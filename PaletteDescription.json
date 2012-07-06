@@ -74,7 +74,7 @@
 	}
     },
     "Palette": {
-	"Order": ["Subsystems", "Controllers", "Sensors", "Actuators", "OI", "Hidden"],
+	"Order": ["Subsystems", "Controllers", "Sensors", "Actuators", "OI", "Commands", "Hidden"],
 	"Hidden" : [
 	    {
 		"Name": "Robot",
@@ -397,6 +397,16 @@
 			"Name" : "",
                         "Type" : "$Button"
                     }
+                ]
+            }
+	],
+	"Commands" : [
+            {
+		"Name": "Command",
+		"Type": "Command",
+		"Help": "A command, someone really needs to update the help.",
+                "Properties" : [
+
                 ]
             }
 	]
