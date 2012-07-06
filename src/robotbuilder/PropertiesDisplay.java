@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import robotbuilder.data.RobotComponent;
 
 /**
  *
@@ -14,6 +15,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 class PropertiesDisplay extends JPanel {
     JTable propTable;
     TableModel propTableModel;
+    RobotComponent currentComponent;
+    String[] keys;
     
     public PropertiesDisplay() {
 	propTableModel = new PropertiesTableModel();
@@ -23,13 +26,22 @@ class PropertiesDisplay extends JPanel {
 
     void setCurrentComponent(DefaultMutableTreeNode node) {
 	System.out.println("Current component is: " + node);
+        currentComponent = (RobotComponent) node.getUserObject();
+        String[] type = {};
+        keys = currentComponent.getProperties().keySet().toArray(type);
+//        this.repaint();
+        this.updateUI();
     }
     
     class PropertiesTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-	    return 0;
+            if (currentComponent == null) {
+                return 0;
+            } else {
+                return currentComponent.getProperties().size()+1;
+            }
 	}
 
 	@Override
@@ -38,8 +50,14 @@ class PropertiesDisplay extends JPanel {
 	}
 
 	@Override
-	public Object getValueAt(int i, int i1) {
-	    return null;
+	public Object getValueAt(int row, int column) {
+            if (column == 0) {
+                if (row == 0) return "Name";
+                else return currentComponent.getProperties().get(keys[row-1]).getName();
+            } else {
+                if (row == 0) return currentComponent.getName();
+                else return currentComponent.getProperties().get(keys[row-1]).getDefault();
+            }
 	}
     }
 }

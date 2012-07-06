@@ -5,6 +5,7 @@
 package robotbuilder.data;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -36,6 +37,10 @@ public class PaletteComponent {
     public void addProperty(String propName, Property property) {
         System.out.println(property);
         properties.put(propName, property);
+    }
+    
+    public Map<String, Property> getProperties() {
+        return properties;
     }
     
     @Override
