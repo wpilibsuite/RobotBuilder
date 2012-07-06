@@ -2,12 +2,15 @@
 package robotbuilder;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.text.html.HTMLDocument;
 
@@ -25,6 +28,7 @@ public class MainFrame extends JFrame {
     JToolBar toolBar;
     private JFrame frame;
     private static MainFrame instance = null;
+    public Preferences prefs;
 
     public static MainFrame getInstance() {
         if (instance == null)
@@ -33,6 +37,10 @@ public class MainFrame extends JFrame {
     }
     
     private MainFrame() {
+        prefs = Preferences.userRoot().node(this.getClass().getName());
+        
+        setLocation(prefs.getInt("X", 200), prefs.getInt("Y", 300));
+        
         frame = this;
         setTitle("FRC RobotBuilder");
 
@@ -70,10 +78,17 @@ public class MainFrame extends JFrame {
         statusPanel.setStatus("Everything A OK");
         
         pack();
+        
+        setSize(prefs.getInt("Width", 100), prefs.getInt("Height", 100));
     }
     
     public void closeWindow() {
         if (robotTree.OKToClose()) {
+            prefs.putInt("Width", getWidth());
+            prefs.putInt("Height", getHeight());
+            Point location = this.getLocationOnScreen();
+            prefs.putInt("X", location.x);
+            prefs.putInt("Y", location.y);
             setVisible(false);
             System.exit(0);
         }

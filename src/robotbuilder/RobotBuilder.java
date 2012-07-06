@@ -20,7 +20,6 @@ public class RobotBuilder {
                 System.out.println((new File(".")).getAbsolutePath());
                 MainFrame frame = MainFrame.getInstance();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(800, 400);
                 frame.setVisible(true);
             }
         });
