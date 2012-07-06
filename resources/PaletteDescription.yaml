@@ -153,12 +153,12 @@
 #end
 #macro( Solenoid $Name )
 - !ChoicesProperty
-            name: $Name Module
+            name: $Name Module (Solenoid)
             validators: [Solenoid]
             choices: ["1", "2"]
             default: "1"
           - !ChoicesProperty
-            name: $Name Channel
+            name: $Name Channel (Solenoid)
             validators: [Solenoid]
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
             default: "1"
@@ -191,7 +191,7 @@ Validators:
     fields: [Channel (Relay), Module (Digital)]
   - !UniqueValidator
     name: Solenoid
-    fields: [Channel, Module]
+    fields: [Channel (Solenoid), Module (Solenoid)]
   - !UniqueValidator
     name: NetworkButton
     fields: [String, String]
@@ -539,31 +539,24 @@ Palette:
           #DigitalChannel("Pressure Switch")
           #RelayOutput("Spike")
       - !Component
-        name: Module-based Solenoid
+        name: Solenoid
         type: Pneumatic
         help: A linear actuator used to open and close valves that runs off of the solenoid module.
         properties:
-          #Solenoid("Solenoid")
+          #Solenoid("Output")
       - !Component
-        name: Relay-based Solenoid
+        name: Relay Solenoid
         type: Pneumatic
         help: A linear actuator used to open and close valves that runs off of a relay.
         properties:
-          #RelayOutput("Spike")
+          #RelayOutput("Output")
       - !Component
-        name: Module-based Double Solenoid
+        name: Double Solenoid
         type: Pneumatic
         help: A double-action linear actuator used to open and close valves that runs off of the Solenoid Module.
         properties:
-          #Solenoid("Solenoid 1")
-          #Solenoid("Solenoid 2")
-      - !Component
-        name: Relay-based Double Solenoid
-        type: Pneumatic
-        help: A double-action linear actuator used to open and close valves that runs off of a relay.
-        properties:
-          #RelayOutput("Spike 1")
-          #RelayOutput("Spike 2")
+          #Solenoid("Forward")
+          #Solenoid("Reverse")
 
   - OI:
       - !Component
