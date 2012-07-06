@@ -15,6 +15,7 @@ public class MainFrame extends JFrame {
     Palette palette;
     RobotTree robotTree;
     PropertiesDisplay properties;
+    StatusPanel statusPanel;
     public static JFrame frame;
 
     public MainFrame() {
@@ -30,6 +31,12 @@ public class MainFrame extends JFrame {
         JSplitPane robotStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, robotTree, properties);
         add(palette, BorderLayout.WEST);
         add(robotStuff, BorderLayout.CENTER);
+        
+        statusPanel = new StatusPanel();
+        add(statusPanel, BorderLayout.SOUTH);
+        
+        statusPanel.setStatus("Everything A OK");
+        
         pack();
     }
 }
