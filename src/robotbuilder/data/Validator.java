@@ -109,8 +109,8 @@ public class Validator {
                 values.put(field, choices.get(field)[locations.get(field)]);
             }
             
-            System.out.println(used);
-            System.out.println(values);
+            //System.out.println(used);
+            //System.out.println(values);
             System.out.println(fieldLocation+"--"+locations);
         
             // Return it if acceptable
@@ -119,7 +119,7 @@ public class Validator {
                 return values;
             }
             
-            // Increment to the next
+            // Change locations
             String field = fields.get(fieldLocation);
             locations.put(field, locations.get(field)+1);
             
@@ -127,7 +127,8 @@ public class Validator {
                 locations.put(field, 0);
                 fieldLocation++;
                 locations.put(fields.get(fieldLocation), locations.get(fields.get(fieldLocation))+1);
-                if (fieldLocation >= fields.size()) {
+                if (locations.get(fields.get(fields.size()-1)) >= choices.get(fields.get(fields.size()-1)).length) {
+                    System.out.println("Error!!!");
                     throw new InvalidException();
                 }
             }

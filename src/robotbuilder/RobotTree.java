@@ -29,7 +29,6 @@ import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
 import robotbuilder.data.Validator;
 import robotbuilder.data.Validator.InvalidException;
-import sun.security.validator.ValidatorException;
 
 /**
  *
@@ -542,8 +541,11 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		PaletteComponent base = Palette.getInstance().getItem(data);
 		assert base != null; // TODO: Handle more gracefully
                 try {
+                    System.out.println("Creating Component...");
                     newNode = new RobotComponent(getDefaultComponentName(base, ((RobotComponent) parentNode).getSubsystem()), base, robot, true);
+                    System.out.println("...Component Created");
                 } catch (InvalidException ex) {
+                    System.out.println("...Failed");
                     JOptionPane.showMessageDialog(MainFrame.getInstance(),
                             "All of the ports this component could use are taken.", "No more free ports.", JOptionPane.ERROR_MESSAGE);
                     return false;
