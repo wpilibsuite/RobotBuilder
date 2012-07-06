@@ -231,18 +231,16 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
     
     public void load() {
-	if (filePath == null) {
-	    int result = fileChooser.showOpenDialog(MainFrame.getInstance().getFrame());
-	    if (result == JFileChooser.CANCEL_OPTION) {
-		return;
-	    }
-	    else if (result == JFileChooser.ERROR_OPTION) {
-		return;
-	    }
-	    else if (result == JFileChooser.APPROVE_OPTION) {
-		filePath = fileChooser.getSelectedFile().getName();
-	    }
-	}
+        int result = fileChooser.showOpenDialog(MainFrame.getInstance().getFrame());
+        if (result == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
+        else if (result == JFileChooser.ERROR_OPTION) {
+            return;
+        }
+        else if (result == JFileChooser.APPROVE_OPTION) {
+            filePath = fileChooser.getSelectedFile().getName();
+        }
         load(filePath);
     }
 
