@@ -61,6 +61,24 @@ public class RobotComponent extends DefaultMutableTreeNode {
     }
     
     @Override
+    public boolean equals(Object oth) {
+        if (oth instanceof RobotComponent) {
+            RobotComponent other = (RobotComponent) oth;
+            boolean equal = getFullName().equals(other.getFullName()) &&
+                    getBaseType().equals(other.getBaseType()) &&
+                    getProperties().equals(other.getProperties());
+            if (equal) {
+                for (int i = 0; i < getChildren().size(); i++) {
+                    equal = equal && 
+                            getChildren().elementAt(i).equals(other.getChildren().elementAt(i));
+                }
+            }
+            return equal;
+        }
+        return false;
+    }
+    
+    @Override
     public String toString() {
         return name;
     }

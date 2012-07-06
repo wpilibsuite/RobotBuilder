@@ -1,5 +1,6 @@
 package robotbuilder.data.properties;
 
+import java.util.Arrays;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.UniqueValidator;
 import robotbuilder.data.Validator;
@@ -128,6 +129,17 @@ public abstract class Property {
                 out += validator.getError(component, this) + " ";
         }
         return "".equals(out) ? null : out;
+    }
+    
+    public boolean equals(Object oth) {
+        if (oth instanceof Property) {
+            Property other = (Property) oth;
+            return getClass().equals(oth.getClass()) &&
+                    getName().equals(other.getName()) &&
+                    getValue().equals(other.getValue()) &&
+                    Arrays.equals(getValidators(), other.getValidators());
+        }
+        return false;
     }
     
     public void setName(String name) {

@@ -67,7 +67,7 @@ public class FileProperty extends Property {
 
     @Override
     public void _setValue(Object value) {
-        if (extension != null && value != null
+        if (extension != null && value != null && !value.equals("")
                 && !((String) value).endsWith("."+extension)) {
             value = ((String) value)+"."+extension;
         }

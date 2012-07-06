@@ -187,6 +187,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param path 
      */
     public void save(String path) {
+        filePath = path;
 	try {
 	    System.out.println("Saving to: " + path);
 	    FileWriter save = new FileWriter(path);
