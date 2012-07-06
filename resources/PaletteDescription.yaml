@@ -49,16 +49,48 @@
 ##           mouse hovers.
 ##     properties: A list of properties
 ##
-##   A property is defined as:
-##   - !Property
+##   A property is one of:
+##   - !StringProperty
 ##     name: The name of this property, should be unique within this component
-##     type: The type of this property, affects how it is displayed.
-##           Valid types include: Integer, Double, Boolean, String, File,
-##           Folder, Subsystem, Command, Sensor, Actuator.
-##     choices: Optional. List of choices to present to the user.
 ##     validator: Optional. The validator that should be used to
 ##                validate this property.
 ##     default: The default value when no other is presented.
+##   - !BooleanProperty
+##     name: The name of this property, should be unique within this component
+##     validator: Optional. The validator that should be used to
+##                validate this property.
+##     default: The default value when no other is presented.
+##   - !DoubleProperty
+##     name: The name of this property, should be unique within this component
+##     validator: Optional. The validator that should be used to
+##                validate this property.
+##     default: The default value when no other is presented.
+##   - !FileProperty
+##     name: The name of this property, should be unique within this component
+##     validator: Optional. The validator that should be used to
+##                validate this property.
+##     default: The default value when no other is presented.
+##     extension: The extension at the end of this file without the '.'
+##     folder: Whether or not to select folders instead of files
+##   - !ChoicesProperty
+##     name: The name of this property, should be unique within this component
+##     validator: Optional. The validator that should be used to
+##                validate this property.
+##     default: The default value when no other is presented.
+##     choices: List of choices to present to the user.
+##   - !ChiledSelectioProperty
+##     name: The name of this property, should be unique within this component
+##     validator: Optional. The validator that should be used to
+##                validate this property.
+##     default: The default value when no other is presented.
+##     type: Type of the child to select.
+##   - !TypeSelectioProperty
+##     name: The name of this property, should be unique within this component
+##     validator: Optional. The validator that should be used to
+##                validate this property.
+##     default: The default value when no other is presented.
+##     type: Type of component to select.
+
 
 ## Macros:
 #macro( AnalogInput $Name )
