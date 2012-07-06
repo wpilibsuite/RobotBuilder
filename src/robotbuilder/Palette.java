@@ -58,6 +58,7 @@ public class Palette extends JPanel {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
         }
         paletteTree = new JTree(root);
+        paletteTree.setRootVisible(false);
 	paletteTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         paletteTree.setTransferHandler(new PaletteTransferHandler(paletteTree.getTransferHandler()));
         paletteTree.setDragEnabled(true);
