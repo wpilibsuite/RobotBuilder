@@ -127,7 +127,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         
                         final int numSupports = 25;
                         
-                        final JMenuItem componentNameItem = new JMenuItem(name.toUpperCase()); // shows the name of the selected component
                         
                         System.out.println("\nComponent name: \""+name+"\"");
                         System.out.println("Type of selected component: \""+selectedType+"\"");
@@ -208,10 +207,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         }
                         //</editor-fold>
                         
-                        componentNameItem.setEnabled(false);
-                        mainMenu.add(componentNameItem);
-                        mainMenu.addSeparator();
-                        
                         if(selectedType.equals("Subsystem") || selectedType.equals("PID Subsystem")){
                             mainMenu.add(controllerMenu);
                             mainMenu.add(actuatorMenu);
@@ -251,7 +246,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             boolean ctrlDown = false;
             @Override
             public void keyTyped(KeyEvent e) {
-                int keyCode = e.getExtendedKeyCode();
                 char keyChar = e.getKeyChar();
                 System.out.println("Modifiers: \""+e.getModifiersEx()+"\"");
                 ctrlDown = (e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0;
@@ -259,7 +253,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
                 TreePath path = tree.getSelectionPath();
                 RobotComponent selected = (RobotComponent) path.getLastPathComponent();
-                System.out.println("Key \""+keyCode+"\" typed.");
                 System.out.println("Key char \""+keyChar+"\"");
 
                 if(keyChar == KeyEvent.VK_BACK_SPACE || keyChar == KeyEvent.VK_DELETE) {
