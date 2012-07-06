@@ -24,7 +24,6 @@ public class Property {
     public Property(String name, String type, String defaultValue) {
         this(name, type);
         this.defaultValue = defaultValue;
-        choices = null;
     }
     
     public void setName(String name) {

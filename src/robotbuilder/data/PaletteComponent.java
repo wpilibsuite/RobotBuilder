@@ -27,14 +27,15 @@ public class PaletteComponent {
     // the metadata for the component (type, etc.)
     private HashMap<String, String> metaData = new HashMap<String, String>(); 
     // set of properties for the component
-    private HashMap<String, Property[]> properties = new HashMap<String, Property[]>();
+    private HashMap<String, Property> properties = new HashMap<String, Property>();
     
     public PaletteComponent(String name) {
         this.name = name;
     }
     
     public void addProperty(String propName, Property property) {
-        properties.put(propName, null);
+        System.out.println(property);
+        properties.put(propName, property);
     }
     
     @Override

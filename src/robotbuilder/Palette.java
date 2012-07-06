@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import robotbuilder.data.PaletteComponent;
+import robotbuilder.data.Property;
 
 /**
  * The Palette is the set of components that can be used to create the robot
@@ -121,7 +122,7 @@ public class Palette extends JPanel {
                 for (Iterator v = values.keys(); v.hasNext(); ) {
                     System.out.println((String)v.next());
                 }
-                component.addProperty(name, null);
+                component.addProperty(name, new Property(name, values.getString("Type"), values.getString("Default")));
             }
         } catch (JSONException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
