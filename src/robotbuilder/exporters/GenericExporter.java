@@ -224,9 +224,9 @@ public class GenericExporter {
         return mapping;
     }
     
-    public String classOf(RobotComponent comp) { // TODO: Make macro
+    public String getInstruction(RobotComponent comp, String instruction) { // TODO: Make macro
         final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
-        return instructions.get("ClassName");
+        return eval(instructions.get(instruction), getContext(comp));
     }
     
     /**
@@ -266,34 +266,7 @@ public class GenericExporter {
     public boolean exportsTo(String category, RobotComponent comp) { // TODO: Make macro
         return category.equals(componentInstructions.get(comp.getBase().getName()).get("Export"));
     }
-    
-    /**
-     * @param comp The robot component as the base.
-     * @return The declaration string
-     */
-    public String getDeclaration(RobotComponent comp) { // TODO: Make macro
-        final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
-        return eval(instructions.get("Declaration"), getContext(comp));
-    }
-    
-    /**
-     * @param comp The robot component as the base.
-     * @return The declaration string
-     */
-    public String getConstructor(RobotComponent comp) { // TODO: Make macro
-        final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
-        return eval(instructions.get("Construction"), getContext(comp));
-    }
-    
-    /**
-     * @param comp The robot component as the base.
-     * @return The declaration string
-     */
-    public String getExtra(RobotComponent comp) { // TODO: Make macro
-        final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
-        return eval(instructions.get("Extra"), getContext(comp));
-    }
-    
+
     public RobotComponent getByName(final String name, RobotComponent robot) { // TODO: Make macro
         final RobotComponent[] component = new RobotComponent[1];
         robot.walk(new RobotWalker() {

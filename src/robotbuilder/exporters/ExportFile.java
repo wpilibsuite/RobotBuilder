@@ -54,6 +54,7 @@ class ExportFile extends File {
                 idContext.put("id", id);
                 String beginning = exporter.eval(exporter.begin_modification, idContext);
                 String end = exporter.eval(exporter.end_modification, idContext);
+                System.out.println(exporter.eval(new File(exporter.path + modifications.get(id)), idContext));
                 file = file.replaceAll("(" + beginning + ")([\\s\\S]*?)(" + end + ")",
                         "$1\n" + exporter.eval(new File(exporter.path + modifications.get(id)), idContext) + "\n    $3");
             }

@@ -1,6 +1,6 @@
 #foreach ($component in $components)
 #if ($helper.exportsTo("OI", $component))
-        $helper.getConstructor($component)
-        $helper.getExtra($component)
+        #constructor($component)
+        #extra($component)
 #end
 #end

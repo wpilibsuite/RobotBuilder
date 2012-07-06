@@ -10,15 +10,15 @@ ${helper.getImports($robot, "RobotMap")}
 public class RobotMap {
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotMap", $component))
-    $helper.getDeclaration($component)
+    #declaration($component)
 #end
 #end
 
     public static void init() {
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotMap", $component))
-        $helper.getConstructor($component)
-        $helper.getExtra($component)
+        #constructor($component)
+        #extra($component)
 #end
 #end
     }
