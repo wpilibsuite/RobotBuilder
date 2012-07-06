@@ -23,12 +23,10 @@ public class ActionsClass {
     AbstractAction saveAction = new SaveAction();
     AbstractAction saveAsAction = new SaveAsAction();
     AbstractAction openAction = new OpenAction();
-//    AbstractAction cppAction = new CppAction();
-//    AbstractAction javaAction = new JavaAction();;
-//    AbstractAction labViewAction = new LabViewAction();
     AbstractAction gettingStartedAction = new GettingStartedAction();
     AbstractAction aboutAction = new AboutAction();
-//    AbstractAction wiringDiagramAction = new WiringDiagramAction();
+    AbstractAction undoAction = new UndoAction();
+
     private LinkedList<ExporterAction> exporters;
 
     public ActionsClass() {
@@ -75,14 +73,12 @@ public class ActionsClass {
         bar.add(newAction);
         bar.add(saveAction);
         bar.add(openAction);
+        bar.add(undoAction);
         for (ExporterAction action : exporters) {
             if (action.isOnToolbar()) {
                 bar.add(action);
             }
         }
-//        bar.add(cppAction);
-//        bar.add(javaAction);
-//        bar.add(labViewAction);
         bar.add(gettingStartedAction);
         return bar;
     }

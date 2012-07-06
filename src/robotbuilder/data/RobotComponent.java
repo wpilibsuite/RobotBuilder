@@ -146,7 +146,6 @@ public class RobotComponent extends DefaultMutableTreeNode {
             if (property.getType().equals("Actuator") ||
                     property.getType().equals("Sensor")) {
                 // Provide a JComboBox for this actuator or sensor
-                System.out.println("Updating: "+key);
                 String old;
                 if (combos.get(key) != null) {
                     old = (String) combos.get(key).getSelectedItem();

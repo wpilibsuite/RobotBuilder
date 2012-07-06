@@ -6,9 +6,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.logging.Level;
@@ -58,6 +56,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private String currentFile = null;
 
     private JFileChooser fileChooser = new JFileChooser();
+    
+    private Deque<String> undoHistory = new LinkedList<String>();
 
     public RobotTree(PropertiesDisplay properties, Palette palette) {
 	fileChooser.setFileFilter(new FileNameExtensionFilter("JSON save file", "json"));
@@ -201,6 +201,15 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	}
         save(filePath);
     }
+    
+    public String encode() throws JSONException {
+        System.out.println("Saving to as String");
+        StringWriter save = new StringWriter();
+        JSONObject robot = ((RobotComponent) treeModel.getRoot()).encodeAsJSON();
+        System.out.println("Encoded to: " + robot);
+        robot.write(save);
+        return save.toString();
+    }
 
     /**
      * Load the RobotTree from a json.
@@ -249,6 +258,27 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         }
         load(filePath);
     }
+    
+    public void decodeAndLoad(String in) throws JSONException, InvalidException {
+	    System.out.println("Loading from String");
+	    StringReader source = new StringReader(in);
+	    JSONTokener tokener;
+	    tokener = new JSONTokener(source);
+	    JSONObject json;
+	    json = new JSONObject(tokener);
+	    treeModel.setRoot(RobotComponent.decodeFromJSON(json, this));
+	    update();
+	    System.out.println("Loaded");
+	    source.close();
+            
+            usedNames = new HashSet<String>();
+            walk(new RobotWalker() {
+                @Override
+                public void handleRobotComponent(RobotComponent self) {
+                    addName(self.getFullName());
+                }
+            });
+    }
 
     public void walk(RobotWalker walker) {
 	((RobotComponent) this.treeModel.getRoot()).walk(walker);
@@ -259,6 +289,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public void update() {
 	treeModel.reload();
+        saveState();
 
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
@@ -382,6 +413,31 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         });
         
         return subsystemNames;
+    }
+    
+    private void saveState() {
+        System.out.println("State Changed");
+        try {
+            undoHistory.addLast(encode());
+        } catch (JSONException ex) {
+            Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void undo() {
+        if (undoHistory.size() > 1) {
+            System.out.println("Undoing");
+            undoHistory.pollLast();
+            try {
+                decodeAndLoad(undoHistory.pollLast());
+            } catch (JSONException ex) {
+                Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvalidException ex) {
+                Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        tree.setSelectionRow(0);
+//        valueChanged(null);
     }
 
     /**
