@@ -12,9 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.swing.tree.DefaultMutableTreeNode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +30,7 @@ public abstract class AbstractExporter {
      * @param robot
      * @param exportPath The path of the project to export to.
      */
-    public abstract void export(RobotTree robot, String exportPath) throws IOException;
+    public abstract void export(RobotTree robot) throws IOException;
     
 
     protected Map<String, Map<String, String>> componentInstructions;

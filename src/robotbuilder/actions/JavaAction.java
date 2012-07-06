@@ -27,8 +27,7 @@ public class JavaAction extends AbstractAction {
     public void actionPerformed(ActionEvent ae) {
         System.out.append("Generate Java code");
         try {
-            new JavaExporter().export(MainFrame.getInstance().getCurrentRobotTree(),
-                    "/home/alex/scratch/RobotBuilderTest");
+            new JavaExporter().export(MainFrame.getInstance().getCurrentRobotTree());
         } catch (IOException ex) {
             Logger.getLogger(JavaAction.class.getName()).log(Level.SEVERE, null, ex);
         }

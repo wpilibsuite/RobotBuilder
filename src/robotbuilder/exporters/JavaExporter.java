@@ -6,12 +6,10 @@ package robotbuilder.exporters;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
+import javax.swing.JFileChooser;
 import robotbuilder.RobotTree;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
@@ -26,7 +24,7 @@ public class JavaExporter extends AbstractExporter {
     private static String ROBOT_MAP_TEMPLATE = "export/java/RobotMap.java";
 
     @Override
-    public void export(RobotTree robot, String exportPath) throws IOException {
+    public void export(RobotTree robot) throws IOException {
         System.out.println("Loading export description for java");
         loadExportDescription(DESCRIPTION_PATH, DESCRIPTION_PROPERTIES);
         
@@ -40,7 +38,7 @@ public class JavaExporter extends AbstractExporter {
         template = substitute(template, "constructions", generateConstructions(robot));
         
         System.out.println("Writing file");
-        FileWriter out = new FileWriter(exportPath+"/src/edu/wpi/first/wpilibj/templates/RobotMap.java"); // TODO: convert package to path
+        FileWriter out = new FileWriter(getPath(robot.getRoot())+"RobotMap.java"); // TODO: convert package to path
         out.write(template);
         out.close();
         System.out.println("Done");
@@ -108,4 +106,8 @@ public class JavaExporter extends AbstractExporter {
         return out;
     }
     
+    private String getPath(RobotComponent robot) {
+        System.out.println("Path: "+robot.getProperty("Java Project")+"/src/"+robot.getProperty("Java Package").replace(".", "/")+"/");
+        return robot.getProperty("Java Project")+"/src/"+robot.getProperty("Java Package").replace(".", "/")+"/";
+    }
 }
