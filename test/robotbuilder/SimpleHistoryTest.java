@@ -29,7 +29,7 @@ public class SimpleHistoryTest {
     
     @Before
     public void setUp() {
-        history = new SimpleHistory<Integer>(1000);
+        history = new SimpleHistory<Integer>();
     }
     
     @After
@@ -72,45 +72,4 @@ public class SimpleHistoryTest {
         assertEquals("Conflict in the future. Value ", (Integer)65535, history.redo());
         System.out.println("Current state: "+history.getCurrentState());
     }
-    
-    @Test
-    public void undoRedoAll() {
-        for(Integer i = 0; i <= 20; i++) {
-            history.addState(i);
-            assertEquals("Adding failed. Value ", history.getCurrentState(), i);
-        }
-        
-        System.out.println("Current state after adding: "+history.getCurrentState());
-        System.out.println("------------------------------\n"+
-                           "             UNDO             \n"+
-                           "------------------------------");
-        
-        for(Integer i = history.getLast(); i != history.getFirst() && history.getFirst() != null; i = history.undo()) {
-            System.out.print("Last: "+history.getLast());
-            System.out.print("\tCurrent state: "+history.getCurrentState());
-            System.out.println("\tFirst: "+history.getFirst());
-            
-            assertEquals("Undo failed. Value ", i, history.getCurrentState());
-        }
-        
-        System.out.println("Current state after undoing: "+history.getCurrentState()+"\n");
-        
-        System.out.println("------------------------------\n"+
-                           "             REDO             \n"+
-                           "------------------------------");
-        
-        for(Integer i = history.getCurrentState(); i != history.getLast() && history.getLast() != null; i = history.redo()) {
-            System.out.print("Last: "+history.getLast());
-            System.out.print("\tCurrent state: "+history.getCurrentState());
-            System.out.println("\tFirst: "+history.getFirst());
-            
-            assertEquals("Redo failed. Value ", i, history.getCurrentState());
-        }
-        
-        assertEquals("Unequal values after undoing and redoing. Value ", (Integer)20, history.getCurrentState());
-        System.out.println("Current state: "+history.getCurrentState()+"\n\n");
-        
-    }
-    
-    
 }

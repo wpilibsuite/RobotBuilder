@@ -15,12 +15,7 @@ public class SimpleHistory<E> {
     private E present = null;
     private Deque<E> future = new LinkedList<E>();
     private int timesSaved = 0;
-    private final int historyLimit;
     
-    public SimpleHistory(int historyLimit){
-        this.historyLimit = historyLimit;
-    }    
-        
     /**
      * Adds the given state to the history.
      * @param state The state to add to the history.

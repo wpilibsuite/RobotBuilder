@@ -42,7 +42,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     /** The currently selected node */
     private String filePath = null;
     
-    private SimpleHistory<String> history = new SimpleHistory<String>(100);
+    private SimpleHistory<String> history = new SimpleHistory<String>();
     private int snapshots = 0;
     
     private Preferences prefs;
