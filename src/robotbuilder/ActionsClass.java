@@ -35,10 +35,20 @@ public class ActionsClass {
         exporters = getExporters();
 
         JMenu fileMenu = new JMenu("File");
-        fileMenu.add(newAction);
-        fileMenu.add(saveAction);
-        fileMenu.add(saveAsAction);
-        fileMenu.add(openAction);
+        JMenuItem newItem  = new JMenuItem(newAction);
+        JMenuItem saveItem = new JMenuItem(saveAction);
+        JMenuItem openItem = new JMenuItem(openAction);
+        JMenuItem saveAsItem = new JMenuItem(saveAsAction);
+        
+        newItem.setAccelerator(KeyStroke.getKeyStroke("control N"));
+        saveItem.setAccelerator(KeyStroke.getKeyStroke("control S"));
+        saveAsItem.setAccelerator(KeyStroke.getKeyStroke("control shift S"));
+        openItem.setAccelerator(KeyStroke.getKeyStroke("control O"));
+        
+        fileMenu.add(newItem);
+        fileMenu.add(saveItem);
+        fileMenu.add(saveAsItem);
+        fileMenu.add(openItem);
         fileMenu.add(new JSeparator());
         fileMenu.add(exitAction);
         menu.add(fileMenu);
@@ -71,8 +81,15 @@ public class ActionsClass {
         bar.add(newAction);
         bar.add(saveAction);
         bar.add(openAction);
-        bar.add(undoAction);
-        bar.add(redoAction);
+        
+        JButton undoButton = new JButton(undoAction);
+        JButton redoButton = new JButton(redoAction);
+        
+        undoButton.registerKeyboardAction(undoAction, KeyStroke.getKeyStroke("control Z"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+        undoButton.registerKeyboardAction(redoAction, KeyStroke.getKeyStroke("control Y"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+        
+        bar.add(undoButton);
+        bar.add(redoButton);
         for (ExporterAction action : exporters) {
             if (action.isOnToolbar()) {
                 bar.add(action);

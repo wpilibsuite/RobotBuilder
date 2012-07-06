@@ -243,24 +243,27 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         this.setFocusable(true);
         tree.addKeyListener(new KeyAdapter(){
             
-            boolean ctrlDown = false;
+            RobotComponent selected = null;
+            TreePath path = null;
+            
             @Override
             public void keyTyped(KeyEvent e) {
                 char keyChar = e.getKeyChar();
-                System.out.println("Modifiers: \""+e.getModifiersEx()+"\"");
-                ctrlDown = (e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0;
-                System.out.println("Control down = "+ctrlDown);
-
-                TreePath path = tree.getSelectionPath();
-                RobotComponent selected = (RobotComponent) path.getLastPathComponent();
-                System.out.println("Key char \""+keyChar+"\"");
+                path = tree.getSelectionPath();
 
                 if(keyChar == KeyEvent.VK_BACK_SPACE || keyChar == KeyEvent.VK_DELETE) {
+                    if(path != null) {
+                        selected = (RobotComponent) path.getLastPathComponent();
+                    } else {
+                        System.out.println("Nothing selected");
+                        return;
+                    }
 
                     if(!selected.getBase().toString().equals("Subsystems") &&
                     !selected.getBase().toString().equals("OI") &&
                     !selected.getBase().toString().equals("Commands") &&
                     !selected.getBase().toString().equals("Robot")) {
+                        System.out.println("Delete key pressed");
 
                         selected.removeFromParent();
                         selected.walk(new RobotWalker() {
@@ -269,25 +272,16 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                                 MainFrame.getInstance().getCurrentRobotTree().removeName(self.getFullName());
                             }
                         });
+                        System.out.println("Updating....");
                         update();
                         takeSnapshot();
-                        System.out.println("\""+selected.getName()+"\" removed");
+                        System.out.println("Updated. \""+selected.getName()+"\" removed");
                     } else {
                         JOptionPane.showMessageDialog(MainFrame.getInstance(), 
-                                                      "Cannot delete \""+selected+"\"", 
+                                                      "Cannot delete \""+selected+"\"!", 
                                                       "Cannot Delete", 
                                                       JOptionPane.ERROR_MESSAGE);
                     }
-                } else if((e.getKeyCode() == KeyEvent.VK_C) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-                    System.out.println("CTRL+C");
-                } else if((e.getKeyCode() == KeyEvent.VK_X) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-                    System.out.println("CTRL+X");
-                } else if((e.getKeyCode() == KeyEvent.VK_V) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-                    System.out.println("CTRL+V");
-                } else if((e.getKeyCode() == KeyEvent.VK_Z) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-                    System.out.println("CTRL+Z");
-                } else if((e.getKeyCode() == KeyEvent.VK_Y) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-                    System.out.println("CTRL+Y");
                 }
             }
         });
@@ -978,26 +972,5 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             System.out.println("\""+target.getName()+"\" removed");
             
         }
-    }
-    
-    private class ClearAction extends AbstractAction {
-        
-        private String name;
-        private RobotComponent selected;
-        
-        public ClearAction(String name, RobotComponent selected) {
-            putValue(Action.NAME, name);
-            putValue(Action.SHORT_DESCRIPTION, "Clear the components within this.");
-            this.name = name;
-            this.selected = selected;
-        }
-        
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            selected.removeAllChildren();
-            update();
-            takeSnapshot();
-        }
-        
     }
 }
