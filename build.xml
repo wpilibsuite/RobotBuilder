@@ -13,8 +13,10 @@
 
     <target name="-post-jar">
       <jar destfile="${dist.jar}" update="true">
+	<zipgroupfileset dir="${dist.dir}/lib" includes="*.jar" /> 
 	<fileset dir="resources" includes="**"/>
       </jar>
+      <delete dir="${dist.dir}/lib" />
     </target>
 
     <target depends="init,compile,compile,jar,-post-jar" description="Run a main class." name="run">
