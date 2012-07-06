@@ -86,7 +86,6 @@ public abstract class AbstractExporter {
                     assert instruction != null; // TODO: Deal with more elegantly
                     componentMap.put(instructionKey, instruction);
                 }
-                System.out.println();
                 componentInstructions.put((String) key, componentMap);
             }
             

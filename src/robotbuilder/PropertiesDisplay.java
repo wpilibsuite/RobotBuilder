@@ -82,12 +82,7 @@ class PropertiesDisplay extends JPanel {
                     return new TableCellRenderer() {
                         @Override
                         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                            System.out.println("Render component fetched.");
                             try {
-                                //System.out.println("Filechooser: "+value);
-                                //System.out.println("Directory: "+((JFileChooser) value).getCurrentDirectory());
-                                //System.out.println("Selection: "+((JFileChooser) value).getSelectedFile());
-                                //System.out.println("Path: "+((JFileChooser) value).getSelectedFile().getPath());
                                 String path = ((JFileChooser) value).getSelectedFile().getPath();
                                 setValueAt(path, row, column);
                                 return new JLabel(path);
@@ -130,7 +125,6 @@ class PropertiesDisplay extends JPanel {
 
 	@Override
 	public Object getValueAt(int row, int column) {
-            System.out.println("Getting value for (" + row + "' " + column + ")");
             if (column == 0) {
                 if (row == 0)
                     return "Name";

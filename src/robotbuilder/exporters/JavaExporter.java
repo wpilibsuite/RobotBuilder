@@ -153,7 +153,6 @@ public class JavaExporter extends AbstractExporter {
                     String instruction = instructions.get("Construction");
                     String extraInstruction = instructions.get("Extra");
                     String className = instructions.get("ClassName");
-                    System.out.println(self.getBase().getName()+": "+className+" -- "+instruction+" -- "+extraInstruction);
                     constructions.add(substitute(instruction, self, className));
                     constructions.add(substitute(extraInstruction, self, className));
                 }
