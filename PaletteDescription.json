@@ -4,32 +4,50 @@
         "Sensors": {
             "Gyro" : {
                 "ClassName" : "Gyro",
-                "Ports" : "a"
+                "Properties" : {
+                    "Input channel" : "AnalogInput",
+                    "Sensitivity" : "Double"
+                }
             },
             "Accelerometer" : {
                 "ClassName" : "Accelerometer",
-                "Ports" : "a"
+                "Properties" : {
+                    "Input channel" : "AnalogInput",
+                }
                 
             },
             "Quadrature encoder" : {
                 "ClassName" : "Encoder",
-                "Ports" : "di, di"
+                "Properties" : {
+                    "AChannel" : "DigitalInput",
+                    "BChannel" : "DigitalInput"
+                }
             },
             "Potentiometer" : {
                 "ClassName" : "AnalogChannel",
-                "Ports" : "a"
+                "Properties" : {
+                    "Input channel" : "AnalogInput"
+                }
             },
             "Limit switch" : {
-                "ClassName" : "di",
-                "Ports" : "di"
+                "ClassName" : "DigitalInput",
+                "Properties" : {
+                    "Input channel" : "DigitalInput"
+                }
             }
         },
         "Speed controllers" : {
             "Victor" : {
-                
+                "ClassName" : "Victor",
+                "Properties" : {
+                    "PWM port" : "PWMInput"
+                }
             },
             "Jaguar" : {
-                
+                "ClassName" : "Jaguar",
+                "Properties" : {
+                    "PWM port" : "PWMInput"
+                }
             }
         },
         "Operator input" : {
@@ -43,14 +61,6 @@
                 
             },
             "Extended I/O analog input" : {
-                
-            }
-        },
-        "Program structure" : {
-            "Subsystem" : {
-                
-            },
-            "Command" : {
                 
             }
         }

@@ -4,6 +4,9 @@
  */
 package robotbuilder.data;
 
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 /**
  *
  * @author brad
@@ -12,17 +15,19 @@ public class RobotComponent {
     private String key;
     private String ports;
     private String className;
+    private Hashtable<String, String> properties;
     
     public RobotComponent(String key) {
+        properties = new Hashtable<String, String>();
         this.key = key;
-    }
-    
-    public void addPorts(String ports) {
-        this.ports = ports;
     }
     
     public void addClassName(String className) {
         this.className = className;
+    }
+    
+    public void addProperty(String propName, String propType) {
+        properties.put(propName, propType);
     }
     
     @Override
@@ -32,7 +37,10 @@ public class RobotComponent {
     
     public void print() {
         System.out.println("Component: " + key);
-        System.out.println("\tPorts: " + ports);
         System.out.println("\tClassName: " + className);
+        for (Enumeration keys = properties.keys(); keys.hasMoreElements(); ) {
+            String k = (String) keys.nextElement();
+            System.out.println("\t\t" + k + ": " + properties.get(k));
+        }
     }
 }

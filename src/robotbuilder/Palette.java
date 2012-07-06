@@ -89,7 +89,12 @@ public class Palette extends JPanel {
     private RobotComponent createRobotComponent(String key, JSONObject child) {
         RobotComponent component = new RobotComponent(key);
         try {
-            component.addPorts(child.getString("Ports"));
+            JSONObject props = child.getJSONObject("Properties");
+            for (Iterator i = props.keys(); i.hasNext();) {
+                String name = (String) i.next();
+                String value = props.getString(name);
+                component.addProperty(name, value);
+            }
             component.addClassName(child.getString("ClassName"));
         } catch (JSONException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
