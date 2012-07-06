@@ -4,11 +4,16 @@
  */
 package robotbuilder.exporters;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeSet;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import robotbuilder.MainFrame;
 import robotbuilder.RobotTree;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
@@ -30,6 +35,7 @@ public class JavaExporter extends AbstractExporter {
         System.out.println("Loading template "+ROBOT_MAP_TEMPLATE);
         String template = loadTemplate(ROBOT_MAP_TEMPLATE);
         
+        getPath(robot.getRoot()); // TODO: Ugly hack
         System.out.println("Substituting real values into template");
         template = substitute(template, "package", robot.getRoot().getProperty("Java Package"));
         template = substitute(template, "imports", generateImports(robot));
@@ -105,7 +111,27 @@ public class JavaExporter extends AbstractExporter {
         return out;
     }
     
-    private String getPath(RobotComponent robot) {
+    private String getPath(RobotComponent robot) throws IOException {
+        if ((robot.getProperty("Java Package")).equals("")) {
+            String packageName = (String) JOptionPane.showInputDialog(MainFrame.getInstance().getFrame(), "Java Package", "Java Package", JOptionPane.PLAIN_MESSAGE, null, null, null);
+            robot.setProperty("Java Package", packageName);
+        }
+        if ((robot.getProperty("Java Project")).equals("")) {
+            String file = null;
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int result = fileChooser.showDialog(MainFrame.getInstance().getFrame(), "Export");
+            if (result == JFileChooser.CANCEL_OPTION) {
+                throw new IOException("No file selected.");
+            } else if (result == JFileChooser.ERROR_OPTION) {
+                throw new IOException("Error selecting file.");
+            } else if (result == JFileChooser.APPROVE_OPTION) {
+                file = fileChooser.getSelectedFile().getAbsolutePath();
+                if (!file.endsWith(".html"))
+                    file += ".html";
+            }
+            robot.setProperty("Java Project", file);
+        }
         System.out.println("Path: "+robot.getProperty("Java Project")+"/src/"+robot.getProperty("Java Package").replace(".", "/")+"/");
         return robot.getProperty("Java Project")+"/src/"+robot.getProperty("Java Package").replace(".", "/")+"/";
     }

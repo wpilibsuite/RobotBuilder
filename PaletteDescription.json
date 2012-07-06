@@ -73,7 +73,7 @@
 		    {
 			"Name" : "Java Package",
                         "Type" : "String",
-                        "Default" : "com.usfirst.teamNNNN.robot2013"
+                        "Default" : ""
 		    },
 		    {
 			"Name" : "Wiring File",
