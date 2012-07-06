@@ -1,7 +1,6 @@
 
 package robotbuilder;
 
-import java.awt.BorderLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
@@ -10,17 +9,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeSelectionModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
