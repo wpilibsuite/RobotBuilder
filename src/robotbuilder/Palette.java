@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -56,6 +57,7 @@ public class Palette extends JPanel {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
         }
         paletteTree = new JTree(root);
+	paletteTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         paletteTree.setTransferHandler(new PaletteTransferHandler(paletteTree.getTransferHandler()));
         paletteTree.setDragEnabled(true);
         
