@@ -78,27 +78,6 @@ public class RobotComponent extends DefaultMutableTreeNode {
         }
     }
     
-    @Override
-    public void add(MutableTreeNode node) {
-        super.add(node);
-        childChange();
-    }
-    @Override
-    public void remove(MutableTreeNode node) {
-        super.remove(node);
-        childChange();
-    }
-    @Override
-    public void remove(int index) {
-        super.remove(index);
-        childChange();
-    }
-    @Override
-    public void removeAllChildren() {
-        super.removeAllChildren();
-        childChange();
-    }
-    
     public void childChange() {
         // Update list of actuators
         for (String key : getBase().getProperties().keySet()) {
@@ -119,6 +98,10 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 if (childrenNames.contains(old)) {
                     combo.setSelectedItem(old);
                 } else if (childrenNames.size() != 0) {
+                    int defaultSelection = Integer.parseInt(getBase().getProperties().get(key).getDefault());
+                    if (defaultSelection < childrenNames.size()) {
+                        combo.setSelectedIndex(defaultSelection);
+                    }
                     setProperty(key, (String) combo.getSelectedItem());
                 }
             }

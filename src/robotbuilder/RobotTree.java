@@ -331,6 +331,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
 		@Override
 		public Object getTransferData(DataFlavor df) throws UnsupportedFlavorException, IOException {
+                    System.out.println("Tree: " + ((JTree) c));
+                    System.out.println("Path: " + ((JTree) c).getSelectionPath());
 		    System.out.println("Transfer: " + ((JTree) c).getSelectionPath().getLastPathComponent());
 		    return ((JTree) c).getSelectionPath().getLastPathComponent();
 		    //return currentNode;
