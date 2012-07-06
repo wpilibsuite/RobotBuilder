@@ -170,7 +170,7 @@ Palette:
       - !Component
         name: OI
         type: OI
-        supports: {Button: -1, Joystick: 4}
+        supports: {Button: -1, Joystick: -1}
         help: Your operator interface!
         properties: []
       - !Component
