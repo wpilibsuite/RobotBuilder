@@ -50,6 +50,10 @@ public class ActionsClass {
         generateMenu.add(labViewAction);
         menu.add(generateMenu);
 
+        JMenu helpMenu = new JMenu("Help");
+        helpMenu.add(aboutAction);
+        menu.add(helpMenu);
+        
         return menu;
     }
 }

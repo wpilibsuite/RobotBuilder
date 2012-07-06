@@ -7,6 +7,7 @@ package robotbuilder;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 /**
  *
@@ -17,8 +18,10 @@ public class MainFrame extends JFrame {
     Palette palette;
     RobotTree robotTree;
     PropertiesDisplay properties;
+    public static JFrame frame;
 
     public MainFrame() {
+        frame = this;
         setTitle("FRC RobotBuilder");
         
         ActionsClass actions = new ActionsClass();
@@ -27,9 +30,7 @@ public class MainFrame extends JFrame {
         palette = new Palette();
         robotTree = new RobotTree();
         properties = new PropertiesDisplay();
-        JPanel robotStuff = new JPanel(new BorderLayout());
-        robotStuff.add(robotTree, BorderLayout.WEST);
-        robotStuff.add(properties, BorderLayout.CENTER);
+        JSplitPane robotStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, robotTree, properties);
         add(palette, BorderLayout.WEST);
         add(robotStuff, BorderLayout.CENTER);
         pack();
