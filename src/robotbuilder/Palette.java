@@ -214,6 +214,7 @@ public class Palette extends JPanel implements TreeSelectionListener {
                     }
                 }
                 prop.setChoices(choices);
+                prop.setValidator(property.optString("Validator", ""));
                 component.addProperty(property.getString("Name"), prop);
             }
         } catch (JSONException ex) {

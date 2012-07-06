@@ -15,6 +15,7 @@ public class Property {
     private String type;
     private String defaultValue;
     private String[] choices;
+    private String validator;
     
     public Property(String name, String type) {
         this.name = name;
@@ -58,6 +59,14 @@ public class Property {
 
     public void setChoices(String[] choices) {
         this.choices = choices;
+    }
+
+    public String getValidator() {
+        return validator;
+    }
+    
+    public void setValidator(String validator) {
+        this.validator = validator;
     }
     
     @Override

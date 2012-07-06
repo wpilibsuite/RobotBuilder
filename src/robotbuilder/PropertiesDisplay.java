@@ -3,6 +3,8 @@ package robotbuilder;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
@@ -10,6 +12,9 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import robotbuilder.data.RobotComponent;
+import robotbuilder.data.Validator;
+import robotbuilder.data.Validator.InvalidException;
+import sun.security.validator.ValidatorException;
 
 /**
  *
@@ -158,14 +163,34 @@ class PropertiesDisplay extends JPanel {
                             "You already have a component named: "+name, "Invalid Name", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
+                final String key = keys[row-1];
+                String validatorName = currentComponent.getBase().getProperties().get(key).getValidator();
+                if (!"".equals(validatorName)) {
+                    Validator validator = robot.getValidator(validatorName);
+                    try {
+                        validator.release(currentComponent);
+                        validator.claim(key, (String) val, currentComponent);
+                    } catch (Validator.InvalidException e) {
+                        try {
+                            validator.claim(currentComponent);
+                        } catch (InvalidException ex) {
+                            Logger.getLogger(PropertiesDisplay.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        JOptionPane.showMessageDialog(MainFrame.getInstance(),
+                                "You already have a component using this port", "Already used", JOptionPane.ERROR_MESSAGE);
+                        currentComponent.setValue(key, currentComponent.getProperty(key));
+                        return;
+                    }
+                }
+                System.out.println("\tAssigning..");
                 if (val instanceof String)
-                    currentComponent.setValue(keys[row-1], (String) val);
+                    currentComponent.setValue(key, (String) val);
                 else if (val instanceof Boolean)
-                    currentComponent.setValue(keys[row-1], ((Boolean) val).toString());
+                    currentComponent.setValue(key, ((Boolean) val).toString());
                 else if (val instanceof Double)
-                    currentComponent.setValue(keys[row-1], ((Double) val).toString());
+                    currentComponent.setValue(key, ((Double) val).toString());
                 else if (val instanceof Integer)
-                    currentComponent.setValue(keys[row-1], ((Integer) val).toString());
+                    currentComponent.setValue(key, ((Integer) val).toString());
             }
             robot.update();
         }
