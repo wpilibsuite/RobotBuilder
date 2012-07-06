@@ -221,6 +221,9 @@ Instructions:
   Jaguar:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Jaguar"
+  Relay:
+    Defaults: "PWMOutput,Component,None"
+    ClassName: "Relay"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"

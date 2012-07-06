@@ -161,6 +161,10 @@ Validators:
     type: Unique
     fields: [Number]
   - !Validator
+    name: KinectJoystick
+    type: Unique
+    fields: [Number]
+  - !Validator
     name: RelayOutput
     type: Unique
     fields: [Channel (Relay), Module (Digital)]
@@ -605,7 +609,7 @@ Palette:
             name: Number
             type: Integer
             choices: ["1", "2"]
-            validator: Joystick
+            validator: KinectJoystick
             default: 1
           
 
