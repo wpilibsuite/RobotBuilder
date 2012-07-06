@@ -1,0 +1,44 @@
+
+{
+    "Palette": {
+        "Sensors": {
+            "Gyro" : {
+                
+            },
+            "Accelerometer" : {
+                
+            },
+            "Quadrature encoder" : {
+                
+            },
+            "Potentiometer" : {
+                
+            },
+            "Limit switch" : {
+                
+            }
+        },
+        "Speed controllers" : {
+            "Victor" : {
+                
+            },
+            "Jaguar" : {
+                
+            }
+        },
+        "Operator input" : {
+            "Joystick analog" : {
+                
+            },
+            "Joystick button" : {
+                
+            },
+            "Extended I/O digital input" : {
+                
+            },
+            "Extended I/O analog input" : {
+                
+            }
+        }
+    }
+}
