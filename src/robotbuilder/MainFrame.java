@@ -110,7 +110,7 @@ public class MainFrame extends JFrame {
         
         pack();
         
-        setSize(prefs.getInt("Width", 100), prefs.getInt("Height", 100));
+        setSize(prefs.getInt("Width", 600), prefs.getInt("Height", 480));
     }
     
     public void openDefaultFile() {
