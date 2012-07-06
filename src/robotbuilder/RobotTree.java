@@ -1,5 +1,6 @@
 package robotbuilder;
 
+import robotbuilder.data.properties.Property;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;

@@ -10,7 +10,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
-import robotbuilder.data.Property;
+import robotbuilder.data.properties.Property;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.Validator;
 
@@ -75,7 +75,7 @@ class PropertiesDisplay extends JPanel {
                         JLabel label = new JLabel(value.toString());
                         if (row == 0) { return label; }
                         Property property = currentComponent.getProperty(keys[row-1]);
-                        if (property.isValid()) {
+                        if (!property.isValid()) {
                             label.setForeground(Color.red);
                             label.setToolTipText(property.getError(currentComponent));
                         } else {

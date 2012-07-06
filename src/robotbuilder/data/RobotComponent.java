@@ -1,14 +1,14 @@
 
 package robotbuilder.data;
 
-import java.io.File;
-import java.util.*;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 import javax.swing.tree.DefaultMutableTreeNode;
 import robotbuilder.Palette;
 import robotbuilder.RobotTree;
-import robotbuilder.data.UniqueValidator.InvalidException;
+import robotbuilder.data.properties.Property;
 
 /**
  *
@@ -177,7 +177,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
         this.robot = robot;
     }
 
-    RobotTree getRobotTree() {
+    public RobotTree getRobotTree() {
         return robot;
     }
 }

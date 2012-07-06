@@ -4,6 +4,7 @@
  */
 package robotbuilder.data;
 
+import robotbuilder.data.properties.Property;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -4,6 +4,7 @@
  */
 package robotbuilder.data;
 
+import robotbuilder.data.properties.Property;
 import java.util.List;
 
 /**

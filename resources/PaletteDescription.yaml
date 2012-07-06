@@ -62,57 +62,49 @@
 
 ## Macros:
 #macro( AnalogInput $Name )
-- !Property
+- !ChoicesProperty
             name: $Name Module (Analog)
-            type: Module (Analog)
             choices: ["1", "2"]
             validators: [AnalogInput]
             default: "1"
-          - !Property
+          - !ChoicesProperty
             name: $Name Channel (Analog)
-            type: Channel (Analog)
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
             validators: [AnalogInput]
             default: "1"
 #end
 #macro( DigitalChannel $Name )
-- !Property
+- !ChoicesProperty
             name: $Name Module (Digital)
-            type: Module (Digital)
             choices: ["1", "2"]
             validators: [DigitalChannel]
             default: "1"
-          - !Property
+          - !ChoicesProperty
             name: $Name Channel (Digital)
-            type: Channel (Digital)
             validators: [DigitalChannel]
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"]
             default: "1"
 #end
 #macro( PWMOutput $Name )          
-- !Property
+- !ChoicesProperty
             name: $Name Module (Digital)
-            type: Module (Digital)
             choices: ["1", "2"]
             validators: [PWMOutput]
             default: "1"
-          - !Property
+          - !ChoicesProperty
             name: $Name Channel (PWM)
-            type: Channel (PWM)
             validators: [PWMOutput]
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
             default: "1"
 #end
 #macro( RelayOutput $Name )          
-- !Property
+- !ChoicesProperty
             name: $Name Module (Digital)
-            type: Module (Digital)
             choices: ["1", "2"]
             validators: [RelayOutput]
             default: "1"
-          - !Property
+          - !ChoicesProperty
             name: $Name Channel (Relay)
-            type: Channel (Relay)
             validators: [RelayOutput]
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
             default: "1"
@@ -122,22 +114,19 @@
             name: $Name Command
             type: Command
             default: "1"
-          - !Property
+          - !ChoicesProperty
             name: $Name When to Run
-            type: String
             choices: [whileHeld, whenPressed, whenReleased]
             default: whileHeld
 #end
 #macro( Solenoid $Name )
-- !Property
+- !ChoicesProperty
             name: $Name Module
-            type: Module
             validators: [Solenoid]
             choices: ["1", "2"]
             default: "1"
-          - !Property
+          - !ChoicesProperty
             name: $Name Channel
-            type: Channel
             validators: [Solenoid]
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
             default: "1"
@@ -508,18 +497,16 @@ Palette:
             name: Reverse Direction
             type: Boolean
             default: "false"
-          - !Property
+          - !ChoicesProperty
             name: Encoding Type
-            type: String
             choices: [k4X, k2X, k1X]
             default: "k4X"
           - !Property
             name: Distance Per Pulse
             type: Double
             default: "1"
-          - !Property
+          - !ChoicesProperty
             name: PID Source
-            type: String
             choices: [kDistance, kRate]
             default: "kRate"
       - !Component
@@ -538,9 +525,8 @@ Palette:
             name: Distance Per Pulse
             type: Double
             default: "1"
-          - !Property
+          - !ChoicesProperty
             name: PID Source
-            type: String
             choices: [kDistance, kRate]
             default: "kRate"
       - !Component
@@ -659,9 +645,8 @@ Palette:
         type: Joystick
         help: A joystick that drivers can use as input.
         properties:
-          - !Property
+          - !ChoicesProperty
             name: Number
-            type: Integer
             choices: ["1", "2", "3", "4"]
             validators: [USB Port]
             default: 1
@@ -674,9 +659,8 @@ Palette:
             name: Joystick
             type: Joystick
             default: "1"
-          - !Property
+          - !ChoicesProperty
             name: Button
-            type: Integer
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
             default: "1"
           #Button("")
@@ -695,9 +679,8 @@ Palette:
         type: Button
         help: A button connected to a Cypress module analog pin.
         properties:
-          - !Property
+          - !ChoicesProperty
             name: Analog Pin
-            type: Integer
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
             default: "1"
           #Button("")
@@ -706,9 +689,8 @@ Palette:
         type: Button
         help: A button connected to a Cypress module digital pin.
         properties:
-          - !Property
+          - !ChoicesProperty
             name: Digital Pin
-            type: Integer
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
             default: "1"
           #Button("")            

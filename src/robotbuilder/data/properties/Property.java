@@ -1,6 +1,9 @@
-package robotbuilder.data;
+package robotbuilder.data.properties;
 
 import robotbuilder.RobotTree;
+import robotbuilder.data.RobotComponent;
+import robotbuilder.data.UniqueValidator;
+import robotbuilder.data.Validator;
 
 /**
  * A property is one of the many values that can be set in a palette or robot component.
@@ -56,10 +59,12 @@ public abstract class Property {
 
     public boolean isValid() {
         if (validators == null) return true;
+        System.out.println(name);
         for (String validatorName : validators) {
             Validator validator = component.getRobotTree().getValidator(validatorName);
-            if (validator != null && !validator.isValid(component, this))
+            if (validator != null && !validator.isValid(component, this)) {
                 return false;
+            }
         }
         return true;
     }
@@ -101,7 +106,7 @@ public abstract class Property {
         return name + "  --  {type: " + this.getClass() + ", default: " + defaultValue + "}";
     }
 
-    void setComponent(RobotComponent component) {
+    public void setComponent(RobotComponent component) {
         this.component = component;
     }
 }

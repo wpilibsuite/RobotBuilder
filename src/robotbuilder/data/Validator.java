@@ -4,6 +4,8 @@
  */
 package robotbuilder.data;
 
+import robotbuilder.data.properties.Property;
+
 /**
  *
  * @author Alex Henning

@@ -4,9 +4,12 @@
  */
 package robotbuilder.data;
 
+import robotbuilder.data.properties.DefaultProperty;
+import robotbuilder.data.properties.Property;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import robotbuilder.data.properties.ChoicesProperty;
 
 /**
  *
@@ -128,7 +131,7 @@ public class UniqueValidator implements Validator {
             Map<String, String[]> choices = new HashMap<String, String[]>();
             for (String field : fields) {
                 choices.put(field,
-                        ((DefaultProperty) component.getBase().getProperty(prefix+field)).getChoices());
+                        ((ChoicesProperty) component.getProperty(prefix+field)).getChoices());
             }
             Map<String, String> selection;
             try {
