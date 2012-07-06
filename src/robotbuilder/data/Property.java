@@ -50,4 +50,9 @@ public class Property {
     public String[] getChoices() {
         return choices;
     }
+    
+    @Override
+    public String toString() {
+        return name + "\n\ttype: " + type + "\n\tdefault: " + defaultValue;
+    }
 }
