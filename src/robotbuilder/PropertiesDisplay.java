@@ -1,6 +1,8 @@
 
 package robotbuilder;
 
+import java.awt.BorderLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -19,9 +21,10 @@ class PropertiesDisplay extends JPanel {
     String[] keys;
     
     public PropertiesDisplay() {
+        setLayout(new BorderLayout());
 	propTableModel = new PropertiesTableModel();
 	propTable = new JTable(propTableModel);
-        add(propTable);
+        add(propTable, BorderLayout.CENTER);
     }
 
     void setCurrentComponent(DefaultMutableTreeNode node) {

@@ -13,17 +13,6 @@ import java.util.Map;
  * @author Alex Henning
  */
 public class PaletteComponent {
-    /** A lookup table of instances by className */
-    private static Hashtable<String, PaletteComponent> instances = new Hashtable<String, PaletteComponent>();
-    
-    /**
-     * @param name The className of the PaletteComponent
-     * @return The palette component with the matching class name
-     */
-    public static PaletteComponent getComponent(String className) {
-        return instances.get(className);
-    }
-    
     private String name; //  the name of the palette component
     // the metadata for the component (type, etc.)
     private HashMap<String, String> metaData = new HashMap<String, String>(); 
