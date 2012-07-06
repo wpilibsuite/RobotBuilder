@@ -1,6 +1,7 @@
 
 package robotbuilder;
 
+import java.awt.BorderLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
@@ -64,8 +65,8 @@ public class Palette extends JPanel {
         for (int i = 0; i < paletteTree.getRowCount(); i++) {
             paletteTree.expandRow(i);
         }
-        
-        add(paletteTree);
+	setLayout(new BorderLayout());
+        add(new JScrollPane(paletteTree), BorderLayout.CENTER);
      }
     
     /**
