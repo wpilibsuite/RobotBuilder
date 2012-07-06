@@ -233,6 +233,76 @@ Palette:
             name: Default Command
             type: Command
             default: "None"
+      - !Component
+        name: PID Subsystem
+        type: Subsystem
+        supports: {Sensor: 1, Actuator: 1, Controller: -1, Pneumatic: 0}
+        help: A PID Subsystem is one that uses a PID loop almost constantly.
+        properties:
+          - !Property
+            name: Default Command
+            type: Command
+            default: "None"
+          - !Property
+            name: Send to SmartDashboard
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Input
+            type: Sensor
+            default: "0"
+          - !Property
+            name: Output
+            type: Actuator
+            default: "0"
+          - !Property
+            name: P
+            type: Double
+            default: "1"
+          - !Property
+            name: I
+            type: Double
+            default: "0"
+          - !Property
+            name: D
+            type: Double
+            default: "0"
+          - !Property
+            name: F
+            type: Double
+            default: "0"
+          - !Property
+            name: Period
+            type: Integer
+            default: "50"
+          - !Property
+            name: Continuous
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Limit Input
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Minimum Input
+            type: Double
+            default: "0"
+          - !Property
+            name: Maximum Input
+            type: Double
+            default: "5"
+          - !Property
+            name: Limit Output
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Minimum Output
+            type: Double
+            default: "-1"
+          - !Property
+            name: Maximum Output
+            type: Double
+            default: "1"
             
   - Controllers:
       - !Component
@@ -514,12 +584,6 @@ Palette:
         properties:
           #DigitalChannel("Ping")
           #DigitalChannel("Echo")
-      - !Component
-        name: Infrared Sensor
-        type: Sensor
-        help: An infrared sensor typically used for following lines on the ground.
-        properties:
-          #DigitalChannel("Input")
 
   - Actuators:
       - !Component
@@ -636,11 +700,6 @@ Palette:
             type: Integer
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
             default: "1"
-          - !Property
-            name: USB Port
-            type: Integer
-            choices: ["1", "2", "3", "4"]
-            default: "1"
           #Button("")
       - !Component
         name: Digital Button
@@ -651,11 +710,6 @@ Palette:
             name: Digital Pin
             type: Integer
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
-            default: "1"
-          - !Property
-            name: USB Port
-            type: Integer
-            choices: ["1", "2", "3", "4"]
             default: "1"
           #Button("")            
 

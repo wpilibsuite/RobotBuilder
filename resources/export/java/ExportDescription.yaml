@@ -107,6 +107,11 @@ Instructions:
     Export: "CommandBase"
     Import: "import ${package}.subsystems.*;"
     Construction: "public static #class($Short_Name) #variable($Short_Name) = new #class($Short_Name)();"
+  PIDSubsystem:
+    Defaults: "None"
+    Export: "CommandBase"
+    Import: "import ${package}.subsystems.*;"
+    Construction: "public static #class($Short_Name) extends PIDSubsystem #variable($Short_Name) = new #class($Short_Name)();"
 
   PID Controller:
     Defaults: "Component,None"
@@ -214,9 +219,6 @@ Instructions:
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
-  Infrared Sensor:
-    Defaults: "DigitalInput,Component,None"
-    ClassName: DigitalInput
       
   Victor:
     Defaults: "PWMOutput,Component,None"
