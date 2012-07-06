@@ -49,7 +49,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
     private JFileChooser fileChooser = new JFileChooser();
 
-    public RobotTree(PropertiesDisplay properties, Palette palette) {
+    RobotTree(PropertiesDisplay properties, Palette palette) {
 	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yaml"));
 	saved = true;
 	this.properties = properties;
@@ -292,6 +292,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                 self.setProperties((Map<String, Property>) details.get("Properties"));
                 for (Property property : self.getProperties().values()) {
                     property.setComponent(self);
+                    if (self.getBase().getProperty(property.getName()) != null) {
+                        property.update(self.getBase().getProperty(property.getName()));
+                    }
                 }
                 for (Object childDescription : (List) details.get("Children")) {
                     RobotComponent child = new RobotComponent();

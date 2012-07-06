@@ -50,6 +50,17 @@ public class ChoicesProperty extends Property {
         this.value = value;
     }
     
+    /**
+     * Called to update this with info from the palette.
+     * @param parent The property that this is a clone of.
+     */
+    public void update(Property parent) {
+        super.update(parent);
+        if (parent instanceof ChoicesProperty) {
+            setChoices(((ChoicesProperty) parent).getChoices());
+        }
+    }
+    
     @Override
     public void update() {
         super.update();
