@@ -158,7 +158,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 combos.put(key, combo);
                 if (childrenNames.contains(old)) {
                     combo.setSelectedItem(old);
-                } else if (childrenNames.size() != 0) {
+                } else if (!childrenNames.isEmpty()) {
                     int defaultSelection = Integer.parseInt(getBase().getProperty(key).getDefault());
                     if (defaultSelection < childrenNames.size()) {
                         combo.setSelectedIndex(defaultSelection);
@@ -188,7 +188,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 combos.put(key, combo);
                 if (choices.contains(old)) {
                     combo.setSelectedItem(old);
-                } else if (choices.size() != 0) {
+                } else if (!choices.isEmpty()) {
                     int defaultSelection = Integer.parseInt(getBase().getProperty(key).getDefault());
                     if (defaultSelection < choices.size()) {
                         combo.setSelectedIndex(defaultSelection);
@@ -290,11 +290,12 @@ public class RobotComponent extends DefaultMutableTreeNode {
         Set<String> used = new HashSet<String>();
         for (String property : self.getBase().getPropertiesKeys()) {
             String validatorName = self.getBase().getProperty(property).getValidator();
-            if (!used.contains(validatorName)) {
-                used.add(validatorName);
-                if (!"".equals(validatorName)) {
-                    Validator validator = robot.getValidator(validatorName);
-                    validator.claim(self);
+            Validator validator = robot.getValidator(validatorName);
+            if (validator != null) {
+                String prefix = validator.getPrefix(property);
+                if (!used.contains(prefix)) {
+                    used.add(prefix);
+                    validator.claim(property, self.getProperty(property), self);
                 }
             }
         }
