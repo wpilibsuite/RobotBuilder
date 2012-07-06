@@ -127,8 +127,6 @@ public class JavaExporter extends AbstractExporter {
                 throw new IOException("Error selecting file.");
             } else if (result == JFileChooser.APPROVE_OPTION) {
                 file = fileChooser.getSelectedFile().getAbsolutePath();
-                if (!file.endsWith(".html"))
-                    file += ".html";
             }
             robot.setProperty("Java Project", file);
         }
