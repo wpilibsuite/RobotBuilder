@@ -36,6 +36,7 @@ public abstract class AbstractExporter {
     public abstract String getFullName(String s);
     public abstract String getShortName(RobotComponent comp);
     public abstract String getShortName(String s);
+    public abstract String getClassName(RobotComponent comp);
     public abstract String getClassName(String s);
 
     protected Map<String, Map<String, String>> componentInstructions;

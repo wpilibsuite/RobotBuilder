@@ -300,6 +300,20 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         return subsystems;
     }
 
+    public Iterable<RobotComponent> getCommands() {
+        final LinkedList<RobotComponent> subsystems = new LinkedList<RobotComponent>();
+        walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                if (self.getBase().getType().equals("Command")) {
+                    subsystems.add(self);
+                }
+            }
+        });
+        
+        return subsystems;
+    }
+
     public Vector<String> getJoystickNames() {
         final Vector<String> joystickNames = new Vector<String>();
         walk(new RobotWalker() {

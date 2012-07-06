@@ -186,4 +186,14 @@ public class WiringExporter extends AbstractExporter {
     public String getShortName(String s) {
         return s;
     }
+
+    @Override
+    public String getClassName(RobotComponent comp) {
+        return comp.getName();
+    }
+
+    @Override
+    public String getClassName(String s) {
+        return s;
+    }
 }
