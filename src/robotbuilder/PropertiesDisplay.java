@@ -29,7 +29,6 @@ class PropertiesDisplay extends JPanel {
     }
 
     void setCurrentComponent(DefaultMutableTreeNode node) {
-	System.out.println("Current component is: " + node);
         currentComponent = (RobotComponent) node.getUserObject();
         String[] type = {};
         keys = currentComponent.getProperties().keySet().toArray(type);
@@ -59,11 +58,15 @@ class PropertiesDisplay extends JPanel {
 	@Override
 	public Object getValueAt(int row, int column) {
             if (column == 0) {
-                if (row == 0) return "Name";
-                else return currentComponent.getProperties().get(keys[row-1]).getName();
+                if (row == 0)
+                    return "Name";
+                else
+                    return currentComponent.getProperties().get(keys[row-1]).getName();
             } else {
-                if (row == 0) return currentComponent.getName();
-                else return currentComponent.getProperty(keys[row-1]);
+                if (row == 0)
+                    return currentComponent.getName();
+                else
+                    return currentComponent.getProperty(keys[row-1]);
             }
 	}
         
@@ -75,8 +78,10 @@ class PropertiesDisplay extends JPanel {
         @Override
         public void setValueAt(Object val, int row, int column) {
             assert column == 1; // TODO: Deal with more cleanly
-            if (row == 0) currentComponent.setName((String) val);
-            else currentComponent.setProperty(keys[row-1], (String) val);
+            if (row == 0)
+                currentComponent.setName((String) val);
+            else
+                currentComponent.setProperty(keys[row-1], (String) val);
             robot.update();
         }
     }
