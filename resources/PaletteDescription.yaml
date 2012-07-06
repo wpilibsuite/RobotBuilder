@@ -75,17 +75,17 @@
             validator: AnalogInput
             default: "1"
 #end
-#macro( DigitalInput $Name )
+#macro( DigitalChannel $Name )
 - !Property
             name: $Name Module (Digital)
             type: Module (Digital)
             choices: ["1", "2"]
-            validator: DigitalInput
+            validator: DigitalChannel
             default: "1"
           - !Property
             name: $Name Channel (Digital)
             type: Channel (Digital)
-            validator: DigitalInput
+            validator: DigitalChannel
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"]
             default: "1"
 #end
@@ -103,6 +103,20 @@
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
             default: "1"
 #end
+#macro( RelayOutput $Name )          
+- !Property
+            name: $Name Module (Digital)
+            type: Module (Digital)
+            choices: ["1", "2"]
+            validator: RelayOutput
+            default: "1"
+          - !Property
+            name: $Name Channel (Relay)
+            type: Channel (PWM)
+            validator: RelayOutput
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+            default: "1"
+#end
 #macro( Button $Name )
 - !Property
             name: $Name Command
@@ -114,58 +128,6 @@
             choices: [whileHeld, whenPressed, whenReleased]
             default: whileHeld
 #end
-#macro( Ultrasonic $Name )
-- !Property
-            name: $Name Ping Module (Digital)
-            type: Module (Digital)
-            choices: ["1", "2"]
-            validator: Ultrasonic
-            default: "1"
-          - !Property
-            name: $Name Ping Channel (PWM)
-            type: Channel (PWM)
-            validator: Ultrasonic
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-            default: "1"
-          - !Property
-            name: $Name Echo Module (Digital)
-            type: Module (Digital)
-            choices: ["1", "2"]
-            validator: Ultrasonic
-            default: "1"
-          - !Property
-            name: $Name Echo Channel (PWM)
-            type: Channel (PWM)
-            validator: Ultrasonic
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-            default: "1"
-#end
-#macro( Compressor $Name )
-- !Property
-            name: $Name Pressure Switch Module (Digital)
-            type: Module (Digital)
-            choices: ["1", "2"]
-            validator: Ultrasonic
-            default: "1"
-          - !Property
-            name: $Name Pressure Switch Channel (PWM)
-            type: Channel (PWM)
-            validator: Ultrasonic
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-            default: "1"
-          - !Property
-            name: $Name Compressor Relay Module (Digital)
-            type: Module (Digital)
-            choices: ["1", "2"]
-            validator: Ultrasonic
-            default: "1"
-          - !Property
-            name: $Name Compressor Relay Channel (PWM)
-            type: Channel (PWM)
-            validator: Ultrasonic
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-            default: "1"
-#end            
 
 Validators:
   - !Validator
@@ -173,7 +135,7 @@ Validators:
     type: Unique
     fields: [Channel (Analog), Module (Analog)]
   - !Validator
-    name: DigitalInput
+    name: DigitalChannel
     type: Unique
     fields: [Channel (Digital), Module (Digital)]
   - !Validator
@@ -185,9 +147,9 @@ Validators:
     type: Unique
     fields: [Number]
   - !Validator
-    name: Ultrasonic
+    name: RelayOutput
     type: Unique
-    fields: [Channel (PWM), Module (Digital), Channel (PWM), Module (Digital)]
+    fields: [Channel (Relay), Module (Digital)]
     
 Palette:
   - Hidden:
@@ -438,8 +400,8 @@ Palette:
         type: Sensor
         help: A digital sensor that can be used to calculate the speed and distance rotated.
         properties:
-          #DigitalInput("Channel A")
-          #DigitalInput("Channel B")
+          #DigitalChannel("Channel A")
+          #DigitalChannel("Channel B")
           - !Property
             name: Reverse Direction
             type: Boolean
@@ -463,9 +425,9 @@ Palette:
         type: Sensor
         help: A digital sensor that can be used to calculate the speed and distance rotated.
         properties:
-          #DigitalInput("Channel A")
-          #DigitalInput("Channel B")
-          #DigitalInput("Index")
+          #DigitalChannel("Channel A")
+          #DigitalChannel("Channel B")
+          #DigitalChannel("Index")
           - !Property
             name: Reverse Direction
             type: Boolean
@@ -484,7 +446,7 @@ Palette:
         type: Sensor
         help: A sensor that counts the number of gear teeth that go by.
         properties:
-          #DigitalInput("Input")
+          #DigitalChannel("Input")
           - !Property
             name: Direction Sensitive
             type: Boolean
@@ -506,19 +468,20 @@ Palette:
         type: Sensor
         help: A digital sensor that can be used to detect presses.
         properties:
-          #DigitalInput("Input")
+          #DigitalChannel("Input")
       - !Component
         name: Digital Input
         type: Sensor
         help: A generic digital input.
         properties:
-          #DigitalInput("Input")
+          #DigitalChannel("Input")
       - !Component
         name: Ultrasonic
         type: Sensor
         help: A range finding sensor based off of sound reflections.
         properties:
-          #Ultrasonic("Sensor")
+          #DigitalChannel("Ping")
+          #DigitalChannel("Echo")
 
   - Actuators:
       - !Component
@@ -544,7 +507,7 @@ Palette:
         type: Actuator
         help: A simple on/off output.
         properties:
-          #PWMOutput("Output")
+          #DigitalChannel("Output")
 
 
   - Pneumatics:
@@ -553,7 +516,8 @@ Palette:
         type: Pneumatic
         help: A pneumatic compressor on your robot.
         properties:
-          #Compressor("")
+          #DigitalChannel("Pressure Switch")
+          #RelayOutput("Spike")
       - !Component
         name: Solenoid
         type: Pneumatic
