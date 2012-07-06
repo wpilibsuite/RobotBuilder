@@ -112,17 +112,17 @@ public abstract class AbstractExporter {
     }
     
     protected String substitute(String template, String key, String val) {
-        System.out.println("${"+key+"}"+" => "+val);
+        //System.out.println("${"+key+"}"+" => "+val);
         return template.replace("${"+key+"}", val);
     }
     
     protected String substitute(String template, RobotComponent comp, String className) {
-        System.out.println(comp);
+        //System.out.println(comp);
         template = substitute(template, "Name", getFullName(comp));
         template = substitute(template, "Short Name", getShortName(comp));
         template = substitute(template, "ClassName", className);
         for (String property : comp.getPropertyKeys()) {
-            System.out.println("\t"+property);
+            //System.out.println("\t"+property);
             String type = comp.getBase().getProperties().get(property).getType();
             if (type.equals("Actuator") || type.equals("Sensor")) {
                 template = substitute(template, property, getFullName(comp.getProperty(property)));
