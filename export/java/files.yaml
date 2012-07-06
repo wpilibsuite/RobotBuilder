@@ -6,7 +6,7 @@
   Source: OI.java
   Update: Modify
   Modifications:
-    Declarations: OI-declarations.java,constructors
+    Declarations: OI-declarations.java
     Constructors: OI-constructors.java
 
 - Export: $package-path/commands/CommandBase.java

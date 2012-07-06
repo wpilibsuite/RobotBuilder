@@ -2,12 +2,16 @@
 package robotbuilder.actions;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import org.json.JSONException;
 import robotbuilder.MainFrame;
+import robotbuilder.exporters.GenericExporter;
 import robotbuilder.exporters.WiringExporter;
 
 /**
@@ -25,10 +29,21 @@ public class WiringDiagramAction extends AbstractAction {
     public void actionPerformed(ActionEvent ae) {
         System.out.append("Generate Wiring");
         try {
-            new WiringExporter().export(MainFrame.getInstance().getCurrentRobotTree());
+            GenericExporter exporter = new GenericExporter(new File("export/wiring/ExportDescription.json"));
+            System.out.println(exporter);
+            exporter.export(MainFrame.getInstance().getCurrentRobotTree());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(JavaAction.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(JavaAction.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(JavaAction.class.getName()).log(Level.SEVERE, null, ex);
         }
+//        try {
+//            new WiringExporter().export(MainFrame.getInstance().getCurrentRobotTree());
+//        } catch (IOException ex) {
+//            Logger.getLogger(JavaAction.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
     
 }

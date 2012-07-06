@@ -1,0 +1,33 @@
+## Filter components 
+#macro( filter $module_name $port_name $module_number )
+#set($ports = $helper.filterComponents($module_name, $port_name, $module_number, $robot))
+#end ## macro
+
+## Generate a table row
+#macro( tr $port $name )
+<tr><td>$port</td><td>$name</td></tr>
+#end
+
+## Generate the DIO table for a module
+#macro( DIO $module )
+    #filter("Module (Digital)", "Channel (Digital)", $module)
+    #foreach ($port in $ports.keySet())
+        #tr($port, $ports.get($port))
+    #end ##forech
+#end ##macro
+
+## Generate the PWM table for a module
+#macro( PWM $module )
+    #filter("Module (Digital)", "Channel (PWM)", $module)
+    #foreach ($port in $ports.keySet())
+        #tr($port, $ports.get($port))
+    #end ##forech
+#end ##macro
+
+## Generate the Analog table for a module
+#macro( Analog $module )
+    #filter("Module (Analog)", "Channel (Analog)", $module)
+    #foreach ($port in $ports.keySet())
+        #tr($port, $ports.get($port))
+    #end ##forech
+#end ##macro

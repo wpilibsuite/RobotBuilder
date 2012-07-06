@@ -40,8 +40,8 @@ public class GenericExporter {
         name = description.getString("Name");
         type = description.getString("Type");
         filesPath = description.getString("Files");
-        begin_modification = description.getString("Begin Modification");
-        end_modification = description.getString("End Modification");
+        begin_modification = description.optString("Begin Modification");
+        end_modification = description.optString("End Modification");
         String _ = eval(new File(path+description.getString("Macros")));
         showOnToolbar = description.getBoolean("Toolbar");
         for (Object pair : description.getJSONArray("Vars").getIterable()) {
@@ -49,8 +49,10 @@ public class GenericExporter {
             vars.put(obj.getString("Name"), obj.getString("Value"));
             varKeys.add(obj.getString("Name"));
         }
-        loadExportDescription(description.getJSONObject("Defaults"), 
-                description.getJSONObject("Instructions"));
+        if (description.has("Instructions")) {
+            loadExportDescription(description.getJSONObject("Defaults"), 
+                    description.getJSONObject("Instructions"));
+        }
     }
     
     public void export(RobotTree robotTree) throws IOException {
@@ -144,7 +146,7 @@ public class GenericExporter {
         FileReader fileReader;
         fileReader = new FileReader(file);
         StringWriter w = new StringWriter();
-        Velocity.evaluate(context, w, name+" Exporter", fileReader);
+        Velocity.evaluate(context, w, name+" Exporter: "+file.getName(), fileReader);
         return w.toString();
     }
     private String eval(File file) throws FileNotFoundException {
@@ -192,6 +194,35 @@ public class GenericExporter {
     
     //// Everything below is used by the java export as $helper.* and should be
     //// cleaned up and ported to macros.
+    
+    
+    // TODO: make macro
+    public Map<Integer, String> filterComponents(final String moduleFilter, final String portFilter, final int module, RobotComponent robot) {
+        final Map<Integer, String> mapping = new HashMap<Integer, String>();
+        robot.walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                Map<String, Integer> modules = new HashMap<String, Integer>();
+                Map<String, Integer> ports = new HashMap<String, Integer>();
+                for (String property : self.getPropertyKeys()) {
+                    if (property.endsWith(moduleFilter)) {
+                        String key = property.replace(moduleFilter, "");
+                        modules.put(key, Integer.parseInt(self.getProperty(property)));
+                    } else if (property.endsWith(portFilter)) {
+                        String key = property.replace(portFilter, "");
+                        ports.put(key, Integer.parseInt(self.getProperty(property)));
+                    }
+                }
+                for (Iterator i = ports.keySet().iterator(); i.hasNext();) {
+                    String key = (String) i.next();
+                    if (module == modules.get(key)) {
+                        mapping.put(ports.get(key), self.getName()+" "+key);
+                    }
+                }
+            }
+        });
+        return mapping;
+    }
     
     public String classOf(RobotComponent comp) { // TODO: Make macro
         final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
