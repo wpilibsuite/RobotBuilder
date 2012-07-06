@@ -115,7 +115,7 @@ public class Palette extends JPanel {
                 for (Iterator v = values.keys(); v.hasNext(); ) {
                     System.out.println((String)v.next());
                 }
-                component.addProperty(name, new Property(name, values.getString("Type"), values.getString("Default")));
+                component.addProperty(name, new Property(name, values.getString("Type"), values.optString("Default", null)));
             }
         } catch (JSONException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
