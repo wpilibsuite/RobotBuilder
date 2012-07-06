@@ -4,6 +4,7 @@ package robotbuilder;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -25,7 +26,8 @@ class PropertiesDisplay extends JPanel {
         setLayout(new BorderLayout());
 	propTableModel = new PropertiesTableModel();
 	propTable = new JTable(propTableModel);
-        add(propTable, BorderLayout.CENTER);
+        add(new JScrollPane(propTable), BorderLayout.CENTER);
+        propTable.setFillsViewportHeight(true);
     }
 
     void setCurrentComponent(DefaultMutableTreeNode node) {
@@ -65,6 +67,7 @@ class PropertiesDisplay extends JPanel {
 
 	@Override
 	public Object getValueAt(int row, int column) {
+            System.out.println("Getting value for (" + row + "' " + column + ")");
             if (column == 0) {
                 if (row == 0)
                     return "Name";
