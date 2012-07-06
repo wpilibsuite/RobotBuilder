@@ -401,7 +401,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		return;
 	    }
 	    else if (result == JFileChooser.APPROVE_OPTION) {
-                filePath = fileChooser.getSelectedFile().getName();
+                filePath = fileChooser.getSelectedFile().getAbsolutePath();
                 if (!filePath.endsWith(".yaml"))
                         filePath += ".yaml";
 	    }
