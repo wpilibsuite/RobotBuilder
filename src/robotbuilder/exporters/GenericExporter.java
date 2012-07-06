@@ -57,7 +57,7 @@ public class GenericExporter {
         filesPath = (String) description.get("Files");
         begin_modification = (String) description.get("Begin Modification");
         end_modification = (String) description.get("End Modification");
-        String _ = eval(new File(path+(String) description.get("Macros"))); // Loads Macros Globally
+        String _ = evalResource(path+(String) description.get("Macros")); // Loads Macros Globally
         showOnToolbar = (Boolean) description.get("Toolbar");
         if (description.containsKey("Required Properties")) {
             for (String prop : ((ArrayList<String>) description.get("Required Properties"))) {
@@ -145,7 +145,7 @@ public class GenericExporter {
     }
     
     private ArrayList<ExportFile> getFiles() throws FileNotFoundException {
-        String filesString = eval(new File(path+filesPath));
+        String filesString = evalResource(path+filesPath);
         Constructor constructor = new Constructor();
         constructor.addTypeDescription(new TypeDescription(ExportFile.class, "!File"));
         Yaml yaml = new Yaml(constructor);
@@ -153,15 +153,15 @@ public class GenericExporter {
         return filesYaml;
     }
 
-    String eval(File file, Context context) {
+    String evalResource(String resource, Context context) {
         InputStreamReader in;
-        in = new InputStreamReader(this.getClass().getResourceAsStream(file.getAbsolutePath()));
+        in = new InputStreamReader(this.getClass().getResourceAsStream(resource));
         StringWriter w = new StringWriter();
-        ve.evaluate(context, w, name+" Exporter: "+file.getName(), in);
+        ve.evaluate(context, w, name+" Exporter: "+resource, in);
         return w.toString();
     }
-    String eval(File file) {
-        return eval(file, rootContext);
+    String evalResource(String resource) {
+        return evalResource(resource, rootContext);
     }
     
     String eval(String templateString, Context context) {

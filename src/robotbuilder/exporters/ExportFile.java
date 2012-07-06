@@ -38,7 +38,7 @@ public class ExportFile {
         // Export
         if (!export.exists() || update.equals("Overwrite")) {
             FileWriter out = new FileWriter(export);
-            out.write(exporter.eval(source, fileContext));
+            out.write(exporter.evalResource(source.getAbsolutePath(), fileContext));
             out.close();
         } else if (update.equals("Modify")) {
             String file = exporter.openFile(export.getAbsolutePath());
@@ -47,9 +47,9 @@ public class ExportFile {
                 idContext.put("id", id);
                 String beginning = exporter.eval(exporter.begin_modification, idContext);
                 String end = exporter.eval(exporter.end_modification, idContext);
-                System.out.println(exporter.eval(new File(modifications.get(id)), idContext));
+                System.out.println(exporter.evalResource(modifications.get(id), idContext));
                 file = file.replaceAll("(" + beginning + ")([\\s\\S]*?)(" + end + ")",
-                        "$1\n" + exporter.eval(new File(modifications.get(id)), idContext) + "\n    $3");
+                        "$1\n" + exporter.evalResource(modifications.get(id), idContext) + "\n    $3");
             }
             FileWriter out = new FileWriter(export);
             out.write(file);
