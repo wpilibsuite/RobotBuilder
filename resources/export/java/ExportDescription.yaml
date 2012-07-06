@@ -226,6 +226,9 @@ Instructions:
   Digital Output:
     Defaults: "PWMOutput,Component,None"
     ClassName: "DigitalOutput"
+  Solenoid:
+    Defaults: "PWMOutput,Component,None"
+    ClassName: "Solenoid"
 
   Compressor:
     Defaults: "PWMOutput,Component,None"
