@@ -71,4 +71,8 @@ public class MainFrame extends JFrame {
     public JFrame getFrame() {
         return frame;
     }
+    
+    public RobotTree getCurrentRobotTree() {
+	return robotTree;
+    }
 }
