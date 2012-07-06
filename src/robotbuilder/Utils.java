@@ -7,8 +7,11 @@ package robotbuilder;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 /**
  *
@@ -52,5 +55,27 @@ public class Utils {
         }
         return ret;
     }
-    
+
+    /**
+     * Handle velocity template loader frome either resource or file.
+     * @return 
+     */
+    public static Properties getVelocityProperties() {
+        Properties p = new Properties();
+        if (isJarred()) {
+            p.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+            p.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+            return p;
+        } else {
+            p.setProperty("file.resource.loader.path", PATH);
+            return p;
+        }
+    }
+
+    /**
+     * @return Whether or not the code is running from a jar file
+     */
+    private static boolean isJarred() {
+        return Utils.class.getResource("/PaletteDescription.yaml") != null;
+    }
 }

@@ -26,8 +26,7 @@ import robotbuilder.data.RobotWalker;
  * @author Alex Henning
  */
 public class GenericExporter {
-    private final static String[] DESCRIPTION_PROPERTIES = {"Export", "Import", "Declaration",
-        "Construction", "Extra", "ClassName", "Subsystem Export", "Template"};
+    private List<String> instructions;
     
     private String name, type, filesPath;
     String path, begin_modification, end_modification;
@@ -43,10 +42,7 @@ public class GenericExporter {
         this.path = path;
         
         // Setup velocity engine
-        Properties p = new Properties();
-        p.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        p.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        ve = new VelocityEngine(p);
+        ve = new VelocityEngine(Utils.getVelocityProperties());
         
         // Load YAML Description
         Yaml yaml = new Yaml();
@@ -70,6 +66,7 @@ public class GenericExporter {
             varKeys.add(var);
         }
         if (description.containsKey("Instructions")) {
+            instructions = (List<String>) description.get("Instruction Names");
             loadExportDescription((Map<String, Map<String, String>>) description.get("Defaults"), 
                     (Map<String, Map<String, String>>) description.get("Instructions"));
         }
@@ -126,7 +123,7 @@ public class GenericExporter {
             Map<String, String> componentBase = components.get(key);
             Map<String, String> component = new HashMap<String, String>();
             String[] componentDefaults = componentBase.get("Defaults").split(",");
-            for (String instructionKey : DESCRIPTION_PROPERTIES) {
+            for (String instructionKey : instructions) {
                 String instruction = componentBase.get(instructionKey);
                 // If the instruction isn't defined, load it from a default.
                 // Earlier defaults take precedence.

@@ -60,21 +60,20 @@ Vars:
     
 Macros: macros.vm
 
+Instruction Names: ["Export", "Import", "Declaration", "Construction", "Extra", "ClassName"]
+
 Defaults:
   Component:
     Export: "RobotMap"
     Import: "import edu.wpi.first.wpilibj.*;"
     Declaration: "public static ${ClassName} #constant($Name);"
-    Subsystem Export: "${ClassName} ${Short_Name} = RobotMap.#constant($Name);"
   None:
     Export: ""
     Import: ""
     Declaration: ""
     Construction: ""
     Extra: ""
-    Subsystem Export: ""
     ClassName: ""
-    Template: ""
   AnalogInput:
     Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Analog}, ${Input_Channel_Analog});"
   DigitalInput:
@@ -244,7 +243,5 @@ Instructions:
     Construction: "#variable($Name) = new ${ClassName}(#variable($Joystick), ${Button});"
   Command:
     Defaults: "Command,None"
-    Template: "Command.java"
   Command Group:
     Defaults: "Command,None"
-    Template: "CommandGroup.java"
