@@ -2,8 +2,13 @@
 package robotbuilder.actions;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import robotbuilder.MainFrame;
+import robotbuilder.exporters.WiringExporter;
 
 /**
  *
@@ -18,7 +23,12 @@ public class WiringDiagramAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.append("Generate Wiring");
+        try {
+            new WiringExporter().export(MainFrame.getInstance().getCurrentRobotTree());
+        } catch (IOException ex) {
+            Logger.getLogger(JavaAction.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
