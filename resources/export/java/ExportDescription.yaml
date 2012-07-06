@@ -54,8 +54,8 @@ Required Properties:
   - Java Package
   
 Vars:
-  project: ${robot.getProperty('Java Project')}
-  package: ${robot.getProperty('Java Package')}
+  project: ${robot.getProperty('Java Project').getValue()}
+  package: ${robot.getProperty('Java Package').getValue()}
   package-path: ${project}/src/${package.replace('.', '/')}
     
 Macros: macros.vm

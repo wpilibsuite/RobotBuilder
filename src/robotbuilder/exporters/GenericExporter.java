@@ -12,8 +12,6 @@ import javax.swing.JOptionPane;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -79,7 +77,7 @@ public class GenericExporter {
         // Check that all necessary properties are filled in.
         RobotComponent robot = robotTree.getRoot();
         for (String prop : requires) {
-            String state = robot.getProperty(prop).getValue().toString();
+            Object state = robot.getProperty(prop).getValue();
             if (state == null || state.equals("") || state.equals("None")) {
                 JOptionPane.showMessageDialog(MainFrame.getInstance(),
                                 "You need to fill in the '"+prop+"' property of your robot for this export to work.",
@@ -101,9 +99,9 @@ public class GenericExporter {
         rootContext.put("helper", this);
         rootContext.put("exporter-path", path);
         rootContext.put("components", getComponents(robot));
-        rootContext.put("export-subsystems", robot.getProperty("Export Subsystems").equals("true"));
+        rootContext.put("export-subsystems", robot.getProperty("Export Subsystems").getValue());
         rootContext.put("subsystems", robotTree.getSubsystems());
-        rootContext.put("export-commands", robot.getProperty("Export Commands").equals("true"));
+        rootContext.put("export-commands", robot.getProperty("Export Commands").getValue());
         rootContext.put("commands", robotTree.getCommands());
         for (String key : varKeys) {
             System.out.println("Var: "+key+" = "+eval(vars.get(key)));
@@ -209,7 +207,7 @@ public class GenericExporter {
         context.put("Short_Name", comp.getName());
         for (String property : comp.getPropertyKeys()) {
             context.put(property.replace(" ", "_").replace("(", "").replace(")", ""),
-                    comp.getProperty(property));
+                    comp.getProperty(property).getValue());
         }
         return context;
     }
