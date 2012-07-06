@@ -37,7 +37,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	this.properties = properties;
         this.properties.setRobotTree(this);
         setLayout(new BorderLayout());
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode(new RobotComponent("Team190Robot", Palette.getInstance().getItem("Folder"), this));
+        DefaultMutableTreeNode root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Folder"), this);
         treeModel = new DefaultTreeModel(root);
         tree = new JTree(treeModel);
 	tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -131,7 +131,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             JTree.DropLocation dl = (JTree.DropLocation) support.getDropLocation();
             TreePath path = dl.getPath();
             if (path == null) return false;
-            RobotComponent target = (RobotComponent) ((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject();
+            RobotComponent target = ((RobotComponent) path.getLastPathComponent());
             System.out.println(target.getName()+": ");
             if (support.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 System.out.println("Can I import a string?");
@@ -249,12 +249,11 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                 System.out.println("Data: " + data);
                 PaletteComponent base = Palette.getInstance().getItem(data);
                 assert base != null; // TODO: Handle more gracefully
-                newNode = new DefaultMutableTreeNode(new RobotComponent(getDefaultComponentName(base), base, robot));
+                newNode = new RobotComponent(getDefaultComponentName(base), base, robot);
             } else if (support.getTransferable().isDataFlavorSupported(ROBOT_COMPONENT_FLAVOR)) {
                 System.out.println("Moving a robot component");
-                RobotComponent data;
                 try {
-                    data = (RobotComponent) support.getTransferable().getTransferData(ROBOT_COMPONENT_FLAVOR);
+                    newNode = (RobotComponent) support.getTransferable().getTransferData(ROBOT_COMPONENT_FLAVOR);
                 } catch (UnsupportedFlavorException e) {
                     System.out.println("UnsupportedFlavor");
                     return false;
@@ -262,8 +261,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                     System.out.println("IOException");
                     return false;
                 }
-                System.out.println("Imported a robot component: "+data.toString());
-                newNode = new DefaultMutableTreeNode(data);
+                System.out.println("Imported a robot component: "+newNode.toString());
             } else {
                 return false;
             }
