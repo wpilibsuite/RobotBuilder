@@ -7,6 +7,7 @@ package robotbuilder.data.properties;
 import robotbuilder.data.RobotComponent;
 
 /**
+ * The Double property represents a number of the type double.
  *
  * @author Alex Henning
  */

@@ -1,7 +1,5 @@
 package robotbuilder.data.properties;
 
-import robotbuilder.MainFrame;
-import robotbuilder.RobotTree;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.UniqueValidator;
 import robotbuilder.data.Validator;
@@ -12,7 +10,13 @@ import robotbuilder.data.Validator;
  * and a set of values for each name. For example, a gyro has two properties, AChannel
  * and BChannel. Each property has a number of attributes that describe the property
  * such as the name, type, defaultValue, set of possible choices, etc.
+ * 
+ * The abstract Property class implements the core functionality that a number of
+ * subclasses expand upon to provide properties that are edited differently and
+ * have additional validation rules.
+ * 
  * @author brad
+ * @author Alex Henning
  */
 public abstract class Property {
     protected String name;
@@ -29,11 +33,20 @@ public abstract class Property {
         this.component = component;
     }
     
+    /**
+     * @return An identical copy of this property.
+     */
     public abstract Property copy();
+    
+    /**
+     * @return The value of this property.
+     */
     public abstract Object getValue();
     
     /**
      * Must implement in subclasses!!!!
+     * This is called to set the value of this property.
+     * 
      * @param value 
      */
     public void setValue(Object value) {
@@ -42,10 +55,17 @@ public abstract class Property {
             component.getRobotTree().takeSnapshot();
         }
     }
+    
+    /**
+     * @return The value to display in th properties table.
+     */
     public Object getDisplayValue() {
         return getValue();
     }
 
+    /**
+     * Called to allow the property to update to changes.
+     */
     public void update() {
         if (validators == null) return;
         for (String validatorName : validators) {
@@ -56,6 +76,9 @@ public abstract class Property {
         }
     }
     
+    /**
+     * A special method to deal with the UniqueValidator.
+     */
     public void setUnique() {
         if (validators == null) return;
         for (String validatorName : validators) {
@@ -66,6 +89,9 @@ public abstract class Property {
         }
     }
 
+    /**
+     * @return Whether or not this property is valid.
+     */
     public boolean isValid() {
         if (validators == null) return true;
         System.out.println(name);
@@ -78,6 +104,9 @@ public abstract class Property {
         return true;
     }
 
+    /**
+     * @return Description of any errors relating to this property.
+     */
     public String getError() {
         if (validators == null) return null;
         String out = "";

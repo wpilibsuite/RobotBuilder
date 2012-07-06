@@ -4,12 +4,12 @@
  */
 package robotbuilder.data.properties;
 
-import java.util.List;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import robotbuilder.data.RobotComponent;
 
 /**
+ * The type selection property allows you to select a component of a certain type.
  *
  * @author Alex Henning
  */

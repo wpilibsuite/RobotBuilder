@@ -7,6 +7,7 @@ package robotbuilder.data.properties;
 import robotbuilder.data.RobotComponent;
 
 /**
+ * A String property represents a string.
  *
  * @author Alex Henning
  */

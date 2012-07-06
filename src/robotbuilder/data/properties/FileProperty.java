@@ -7,13 +7,12 @@ package robotbuilder.data.properties;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import robotbuilder.data.RobotComponent;
-import sun.java2d.loops.ProcessPath;
 
 /**
+ * A file property represents a file or folder.
  *
  * @author Alex Henning
  */

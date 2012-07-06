@@ -7,6 +7,8 @@ package robotbuilder.data.properties;
 import robotbuilder.data.RobotComponent;
 
 /**
+ * A boolean property is a property that can be true or false. It is represented
+ * by a checkbox.
  *
  * @author Alex Henning
  */

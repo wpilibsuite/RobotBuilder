@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import robotbuilder.data.RobotComponent;
 
 /**
+ * A choices property allows selection from a number of known choices.
  *
  * @author Alex Henning
  */
