@@ -4,6 +4,7 @@ package robotbuilder;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,6 +14,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import robotbuilder.data.PaletteItem;
 import robotbuilder.data.RobotComponent;
 
 /**
@@ -25,6 +27,7 @@ public class Palette extends JPanel {
     
     private JTree paletteTree;
     static private Palette instance = null;
+    private HashMap<String, PaletteItem> paletteItems = new HashMap<String, PaletteItem>();
     
     private Palette() {
         FileReader file;
@@ -56,10 +59,26 @@ public class Palette extends JPanel {
         add(paletteTree);
      }
     
+    /**
+     * Singleton getInstance method returns the single instance of the palette.
+     * @return Palette instance
+     */
     public static Palette getInstance() {
         if (instance == null)
             instance = new Palette();
         return instance;
+    }
+    
+    /**
+     * Get the paletteItem that corresponds to a name.
+     * Each item on the palette has a unique name and this method returns the PaletteItem object that
+     * corresponds to the given name.
+     * @param name The name of the palette item
+     * @return The PaletteItem for the given name
+     */
+    public PaletteItem getItem(String name) {
+        PaletteItem item = paletteItems.get(name);
+        return item;
     }
 
     /**
@@ -79,6 +98,7 @@ public class Palette extends JPanel {
             }
             if (!child.has("Properties")) {
                 try {
+                    //TODO: create the PaletteItem here
                     DefaultMutableTreeNode node = new DefaultMutableTreeNode(key);
                     root.add(node);
                     createTree(node, jSONObject.getJSONObject(key));
