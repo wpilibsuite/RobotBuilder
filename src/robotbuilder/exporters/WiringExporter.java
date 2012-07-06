@@ -4,9 +4,11 @@
  */
 package robotbuilder.exporters;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
 import java.util.*;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -39,6 +41,8 @@ public class WiringExporter extends AbstractExporter {
         FileWriter out = new FileWriter(getPath(robot));
         out.write(template);
         out.close();
+        System.out.println("Opening file");
+        launchBrowser(new File(getPath(robot)).toURI());
         System.out.println("Done");
     }
 
@@ -137,5 +141,29 @@ public class WiringExporter extends AbstractExporter {
             robot.getRoot().setProperty("Wiring File", file);
         }
         return robot.getRoot().getProperty("Wiring File");
+    }
+
+    private void launchBrowser(final URI toURI) throws IOException {
+        try {
+            Desktop.getDesktop().browse(toURI);
+        } catch (UnsupportedOperationException e)  {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Process p;
+                    try {
+                        System.out.println("firefox -new-tab "+toURI.toString());
+                        p = Runtime.getRuntime().exec("firefox -new-tab "+toURI.toString());
+                        p.waitFor();
+                        // Do something after the forked process terminates
+                        System.out.println("The browser is closed");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).run();
+        }
     }
 }
