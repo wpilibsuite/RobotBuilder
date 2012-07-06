@@ -553,12 +553,12 @@ Palette:
         type: Pneumatic
         help: A pneumatic compressor on your robot.
         properties:
-          #Compressor("Compressor")
+          #Compressor("")
       - !Component
         name: Solenoid
         type: Pneumatic
         help: A linear actuator used to open and close valves.
-        properties:[]
+        properties: []
 
   - OI:
       - !Component
