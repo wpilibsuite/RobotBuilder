@@ -247,7 +247,6 @@ public class JavaExporter extends AbstractExporter {
             }
             robot.setProperty("Java Project", file);
         }
-        System.out.println("Path: "+robot.getProperty("Java Project")+"/src/"+robot.getProperty("Java Package").replace(".", "/")+"/");
         return robot.getProperty("Java Project")+"/src/"+robot.getProperty("Java Package").replace(".", "/")+"/";
     }
 
