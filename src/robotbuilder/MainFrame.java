@@ -55,7 +55,7 @@ public class MainFrame extends JFrame {
 
         palette = Palette.getInstance();
         properties = new PropertiesDisplay();
-        robotTree = new RobotTree(properties);
+        robotTree = new RobotTree(properties, palette);
         help = new JEditorPane();
         help.setEditable(false);
         help.addHyperlinkListener(new HyperlinkListener() {

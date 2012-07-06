@@ -26,10 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import robotbuilder.data.Macro;
-import robotbuilder.data.PaletteComponent;
-import robotbuilder.data.Property;
-import robotbuilder.data.RobotComponent;
+import robotbuilder.data.*;
 
 /**
  * The Palette is the set of components that can be used to create the robot
@@ -44,6 +41,7 @@ public class Palette extends JPanel implements TreeSelectionListener {
     static private Palette instance = null;
     private Map<String, Macro> macros = new HashMap<String, Macro>();
     private Map<String, PaletteComponent> paletteItems = new HashMap<String, PaletteComponent>();
+    private Map<String, Validator> validators = new HashMap<String, Validator>();
     
     private Palette() {
         FileReader file;
@@ -67,6 +65,7 @@ public class Palette extends JPanel implements TreeSelectionListener {
         try {
             generateMacros(json.getJSONObject("Macros"));
             createTree(root, json.getJSONObject("Palette"));
+            loadValidators(json.getJSONObject("Validators"));
         } catch (JSONException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -276,6 +275,30 @@ public class Palette extends JPanel implements TreeSelectionListener {
             }
             macros.put(macroName, macro);
         }
+    }
+    
+    private void loadValidators(JSONObject json) throws JSONException {
+        for (Iterator validatorNames = json.keys(); validatorNames.hasNext(); ) {
+            String name = (String) validatorNames.next();
+            JSONObject object = json.getJSONObject(name);
+            LinkedList<String> fields = null;
+            if (object.has("Fields")) {
+                fields = new LinkedList<String>();
+                for (Object c : object.optJSONArray("Fields").getIterable()) {
+                    fields.add((String) c);
+                }
+            }
+            Validator validator = new Validator(name, object.getString("Type"), fields);
+            validators.put(name, validator);
+        }
+    }
+    
+    public Map<String, Validator> getValidators() {
+        Map<String, Validator> copy = new HashMap<String, Validator>();
+        for (String key : validators.keySet()) {
+            copy.put(key, validators.get(key).copy());
+        }
+        return copy;
     }
 
     @Override

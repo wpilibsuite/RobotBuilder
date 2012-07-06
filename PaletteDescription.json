@@ -7,6 +7,7 @@
 		    "Name" : "Module (Analog)",
                     "Type" : "Module (Analog)",
 		    "Choices" : ["1", "2"],
+		    "Validator": "AnalogInput",
 		    "Default" : "Default Module",
 		    "DefaultDefault" : "1"
                 },
@@ -14,6 +15,7 @@
 		    "Name" : "Channel (Analog)",
                     "Type" : "Channel (Analog)",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8"],
+		    "Validator": "AnalogInput",
 		    "Default" : "Default Channel",
 		    "DefaultDefault" : "1"
                 },
@@ -25,30 +27,34 @@
 		    "Name" : "Module (Digital)",
                     "Type" : "Module (Digital)",
 		    "Choices" : ["1", "2"],
+		    "Validator": "DigitalInput",
 		    "Default" : "Default Module",
 		    "DefaultDefault" : "1"
                 },
 		{
 		    "Name" : "Channel (Digital)",
                     "Type" : "Channel (Digital)",
+		    "Validator": "DigitalInput",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"],
 		    "Default" : "Default Channel",
 		    "DefaultDefault" : "1"
                 },
 	    ]
 	},
-	"$PWMInput": {
+	"$PWMOutput": {
 	    "Properties" : [
 		{
 		    "Name" : "Module (Digital)",
                     "Type" : "Module (Digital)",
 		    "Choices" : ["1", "2"],
+		    "Validator": "PWMOutput",
 		    "Default" : "Default Module",
 		    "DefaultDefault" : "1"
                 },
 		{
 		    "Name" : "Channel (PWM)",
                     "Type" : "Channel (PWM)",
+		    "Validator": "PWMOutput",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
 		    "Default" : "Default Channel",
 		    "DefaultDefault" : "1"
@@ -71,6 +77,20 @@
 		    "DefaultDefault" : "1"
                 },
 	    ]
+	}
+    },
+    "Validators" : {
+	"AnalogInput" : {
+	    "Type": "Unique",
+	    "Fields": ["Module (Analog)","Channel (Analog)"]
+	},
+	"DigitalInput" : {
+	    "Type": "Unique",
+	    "Fields": ["Module (Digital)", "Channel (Digital)"]
+	},
+	"PWMOutput" : {
+	    "Type": "Unique",
+	    "Fields": ["Module (Digital)", "Channel (PWM)"]
 	}
     },
     "Palette": {
@@ -359,7 +379,7 @@
                 "Properties" : [
                     {
 			"Name" : "Output",
-                        "Type" : "$PWMInput"
+                        "Type" : "$PWMOutput"
                     }
                 ]
             },
@@ -370,7 +390,7 @@
                 "Properties" : [
                     {
 			"Name" : "Output",
-                        "Type" : "$PWMInput"
+                        "Type" : "$PWMOutput"
                     }
                 ]
             }

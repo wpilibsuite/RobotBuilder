@@ -9,10 +9,7 @@ import java.awt.event.MouseEvent;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -30,6 +27,7 @@ import org.json.JSONTokener;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
+import robotbuilder.data.Validator;
 
 /**
  *
@@ -46,6 +44,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private boolean saved;
     /** Names used by components during name auto-generation */
     private Set<String> usedNames = new HashSet<String>();
+    private Map<String, Validator> validators;
     /** The currently selected node */
     private DefaultMutableTreeNode currentNode;
     private String filePath = null;
@@ -56,7 +55,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
     private JFileChooser fileChooser = new JFileChooser();
 
-    public RobotTree(PropertiesDisplay properties) {
+    public RobotTree(PropertiesDisplay properties, Palette palette) {
 	fileChooser.setFileFilter(new FileNameExtensionFilter("JSON save file", "json"));
 	saved = true;
 	this.properties = properties;
@@ -83,6 +82,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	tree.setDragEnabled(true);
         ToolTipManager.sharedInstance().registerComponent(tree);
 
+        validators = palette.getValidators();
+        
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
 	}
