@@ -4,9 +4,12 @@ package robotbuilder;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
-import javax.swing.JSplitPane;
-import javax.swing.JToolBar;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
+import javax.swing.text.html.HTMLDocument;
 
 /**
  *
@@ -17,6 +20,7 @@ public class MainFrame extends JFrame {
     Palette palette;
     RobotTree robotTree;
     PropertiesDisplay properties;
+    JEditorPane help;
     StatusPanel statusPanel;
     JToolBar toolBar;
     private JFrame frame;
@@ -42,7 +46,18 @@ public class MainFrame extends JFrame {
         palette = Palette.getInstance();
         properties = new PropertiesDisplay();
         robotTree = new RobotTree(properties);
-        JSplitPane robotStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, robotTree, properties);
+        help = new JEditorPane();
+        try {
+            help.setPage(new File("help/Limit Switch.html").toURL());
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JScrollPane helpScrollPane = new JScrollPane(help);
+        helpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        
+        JSplitPane propertiesAndHelp = new JSplitPane(JSplitPane.VERTICAL_SPLIT, properties, helpScrollPane);
+        propertiesAndHelp.setDividerLocation(300);
+        JSplitPane robotStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, robotTree, propertiesAndHelp);
         robotStuff.setDividerLocation(200);
         add(palette, BorderLayout.WEST);
         add(robotStuff, BorderLayout.CENTER);
