@@ -23,7 +23,6 @@ public class SaveAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent ae) {
         System.out.println("Save selected");
-        MainFrame.getInstance().getCurrentRobotTree().save("save.json");
+        MainFrame.getInstance().getCurrentRobotTree().save();
     }
-    
 }

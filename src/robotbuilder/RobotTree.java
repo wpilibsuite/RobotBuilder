@@ -43,7 +43,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     /** Names used by components during name auto-generation */
     private Set<String> usedNames = new HashSet<String>();
     /** The currently selected node */
-    private String currentFile = null;
+    private DefaultMutableTreeNode currentNode;
+    private String filePath = null;
     private JFileChooser fileChooser = new JFileChooser();
 
     public RobotTree(PropertiesDisplay properties) {
@@ -116,8 +117,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * Save the RobotTree as a json.
      * @param filePath 
      */
-    public void save(String filePath) {
-	if (currentFile == null) {
+    public void save() {
+	if (filePath == null) {
 	    int result = fileChooser.showSaveDialog(MainFrame.getInstance().getFrame());
 	    if (result == JFileChooser.CANCEL_OPTION) {
 		return;
@@ -126,7 +127,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		return;
 	    }
 	    else if (result == JFileChooser.APPROVE_OPTION) {
-		System.out.println("Saving to: " + fileChooser.getSelectedFile().getName());
+		filePath = fileChooser.getSelectedFile().getName() + ".json";
 	    }
 	}
 	try {
@@ -204,7 +205,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		options[2]);
 	if (value == 2) {
 	    System.out.println("Save");
-	    save("save.json");
+	    save();
 	} else if (value == 1) {
 	    System.out.println("Cancel");
 	} else {
