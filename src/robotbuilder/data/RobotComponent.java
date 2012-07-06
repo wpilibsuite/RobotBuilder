@@ -32,10 +32,45 @@ public class RobotComponent extends DefaultMutableTreeNode {
         robot.addName(name);
     }
     
+    public RobotComponent(String name, PaletteComponent base, RobotTree robot, boolean autogenerate) throws InvalidException {
+        this(name, base, robot);
+        
+        if (autogenerate) {
+            //// Set unique validated ports to be some unused value
+            Map<String, LinkedList<String>> prefixes = new HashMap<String, LinkedList<String>>();
+            Map<String, Validator> validators = new HashMap<String, Validator>();
+            // Get the validated properties
+            for (String property : getBase().getPropertiesKeys()) {
+                String validatorName = getBase().getProperty(property).getValidator();
+                if (!validatorName.equals("")) {
+                    Validator validator = robot.getValidator(validatorName);
+                    String prefix = validator.getPrefix(property);
+                    if (prefixes.get(prefix) == null) {
+                        prefixes.put(prefix, new LinkedList<String>());
+                        validators.put(prefix, validator);
+                    }
+                    prefixes.get(prefix).add(property);
+                }
+            }
+            // Get the unique value
+            for (String prefix : prefixes.keySet()) {
+                Validator validator = validators.get(prefix);
+                Map<String, String[]> choices = new HashMap<String, String[]>();
+                for (String property : prefixes.get(prefix)) {
+                    choices.put(property.replace(prefix, ""), getBase().getProperty(property).getChoices());
+                }
+                Map<String, String> free = validator.getFree(choices);
+                for (String suffix : free.keySet()) {
+                    setProperty(prefix+suffix, free.get(suffix));
+                }
+            }
+        }
+    }
+    
     public String getProperty(String key) {
         String val = configuration.get(key);
         if (val == null) {
-            val = base.getProperties().get(key).getDefault();
+            val = base.getProperty(key).getDefault();
         }
         return val;
     }
@@ -48,7 +83,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
      * @return The value to render.
      */
     public Object getValue(String key) {
-        Property property = base.getProperties().get(key);
+        Property property = base.getProperty(key);
         updateComboBoxes();
         if (property.getChoices() != null) {
             // Provide a JComboBox for choicse
@@ -106,8 +141,8 @@ public class RobotComponent extends DefaultMutableTreeNode {
     
     public void updateComboBoxes() {
         // Update list of actuators
-        for (String key : getBase().getProperties().keySet()) {
-            Property property = base.getProperties().get(key);
+        for (String key : getBase().getPropertiesKeys()) {
+            Property property = base.getProperty(key);
             if (property.getType().equals("Actuator") ||
                     property.getType().equals("Sensor")) {
                 // Provide a JComboBox for this actuator or sensor
@@ -124,7 +159,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 if (childrenNames.contains(old)) {
                     combo.setSelectedItem(old);
                 } else if (childrenNames.size() != 0) {
-                    int defaultSelection = Integer.parseInt(getBase().getProperties().get(key).getDefault());
+                    int defaultSelection = Integer.parseInt(getBase().getProperty(key).getDefault());
                     if (defaultSelection < childrenNames.size()) {
                         combo.setSelectedIndex(defaultSelection);
                     }
@@ -154,7 +189,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 if (choices.contains(old)) {
                     combo.setSelectedItem(old);
                 } else if (choices.size() != 0) {
-                    int defaultSelection = Integer.parseInt(getBase().getProperties().get(key).getDefault());
+                    int defaultSelection = Integer.parseInt(getBase().getProperty(key).getDefault());
                     if (defaultSelection < choices.size()) {
                         combo.setSelectedIndex(defaultSelection);
                     }
@@ -254,7 +289,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
         // Validate
         Set<String> used = new HashSet<String>();
         for (String property : self.getBase().getPropertiesKeys()) {
-            String validatorName = self.getBase().getProperties().get(property).getValidator();
+            String validatorName = self.getBase().getProperty(property).getValidator();
             if (!used.contains(validatorName)) {
                 used.add(validatorName);
                 if (!"".equals(validatorName)) {

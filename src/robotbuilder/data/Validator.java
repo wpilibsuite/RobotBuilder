@@ -29,14 +29,23 @@ public class Validator {
         return new Validator(name, type, newFields);
     }
     
+    public String getPrefix(String key) {
+        for (String field : fields) {
+            if (key.endsWith(field)) {
+                return key.replace(field, "");
+            }
+        }
+        return null;
+    }
+    
     private Map<String, String> getMap(RobotComponent comp) {
         return getMap(comp, null);
     }
     
-    private Map<String, String> getMap(RobotComponent comp, String prefix) {
+    public Map<String, String> getMap(RobotComponent comp, String prefix) {
         Map<String, String> values = new HashMap<String, String>();
         for (String prop : comp.getPropertyKeys()) {
-            if (comp.getBase().getProperties().get(prop).getValidator().equals(name)) {
+            if (comp.getBase().getProperty(prop).getValidator().equals(name)) {
                 for (String field : fields) {
                     if (prop.endsWith(field) && (prefix == null || prop.startsWith(prefix))) {
                         System.out.println("\tPrefix: "+prefix);
@@ -52,12 +61,7 @@ public class Validator {
         assert type.equals("unique"); // TODO: Deal with better
         
         // Get the prefix
-        String prefix = null;
-        for (String field : fields) {
-            if (key.endsWith(field)) {
-                prefix = key.replace(field, "");
-            }
-        }
+        String prefix = getPrefix(key);
         Map<String, String> values = getMap(comp, prefix);
         for (String field : fields) {
             if (key.endsWith(field)) {
@@ -86,7 +90,36 @@ public class Validator {
         Map<String, String> values = getMap(comp);
         used.remove(values);
     }
+    
+    /**
+     * @return A unused port, that has just been claimed for you
+     */
+    public Map<String, String> getFree(Map<String, String[]> choices) throws InvalidException {
+        Map<String, String> values = new HashMap<String, String>();
+        for (String field : fields) {
+            values.put(field, choices.get(field)[0]);
+        }
+        int fieldLocation = 0, choiceLocation = 0;
 
+        while (true) {
+            if (!used.contains(values)) {
+                used.add(values);
+                return values;
+            }
+            
+            String field = fields.get(fieldLocation);
+            values.put(field, choices.get(field)[choiceLocation]);
+            choiceLocation++;
+            
+            if (choiceLocation >= choices.get(field).length) {
+                choiceLocation = 0;
+                fieldLocation++;
+                if (fieldLocation >= fields.size()) {
+                    throw new InvalidException();
+                }
+            }
+        }
+    }
 
     public static class InvalidException extends Throwable {
         public InvalidException() {

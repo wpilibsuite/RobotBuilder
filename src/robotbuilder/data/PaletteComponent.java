@@ -35,7 +35,12 @@ public class PaletteComponent {
         propertiesKeys.add(propName);
     }
     
-    public Map<String, Property> getProperties() {
+    public Property getProperty(String propName) {
+        return properties.get(propName);
+    }
+    
+    
+    private Map<String, Property> getProperties() {
         return properties;
     }
     

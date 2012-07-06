@@ -164,7 +164,7 @@ class PropertiesDisplay extends JPanel {
                 }
             } else {
                 final String key = keys[row-1];
-                String validatorName = currentComponent.getBase().getProperties().get(key).getValidator();
+                String validatorName = currentComponent.getBase().getProperty(key).getValidator();
                 if (!"".equals(validatorName)) {
                     Validator validator = robot.getValidator(validatorName);
                     try {
