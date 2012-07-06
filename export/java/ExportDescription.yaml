@@ -132,7 +132,14 @@ Instructions:
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital});"
+    Import: >-
+      import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+      import edu.wpi.first.wpilibj.Encoder.PIDSourceParameter;
+    Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, EncodingType.${Encoding_Type});"
+    Extra: >-
+      #constant($Name).setDistancePerPulse(${Distance_Per_Pulse});
+              #constant($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
+      
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"

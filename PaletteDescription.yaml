@@ -316,6 +316,14 @@ Palette:
           - !Property
             name: Input
             type: $AnalogInput
+          - !Property
+            name: Volts Per G
+            type: Double
+            default: "1"
+          - !Property
+            name: Zero G Volts
+            type: Double
+            default: "2.5"
       - !Component
         name: Quadrature Encoder
         type: Sensor
@@ -327,6 +335,37 @@ Palette:
           - !Property
             name: Channel B
             type: $DigitalInput
+          # Add a seperate indexed encoder?
+          # - !Property
+          #   name: Has Index
+          #   type: Boolean
+          #   default: "false"
+          # - !Property
+          #   name: Index
+          #   type: $DigitalInput
+          - !Property
+            name: Reverse Direction
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Encoding Type
+            type: String
+            choices: [k4X, k2X, k1X]
+            default: "k4X"
+          - !Property
+            name: Distance Per Pulse
+            type: Double
+            default: "1"
+          - !Property
+            name: PID Source
+            type: String
+            choices: [kDistance, kRate]
+            default: "kRate"
+          # Which one should we choose
+          # - !Property
+          #   name: Maximum Period (Min Rate??)
+          #   type: Double
+          #   default: "0"
       - !Component
         name: Potentiometer
         type: Sensor
