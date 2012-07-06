@@ -19,6 +19,7 @@ class PropertiesDisplay extends JPanel {
     TableModel propTableModel;
     RobotComponent currentComponent;
     String[] keys;
+    RobotTree robot;
     
     public PropertiesDisplay() {
         setLayout(new BorderLayout());
@@ -32,8 +33,11 @@ class PropertiesDisplay extends JPanel {
         currentComponent = (RobotComponent) node.getUserObject();
         String[] type = {};
         keys = currentComponent.getProperties().keySet().toArray(type);
-//        this.repaint();
         this.updateUI();
+    }
+
+    void setRobotTree(RobotTree robot) {
+        this.robot = robot;
     }
     
     class PropertiesTableModel extends AbstractTableModel {
@@ -59,8 +63,21 @@ class PropertiesDisplay extends JPanel {
                 else return currentComponent.getProperties().get(keys[row-1]).getName();
             } else {
                 if (row == 0) return currentComponent.getName();
-                else return currentComponent.getProperties().get(keys[row-1]).getDefault();
+                else return currentComponent.getProperty(keys[row-1]);
             }
 	}
+        
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return column == 1;
+        }
+        
+        @Override
+        public void setValueAt(Object val, int row, int column) {
+            assert column == 1; // TODO: Deal with more cleanly
+            if (row == 0) currentComponent.setName((String) val);
+            else currentComponent.setProperty(keys[row-1], (String) val);
+            robot.update();
+        }
     }
 }

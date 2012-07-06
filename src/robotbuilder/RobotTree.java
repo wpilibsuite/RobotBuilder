@@ -39,6 +39,7 @@ class RobotTree extends JPanel implements TreeSelectionListener {
     
     public RobotTree(PropertiesDisplay properties) {
 	this.properties = properties;
+        this.properties.setRobotTree(this);
         setLayout(new BorderLayout());
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Team190Robot");
         DefaultMutableTreeNode motors = new DefaultMutableTreeNode("Motors");
@@ -83,6 +84,13 @@ class RobotTree extends JPanel implements TreeSelectionListener {
 	    properties.setCurrentComponent(node);
             currentNode = node;
         }
+    }
+    
+    /**
+     * Updates the UI display to adjust for changed names.
+     */
+    public void update() {
+        treeModel.reload();
     }
 
     public static DataFlavor ROBOT_COMPONENT_FLAVOR = new DataFlavor(RobotComponent.class, "Robot Component Flavor");
