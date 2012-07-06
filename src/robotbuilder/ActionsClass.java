@@ -14,6 +14,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JSeparator;
+import javax.swing.JToolBar;
 
 /**
  *
@@ -58,5 +59,18 @@ public class ActionsClass {
         menu.add(helpMenu);
         
         return menu;
+    }
+    
+    public JToolBar getToolBar() {
+        JToolBar bar = new JToolBar();
+        bar.setFloatable(false);
+        bar.setRollover(true);
+        
+        bar.add(newAction);
+        bar.add(saveAction);
+        bar.add(cppAction);
+        bar.add(javaAction);
+        bar.add(labViewAction);
+        return bar;
     }
 }

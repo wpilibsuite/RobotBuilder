@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
 
 /**
  *
@@ -16,6 +17,7 @@ public class MainFrame extends JFrame {
     RobotTree robotTree;
     PropertiesDisplay properties;
     StatusPanel statusPanel;
+    JToolBar toolBar;
     public static JFrame frame;
 
     public MainFrame() {
@@ -34,6 +36,9 @@ public class MainFrame extends JFrame {
         
         statusPanel = new StatusPanel();
         add(statusPanel, BorderLayout.SOUTH);
+        
+        toolBar = actions.getToolBar();
+        add(toolBar, BorderLayout.PAGE_START);
         
         statusPanel.setStatus("Everything A OK");
         
