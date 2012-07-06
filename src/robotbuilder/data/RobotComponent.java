@@ -66,8 +66,21 @@ public class RobotComponent extends DefaultMutableTreeNode {
         } else if (property.getType().equals("Actuator") ||
                 property.getType().equals("Sensor")) {
             return combos.get(key);
+        } else if (property.getType().equals("File")) {
+            // Provide a file chooser for files
+            if (filechoosers.get(key) == null) {
+                JFileChooser fc;
+                System.out.println("File: "+getProperty(key));
+                if (getProperty(key).equals("")) {
+                    fc = new JFileChooser((String) null);
+                } else {
+                    fc = new JFileChooser(getProperty(key));
+                }
+                filechoosers.put(key, fc);
+            }
+            return filechoosers.get(key);
         } else if (property.getType().equals("Folder")) {
-            // Provide a file chooser for 
+            // Provide a file chooser for folders
             if (filechoosers.get(key) == null) {
                 JFileChooser fc;
                 System.out.println("File: "+getProperty(key));

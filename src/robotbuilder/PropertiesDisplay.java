@@ -92,7 +92,7 @@ class PropertiesDisplay extends JPanel {
                                 setValueAt(path, row, column);
                                 return new JLabel(path);
                             } catch (NullPointerException e) {
-                                return new JLabel("Select Folder");
+                                return new JLabel("Click to Select");
                             }
                         }
                     };

@@ -36,7 +36,7 @@ public class WiringExporter extends AbstractExporter {
         template = substitute(template, "Analog 2", generateAnalog(2, robot));
         
         System.out.println("Writing file");
-        FileWriter out = new FileWriter(getPath());
+        FileWriter out = new FileWriter(getPath(robot));
         out.write(template);
         out.close();
         System.out.println("Done");
@@ -109,30 +109,33 @@ public class WiringExporter extends AbstractExporter {
         return mapping;
     }
     
-    private String getPath() throws IOException {
-        String file = null;
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                return file.getAbsolutePath().endsWith(".html") || file.isDirectory();
-            }
+    private String getPath(RobotTree robot) throws IOException {
+        if ((robot.getRoot().getProperty("Wiring File")).equals("")) {
+            String file = null;
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(File file) {
+                    return file.getAbsolutePath().endsWith(".html") || file.isDirectory();
+                }
 
-            @Override
-            public String getDescription() {
-                return "HTML Files";
+                @Override
+                public String getDescription() {
+                    return "HTML Files";
+                }
+            });
+            int result = fileChooser.showSaveDialog(MainFrame.getInstance().getFrame());
+            if (result == JFileChooser.CANCEL_OPTION) {
+                throw new IOException("No file selected.");
+            } else if (result == JFileChooser.ERROR_OPTION) {
+                throw new IOException("Error selecting file.");
+            } else if (result == JFileChooser.APPROVE_OPTION) {
+                file = fileChooser.getSelectedFile().getAbsolutePath();
+                if (!file.endsWith(".html"))
+                    file += ".html";
             }
-        });
-        int result = fileChooser.showSaveDialog(MainFrame.getInstance().getFrame());
-        if (result == JFileChooser.CANCEL_OPTION) {
-            throw new IOException("No file selected.");
-        } else if (result == JFileChooser.ERROR_OPTION) {
-            throw new IOException("Error selecting file.");
-        } else if (result == JFileChooser.APPROVE_OPTION) {
-            file = fileChooser.getSelectedFile().getAbsolutePath();
-            if (!file.endsWith(".html"))
-                        file += ".html";
+            robot.getRoot().setProperty("Wiring File", file);
         }
-        return file;
+        return robot.getRoot().getProperty("Wiring File");
     }
 }
