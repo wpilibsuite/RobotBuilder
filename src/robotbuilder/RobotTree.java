@@ -143,7 +143,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 //                        wipe.setAction(new ClearAction("Clear", selected));
                         final JMenuItem cancel = new JMenuItem("Cancel");
                         
-                        componentNameItem.setEnabled(false);
                         
                         JMenuItem[] addActions    = new JMenuItem[3];
                         JMenuItem[] subsystemAdds = new JMenuItem[numSupports];
@@ -175,9 +174,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         //</editor-fold>
                         //<editor-fold defaultstate="collapsed" desc="Subsystem Menus and Choices">
                         if(selectedType.equals("Subsystem") || selectedType.equals("PID Subsystem") || selectedType.equals("PID Controller")){
-                            subsystemAdds[0]  = new JMenuItem("Add PID Controller");
+                            subsystemAdds[0]  = new JMenuItem("Add Robot Drive 4");
                             subsystemAdds[1]  = new JMenuItem("Add Robot Drive 2");
-                            subsystemAdds[2]  = new JMenuItem("Add Robot Drive 4");
+                            subsystemAdds[2]  = new JMenuItem("Add PID Controller");
                             for(int i = 0; i < 3; i++)
                                 controllerMenu.add(subsystemAdds[i]);
                             
@@ -214,6 +213,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         
                         componentNameItem.setEnabled(false);
                         mainMenu.add(componentNameItem);
+                        mainMenu.addSeparator();
                         
                         if(selectedType.equals("Subsystem") || selectedType.equals("PID Subsystem")){
                             mainMenu.add(controllerMenu);
@@ -237,8 +237,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         }
                         
 //                        mainMenu.add(wipe);
+                        mainMenu.addSeparator();
                         mainMenu.add(delete);
-                        mainMenu.add(cancel);
                         mainMenu.show(tree, bounds.x, bounds.y + bounds.height);
                             
                     }
@@ -651,6 +651,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         System.out.println("Redo button pressed");
         load(history.redo());
     }
+    
+    public void setSaved() {
+        saved = true;
+    }
 
     /**
      * A transfer handler for that wraps the default transfer handler of RobotTree.
@@ -899,8 +903,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             System.out.println("Component created\n");
 
             selectedComponent.addChild(toAdd);
-            tree.expandRow(selectedComponent.getLevel());
-            treeModel.reload(selectedComponent);
             update();
             takeSnapshot();
             System.out.println("Item \""+toAdd.getFullName()+"\" added.");
