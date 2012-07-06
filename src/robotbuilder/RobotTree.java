@@ -54,7 +54,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	this.properties = properties;
 	this.properties.setRobotTree(this);
 	setLayout(new BorderLayout());
-	RobotComponent root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Robot"), this);
+	RobotComponent root = makeTreeRoot();
 	treeModel = new DefaultTreeModel(root);
 	tree = new JTree(treeModel) {
             @Override
@@ -78,6 +78,11 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
 	}
+    }
+
+    private RobotComponent makeTreeRoot() {
+	RobotComponent root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Robot"), this);
+	return root;
     }
 
     /**
@@ -230,7 +235,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
     public void newFile() {
 	if (OKToClose()) {
-	    DefaultMutableTreeNode root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Folder"), this);
+	    DefaultMutableTreeNode root = makeTreeRoot();
 	    treeModel.setRoot(root);
 	    tree.setSelectionPath(new TreePath(root));
 	    saved = true;
