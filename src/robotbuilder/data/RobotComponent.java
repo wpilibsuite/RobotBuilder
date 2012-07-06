@@ -7,16 +7,18 @@ package robotbuilder.data;
 
 /**
  *
- * @author alex
+ * @author Alex Henning
  */
 public class RobotComponent {
-    PaletteComponent base;
+    private String name;
+    private PaletteComponent base;
 
-    public RobotComponent(PaletteComponent base) {
+    public RobotComponent(String name, PaletteComponent base) {
+        this.name = name;
         this.base = base;
     }
     
     public String toString() {
-        return base.toString()+" 1";
+        return name;
     }
 }

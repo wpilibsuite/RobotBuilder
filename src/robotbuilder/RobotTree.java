@@ -6,6 +6,10 @@ import java.awt.BorderLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import javax.swing.DropMode;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,6 +36,9 @@ class RobotTree extends JPanel implements TreeSelectionListener {
     private JTree tree;
     private DefaultTreeModel treeModel;
     private PropertiesDisplay properties;
+    
+    /** Names used by components during name auto-generation */
+    private Set<String> usedNames = new HashSet<String>();
     
     public RobotTree(PropertiesDisplay properties) {
 	this.properties = properties;
@@ -70,7 +77,7 @@ class RobotTree extends JPanel implements TreeSelectionListener {
                 }
                 PaletteComponent base = PaletteComponent.getComponent(data);
                 assert data != null; // TODO: Handle more gracefully
-                DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(new RobotComponent(base));
+                DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(new RobotComponent(getDefaultComponentName(base), base));
                 DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode)path.getLastPathComponent();
                 treeModel.insertNodeInto(newNode, parentNode, childIndex);
                 tree.makeVisible(path.pathByAddingChild(newNode));
@@ -91,6 +98,23 @@ class RobotTree extends JPanel implements TreeSelectionListener {
                 return true;
             }
         });
+    }
+    
+    /**
+     * @param component The type of component to generate a default name for.
+     * @return The default name.
+     */
+    private String getDefaultComponentName(PaletteComponent componentType) {
+        int i = 0;
+        String name;
+        while (true) {
+            i++;
+            name = componentType.toString() + " " + i;
+            if (!usedNames.contains(name)) {
+                usedNames.add(name);
+                return name;
+            }
+        }
     }
 
     @Override
