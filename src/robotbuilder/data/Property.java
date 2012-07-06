@@ -1,10 +1,11 @@
 package robotbuilder.data;
 
 /**
- * A property is describing a single property in a PaletteComponent.
- * For example, a Victor PaletteComponent has a set of properties and each property is
- * described by an attribute such as name, a type (PWMInput), maybe a default value
- * such as 1, 2, or 3. 
+ * A property is one of the many values that can be set in a palette or robot component.
+ * For example, a Victor PaletteComponent has a set of properties described by a name
+ * and a set of values for each name. For example, a gyro has two properties, AChannel
+ * and BChannel. Each property has a number of attributes that describe the property
+ * such as the name, type, defaultValue, set of possible choices, etc.
  * @author brad
  */
 public class Property {

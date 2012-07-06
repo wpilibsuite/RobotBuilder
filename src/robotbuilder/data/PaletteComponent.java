@@ -4,9 +4,7 @@
  */
 package robotbuilder.data;
 
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 
 /**
  *
@@ -25,15 +23,17 @@ public class PaletteComponent {
         return instances.get(className);
     }
     
-    private String name;
-    private HashMap<String, String> metaData = new HashMap<String, String>();
+    private String name; //  the name of the palette component
+    // the metadata for the component (type, etc.)
+    private HashMap<String, String> metaData = new HashMap<String, String>(); 
+    // set of properties for the component
     private HashMap<String, Property[]> properties = new HashMap<String, Property[]>();
     
     public PaletteComponent(String name) {
         this.name = name;
     }
     
-    public void addProperty(String propName, String propType) {
+    public void addProperty(String propName, Property property) {
         properties.put(propName, null);
     }
     
