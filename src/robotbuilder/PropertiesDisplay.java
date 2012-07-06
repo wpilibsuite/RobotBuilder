@@ -3,11 +3,14 @@ package robotbuilder;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.util.LinkedList;
+import java.util.EventObject;
 import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeCellEditor;
 import robotbuilder.data.RobotComponent;
 
 /**
@@ -49,8 +52,10 @@ class PropertiesDisplay extends JPanel {
         public TableCellEditor getCellEditor(int row, int column) {
             Object value = super.getValueAt(row, column);
             if(value != null) {
-                if(value instanceof JComboBox) {
+                if (value instanceof JComboBox) {
                     return new DefaultCellEditor((JComboBox) value);
+                } else if (value instanceof JFileChooser) {
+                    return new FileCellEditor((JFileChooser) value);
                 }
                 return getDefaultEditor(value.getClass());
             }
@@ -60,13 +65,28 @@ class PropertiesDisplay extends JPanel {
         @Override
         public TableCellRenderer getCellRenderer(int row, int column) {
             final Object value = super.getValueAt(row, column);
-            if(value != null) {
-                if(value instanceof JComboBox) {
+            if (value != null) {
+                if (value instanceof JComboBox) {
+                    return new TableCellRenderer() {
+                        @Override
+                        public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
+                            return new JLabel(((JComboBox) value).getSelectedItem().toString());
+                        }
+                    };
+                } else if (value instanceof JFileChooser) {
                     return new TableCellRenderer() {
                         @Override
                         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                             System.out.println("Render component fetched.");
-                            return new JLabel(((JComboBox) value).getSelectedItem().toString());
+                            try {
+                                System.out.println("Filechooser: "+value);
+                                System.out.println("Directory: "+((JFileChooser) value).getCurrentDirectory());
+                                System.out.println("Selection: "+((JFileChooser) value).getSelectedFile());
+                                System.out.println("Path: "+((JFileChooser) value).getSelectedFile().getPath());
+                                return new JLabel(((JFileChooser) value).getSelectedFile().getPath());
+                            } catch (NullPointerException e) {
+                                return new JLabel("Select Folder");
+                            }
                         }
                     };
                 }
@@ -113,8 +133,6 @@ class PropertiesDisplay extends JPanel {
                 if (row == 0)
                     return currentComponent.getName();
                 else
-                    //String[] choices = {"1", "2", "3"};
-                    //return new JComboBox(choices);}
                     return currentComponent.getValue(keys[row-1]);
             }
 	}

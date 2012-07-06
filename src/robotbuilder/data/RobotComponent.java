@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +24,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
     private RobotTree robot;
     private Map<String, String> configuration = new HashMap<String, String>();
     private Map<String, JComboBox> combos = new HashMap<String, JComboBox>();
+    private Map<String, JFileChooser> filechoosers = new HashMap<String, JFileChooser>();
 
     public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
         //setName(name);
@@ -52,12 +54,27 @@ public class RobotComponent extends DefaultMutableTreeNode {
      * @return The value to render.
      */
     public Object getValue(String key) {
-        if (combos.get(key) == null && base.getProperties().get(key).getChoices() != null) {
-            combos.put(key, new JComboBox(base.getProperties().get(key).getChoices()));
-            combos.get(key).setSelectedItem(getProperty(key));
-        }
-        if (combos.get(key) != null) {
+        Property property = base.getProperties().get(key);
+        if (property.getChoices() != null) {
+            // Provide a JComboBox for choicse
+            if (combos.get(key) == null) {
+                combos.put(key, new JComboBox(property.getChoices()));
+                combos.get(key).setSelectedItem(getProperty(key));
+            }
             return combos.get(key);
+        } else if (property.getType().equals("Folder")) {
+            // Provide a file chooser for 
+            if (filechoosers.get(key) == null) {
+                JFileChooser fc;
+                if (getProperty(key).equals("")) {
+                    fc = new JFileChooser((String) null);
+                } else {
+                    fc = new JFileChooser(getProperty(key));
+                }
+                fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                filechoosers.put(key, fc);
+            }
+            return filechoosers.get(key);
         } else {
             return getProperty(key);
         }
