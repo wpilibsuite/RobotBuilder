@@ -6,6 +6,8 @@ package robotbuilder.exporters;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -29,7 +31,7 @@ public class GenericExporter {
     private List<String> instructions;
     
     private String name, type, filesPath;
-    String path, begin_modification, end_modification;
+    String path, begin_modification, end_modification, post_export_action;
     private boolean showOnToolbar;
     VelocityEngine ve;
     Context rootContext = new VelocityContext();
@@ -65,6 +67,7 @@ public class GenericExporter {
             vars.put(var, variables.get(var));
             varKeys.add(var);
         }
+        post_export_action = (String) description.get("Post Export Action");
         if (description.containsKey("Instructions")) {
             instructions = (List<String>) description.get("Instruction Names");
             loadExportDescription((Map<String, Map<String, String>>) description.get("Defaults"), 
@@ -104,6 +107,21 @@ public class GenericExporter {
         Collection<ExportFile> newFiles = getFiles();
         for (ExportFile file : newFiles) {
             file.export(this);
+        }
+        
+        if (post_export_action != null) {
+            String action = eval(post_export_action);
+            if (action.startsWith("#")) {
+                if (action.startsWith("#Browse:")) {
+                    Utils.browse(action.replace("#Browse:", ""));
+                } else {
+                    Logger.getLogger(Utils.class.getName()).log(Level.WARNING, null,
+                            "No special action for "+action);
+                }
+            } else {
+                Runtime rt = Runtime.getRuntime();
+                Process pr = rt.exec(action);
+            }
         }
         
         System.out.println(name+" Export Finished");

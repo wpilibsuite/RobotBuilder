@@ -4,8 +4,11 @@
  */
 package robotbuilder;
 
+import java.awt.Desktop;
 import java.io.*;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -77,5 +80,28 @@ public class Utils {
      */
     private static boolean isJarred() {
         return Utils.class.getResource("/PaletteDescription.yaml") != null;
+    }
+
+    public static void browse(final String url) {
+        try {
+                Desktop.getDesktop().browse(new URI(url));
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedOperationException e)  {
+           new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Process p;
+                    try {
+                        System.out.println("firefox -new-tab "+url);
+                        p = Runtime.getRuntime().exec("firefox -new-tab "+url);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).run();
+        }
     }
 }
