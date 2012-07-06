@@ -165,11 +165,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     /**
-<<<<<<< HEAD
      * Save the RobotTree as a yaml file.
-=======
-     * Save the RobotTree as a yaml.
->>>>>>> Added pneumatics and added some documentation in the java files.
      * @param path 
      */
     public void save(String path) {
@@ -413,7 +409,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             validators = palette.getValidators();
 	    saved = true;
             MainFrame.getInstance().prefs.put("FileName", "");
-            takeSnapshot();
 	//}
     }
 

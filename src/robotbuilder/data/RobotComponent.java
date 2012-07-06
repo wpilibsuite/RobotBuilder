@@ -139,10 +139,11 @@ public class RobotComponent extends DefaultMutableTreeNode {
     public void setValue(String key, String val) {
         if (combos.get(key) != null) combos.get(key).setSelectedItem(val);
         if(val != getProperty(key)){
+            System.out.println("Snapshot of "+this+" taken: tKey: "+key+"\tVal: "+val);
+            setProperty(key, val);
             robot.takeSnapshot();
-            System.out.println("Snapshot of "+this+" taken:\n\tKey: "+key+"\tVal: "+val);
         }
-        setProperty(key, val);
+
 //        System.out.println(key+" => "+val);
     }
     
