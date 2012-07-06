@@ -507,9 +507,15 @@ Palette:
         type: Actuator
         help: A simple on/off output.
         properties:
-          #DigitalChannel("Output")
-
-
+          #PWMOutput("Output")
+      - !Component
+        name: Relay
+        type: Actuator
+        help: A simple forwards/backwards/stop motor; usually a compressor
+        properties:
+          #PWMOutput("Output")
+          
+          
   - Pneumatics:
       - !Component
         name: Compressor
