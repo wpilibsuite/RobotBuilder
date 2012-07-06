@@ -33,7 +33,8 @@
 	"PID Controller" : {
 	    "Defaults": ["All"],
 	    "ClassName": "PIDController",
-	    "Construction": "${Name} = new ${ClassName}(${P}, ${I}, ${D}, ${F}, ${Input}, ${Output}, ${Period});"
+	    "Construction": "${Name} = new ${ClassName}(${P}, ${I}, ${D}, ${F}, ${Input}, ${Output}, ${Period});",
+	    "Extra": "${Name}.setContinuous(${Continuous});\n        if (${Limit Input}) ${Name}.setInputRange(${Minimum Input}, ${Maximum Input});\n        if (${Limit Output}) ${Name}.setInputRange(${Minimum Output}, ${Maximum Output});"
 	},
 	"Robot Drive 2" : {
 	    "Defaults": ["All"],

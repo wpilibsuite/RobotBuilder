@@ -132,7 +132,42 @@
 			"Name" : "Period",
                         "Type" : "Integer",
 			"Default" : "50"
-                    }
+                    },
+		    {
+			"Name" : "Continuous",
+                        "Type" : "Boolean",
+			"Default" : "false"
+                    },
+		    {
+			"Name" : "Limit Input",
+                        "Type" : "Boolean",
+			"Default" : "false"
+                    },
+		    {
+			"Name" : "Minimum Input",
+                        "Type" : "Double",
+			"Default" : "0"
+                    },
+		    {
+			"Name" : "Maximum Input",
+                        "Type" : "Double",
+			"Default" : "5"
+                    },
+		    {
+			"Name" : "Limit Output",
+                        "Type" : "Boolean",
+			"Default" : "false"
+                    },
+		    {
+			"Name" : "Minimum Output",
+                        "Type" : "Double",
+			"Default" : "-1"
+                    },
+		    {
+			"Name" : "Maximum Output",
+                        "Type" : "Double",
+			"Default" : "1"
+                    },
 		]
 	    },
 	    "Robot Drive 2" : {

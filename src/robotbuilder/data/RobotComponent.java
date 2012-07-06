@@ -2,6 +2,7 @@
 package robotbuilder.data;
 
 import java.util.*;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -56,6 +57,12 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 combos.get(key).setSelectedItem(getProperty(key));
             }
             return combos.get(key);
+        } else if (property.getType().equals("Boolean")) {
+            return getProperty(key).equals("true");
+        } else if (property.getType().equals("Double")) {
+            return Double.parseDouble(getProperty(key));
+        } else if (property.getType().equals("Integer")) {
+            return Integer.parseInt(getProperty(key));
         } else if (property.getType().equals("Actuator") ||
                 property.getType().equals("Sensor")) {
             return combos.get(key);
@@ -76,6 +83,12 @@ public class RobotComponent extends DefaultMutableTreeNode {
         } else {
             return getProperty(key);
         }
+    }
+
+    public void setValue(String key, String val) {
+        if (combos.get(key) != null) combos.get(key).setSelectedItem(val);
+        setProperty(key, val);
+        System.out.println(key+" => "+val);
     }
     
     public void childChange() {
@@ -106,12 +119,6 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 }
             }
         }
-    }
-
-    public void setValue(String key, String val) {
-        if (combos.get(key) != null) combos.get(key).setSelectedItem(val);
-        setProperty(key, val);
-        System.out.println(key+" => "+val);
     }
     
     @Override

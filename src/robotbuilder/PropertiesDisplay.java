@@ -52,7 +52,9 @@ class PropertiesDisplay extends JPanel {
             if(value != null) {
                 if (value instanceof JComboBox) {
                     return new DefaultCellEditor((JComboBox) value);
-                } else if (value instanceof JFileChooser) {
+                } else if (value instanceof JCheckBox) {
+                    return new DefaultCellEditor((JCheckBox) value);
+                }else if (value instanceof JFileChooser) {
                     return new FileCellEditor((JFileChooser) value);
                 }
                 return getDefaultEditor(value.getClass());
@@ -75,6 +77,7 @@ class PropertiesDisplay extends JPanel {
                             }
                         }
                     };
+                } else if (value instanceof JCheckBox) {
                 } else if (value instanceof JFileChooser) {
                     return new TableCellRenderer() {
                         @Override
@@ -151,8 +154,16 @@ class PropertiesDisplay extends JPanel {
             assert column == 1; // TODO: Deal with more cleanly
             if (row == 0)
                 currentComponent.setName((String) val);
-            else
-                currentComponent.setValue(keys[row-1], (String) val);
+            else {
+                if (val instanceof String)
+                    currentComponent.setValue(keys[row-1], (String) val);
+                else if (val instanceof Boolean)
+                    currentComponent.setValue(keys[row-1], ((Boolean) val).toString());
+                else if (val instanceof Double)
+                    currentComponent.setValue(keys[row-1], ((Double) val).toString());
+                else if (val instanceof Integer)
+                    currentComponent.setValue(keys[row-1], ((Integer) val).toString());
+            }
             robot.update();
         }
     }
