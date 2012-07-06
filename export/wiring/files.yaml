@@ -1,3 +1,4 @@
-- Export: $export-path
-  Source: wiring.html
-  Update: Overwrite
+- !File
+  export: $export-path
+  source: $exporter-path/wiring.html
+  update: Overwrite

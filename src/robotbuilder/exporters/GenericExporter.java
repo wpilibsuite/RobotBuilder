@@ -14,7 +14,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 import robotbuilder.MainFrame;
 import robotbuilder.RobotTree;
 import robotbuilder.data.RobotComponent;
@@ -45,7 +47,7 @@ public class GenericExporter {
         filesPath = description.getString("Files");
         begin_modification = description.optString("Begin Modification");
         end_modification = description.optString("End Modification");
-        String _ = eval(new File(path+description.getString("Macros")));
+        String _ = eval(new File(path+description.getString("Macros"))); // Loads Macros Globally
         showOnToolbar = description.getBoolean("Toolbar");
         if (description.has("Required Properties")) {
             for (Object prop : description.getJSONArray("Required Properties").getIterable()) {
@@ -90,8 +92,9 @@ public class GenericExporter {
         }
         System.out.println();
         
+        Yaml yaml = new Yaml();
         // Export to all files
-        LinkedList<ExportFile> newFiles = getFiles();
+        Collection<ExportFile> newFiles = getFiles();
         for (ExportFile file : newFiles) {
             file.export(this);
         }
@@ -148,16 +151,13 @@ public class GenericExporter {
         }
     }
     
-    private LinkedList<ExportFile> getFiles() throws FileNotFoundException {
-        LinkedList<ExportFile> files = new LinkedList<ExportFile>();
+    private ArrayList<ExportFile> getFiles() throws FileNotFoundException {
         String filesString = eval(new File(path+filesPath));
-        Yaml yaml = new Yaml();
-        ArrayList filesYaml = (ArrayList) yaml.load(filesString);
-        System.out.print(filesYaml.getClass());
-        for (Object fileYaml: filesYaml) {
-            files.add(new ExportFile((Map<String, Object>) fileYaml, path));
-        }
-        return files;
+        Constructor constructor = new Constructor();
+        constructor.addTypeDescription(new TypeDescription(ExportFile.class, "!File"));
+        Yaml yaml = new Yaml(constructor);
+        ArrayList<ExportFile> filesYaml = (ArrayList<ExportFile>) yaml.load(filesString);
+        return filesYaml;
     }
 
     String eval(File file, Context context) throws FileNotFoundException {

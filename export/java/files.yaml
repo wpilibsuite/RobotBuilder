@@ -1,36 +1,41 @@
-- Export: $package-path/RobotMap.java
-  Source: RobotMap.java
-  Update: Overwrite
+- !File
+  export: $package-path/RobotMap.java
+  source: $exporter-path/RobotMap.java
+  update: Overwrite
   
-- Export: $package-path/OI.java
-  Source: OI.java
-  Update: Modify
-  Modifications:
-    Declarations: OI-declarations.java
-    Constructors: OI-constructors.java
+- !File
+  export: $package-path/OI.java
+  source: $exporter-path/OI.java
+  update: Modify
+  modifications:
+    declarations: $exporter-path/OI-declarations.java
+    constructors: $exporter-path/OI-constructors.java
 
-- Export: $package-path/commands/CommandBase.java
-  Source: CommandBase.java
-  Update: Modify
-  Modifications:
-    Constructors: CommandBase-constructors.java
+- !File
+  export: $package-path/commands/CommandBase.java
+  source: $exporter-path/CommandBase.java
+  update: Modify
+  modifications:
+    constructors: $exporter-path/CommandBase-constructors.java
 
 ## Export Commands as files
 #if ($export-commands)
 #foreach ($command in $commands)
 #if ($command.base.name == "Command Group")
-- Export: $package-path/commands/#class($command.name).java
-  Source: CommandGroup.java
-  Update: None
-  Variables:
+- !File
+  export: $package-path/commands/#class($command.name).java
+  source: $exporter-path/CommandGroup.java
+  update: None
+  variables:
     command-name: ${command.name}
 #else
-- Export: $package-path/commands/#class($command.name).java
-  Source: Command.java
-  Update: Modify
-  Modifications:
-    Requires: Command-requires.java
-  Variables:
+- !File
+  export: $package-path/commands/#class($command.name).java
+  source: $exporter-path/Command.java
+  update: Modify
+  modifications:
+    requires: $exporter-path/Command-requires.java
+  variables:
     command-name: ${command.name}
 #end 
 #end 
@@ -39,13 +44,14 @@
 ## Export Subsystems as files
 #if ($export-subsystems)
 #foreach ($subsystem in $subsystems)
-- Export: $package-path/subsystems/#class($subsystem.name).java
-  Source: Subsystem.java
-  Update: Modify
-  Modifications:
-    Declarations: Subsystem-declarations.java
-    Default_Command: Subsystem-default_command.java
-  Variables: 
+- !File
+  export: $package-path/subsystems/#class($subsystem.name).java
+  source: $exporter-path/Subsystem.java
+  update: Modify
+  modifications:
+    declarations: $exporter-path/Subsystem-declarations.java
+    default_command: $exporter-path/Subsystem-default_command.java
+  variables: 
     subsystem-name: ${subsystem.name}
 #end
 #end
