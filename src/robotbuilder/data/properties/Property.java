@@ -174,7 +174,7 @@ public abstract class Property {
     
     @Override
     public String toString() {
-        return name + "  --  {type: " + this.getClass() + ", default: " + defaultValue + "}";
+        return name + " -- {value: " + getValue() + ", default: " + defaultValue + "}";
     }
 
     public void setComponent(RobotComponent component) {
