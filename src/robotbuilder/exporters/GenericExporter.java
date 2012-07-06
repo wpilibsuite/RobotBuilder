@@ -26,10 +26,10 @@ public class GenericExporter {
     private final static String[] DESCRIPTION_PROPERTIES = {"Export", "Import", "Declaration",
         "Construction", "Extra", "ClassName", "Subsystem Export", "Template"};
     
-    private String name, type, filesPath, begin_modification, end_modification;
+    private String name, type, filesPath;
+    String path, begin_modification, end_modification;
     private boolean showOnToolbar;
-    private String path;
-    private Context rootContext = new VelocityContext();
+    Context rootContext = new VelocityContext();
     private Map<String, String> vars = new HashMap<String, String>();
     private LinkedList<String> varKeys = new LinkedList<String>();
     private Map<String, Map<String, String>> componentInstructions;
@@ -75,7 +75,7 @@ public class GenericExporter {
         // Export to all files
         LinkedList<ExportFile> newFiles = getFiles();
         for (ExportFile file : newFiles) {
-            file.export();
+            file.export(this);
         }
         
         System.out.println(name+" Export Finished");
@@ -137,28 +137,28 @@ public class GenericExporter {
         ArrayList filesYaml = (ArrayList) yaml.load(filesString);
         System.out.print(filesYaml.getClass());
         for (Object fileYaml: filesYaml) {
-            files.add(new ExportFile((Map<String, Object>) fileYaml));
+            files.add(new ExportFile((Map<String, Object>) fileYaml, path));
         }
         return files;
     }
 
-    private String eval(File file, Context context) throws FileNotFoundException {
+    String eval(File file, Context context) throws FileNotFoundException {
         FileReader fileReader;
         fileReader = new FileReader(file);
         StringWriter w = new StringWriter();
         Velocity.evaluate(context, w, name+" Exporter: "+file.getName(), fileReader);
         return w.toString();
     }
-    private String eval(File file) throws FileNotFoundException {
+    String eval(File file) throws FileNotFoundException {
         return eval(file, rootContext);
     }
     
-    private String eval(String templateString, Context context) {
+    String eval(String templateString, Context context) {
         StringWriter w = new StringWriter();
         Velocity.evaluate(context, w, name+" Exporter", templateString);
         return w.toString();
     }
-    private String eval(String templateString) {
+    String eval(String templateString) {
         return eval(templateString, rootContext);
     }
     
@@ -307,56 +307,8 @@ public class GenericExporter {
         return component[0];
     }
     
-    class ExportFile extends File {
-        File template;
-        String update;
-        Map <String, String> modifications = new HashMap<String, String>();
-        Map <String, String> vars = new HashMap<String, String>();
-
-        private ExportFile(Map<String, Object> map) {
-            super((String) map.get("Export"));
-            System.out.println(this);
-            template = new File(path + ((String) map.get("Source")));
-            update = (String) map.get("Update");
-            modifications = (Map<String, String>) map.get("Modifications");
-            vars = (Map<String, String>) map.get("Variables");
-        }
-        
-        public void export() throws IOException {
-            // Build the context
-            Context fileContext = new VelocityContext(rootContext);
-            if (vars != null) {
-                for (String key : vars.keySet()) {
-                    fileContext.put(key, eval(vars.get(key), fileContext));
-                }
-            }
-            
-            // Export
-            if (!this.exists() || update.equals("Overwrite")) {
-                FileWriter out = new FileWriter(this);
-                out.write(eval(template, fileContext));
-                out.close();
-            } else if (update.equals("Modify")) {
-                String file = openFile(this.getAbsolutePath());
-                
-                for (String id : modifications.keySet()) {
-                    Context idContext = new VelocityContext(fileContext);
-                    idContext.put("id", id);
-                    String beginning = eval(begin_modification, idContext);
-                    String end = eval(end_modification, idContext);
-                    file = file.replaceAll("("+beginning+")([\\s\\S]*?)("+end+")",
-                            "$1\n"+eval(new File(path+modifications.get(id)), idContext)+"\n    $3");
-                }
-                
-                FileWriter out = new FileWriter(this);
-                out.write(file);
-                out.close();
-            }
-        }
-    }
-    
     // UTILITIES
-    protected String openFile(String path) throws IOException {
+    String openFile(String path) throws IOException {
         BufferedReader reader = new BufferedReader( new FileReader (path));
         String line  = null;
         StringBuilder stringBuilder = new StringBuilder();
