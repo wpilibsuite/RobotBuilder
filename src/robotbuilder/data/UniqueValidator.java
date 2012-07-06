@@ -141,7 +141,8 @@ public class UniqueValidator implements Validator {
             }
             for (String prop : selection.keySet()) {
                 System.out.println("\t"+prefix+prop+" => "+selection.get(prop));
-                component.setProperty(prefix+prop, selection.get(prop));
+                component.getProperty(prefix+prop)._setValue(selection.get(prop));
+                component.getProperty(prefix+prop).update();
             }
         }
     }
