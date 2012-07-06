@@ -93,6 +93,16 @@
                         "Default" : ""
 		    },
 		    {
+			"Name" : "Export Subsystems",
+                        "Type" : "Boolean",
+                        "Default" : "true",
+		    },
+		    {
+			"Name" : "Export Commands",
+                        "Type" : "Boolean",
+                        "Default" : "true"
+		    },
+		    {
 			"Name" : "Wiring File",
                         "Type" : "File",
                         "Default" : ""
