@@ -33,12 +33,14 @@ public class JavaExportTest {
         File robotmap = new File("test-resources/RobotBuilderTestProject/src/robotcode/RobotMap.java");
         File oi = new File("test-resources/RobotBuilderTestProject/src/robotcode/OI.java");
         
-        for (File child : commands.listFiles()) { child.delete(); }
+        if (commands.listFiles() != null)
+            for (File child : commands.listFiles()) { child.delete(); }
         commands.delete();
         assertFalse(commands.exists());
         commands.mkdir();
 
-        for (File child : subsystems.listFiles()) { child.delete(); }
+        if (subsystems.listFiles() != null)
+            for (File child : subsystems.listFiles()) { child.delete(); }
         subsystems.delete();
         assertFalse(subsystems.exists());
         subsystems.mkdir();
