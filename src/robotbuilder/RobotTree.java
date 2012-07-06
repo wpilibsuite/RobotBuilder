@@ -96,6 +96,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	return root;
     }
     
+    /**
+     * Gets the Validator of the given name.
+     */
     public Validator getValidator(String name) {
         return validators.get(name);
     }
@@ -241,8 +244,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	}
         filePath = path.getAbsolutePath();
-	saved = true;
-        takeSnapshot();
     }
     
     /**

@@ -141,7 +141,7 @@
             validator: Solenoid
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
             default: "1"
-#end
+#end            
 
 Validators:
   - !Validator
@@ -157,7 +157,7 @@ Validators:
     type: Unique
     fields: [Channel (PWM), Module (Digital)]
   - !Validator
-    name: Joystick
+    name: USB Port
     type: Unique
     fields: [Number]
   - !Validator
@@ -172,6 +172,10 @@ Validators:
     name: Solenoid
     type: Unique
     fields: [Channel, Module]
+  - !Validator
+    name: NetworkButton
+    type: Unique
+    fields: [String, String]
     
 Palette:
   - Hidden:
@@ -504,6 +508,12 @@ Palette:
         properties:
           #DigitalChannel("Ping")
           #DigitalChannel("Echo")
+      - !Component
+        name: Infrared Sensor
+        type: Sensor
+        help: An infrared sensor typically used for following lines on the ground.
+        properties:
+          #DigitalChannel("Input")
 
   - Actuators:
       - !Component
@@ -583,7 +593,7 @@ Palette:
             name: Number
             type: Integer
             choices: ["1", "2", "3", "4"]
-            validator: Joystick
+            validator: USB Port
             default: 1
       - !Component
         name: Joystick Button
@@ -611,7 +621,37 @@ Palette:
             choices: ["1", "2"]
             validator: KinectJoystick
             default: 1
-          
+        name: Analog Button
+        type: Button
+        help: A button connected to a Cypress module analog pin.
+        properties:
+          - !Property
+            name: Analog Pin
+            type: Integer
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+            default: "1"
+          - !Property
+            name: USB Port
+            type: Integer
+            choices: ["1", "2", "3", "4"]
+            default: "1"
+          #Button("")
+      - !Component
+        name: Digital Button
+        type: Button
+        help: A button connected to a Cypress module digital pin.
+        properties:
+          - !Property
+            name: Digital Pin
+            type: Integer
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+            default: "1"
+          - !Property
+            name: USB Port
+            type: Integer
+            choices: ["1", "2", "3", "4"]
+            default: "1"
+          #Button("")            
 
   - Commands:
       - !Component

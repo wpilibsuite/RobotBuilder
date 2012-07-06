@@ -111,6 +111,8 @@ public class MainFrame extends JFrame {
         String fileName = prefs.get("FileName", "");
         if (fileName.length() > 0)
             robotTree.load(new File(fileName));
+        else
+            robotTree.takeSnapshot();
     }
     
     public void closeWindow() {

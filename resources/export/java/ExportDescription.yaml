@@ -214,6 +214,9 @@ Instructions:
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
+  Infrared Sensor:
+    Defaults: "DigitalInput,Component,None"
+    ClassName: DigitalInput
       
   Victor:
     Defaults: "PWMOutput,Component,None"
@@ -260,6 +263,15 @@ Instructions:
     Defaults: "OI, None"
     ClassName: "Joystick"
     Construction: "#variable($Name) = new ${ClassName}(${Number});"
+  Analog Button:
+    Defaults: "Button,OI,None"
+    ClassName: "AnalogIOButton"
+    Construction: "#variable($Name) = new ${ClassName}(#variable($USB Port);"
+  Digital Button:
+    Defaults: "Button,OI,None"
+    ClassName: "DigitalIOButton"
+    Construction: "#variable($Name) = new ${ClassName}(#variable($USB Port);"
+
   Command:
     Defaults: "Command,None"
   Command Group:
