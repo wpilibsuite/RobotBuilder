@@ -57,6 +57,12 @@ class PropertiesDisplay extends JPanel {
                     return new DefaultCellEditor((JComboBox) value);
                 } else if (value instanceof JFileChooser) {
                     return new FileCellEditor((JFileChooser) value);
+                } else if (value instanceof Boolean) {
+                    JCheckBox checkbox = new JCheckBox("", (Boolean) this.getValueAt(row, column));
+                    checkbox.setOpaque(false);
+                    TableCellEditor editor = new DefaultCellEditor(checkbox);
+                    editor.getTableCellEditorComponent(propTable, null, true, row, column).setBackground(Color.BLUE);
+                    return editor;
                 }
                 return getDefaultEditor(value.getClass());
             }
@@ -106,6 +112,15 @@ class PropertiesDisplay extends JPanel {
                             } catch (NullPointerException e) {
                                 return new JLabel("Click to Select");
                             }
+                        }
+                    };
+                } else if (value instanceof Boolean) {
+                    return new TableCellRenderer() {
+                        @Override
+                        public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
+                            JCheckBox checkbox = new JCheckBox("", (Boolean) value);
+                            checkbox.setOpaque(false);
+                            return checkbox;
                         }
                     };
                 }
