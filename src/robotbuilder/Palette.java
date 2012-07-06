@@ -1,7 +1,6 @@
 
 package robotbuilder;
 
-import robotbuilder.data.properties.DefaultProperty;
 import java.awt.BorderLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -23,10 +22,11 @@ import org.apache.velocity.app.VelocityEngine;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
-import robotbuilder.data.*;
-import robotbuilder.data.properties.BooleanProperty;
-import robotbuilder.data.properties.ChoicesProperty;
-import robotbuilder.data.properties.DoubleProperty;
+import robotbuilder.data.ExistsValidator;
+import robotbuilder.data.PaletteComponent;
+import robotbuilder.data.UniqueValidator;
+import robotbuilder.data.Validator;
+import robotbuilder.data.properties.*;
 
 /**
  * The Palette is the set of components that can be used to create the robot
@@ -59,6 +59,7 @@ public class Palette extends JPanel implements TreeSelectionListener {
         constructor.addTypeDescription(new TypeDescription(ChoicesProperty.class, "!ChoicesProperty"));
         constructor.addTypeDescription(new TypeDescription(BooleanProperty.class, "!BooleanProperty"));
         constructor.addTypeDescription(new TypeDescription(DoubleProperty.class, "!DoubleProperty"));
+        constructor.addTypeDescription(new TypeDescription(FileProperty.class, "!FileProperty"));
         constructor.addTypeDescription(new TypeDescription(ExistsValidator.class, "!ExistsValidator"));
         constructor.addTypeDescription(new TypeDescription(UniqueValidator.class, "!UniqueValidator"));
         Yaml yaml = new Yaml(constructor);

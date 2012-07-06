@@ -172,9 +172,10 @@ Palette:
         supports: {Subsystems: 1, OI: 1, Commands: 1}
         help: Your Robot!
         properties:
-          - !Property
+          - !FileProperty
             name: Java Project
-            type: Folder
+            extension: null
+            folder: true
             default: ""
           - !Property
             name: Java Package
@@ -186,9 +187,10 @@ Palette:
           - !BooleanProperty
             name: Export Commands
             default: true
-          - !Property
+          - !FileProperty
             name: Wiring File
-            type: File
+            extension: html
+            folder: false
             default: ""
       - !Component
         name: Subsystems

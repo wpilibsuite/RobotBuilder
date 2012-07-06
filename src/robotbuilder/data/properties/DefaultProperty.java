@@ -56,28 +56,6 @@ public class DefaultProperty extends Property {
                 getType().equals("Command") ||
                 getType().equals("Subsystem")) {
             return combo;
-        } else if (getType().equals("File")) {
-            // Provide a file chooser for files
-            if (filechooser == null) {
-                JFileChooser fc = new JFileChooser();
-//                System.out.println("File: "+getProperty(key));
-                if (!getValue().equals("")) {
-                    fc.setSelectedFile(new File(getValue().toString()));
-                }
-                fc.setSelectedFile(new File(getValue().toString()));
-            }
-            return filechooser;
-        } else if (getType().equals("Folder")) {
-            // Provide a file chooser for folders
-            if (filechooser == null) {
-                JFileChooser fc = new JFileChooser();;
-//                System.out.println("Folder: "+getProperty(key));
-                if (!getValue().equals("")) {
-                    fc.setSelectedFile(new File(getValue().toString()));
-                }
-                fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            }
-            return filechooser;
         } else {
             return getValue();
         }

@@ -1,6 +1,5 @@
 package robotbuilder;
 
-import robotbuilder.data.properties.Property;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -20,8 +19,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.*;
 import org.yaml.snakeyaml.Yaml;
-import robotbuilder.data.UniqueValidator.InvalidException;
 import robotbuilder.data.*;
+import robotbuilder.data.properties.Property;
 
 /**
  *
