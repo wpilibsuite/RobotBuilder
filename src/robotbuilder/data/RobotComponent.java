@@ -1,12 +1,14 @@
 
 package robotbuilder.data;
 
-import java.util.*;
-import javax.swing.JCheckBox;
+import java.io.File;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,25 +71,22 @@ public class RobotComponent extends DefaultMutableTreeNode {
         } else if (property.getType().equals("File")) {
             // Provide a file chooser for files
             if (filechoosers.get(key) == null) {
-                JFileChooser fc;
+                JFileChooser fc = new JFileChooser();
                 System.out.println("File: "+getProperty(key));
-                if (getProperty(key).equals("")) {
-                    fc = new JFileChooser((String) null);
-                } else {
-                    fc = new JFileChooser(getProperty(key));
+                if (!getProperty(key).equals("")) {
+                    fc.setSelectedFile(new File(getProperty(key)));
                 }
+                fc.setSelectedFile(new File(getProperty(key)));
                 filechoosers.put(key, fc);
             }
             return filechoosers.get(key);
         } else if (property.getType().equals("Folder")) {
             // Provide a file chooser for folders
             if (filechoosers.get(key) == null) {
-                JFileChooser fc;
-                System.out.println("File: "+getProperty(key));
-                if (getProperty(key).equals("")) {
-                    fc = new JFileChooser((String) null);
-                } else {
-                    fc = new JFileChooser(getProperty(key));
+                JFileChooser fc = new JFileChooser();;
+                System.out.println("Folder: "+getProperty(key));
+                if (!getProperty(key).equals("")) {
+                    fc.setSelectedFile(new File(getProperty(key)));
                 }
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 filechoosers.put(key, fc);
