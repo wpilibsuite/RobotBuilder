@@ -68,7 +68,8 @@ public class RobotComponent extends DefaultMutableTreeNode {
         } else if (property.getType().equals("Actuator") ||
                 property.getType().equals("Sensor") ||
                 property.getType().equals("Joystick") ||
-                property.getType().equals("Command")) {
+                property.getType().equals("Command") ||
+                property.getType().equals("Subsystem")) {
             return combos.get(key);
         } else if (property.getType().equals("File")) {
             // Provide a file chooser for files
@@ -132,7 +133,8 @@ public class RobotComponent extends DefaultMutableTreeNode {
                     setProperty(key, (String) combo.getSelectedItem());
                 }
             } else if (property.getType().equals("Joystick") ||
-                    property.getType().equals("Command")) {
+                    property.getType().equals("Command") ||
+                    property.getType().equals("Subsystem")) {
                 String old;
                 if (combos.get(key) != null) {
                     old = (String) combos.get(key).getSelectedItem();
@@ -144,6 +146,9 @@ public class RobotComponent extends DefaultMutableTreeNode {
                     choices = robot.getJoystickNames();
                 } else if (property.getType().equals("Command")) {
                     choices = robot.getCommandNames();
+                    choices.add(0, "None");
+                } else if (property.getType().equals("Subsystem")) {
+                    choices = robot.getSubsystemNames();
                     choices.add(0, "None");
                 }
                 JComboBox combo = new JComboBox(choices);

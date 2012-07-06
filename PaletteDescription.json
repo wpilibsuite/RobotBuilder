@@ -418,7 +418,11 @@
 		"Type": "Command",
 		"Help": "A command, someone really needs to update the help.",
                 "Properties" : [
-
+		    {
+			"Name" : "Requires",
+			"Type" : "Subsystem",
+			"Default" : "1"
+                    },
                 ]
             },
             {

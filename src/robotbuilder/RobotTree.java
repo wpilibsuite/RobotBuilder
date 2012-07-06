@@ -341,6 +341,20 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         
         return commandNames;
     }
+    
+    public Vector<String> getSubsystemNames() {
+        final Vector<String> subsystemNames = new Vector<String>();
+        walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                if (self.getBase().getType().equals("Subsystem")) {
+                    subsystemNames.add(self.getName());
+                }
+            }
+        });
+        
+        return subsystemNames;
+    }
 
     /**
      * A transfer handler for that wraps the default transfer handler of RobotTree.
