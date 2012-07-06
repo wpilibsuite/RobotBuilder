@@ -36,6 +36,10 @@ public class PaletteComponent {
         return properties;
     }
     
+    public String getName() {
+        return name;
+    }
+    
     @Override
     public String toString() {
         return name;

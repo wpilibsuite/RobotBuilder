@@ -6,14 +6,21 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.InputEvent;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+import org.json.JSONException;
+import org.json.JSONObject;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.RobotComponent;
 
@@ -97,6 +104,46 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	if (node instanceof DefaultMutableTreeNode) {
 	    properties.setCurrentComponent(node);
             currentNode = node;
+        }
+    }
+    
+    /**
+     * Save the RobotTree as a json.
+     * @param filePath 
+     */
+    public void save(String filePath) {
+        try {
+            System.out.println("Saving to: "+filePath);
+            FileWriter save = new FileWriter(filePath);
+            JSONObject robot = ((RobotComponent) treeModel.getRoot()).encodeAsJSON();
+            System.out.println("Encoded to: "+robot);
+            robot.write(save);
+            System.out.println("Written");
+            save.close();
+        } catch (JSONException ex) {
+            Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Load the RobotTree from a JSON.
+     * @param filePath 
+     */
+    public void load(String filePath) {
+        try {
+            System.out.println("Saving to: "+filePath);
+            FileWriter save = new FileWriter(filePath);
+            JSONObject robot = ((RobotComponent) treeModel.getRoot()).encodeAsJSON();
+            System.out.println("Encoded to: "+robot);
+            robot.write(save);
+            System.out.println("Written");
+            save.close();
+        } catch (JSONException ex) {
+            Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

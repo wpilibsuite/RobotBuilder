@@ -12,15 +12,16 @@ public class ActionsClass {
 
     AbstractAction exitAction = new ExitAction();
     AbstractAction newAction = new NewAction();
-    AbstractAction saveAction = new SaveAction();
+    AbstractAction saveAction;
     AbstractAction saveAsAction = new SaveAsAction();
     AbstractAction cppAction = new CppAction();
     AbstractAction javaAction = new JavaAction();
     AbstractAction labViewAction = new LabViewAction();
     AbstractAction aboutAction = new AboutAction();
     AbstractAction wiringDiagramAction = new WiringDiagramAction();
-    
-    public ActionsClass() {
+
+    public ActionsClass(RobotTree robotTree) {
+        saveAction = new SaveAction(robotTree);
     }
 
     public JMenuBar getMenuBar() {

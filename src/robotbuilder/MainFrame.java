@@ -23,9 +23,6 @@ public class MainFrame extends JFrame {
         frame = this;
         setTitle("FRC RobotBuilder");
         
-        ActionsClass actions = new ActionsClass();
-        setJMenuBar(actions.getMenuBar());
-        
         palette = Palette.getInstance();
         properties = new PropertiesDisplay();
         robotTree = new RobotTree(properties);
@@ -33,6 +30,9 @@ public class MainFrame extends JFrame {
         robotStuff.setDividerLocation(200);
         add(palette, BorderLayout.WEST);
         add(robotStuff, BorderLayout.CENTER);
+        
+        ActionsClass actions = new ActionsClass(robotTree);
+        setJMenuBar(actions.getMenuBar());
         
         statusPanel = new StatusPanel();
         add(statusPanel, BorderLayout.SOUTH);

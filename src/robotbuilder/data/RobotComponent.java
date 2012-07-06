@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.tree.DefaultMutableTreeNode;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import robotbuilder.Palette;
 import robotbuilder.RobotTree;
 
@@ -111,5 +114,24 @@ public class RobotComponent extends DefaultMutableTreeNode {
      */
     public boolean supports(RobotComponent data) {
         return this.supports(data.getBase());
+    }
+
+    /**
+     * Encode this RobotComponent and all it's subcomponents as a JSONObject.
+     * @return A JSONObject representing this component.
+     */
+    public JSONObject encodeAsJSON() throws JSONException {
+        JSONObject self = new JSONObject();
+        self.put("Name", name);
+        self.put("Base", base.getName());
+        self.put("Configuration", configuration);
+        JSONArray children = new JSONArray();
+        for (Enumeration i = this.children(); i.hasMoreElements();) {
+            RobotComponent child= (RobotComponent) i.nextElement();
+            children.put(child.encodeAsJSON());
+        }
+        self.put("Children", children);
+        
+        return self;
     }
 }
