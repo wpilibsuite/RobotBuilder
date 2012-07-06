@@ -140,6 +140,32 @@
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
             default: "1"
 #end
+#macro( Compressor $Name )
+- !Property
+            name: $Name Pressure Switch Module (Digital)
+            type: Module (Digital)
+            choices: ["1", "2"]
+            validator: Ultrasonic
+            default: "1"
+          - !Property
+            name: $Name Pressure Switch Channel (PWM)
+            type: Channel (PWM)
+            validator: Ultrasonic
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+            default: "1"
+          - !Property
+            name: $Name Compressor Relay Module (Digital)
+            type: Module (Digital)
+            choices: ["1", "2"]
+            validator: Ultrasonic
+            default: "1"
+          - !Property
+            name: $Name Compressor Relay Channel (PWM)
+            type: Channel (PWM)
+            validator: Ultrasonic
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+            default: "1"
+#end
 
 Validators:
   - !Validator
@@ -214,7 +240,7 @@ Palette:
       - !Component
         name: Subsystem
         type: Subsystem
-        supports: {Sensor: -1, Actuator: -1, Controller: -1}
+        supports: {Sensor: -1, Actuator: -1, Controller: -1, Pneumatic: -1}
         help: A functional part of your robot that groups the sensors and actuators together.
         properties:
           - !Property
@@ -519,6 +545,14 @@ Palette:
         help: A simple on/off output.
         properties:
           #PWMOutput("Output")
+
+  - Pneumatics:
+      - !Component
+        name: Compressor
+        type: Pneumatic
+        help: A pneumatic compressor on your robot.
+        properties:
+          #Compressor("Compressor")
 
   - OI:
       - !Component
