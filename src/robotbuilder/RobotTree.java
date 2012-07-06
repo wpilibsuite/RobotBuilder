@@ -11,20 +11,28 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.TransferHandler;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 /**
  *
  * @author brad
+ * RobotTree is the tree representation of the robot map. It will contain
+ * nodes that represent the various components that can be used to build
+ * the robot. This is constructed by the user by dragging palette items to the tree.
  */
-class RobotTree extends JPanel {
+class RobotTree extends JPanel implements TreeSelectionListener {
     
     private JTree tree;
     private DefaultTreeModel treeModel;
+    private PropertiesDisplay properties;
     
-    public RobotTree() {
+    public RobotTree(PropertiesDisplay properties) {
+	this.properties = properties;
         setLayout(new BorderLayout());
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Team190Robot");
         DefaultMutableTreeNode motors = new DefaultMutableTreeNode("Motors");
@@ -33,6 +41,8 @@ class RobotTree extends JPanel {
         root.add(motors);
         treeModel = new DefaultTreeModel(root);
         tree = new JTree(treeModel);
+	tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+	tree.addTreeSelectionListener(this);
         tree.setDropMode(DropMode.ON_OR_INSERT);
         add(new JScrollPane(tree), BorderLayout.CENTER);
         tree.setTransferHandler(new TransferHandler() {
@@ -77,5 +87,16 @@ class RobotTree extends JPanel {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void valueChanged(TreeSelectionEvent tse) {
+	DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+                       tree.getLastSelectedPathComponent();
+
+	if (node == null) return;
+	if (node instanceof DefaultMutableTreeNode)
+	    properties.setCurrentComponent(node);
+
     }
 }

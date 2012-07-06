@@ -15,7 +15,9 @@ import org.json.JSONTokener;
 import robotbuilder.data.RobotComponent;
 
 /**
- *
+ * The Palette is the set of components that can be used to create the robot
+ * map. Each palette item represents a motor, sensor, or other component. These
+ * are dragged to the robot tree.
  * @author brad
  */
 public class Palette extends JPanel {

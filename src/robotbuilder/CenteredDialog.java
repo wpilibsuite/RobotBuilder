@@ -36,6 +36,6 @@ public class CenteredDialog extends JDialog {
                         parentPostion.y + (parentSize.height - ourSize.height) / 2);
             }
         }
-        super.show();
+        super.setVisible(true);
     }
 }

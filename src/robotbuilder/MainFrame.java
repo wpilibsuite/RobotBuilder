@@ -28,8 +28,8 @@ public class MainFrame extends JFrame {
         setJMenuBar(actions.getMenuBar());
         
         palette = new Palette();
-        robotTree = new RobotTree();
         properties = new PropertiesDisplay();
+        robotTree = new RobotTree(properties);
         JSplitPane robotStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, robotTree, properties);
         robotStuff.setDividerLocation(200);
         add(palette, BorderLayout.WEST);
