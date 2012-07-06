@@ -49,8 +49,24 @@ public class RobotComponent {
         this.name = name;
         robot.addName(name);
     }
+    
+    public PaletteComponent getBase() {
+        return base;
+    }
 
     public void setProperty(String key, String val) {
         configuration.put(key, val);
+    }
+
+    public boolean supports(PaletteComponent component) {
+        String type = component.getType();
+        if (base.getSupports().containsKey(type)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean supports(RobotComponent data) {
+        return this.supports(data.getBase());
     }
 }

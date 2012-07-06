@@ -11,10 +11,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
+import javax.swing.tree.*;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.RobotComponent;
 
@@ -40,7 +37,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	this.properties = properties;
         this.properties.setRobotTree(this);
         setLayout(new BorderLayout());
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Team190Robot");
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(new RobotComponent("Team190Robot", Palette.getInstance().getItem("Folder"), this));
         treeModel = new DefaultTreeModel(root);
         tree = new JTree(treeModel);
 	tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -131,15 +128,46 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         public boolean canImport(TransferSupport support) {
             if (!support.isDrop()) return false;
             support.setShowDropLocation(true);
-            if (!support.isDataFlavorSupported(DataFlavor.stringFlavor)
-                    && !support.isDataFlavorSupported(ROBOT_COMPONENT_FLAVOR)) {
-                System.out.println("Unsupported flavor. The flavor you have chosen is no sufficiently delicious.");
-                return false;
-            }
             JTree.DropLocation dl = (JTree.DropLocation) support.getDropLocation();
             TreePath path = dl.getPath();
             if (path == null) return false;
-            return true;
+            RobotComponent target = (RobotComponent) ((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject();
+            System.out.println(target.getName()+": ");
+            if (support.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                System.out.println("Can I import a string?");
+                String data;
+                try {
+                    data = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+                } catch (UnsupportedFlavorException e) {
+                    System.out.println("UFE");
+                    return false;
+                } catch (IOException e) {
+                    System.out.println("IOE");
+                    return false;
+                }
+                System.out.println("Even if it's a "+data+"?");
+                PaletteComponent base = Palette.getInstance().getItem(data);
+                assert base != null; // TODO: Handle more gracefully
+                System.out.println(target.supports(base) ? "yes" : "no");
+                return target.supports(base);
+            } else if (support.getTransferable().isDataFlavorSupported(ROBOT_COMPONENT_FLAVOR)) {
+                System.out.println("Can I move a robot component?");
+                RobotComponent data;
+                try {
+                    data = (RobotComponent) support.getTransferable().getTransferData(ROBOT_COMPONENT_FLAVOR);
+                } catch (UnsupportedFlavorException e) {
+                    System.out.println("UnsupportedFlavor");
+                    return false;
+                } catch (IOException e) {
+                    System.out.println("IOException");
+                    return false;
+                }
+                System.out.println(target.supports(data) ? "yes" : "no");
+                return target.supports(data);
+            } else {
+                System.out.println("Unsupported flavor. The flavor you have chosen is no sufficiently delicious.");
+                return false;
+            }
         }
         
         @Override

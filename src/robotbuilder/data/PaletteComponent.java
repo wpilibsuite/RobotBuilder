@@ -16,7 +16,7 @@ public class PaletteComponent {
     private String name; //  the name of the palette component
     // The metadata for the component (type, etc.)
     private String type; // the type of the data
-    // Children that this can support having
+    /** Type and quantity of children that this type of component can support. */
     private HashMap<String, Integer> supports = new HashMap<String, Integer>(); 
     
     private HashMap<String, String> metaData = new HashMap<String, String>(); 
@@ -52,8 +52,16 @@ public class PaletteComponent {
     public void setType(String type) {
         this.type = type;
     }
+
+    String getType() {
+        return type;
+    }
     
     public void addSupport(String key, Integer val) {
         supports.put(key, val);
+    }
+    
+    public Map<String, Integer> getSupports() {
+        return supports;
     }
 }

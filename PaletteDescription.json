@@ -3,9 +3,14 @@
     "Palette": {
 	"Order": ["Organization", "Sensors", "Actuators"],
 	"Organization" : {
+	    "Folder" : {
+		"Type": "Organization",
+		"Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Organization": "unlimited"},
+		"Properties": {}
+	    },
 	    "Subsystem" : {
-	    "Type": "Organization",
-	    "Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Organization": "unlimited"},
+		"Type": "Organization",
+		"Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Organization": "unlimited"},
 		"Properties" : {
 		    "Type" : {
                         "Type" : "Subsystem",
