@@ -24,7 +24,6 @@ public class MainFrame extends JFrame {
     RobotTree robotTree;
     PropertiesDisplay properties;
     JEditorPane help;
-    StatusPanel statusPanel;
     JToolBar toolBar;
     private JFrame frame;
     private static MainFrame instance = null;
@@ -94,13 +93,8 @@ public class MainFrame extends JFrame {
         ActionsClass actions = new ActionsClass();
         setJMenuBar(actions.getMenuBar());
         
-        statusPanel = new StatusPanel();
-        add(statusPanel, BorderLayout.SOUTH);
-        
         toolBar = actions.getToolBar();
         add(toolBar, BorderLayout.PAGE_START);
-        
-        statusPanel.setStatus("Everything A OK");
         
         pack();
         
