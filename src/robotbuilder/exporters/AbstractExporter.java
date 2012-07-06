@@ -124,7 +124,8 @@ public abstract class AbstractExporter {
         for (String property : comp.getPropertyKeys()) {
             //System.out.println("\t"+property);
             String type = comp.getBase().getProperties().get(property).getType();
-            if (type.equals("Actuator") || type.equals("Sensor")) {
+            if (type.equals("Actuator") || type.equals("Sensor") ||
+                    type.equals("Command") || type.equals("Joystick")) {
                 template = substitute(template, property, getFullName(comp.getProperty(property)));
             } else {
                 template = substitute(template, property, comp.getProperty(property));

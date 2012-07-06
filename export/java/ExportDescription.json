@@ -1,17 +1,19 @@
 {
     "Defaults": {
-	"All": {
+	"Component": {
+	    "Export": "RobotMap",
 	    "Import": "import edu.wpi.first.wpilibj.${ClassName};",
 	    "Declaration": "public static ${ClassName} ${Name};",
-	    "Extra": "",
 	    "Subsystem Export": "${ClassName} ${Short Name} = RobotMap.${Name};"
 	},
 	"None": {
+	    "Export": "",
 	    "Import": "",
 	    "Declaration": "",
 	    "Construction": "",
 	    "Extra": "",
-	    "Subsystem Export": ""
+	    "Subsystem Export": "",
+	    "ClassName": ""
 	},
 	"AnalogInput": {
 	    "Construction": "${Name} = new ${ClassName}(${Input Module (Analog)}, ${Input Channel (Analog)});"
@@ -21,63 +23,100 @@
 	},
 	"PWMOutput": {
 	    "Construction": "${Name} = new ${ClassName}(${Output Module (Digital)}, ${Output Channel (PWM)});"
+	},
+	"OI": {
+	    "Export": "OI",
+	    "Import": "import edu.wpi.first.wpilibj.${ClassName};",
+	    "Declaration": "public ${ClassName} ${Name};"
+	},
+	"Button": {
+	    "Import": "import edu.wpi.first.wpilibj.buttons.${ClassName};",
+	},
+	"Command": {
+	    "Export": "OI"
 	}
     },
     "Palette": {
 	"Robot" : {
 	    "Defaults": ["None"],
-	    "ClassName": ""
 	},
+	"Subsystems" : {
+	    "Defaults": ["None"],
+	},
+	"OI" : {
+	    "Defaults": ["None"],
+	},
+	"Commands" : {
+	    "Defaults": ["None"],
+	},
+	
 	"Subsystem" : {
 	    "Defaults": ["None"],
-	    "ClassName": ""
 	},
+	
 	"PID Controller" : {
-	    "Defaults": ["All"],
+	    "Defaults": ["Component", "None"],
 	    "ClassName": "SendablePIDController",
 	    "Import": "import edu.wpi.first.wpilibj.smartdashboard.*;",
 	    "Construction": "${Name} = new ${ClassName}(${P}, ${I}, ${D}, ${F}, ${Input}, ${Output}, ${Period});",
 	    "Extra": "${Name}.setContinuous(${Continuous});\n        if (${Limit Input}) ${Name}.setInputRange(${Minimum Input}, ${Maximum Input});\n        if (${Limit Output}) ${Name}.setInputRange(${Minimum Output}, ${Maximum Output});\n        if(${Send to SmartDashboard}) SmartDashboard.putData(\"${Name}\", ${Name});"
 	},
 	"Robot Drive 2" : {
-	    "Defaults": ["All"],
+	    "Defaults": ["Component", "None"],
 	    "ClassName": "RobotDrive",
 	    "Construction": "${Name} = new ${ClassName}(${Left Motor}, ${Right Motor});"
 	},
 	"Robot Drive 4" : {
-	    "Defaults": ["All"],
+	    "Defaults": ["Component", "None"],
 	    "ClassName": "RobotDrive",
 	    "Construction": "${Name} = new ${ClassName}(${Left Front Motor}, ${Left Rear Motor}, ${Right Front Motor}, ${Right Rear Motor});"
 	},
+	
         "Gyro" : {
-	    "Defaults": ["AnalogInput", "All"],
+	    "Defaults": ["AnalogInput", "Component", "None"],
 	    "ClassName": "Gyro",
 	    "Extra": "${Name}.setSensitivity(${Sensitivity});"
         },
         "Accelerometer" : {
-	    "Defaults": ["AnalogInput", "All"],
+	    "Defaults": ["AnalogInput", "Component", "None"],
 	    "ClassName": "Accelerometer"
         },
         "Quadrature Encoder" : {
-	    "Defaults": ["DigitalInput", "All"],
+	    "Defaults": ["DigitalInput", "Component", "None"],
 	    "ClassName": "Encoder",
 	    "Construction": "${Name} = new ${ClassName}(${Channel A Module (Digital)}, ${Channel A Channel (Digital)}, ${Channel B Module (Digital)}, ${Channel B Channel (Digital)});"
         },
         "Potentiometer" : {
-	    "Defaults": ["AnalogInput", "All"],
+	    "Defaults": ["AnalogInput", "Component", "None"],
 	    "ClassName": "AnalogChannel"
         },
         "Limit Switch" : {
-	    "Defaults": ["DigitalInput", "All"],
+	    "Defaults": ["DigitalInput", "Component", "None"],
 	    "ClassName": "DigitalInput"
         },
+	
         "Victor" : {
-	    "Defaults": ["PWMOutput", "All"],
+	    "Defaults": ["PWMOutput", "Component", "None"],
 	    "ClassName": "Victor"
         },
         "Jaguar" : {
-	    "Defaults": ["PWMOutput", "All"],
+	    "Defaults": ["PWMOutput", "Component", "None"],
 	    "ClassName": "Jaguar"
+        },
+	
+	"Joystick" : {
+	    "Defaults": ["OI", "None"],
+	    "ClassName": "Joystick",
+	    "Construction": "${Name} = new ${ClassName}(${Number});"
+        },
+	"Joystick Button" : {
+	    "Defaults": ["Button", "OI", "None"],
+	    "ClassName": "JoystickButton",
+	    "Construction": "${Name} = new ${ClassName}(${Joystick}, ${Button});"
+        },
+	
+	"Command" : {
+	    "Defaults": ["Command", "None"],
         }
     }
 }
