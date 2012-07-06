@@ -34,7 +34,15 @@ public class JavaExporter extends AbstractExporter {
     public void export(RobotTree robot) throws IOException {
         System.out.println("Loading export description for java");
         loadExportDescription(DESCRIPTION_PATH, DESCRIPTION_PROPERTIES);
+        
+        // Sets up for export
         getPath(robot.getRoot()); // TODO: Ugly hack
+        robot.walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                self.updateComboBoxes();
+            }
+        });
 
         // The RobotMap
         System.out.println("Loading template "+ROBOT_MAP_TEMPLATE);
