@@ -1,3 +1,48 @@
+## This file describes the export from RobotBuilder to java. The
+## format is YAML 1.1 (http://www.yaml.org/) with instructions that
+## are post-processed with Velocity (velocity.apache.org). 
+##
+## This is the actual exporter for java, but also serves as a good
+## example of a complicated exporter.
+##
+## Name: The name of this exporter to be displayed in menus.
+## Type: The type, this will affect where it is displayed.
+## Toolbar: Whether or not it displays on the toolbar by default.
+## Files: A YAML file pre-processed by velocity that describes which
+##     files to export and how.
+## Begin Modification: A string that indicates the beginning of an
+##     area that will be modified and replaced by auto-generated code.
+## End Modification: A string that indicates the end of an area
+##     that will be modified and replaced by auto-generated code.
+## Required Properties: A list of robot properties that must be filled
+##     out for this export to actually begin export. If these are not
+##     filled out, the export alerts the user and stops.
+## Vars: A map of variable names to values that are available for the
+##     entire export.
+## Macros: A file containing the velocity macros for this export.
+##
+## Defaults: A map of default names to their instruction sets. The
+##     instruction sets are a map of instruction names to instructions
+##     that may contain velocity templating. These defaults are used
+##     if component instructions do not specify a specific
+##     instruction.
+##
+## Instructions: A map of palette components to their defaults and
+##     instruction sets. The defaults are a comma-seperated string
+##     with the highest priority default first. The instructions
+##     themselves vary from language to language, in the java
+##     exporter:
+##
+##     - Export: The export instruction specifies the file to export
+##           this component to.
+##     - Import: The java import so that this component is properly
+##           imported in the generated java file
+##     - Declaration: The declaration to declare a variable
+##           representing this component.
+##     - Construction: The constructor to create this component.
+##     - Extra: Extra configuration for after the constructor is done.
+##     - ClassName: The java class name of this object.
+
 Name: Java
 Type: Code
 Toolbar: true
