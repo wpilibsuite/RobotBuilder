@@ -3,19 +3,25 @@
     "Palette": {
         "Sensors": {
             "Gyro" : {
-
+                "ClassName" : "Gyro",
+                "Ports" : "a"
             },
             "Accelerometer" : {
+                "ClassName" : "Accelerometer",
+                "Ports" : "a"
                 
             },
             "Quadrature encoder" : {
-                
+                "ClassName" : "Encoder",
+                "Ports" : "di, di"
             },
             "Potentiometer" : {
-                
+                "ClassName" : "AnalogChannel",
+                "Ports" : "a"
             },
             "Limit switch" : {
-                
+                "ClassName" : "di",
+                "Ports" : "di"
             }
         },
         "Speed controllers" : {

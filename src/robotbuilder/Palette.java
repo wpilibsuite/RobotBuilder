@@ -12,6 +12,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import robotbuilder.data.RobotComponent;
 
 /**
  *
@@ -24,7 +25,7 @@ public class Palette extends JPanel {
     public Palette() {
         FileReader file;
         try {
-            file = new FileReader("/Users/brad/Dropbox/Projects/NetBeansProjects/RobotBuilder/src/robotbuilder/PaletteDescription.json");
+            file = new FileReader("/Users/brad/Dropbox/Projects/NetBeansProjects/RobotBuilder/PaletteDescription.json");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
             return;
@@ -59,15 +60,39 @@ public class Palette extends JPanel {
     private void createTree(DefaultMutableTreeNode root, JSONObject jSONObject) {
         for (Iterator i = jSONObject.keys(); i.hasNext(); ) {
             String key = (String) i.next();
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(key);
-            root.add(node);
-            if (!jSONObject.isNull(key)) {
+            JSONObject child;
+            try {
+                child = (JSONObject) jSONObject.get(key);
+            } catch (JSONException ex) {
+                Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
+                return;
+            }
+            if (!child.has("ClassName")) {
                 try {
+                    DefaultMutableTreeNode node = new DefaultMutableTreeNode(key);
+                    root.add(node);
                     createTree(node, jSONObject.getJSONObject(key));
                 } catch (JSONException ex) {
                     Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            else {
+                RobotComponent component = createRobotComponent(key, child);
+                DefaultMutableTreeNode node = new DefaultMutableTreeNode(component);
+                root.add(node);
+            }
         }
+    }
+
+    private RobotComponent createRobotComponent(String key, JSONObject child) {
+        RobotComponent component = new RobotComponent(key);
+        try {
+            component.addPorts(child.getString("Ports"));
+            component.addClassName(child.getString("ClassName"));
+        } catch (JSONException ex) {
+            Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        component.print();
+        return component;
     }
 }

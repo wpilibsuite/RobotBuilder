@@ -31,6 +31,7 @@ public class MainFrame extends JFrame {
         robotTree = new RobotTree();
         properties = new PropertiesDisplay();
         JSplitPane robotStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, robotTree, properties);
+        robotStuff.setDividerLocation(200);
         add(palette, BorderLayout.WEST);
         add(robotStuff, BorderLayout.CENTER);
         
