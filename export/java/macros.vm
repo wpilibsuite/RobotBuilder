@@ -1,0 +1,3 @@
+#macro( variable $name )${name.substring(0,1).toLowerCase()}${name.substring(1).replace(' ', '')}#end
+#macro( class $name )${name.replace(' ', '')}#end
+#macro( constant $name )${name.replace(' ', '_').toUpperCase()}#end

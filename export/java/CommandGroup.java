@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class ${helper.className($command.name)} extends CommandGroup {
+public class #class($command.name) extends CommandGroup {
     
-    public  ${helper.className($command.name)}() {
+    public  #class($command.name)() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -6,7 +6,6 @@ package robotbuilder.exporters;
 
 import java.io.*;
 import java.util.*;
-import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
@@ -40,6 +39,7 @@ public class GenericExporter {
         name = description.getString("Name");
         type = description.getString("Type");
         filesPath = description.getString("New Files");
+        String _ = eval(new File(path+description.getString("Macros")));
         showOnToolbar = description.getBoolean("Toolbar");
         for (Object pair : description.getJSONArray("Vars").getIterable()) {
             JSONObject obj = (JSONObject) pair;
@@ -199,30 +199,6 @@ public class GenericExporter {
     public String classOf(RobotComponent comp) {
         final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
         return instructions.get("ClassName");
-    }
-    
-    /**
-     * @param name The name to convert.
-     * @return Convert the name to a constant name in the java style.
-     */
-    public String constantName(String name) {
-        return name.replace(" ", "_").toUpperCase();
-    }
-    
-    /**
-     * @param name The name to convert.
-     * @return Convert the name to a variable name in the java style.
-     */
-    public String variableName(String name) {
-        return name.substring(0, 1).toLowerCase()+name.replace(" ", "").substring(1);
-    }
-    
-    /**
-     * @param name The name to convert.
-     * @return Convert the name to a class name in the java style.
-     */
-    public String className(String name) {
-        return name.replace(" ", "");
     }
     
     /**
