@@ -285,12 +285,16 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                                                       "Cannot Delete", 
                                                       JOptionPane.ERROR_MESSAGE);
                     }
-//                } else if((e.getKeyCode() == KeyEvent.VK_C) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-//                    System.out.println("Copy");
-//                } else if((e.getKeyCode() == KeyEvent.VK_X) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-//                    System.out.println("Cut");
-//                } else if((e.getKeyCode() == KeyEvent.VK_V) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-//                    System.out.println("Paste");
+                } else if((e.getKeyCode() == KeyEvent.VK_C) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+                    System.out.println("CTRL+C");
+                } else if((e.getKeyCode() == KeyEvent.VK_X) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+                    System.out.println("CTRL+X");
+                } else if((e.getKeyCode() == KeyEvent.VK_V) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+                    System.out.println("CTRL+V");
+                } else if((e.getKeyCode() == KeyEvent.VK_Z) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+                    System.out.println("CTRL+Z");
+                } else if((e.getKeyCode() == KeyEvent.VK_Y) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+                    System.out.println("CTRL+Y");
                 }
             }
         });
