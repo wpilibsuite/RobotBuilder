@@ -62,6 +62,19 @@ public class TestUtils {
         RobotComponent limit = new RobotComponent("Limit", "Limit Switch", tree);
         arm.add(limit);
         
+        // Create an wrist subsystem
+        RobotComponent wrist = new RobotComponent("Wrist", "PID Subsystem", tree);
+        subsystems.add(wrist);
+        wrist.getProperty("P").setValue(2);
+        wrist.getProperty("I").setValue(1);
+        wrist.getProperty("D").setValue(-1);
+        wrist.getProperty("Limit Input").setValue(true);
+        wrist.getProperty("Continuous").setValue(true);
+        RobotComponent wristMotor = new RobotComponent("Motor", "Jaguar", tree);
+        wrist.add(wristMotor);
+        RobotComponent pot = new RobotComponent("Pot", "Potentiometer", tree);
+        wrist.add(pot);
+        
         // Create a simple OI
         RobotComponent leftstick = new RobotComponent("Left Joystick", "Joystick", tree);
         oi.add(leftstick);

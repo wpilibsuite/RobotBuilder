@@ -115,7 +115,7 @@ Instructions:
     Defaults: "None"
     Export: "CommandBase"
     Import: "import ${package}.subsystems.*;"
-    Construction: "public static #class($Short_Name) extends PIDSubsystem #variable($Short_Name) = new #class($Short_Name)();"
+    Construction: "public static #class($Short_Name) #variable($Short_Name) = new #class($Short_Name)();"
 
   PID Controller:
     Defaults: "Component,None"
