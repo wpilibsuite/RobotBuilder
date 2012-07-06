@@ -5,6 +5,6 @@ Files: files.yaml
 Required Properties:
   - Wiring File
 Vars: 
-  export-path: ${robot.getProperty('Wiring File')}
+  export-path: ${robot.getProperty('Wiring File').getValue()}
 Macros: macros.vm
 Post Export Action: "#Browse:file://${export-path}"
