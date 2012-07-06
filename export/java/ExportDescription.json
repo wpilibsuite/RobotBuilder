@@ -22,6 +22,10 @@
 	}
     },
     "Palette": {
+	"Robot" : {
+	    "Defaults": ["None"],
+	    "ClassName": ""
+	},
 	"Folder" : {
 	    "Defaults": ["None"],
 	    "ClassName": ""

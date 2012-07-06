@@ -34,7 +34,7 @@ public class JavaExporter extends AbstractExporter {
         String template = loadTemplate(ROBOT_MAP_TEMPLATE);
         
         System.out.println("Substituting real values into template");
-        template = substitute(template, "package", "com.no.package");
+        template = substitute(template, "package", robot.getRoot().getProperty("Java Package"));
         template = substitute(template, "imports", generateImports(robot));
         template = substitute(template, "declarations", generateDeclarations(robot));
         template = substitute(template, "constructions", generateConstructions(robot));

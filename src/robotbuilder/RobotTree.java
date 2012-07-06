@@ -43,7 +43,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     /** Names used by components during name auto-generation */
     private Set<String> usedNames = new HashSet<String>();
     /** The currently selected node */
-    private DefaultMutableTreeNode currentNode;
     private String currentFile = null;
     private JFileChooser fileChooser = new JFileChooser();
 
@@ -53,7 +52,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	this.properties = properties;
 	this.properties.setRobotTree(this);
 	setLayout(new BorderLayout());
-	DefaultMutableTreeNode root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Robot"), this);
+	RobotComponent root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Robot"), this);
 	treeModel = new DefaultTreeModel(root);
 	tree = new JTree(treeModel);
 	tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -110,7 +109,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	}
 	if (node instanceof DefaultMutableTreeNode) {
 	    properties.setCurrentComponent(node);
-	    currentNode = node;
 	}
     }
 
@@ -224,6 +222,13 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    tree.setSelectionPath(new TreePath(root));
 	    saved = true;
 	}
+    }
+
+    /**
+     * @return The root RobotComponent of the RobotTree
+     */
+    public RobotComponent getRoot() {
+        return (RobotComponent) treeModel.getRoot();
     }
 
     /**

@@ -61,7 +61,7 @@
                         "Type" : "Folder",
                         "Default" : "",
 		    },
-		    "Java Path": {
+		    "Java Package": {
                         "Type" : "String",
                         "Default" : "com.usfirst.teamNNNN.robot2013"
 		    }
