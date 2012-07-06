@@ -67,6 +67,23 @@ class PropertiesDisplay extends JPanel {
         @Override
         public TableCellRenderer getCellRenderer(final int row, final int column) {
             final Object value = super.getValueAt(row, column);
+            if (column == 0) {
+                return new TableCellRenderer() {
+                    @Override
+                    public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
+                        JLabel label = new JLabel(value.toString());
+                        if (row == 0) { return label; }
+                        String validatorName = currentComponent.getBase().getProperty(keys[row-1]).getValidator();
+                        Validator validator = robot.getValidator(validatorName);
+                        if (validator != null && !validator.isValid(currentComponent, keys[row-1])) {
+                            label.setForeground(Color.red);                            
+                        } else {
+                            label.setForeground(Color.black);
+                        }
+                        return label;
+                    }
+                };
+            }
             if (value != null) {
                 if (value instanceof JComboBox) {
                     return new TableCellRenderer() {
@@ -75,9 +92,7 @@ class PropertiesDisplay extends JPanel {
                             try {
                                 return new JLabel(((JComboBox) value).getSelectedItem().toString());
                             } catch (NullPointerException ex) {
-                                JLabel label = new JLabel("No Choices Available");
-                                label.setBackground(Color.red);
-                                return label;
+                                return new JLabel("No Choices Available");
                             }
                         }
                     };
@@ -91,9 +106,7 @@ class PropertiesDisplay extends JPanel {
                                 setValueAt(path, row, column);
                                 return new JLabel(path);
                             } catch (NullPointerException e) {
-                                JLabel label = new JLabel("Click to Select");
-                                label.setBackground(Color.red);
-                                return label;
+                                return new JLabel("Click to Select");
                             }
                         }
                     };
