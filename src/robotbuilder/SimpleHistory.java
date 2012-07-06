@@ -59,7 +59,8 @@ public class SimpleHistory<E> {
      */
     public E redo(){
         if(canRedo()){
-            past.addLast(future.pollLast());
+            past.addLast(present);
+            present = future.pollLast();
         }
         return getCurrentState();
     }

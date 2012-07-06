@@ -23,7 +23,7 @@ public class ActionsClass {
     AbstractAction gettingStartedAction = new GettingStartedAction();
     AbstractAction aboutAction = new AboutAction();
     AbstractAction undoAction = new UndoAction();
-//    AbstractAction redoAction = new RedoAction();
+    AbstractAction redoAction = new RedoAction();
 
     private LinkedList<ExporterAction> exporters;
 
@@ -72,7 +72,7 @@ public class ActionsClass {
         bar.add(saveAction);
         bar.add(openAction);
         bar.add(undoAction);
-//        bar.add(redoAction);
+        bar.add(redoAction);
         for (ExporterAction action : exporters) {
             if (action.isOnToolbar()) {
                 bar.add(action);
