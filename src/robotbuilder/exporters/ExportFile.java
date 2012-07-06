@@ -14,12 +14,11 @@ import org.apache.velocity.context.Context;
 
 /**
  *
- * @author alex
+ * @author Alex Henning
  */
 public class ExportFile {
     private File export;
-    private String source;
-    private String update, exorterPath;
+    private String source, update;
     private Map<String, String> modifications = new HashMap<String, String>();
     private Map<String, String> vars = new HashMap<String, String>();
 
