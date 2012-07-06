@@ -78,7 +78,10 @@
 	    "ClassName": "SendablePIDController",
 	    "Import": "import edu.wpi.first.wpilibj.smartdashboard.*;",
 	    "Construction": "${helper.constantName($Name)} = new ${ClassName}(${P}, ${I}, ${D}, ${F}, ${helper.constantName($Input)}, ${helper.constantName($Output)}, ${Period});",
-	    "Extra": "${helper.constantName($Name)}.setContinuous(${Continuous});\n        if (${Limit_Input}) ${helper.constantName($Name)}.setInputRange(${Minimum_Input}, ${Maximum_Input});\n        if (${Limit_Output}) ${helper.constantName($Name)}.setInputRange(${Minimum_Output}, ${Maximum_Output});\n        if(${Send_to_SmartDashboard}) SmartDashboard.putData(\"${Name}\", ${helper.constantName($Name)});"
+	    "Extra": "${helper.constantName($Name)}.setContinuous(${Continuous});
+        #if (${Limit_Input})${helper.constantName($Name)}.setInputRange(${Minimum_Input}, ${Maximum_Input});#end
+        #if (${Limit_Output})${helper.constantName($Name)}.setInputRange(${Minimum_Output}, ${Maximum_Output});#end
+        #if (${Send_to_SmartDashboard})SmartDashboard.putData(\"${Name}\", ${helper.constantName($Name)});#end"
 	},
 	"Robot Drive 2" : {
 	    "Defaults": ["Component", "None"],
@@ -88,7 +91,8 @@
 	"Robot Drive 4" : {
 	    "Defaults": ["Component", "None"],
 	    "ClassName": "RobotDrive",
-	    "Construction": "${helper.constantName($Name)} = new ${ClassName}(${helper.constantName($Left_Front_Motor)}, ${helper.constantName($Left_Rear_Motor)}, ${helper.constantName($Right_Front_Motor)}, ${helper.constantName($Right_Rear_Motor)});"
+	    "Construction": "${helper.constantName($Name)} = new ${ClassName}(${helper.constantName($Left_Front_Motor)}, ${helper.constantName($Left_Rear_Motor)}
+        ${helper.constantName($Right_Front_Motor)}, ${helper.constantName($Right_Rear_Motor)});"
 	},
 	
         "Gyro" : {
