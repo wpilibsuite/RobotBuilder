@@ -66,7 +66,7 @@ public class UniqueValidator implements Validator {
             String validatorName = comp.getBase().getProperty(prop).getValidator();
             if (validatorName != null && validatorName.equals(name)) {
                 for (String field : fields) {
-                    if (prop.endsWith(field) && (prefix == null || prop.startsWith(prefix))) {
+                    if (prop.endsWith(field) && prop.startsWith(prefix)) {
                         values.put(field, comp.getProperty(prop));
                     }
                 }
@@ -75,6 +75,13 @@ public class UniqueValidator implements Validator {
         return values;
     }
 
+    /**
+     * Claim a unique set of values.
+     * @param key The key being claimed.
+     * @param val It's new value.
+     * @param comp The component making the claim.
+     * @throws robotbuilder.data.UniqueValidator.InvalidException 
+     */
     private void claim(String key, String val, RobotComponent comp) throws InvalidException {
         // Get the prefix
         String prefix = getPrefix(key);
@@ -92,15 +99,58 @@ public class UniqueValidator implements Validator {
         claims.put(values, comp.toString()+"-"+prefix);
     }
 
+    /**
+     * Release a claim.
+     * @param comp The component holding the claim.
+     * @param prefix The prefix associated with the hold
+     */
     private void release(RobotComponent comp, String prefix) {
-        Map<String, String> values = getMap(comp, prefix);
-        claims.remove(values);
+        if (hasClaim(comp, prefix)) {
+            Map<String, String> values = getMap(comp, prefix);
+            claims.remove(values);
+        }
     }
     
     /**
-     * @return An unused port that you need to claim.
+     * Sets a component to be unique with respect to the prefix of this property.
+     * @param component
+     * @param property
+     * @throws robotbuilder.data.UniqueValidator.InvalidException 
      */
-    public Map<String, String> getFree(Map<String, String[]> choices) throws InvalidException {
+    public void setUnique(RobotComponent component, String property) throws InvalidException {
+        String prefix = getPrefix(property);
+        if (!hasClaim(component, prefix)) {
+            Map<String, String[]> choices = new HashMap<String, String[]>();
+            for (String field : fields) {
+                choices.put(field,
+                        component.getBase().getProperty(prefix+field).getChoices());
+            }
+            Map<String, String> selection = getFree(choices);
+            for (String prop : selection.keySet()) {
+                System.out.println("\t"+prefix+prop+" => "+selection.get(prop));
+                component.setProperty(prefix+prop, selection.get(prop));
+            }
+            
+            update(component, property, component.getProperty(property));
+//            claims.put(selection, component.toString()+"-"+prefix);
+        }
+    }
+    
+    /**
+     * Whether or not a (component, prefix) pair has a claim.
+     * @param component
+     * @param prefix
+     * @return 
+     */
+    private boolean hasClaim(RobotComponent component, String prefix) {
+        String index = component.toString()+"-"+prefix;
+        return claims.containsValue(index);
+    }
+    
+    /**
+     * @return An unused port that can be claimed.
+     */
+    private Map<String, String> getFree(Map<String, String[]> choices) throws InvalidException {
         assert fields.size() <= 2; // TODO: buggy with more than two fields
         Map<String, Integer> locations = new HashMap<String, Integer>();
         for (String field : fields) {
@@ -112,6 +162,8 @@ public class UniqueValidator implements Validator {
             // Generate values
             Map<String, String> values = new HashMap<String, String>();
             for (String field : fields) {
+                System.out.println(choices.get(field));
+                System.out.println(locations.get(field));
                 values.put(field, choices.get(field)[locations.get(field)]);
             }
             

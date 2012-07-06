@@ -47,6 +47,9 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 Validator validator = robot.getValidator(validatorName);
                 System.out.println(validator);
                 if (validator != null) {
+                    if (validator instanceof UniqueValidator) {
+                        ((UniqueValidator) validator).setUnique(this, property);
+                    }
                     validator.update(this, property, getProperty(property));
                     System.out.println("Updated..");
                 }
