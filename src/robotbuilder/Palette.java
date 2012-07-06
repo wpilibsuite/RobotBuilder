@@ -55,12 +55,16 @@ public class Palette extends JPanel implements TreeSelectionListener {
 
         Constructor constructor = new Constructor();
         constructor.addTypeDescription(new TypeDescription(PaletteComponent.class, "!Component"));
-        constructor.addTypeDescription(new TypeDescription(DefaultProperty.class, "!Property"));
-        constructor.addTypeDescription(new TypeDescription(ChoicesProperty.class, "!ChoicesProperty"));
+
+        // Properties
         constructor.addTypeDescription(new TypeDescription(StringProperty.class, "!StringProperty"));
         constructor.addTypeDescription(new TypeDescription(BooleanProperty.class, "!BooleanProperty"));
         constructor.addTypeDescription(new TypeDescription(DoubleProperty.class, "!DoubleProperty"));
         constructor.addTypeDescription(new TypeDescription(FileProperty.class, "!FileProperty"));
+        constructor.addTypeDescription(new TypeDescription(ChoicesProperty.class, "!ChoicesProperty"));
+        constructor.addTypeDescription(new TypeDescription(ChildSelectionProperty.class, "!ChildSelectionProperty"));
+        constructor.addTypeDescription(new TypeDescription(TypeSelectionProperty.class, "!TypeSelectionProperty"));
+        
         constructor.addTypeDescription(new TypeDescription(ExistsValidator.class, "!ExistsValidator"));
         constructor.addTypeDescription(new TypeDescription(UniqueValidator.class, "!UniqueValidator"));
         Yaml yaml = new Yaml(constructor);

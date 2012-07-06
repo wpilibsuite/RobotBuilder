@@ -459,46 +459,18 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         return valid[0];
     }
 
-    public Vector<String> getJoystickNames() {
-        final Vector<String> joystickNames = new Vector<String>();
+    public Vector<String> getNamesOfType(final String type) {
+        final Vector<String> names = new Vector<String>();
         walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) {
-                if (self.getBase().getType().equals("Joystick")) {
-                    joystickNames.add(self.getName());
+                if (self.getBase().getType().equals(type)) {
+                    names.add(self.getName());
                 }
             }
         });
         
-        return joystickNames;
-    }
-
-    public Vector<String> getCommandNames() {
-        final Vector<String> commandNames = new Vector<String>();
-        walk(new RobotWalker() {
-            @Override
-            public void handleRobotComponent(RobotComponent self) {
-                if (self.getBase().getType().equals("Command")) {
-                    commandNames.add(self.getName());
-                }
-            }
-        });
-        
-        return commandNames;
-    }
-    
-    public Vector<String> getSubsystemNames() {
-        final Vector<String> subsystemNames = new Vector<String>();
-        walk(new RobotWalker() {
-            @Override
-            public void handleRobotComponent(RobotComponent self) {
-                if (self.getBase().getType().equals("Subsystem")) {
-                    subsystemNames.add(self.getName());
-                }
-            }
-        });
-        
-        return subsystemNames;
+        return names;
     }
     
     public void takeSnapshot(){

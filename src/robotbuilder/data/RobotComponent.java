@@ -29,12 +29,15 @@ public class RobotComponent extends DefaultMutableTreeNode {
         super();
         this.name = name;
         this.base = base;
+        this.robot = robot;
         properties = new HashMap<String, Property>();
         for (String propName : base.getPropertiesKeys()) {
             properties.put(propName, base.getProperty(propName).copy());
             properties.get(propName).setComponent(this);
         }
-        this.robot = robot;
+        for (String propName : base.getPropertiesKeys()) {
+            properties.get(propName).setUnique();
+        }
         robot.addName(name);
     }
     

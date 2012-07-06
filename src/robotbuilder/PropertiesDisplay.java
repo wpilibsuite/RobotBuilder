@@ -10,9 +10,8 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
-import robotbuilder.data.properties.Property;
 import robotbuilder.data.RobotComponent;
-import robotbuilder.data.Validator;
+import robotbuilder.data.properties.Property;
 
 /**
  *

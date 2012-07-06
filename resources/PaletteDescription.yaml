@@ -110,10 +110,10 @@
             default: "1"
 #end
 #macro( Button $Name )
-- !Property
+- !TypeSelectionProperty
             name: $Name Command
             type: Command
-            default: "1"
+            default: 1
           - !ChoicesProperty
             name: $Name When to Run
             choices: [whileHeld, whenPressed, whenReleased]
@@ -217,80 +217,10 @@ Palette:
         supports: {Sensor: -1, Actuator: -1, Controller: -1, Pneumatic: -1}
         help: A functional part of your robot that groups the sensors and actuators together.
         properties:
-          - !Property
+          - !TypeSelectionProperty
             name: Default Command
             type: Command
-            default: "None"
-      - !Component
-        name: PID Subsystem
-        type: Subsystem
-        supports: {Sensor: 1, Actuator: 1, Controller: -1, Pneumatic: 0}
-        help: A PID Subsystem is one that uses a PID loop almost constantly.
-        properties:
-          - !Property
-            name: Default Command
-            type: Command
-            default: "None"
-          - !Property
-            name: Send to SmartDashboard
-            type: Boolean
-            default: "false"
-          - !Property
-            name: Input
-            type: Sensor
-            default: "0"
-          - !Property
-            name: Output
-            type: Actuator
-            default: "0"
-          - !Property
-            name: P
-            type: Double
-            default: "1"
-          - !Property
-            name: I
-            type: Double
-            default: "0"
-          - !Property
-            name: D
-            type: Double
-            default: "0"
-          - !Property
-            name: F
-            type: Double
-            default: "0"
-          - !Property
-            name: Period
-            type: Integer
-            default: "50"
-          - !Property
-            name: Continuous
-            type: Boolean
-            default: "false"
-          - !Property
-            name: Limit Input
-            type: Boolean
-            default: "false"
-          - !Property
-            name: Minimum Input
-            type: Double
-            default: "0"
-          - !Property
-            name: Maximum Input
-            type: Double
-            default: "5"
-          - !Property
-            name: Limit Output
-            type: Boolean
-            default: "false"
-          - !Property
-            name: Minimum Output
-            type: Double
-            default: "-1"
-          - !Property
-            name: Maximum Output
-            type: Double
-            default: "1"
+            default: None
             
   - Controllers:
       - !Component
@@ -302,16 +232,16 @@ Palette:
           - !BooleanProperty
             name: Send to SmartDashboard
             default: false
-          - !Property
+          - !ChildSelectionProperty
             name: Input
             type: Sensor
             validators: [DropdownSelected]
-            default: "0"
-          - !Property
+            default: 0
+          - !ChildSelectionProperty
             name: Output
             type: Actuator
             validators: [DropdownSelected]
-            default: "0"
+            default: 0
           - !DoubleProperty
             name: P
             default: 1
@@ -354,19 +284,19 @@ Palette:
         supports: {Actuator: 2}
         help: RobotDrive handles tank drive, arcade drive and mecanum drive.
         properties:
-          - !Property
+          - !ChildSelectionProperty
             name: Left Motor
             type: Actuator
             validators: [DropdownSelected]
-            default: "0"
+            default: 0
           - !BooleanProperty
             name: Left Motor Inverted
             default: false
-          - !Property
+          - !ChildSelectionProperty
             name: Right Motor
             type: Actuator
             validators: [DropdownSelected]
-            default: "1"
+            default: 1
           - !BooleanProperty
             name: Right Motor Inverted
             default: false
@@ -388,35 +318,35 @@ Palette:
         supports: {"Actuator": 4}
         help: RobotDrive handles tank drive, arcade drive and mecanum drive.
         properties:
-          - !Property
+          - !ChildSelectionProperty
             name: Left Front Motor
             type: Actuator
             validators: [DropdownSelected]
-            default: "0"
+            default: 0
           - !BooleanProperty
             name: Left Front Motor Inverted
             default: false
-          - !Property
+          - !ChildSelectionProperty
             name: Left Rear Motor
             type: Actuator
             validators: [DropdownSelected]
-            default: "1"
+            default: 1
           - !BooleanProperty
             name: Left Rear Motor Inverted
             default: false
-          - !Property
+          - !ChildSelectionProperty
             name: Right Front Motor
             type: Actuator
             validators: [DropdownSelected]
-            default: "2"
+            default: 2
           - !BooleanProperty
             name: Right Front Motor Inverted
             default: false
-          - !Property
+          - !ChildSelectionProperty
             name: Right Rear Motor
             type: Actuator
             validators: [DropdownSelected]
-            default: "3"
+            default: 3
           - !BooleanProperty
             name: Right Rear Motor Inverted
             default: false
@@ -619,10 +549,10 @@ Palette:
         type: Button
         help: A joystick button that binds a driver action to a command.
         properties:
-          - !Property
+          - !TypeSelectionProperty
             name: Joystick
             type: Joystick
-            default: "1"
+            default: None
           - !ChoicesProperty
             name: Button
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
@@ -633,11 +563,10 @@ Palette:
         type: Joystick
         help: A joystick controlled by arm movement in the Microsoft Kinect Station.  1 is the left arm, and 2 is the right arm
         properties:
-          - !Property
+          - !ChoicesProperty
             name: Number
-            type: Integer
             choices: ["1", "2"]
-            validator: KinectJoystick
+            validators: [KinectJoystick]
             default: 1
         name: Analog Button
         type: Button
@@ -665,16 +594,12 @@ Palette:
         type: Command
         help: A command, someone really needs to update the help.
         properties:
-          - !Property
+          - !TypeSelectionProperty
             name: Requires
             type: Subsystem
-            default: "None"
+            default: None
       - !Component
         name: Command Group
         type: Command
         help: A command group, someone really needs to update the help.
-        properties:
-          - !Property
-            name: Requires
-            type: Subsystem
-            default: "None"
+        properties: []

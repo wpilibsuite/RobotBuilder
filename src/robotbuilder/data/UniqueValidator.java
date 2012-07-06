@@ -4,7 +4,6 @@
  */
 package robotbuilder.data;
 
-import robotbuilder.data.properties.DefaultProperty;
 import robotbuilder.data.properties.Property;
 import java.util.*;
 import java.util.logging.Level;
@@ -144,9 +143,12 @@ public class UniqueValidator implements Validator {
                 System.out.println("\t"+prefix+prop+" => "+selection.get(prop));
                 component.setProperty(prefix+prop, selection.get(prop));
             }
-            
-            update(component, property, component.getProperty(property).getValue());
-//            claims.put(selection, component.toString()+"-"+prefix);
+            try {
+                claim(property, component.getProperty(property).getValue(), component);
+    //            claims.put(selection, component.toString()+"-"+prefix);
+            } catch (InvalidException ex) {
+                Logger.getLogger(UniqueValidator.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     

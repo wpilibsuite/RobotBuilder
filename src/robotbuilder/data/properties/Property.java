@@ -1,5 +1,6 @@
 package robotbuilder.data.properties;
 
+import robotbuilder.MainFrame;
 import robotbuilder.RobotTree;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.UniqueValidator;
@@ -50,10 +51,17 @@ public abstract class Property {
         for (String validatorName : validators) {
             Validator validator = component.getRobotTree().getValidator(validatorName);
             if (validator != null) {
-                if (validator instanceof UniqueValidator) {
-                    ((UniqueValidator) validator).setUnique(component, name);
-                }
                 validator.update(component, name, getValue());
+            }
+        }
+    }
+    
+    public void setUnique() {
+        if (validators == null) return;
+        for (String validatorName : validators) {
+            Validator validator = component.getRobotTree().getValidator(validatorName);
+            if (validator != null && validator instanceof UniqueValidator) {
+                ((UniqueValidator) validator).setUnique(component, name);
             }
         }
     }
