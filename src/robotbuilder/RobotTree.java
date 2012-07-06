@@ -1,6 +1,7 @@
 
 package robotbuilder;
 
+import robotbuilder.data.RobotComponent;
 import java.awt.BorderLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -17,6 +18,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import robotbuilder.data.PaletteComponent;
 
 /**
  *
@@ -66,7 +68,9 @@ class RobotTree extends JPanel implements TreeSelectionListener {
                 if (childIndex == -1) {
                     childIndex = tree.getModel().getChildCount(path.getLastPathComponent());
                 }
-                DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(data);
+                PaletteComponent base = PaletteComponent.getComponent(data);
+                assert data != null; // TODO: Handle more gracefully
+                DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(new RobotComponent(base));
                 DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode)path.getLastPathComponent();
                 treeModel.insertNodeInto(newNode, parentNode, childIndex);
                 tree.makeVisible(path.pathByAddingChild(newNode));

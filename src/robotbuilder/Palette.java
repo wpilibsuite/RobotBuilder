@@ -14,8 +14,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import robotbuilder.data.PaletteItem;
-import robotbuilder.data.RobotComponent;
+import robotbuilder.data.PaletteComponent;
 
 /**
  * The Palette is the set of components that can be used to create the robot
@@ -27,7 +26,6 @@ public class Palette extends JPanel {
     
     private JTree paletteTree;
     static private Palette instance = null;
-    private HashMap<String, PaletteItem> paletteItems = new HashMap<String, PaletteItem>();
     
     private Palette() {
         FileReader file;
@@ -70,18 +68,6 @@ public class Palette extends JPanel {
     }
     
     /**
-     * Get the paletteItem that corresponds to a name.
-     * Each item on the palette has a unique name and this method returns the PaletteItem object that
-     * corresponds to the given name.
-     * @param name The name of the palette item
-     * @return The PaletteItem for the given name
-     */
-    public PaletteItem getItem(String name) {
-        PaletteItem item = paletteItems.get(name);
-        return item;
-    }
-
-    /**
      * Build the palette tree recursively by traversing the JSON data object
      * @param root The parent tree node
      * @param jSONObject The JSON object that corresponds to this level
@@ -107,15 +93,15 @@ public class Palette extends JPanel {
                 }
             }
             else {
-                RobotComponent component = createRobotComponent(key, child);
+                PaletteComponent component = createPaletteComponent(key, child);
                 DefaultMutableTreeNode node = new DefaultMutableTreeNode(component);
                 root.add(node);
             }
         }
     }
 
-    private RobotComponent createRobotComponent(String key, JSONObject child) {
-        RobotComponent component = new RobotComponent(key);
+    private PaletteComponent createPaletteComponent(String key, JSONObject child) {
+        PaletteComponent component = new PaletteComponent(key);
         try {
             JSONObject props = child.getJSONObject("Properties");
             for (Iterator i = props.keys(); i.hasNext();) {

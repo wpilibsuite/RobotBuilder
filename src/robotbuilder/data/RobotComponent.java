@@ -4,37 +4,19 @@
  */
 package robotbuilder.data;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
 
 /**
  *
- * @author brad
+ * @author alex
  */
 public class RobotComponent {
-    private String key;
-    private String ports;
-    private Hashtable<String, String> properties;
-    
-    public RobotComponent(String key) {
-        properties = new Hashtable<String, String>();
-        this.key = key;
+    PaletteComponent base;
+
+    public RobotComponent(PaletteComponent base) {
+        this.base = base;
     }
     
-    public void addProperty(String propName, String propType) {
-        properties.put(propName, propType);
-    }
-    
-    @Override
     public String toString() {
-        return key;
-    }
-    
-    public void print() {
-        System.out.println("Component: " + key);
-        for (Enumeration keys = properties.keys(); keys.hasMoreElements(); ) {
-            String k = (String) keys.nextElement();
-            System.out.println("\t\t" + k + ": " + properties.get(k));
-        }
+        return base.toString()+" 1";
     }
 }
