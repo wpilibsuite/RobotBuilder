@@ -602,4 +602,33 @@ Palette:
         name: Command Group
         type: Command
         help: A command group, someone really needs to update the help.
-        properties: []
+        properties:
+          - !Property
+            name: Requires
+            type: Subsystem
+            default: "None"
+      - !Component
+        name: PID Command
+        type: Command
+        help: A PID command, someone really needs to update the help.
+        properties:
+          - !Property
+            name: Requires
+            type: Subsystem
+            default: "None"
+          - !Property
+            name: P value
+            type: Double
+            default: "1"
+          - !Property
+            name: I value
+            type: Double
+            default: "0"
+          - !Property
+            name: D value
+            type: Double
+            default: "0"
+          - !Property
+            name: Update frequency (kHz)
+            type: Integer
+            default: "50"
