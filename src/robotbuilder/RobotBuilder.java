@@ -29,7 +29,6 @@ public class RobotBuilder {
                     System.out.println(laf);
                 }
                 try {
-                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(RobotBuilder.class.getName()).log(Level.SEVERE, null, ex);
