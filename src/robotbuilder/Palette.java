@@ -294,7 +294,9 @@ public class Palette extends JPanel implements TreeSelectionListener {
 	    return;
 	}
 	if (node instanceof DefaultMutableTreeNode) {
-            MainFrame.getInstance().setHelp(((PaletteComponent) node.getUserObject()).getHelpFile());
+            try {
+                MainFrame.getInstance().setHelp(((PaletteComponent) node.getUserObject()).getHelpFile());
+            } catch (ClassCastException ex) { /* Ignore folders */ }
 	}
     }
 
