@@ -45,7 +45,7 @@
 - !Property
             name: $Name Command
             type: Command
-            default: "None"
+            default: "1"
           - !Property
             name: $Name When to Run
             type: String
