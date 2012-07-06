@@ -100,14 +100,14 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param component The type of component to generate a default name for.
      * @return The default name.
      */
-    private String getDefaultComponentName(PaletteComponent componentType) {
+    private String getDefaultComponentName(PaletteComponent componentType, String subsystem) {
 	int i = 0;
 	String name;
 	while (true) {
 	    i++;
 	    name = componentType.toString() + " " + i;
-	    if (!usedNames.contains(name)) {
-		usedNames.add(name);
+	    if (!usedNames.contains(subsystem+name)) {
+		usedNames.add(subsystem+name);
 		return name;
 	    }
 	}
@@ -127,6 +127,13 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public void removeName(String name) {
 	usedNames.remove(name);
+    }
+
+    /**
+     * @param name The name being checked
+     */
+    public boolean hasName(String name) {
+	return usedNames.contains(name);
     }
 
     @Override
@@ -498,6 +505,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    if (childIndex == -1) {
 		childIndex = tree.getModel().getChildCount(path.getLastPathComponent());
 	    }
+	    DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) path.getLastPathComponent();
+	    System.out.println("parentNode=" + parentNode);
 	    DefaultMutableTreeNode newNode;
 	    if (support.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)) {
 		System.out.println("Importing from palette");
@@ -514,7 +523,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		System.out.println("Data: " + data);
 		PaletteComponent base = Palette.getInstance().getItem(data);
 		assert base != null; // TODO: Handle more gracefully
-		newNode = new RobotComponent(getDefaultComponentName(base), base, robot);
+		newNode = new RobotComponent(getDefaultComponentName(base, ((RobotComponent) parentNode).getSubsystem()), base, robot);
 	    } else if (support.getTransferable().isDataFlavorSupported(ROBOT_COMPONENT_FLAVOR)) {
 		System.out.println("Moving a robot component");
 		try {
@@ -532,8 +541,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    }
 	    System.out.println("newNode=" + newNode);
 	    saved = false;
-	    DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-	    System.out.println("parentNode=" + parentNode);
 	    treeModel.insertNodeInto(newNode, parentNode, childIndex);
 	    System.out.println("childIndex=" + childIndex);
 	    tree.makeVisible(path.pathByAddingChild(newNode));

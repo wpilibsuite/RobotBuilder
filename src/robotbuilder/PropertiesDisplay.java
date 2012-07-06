@@ -146,9 +146,18 @@ class PropertiesDisplay extends JPanel {
         @Override
         public void setValueAt(Object val, int row, int column) {
             assert column == 1; // TODO: Deal with more cleanly
-            if (row == 0)
-                currentComponent.setName((String) val);
-            else {
+            if (row == 0) {
+                String subsystem = currentComponent.getSubsystem();
+                String name = (String) val;
+                if (!robot.hasName(subsystem+name)) {
+                    robot.removeName(currentComponent.getFullName());
+                    currentComponent.setName(name);
+                    robot.addName(subsystem+name);
+                } else {
+                    JOptionPane.showMessageDialog(MainFrame.getInstance(),
+                            "You already have a component named: "+name, "Invalid Name", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
                 if (val instanceof String)
                     currentComponent.setValue(keys[row-1], (String) val);
                 else if (val instanceof Boolean)
