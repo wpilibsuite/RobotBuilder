@@ -291,6 +291,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             }
         });
         
+        properties.setCurrentComponent(root);
         update();
         System.out.println("Loaded");
         
