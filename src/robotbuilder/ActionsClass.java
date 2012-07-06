@@ -4,6 +4,7 @@
  */
 package robotbuilder;
 
+import robotbuilder.actions.WiringDiagramAction;
 import robotbuilder.actions.AboutAction;
 import robotbuilder.actions.LabViewAction;
 import robotbuilder.actions.JavaAction;
@@ -30,6 +31,7 @@ public class ActionsClass {
     AbstractAction javaAction = new JavaAction();
     AbstractAction labViewAction = new LabViewAction();
     AbstractAction aboutAction = new AboutAction();
+    AbstractAction wiringDiagramAction = new WiringDiagramAction();
     
     public ActionsClass() {
     }
@@ -48,6 +50,7 @@ public class ActionsClass {
         generateMenu.add(cppAction);
         generateMenu.add(javaAction);
         generateMenu.add(labViewAction);
+        generateMenu.add(wiringDiagramAction);
         menu.add(generateMenu);
 
         JMenu helpMenu = new JMenu("Help");
