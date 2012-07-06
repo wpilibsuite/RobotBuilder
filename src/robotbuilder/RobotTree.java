@@ -7,7 +7,6 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.io.*;
-import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,12 +22,15 @@ import javax.swing.tree.TreeSelectionModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.yaml.snakeyaml.Dumper;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
-import robotbuilder.data.PaletteComponent;
-import robotbuilder.data.RobotComponent;
-import robotbuilder.data.RobotWalker;
-import robotbuilder.data.Validator;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.introspector.BeanAccess;
+import org.yaml.snakeyaml.introspector.PropertyUtils;
+import org.yaml.snakeyaml.nodes.*;
+import org.yaml.snakeyaml.representer.Representer;
+import robotbuilder.data.*;
 import robotbuilder.data.Validator.InvalidException;
 
 /**
@@ -48,7 +50,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private Set<String> usedNames = new HashSet<String>();
     private Map<String, Validator> validators;
     /** The currently selected node */
-    private DefaultMutableTreeNode currentNode;
     private String filePath = null;
     
     private Preferences prefs;
@@ -60,7 +61,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private Deque<String> undoHistory = new LinkedList<String>();
 
     public RobotTree(PropertiesDisplay properties, Palette palette) {
-	fileChooser.setFileFilter(new FileNameExtensionFilter("JSON save file", "json"));
+	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yaml"));
 	saved = true;
 	this.properties = properties;
 	this.properties.setRobotTree(this);
@@ -164,15 +165,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public void save(String path) {
 	try {
-            //Constructor constructor = new Constructor();
-            //constructor.addTypeDescription(new TypeDescription(RobotComponent.class, "!Component"));
-            //Yaml yaml = new Yaml(constructor);
 	    System.out.println("Saving to: " + path);
 	    FileWriter save = new FileWriter(path);
-	    JSONObject robot = ((RobotComponent) treeModel.getRoot()).encodeAsJSON();
-	    System.out.println("Encoded to: " + robot);
-	    robot.write(save);
-
+            save.write(this.encode());
 	    System.out.println("Written");
 	    save.close();
 	} catch (JSONException ex) {
@@ -195,54 +190,128 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    }
 	    else if (result == JFileChooser.APPROVE_OPTION) {
                 filePath = fileChooser.getSelectedFile().getName();
-                if (!filePath.endsWith(".json"))
-                        filePath += ".json";
+                if (!filePath.endsWith(".yaml"))
+                        filePath += ".yaml";
 	    }
 	}
         save(filePath);
     }
     
     public String encode() throws JSONException {
-        System.out.println("Saving to as String");
-        StringWriter save = new StringWriter();
-        JSONObject robot = ((RobotComponent) treeModel.getRoot()).encodeAsJSON();
-        System.out.println("Encoded to: " + robot);
-        robot.write(save);
-        return save.toString();
+        Object out = ((RobotComponent) treeModel.getRoot()).visit(new RobotVisitor() {
+            @Override
+            public Object visit(RobotComponent self, Object...extra) {
+                Map<String, Object> me = new HashMap<String, Object>();
+                me.put("Name", self.getName());
+                me.put("Base", self.getBaseType());
+                me.put("Configuration", self.getConfiguration());
+                List<Object> children = new ArrayList<Object>();
+                for (Iterator it = self.getChildren().iterator(); it.hasNext();) {
+                    RobotComponent child = (RobotComponent) it.next();
+                    children.add(child.visit(this));
+                }
+                me.put("Children", children);
+                return me;
+            }
+        }, null);
+        Yaml yaml = new Yaml();
+        System.out.println(yaml.dump(out));
+        return yaml.dump(out);
     }
 
     /**
-     * Load the RobotTree from a json.
+     * Load the RobotTree from a yaml file.
      * @param path 
      */
-    public void load(String path) {
-        filePath = path;
+    public void load(File path) {
 	try {
 	    System.out.println("Loading from: " + path);
 	    FileReader source = new FileReader(path);
-	    JSONTokener tokener;
-	    tokener = new JSONTokener(source);
-	    JSONObject json;
-	    json = new JSONObject(tokener);
-	    treeModel.setRoot(RobotComponent.decodeFromJSON(json, this));
-	    update();
-	    System.out.println("Loaded");
-	    source.close();
-            
-            walk(new RobotWalker() {
-                @Override
-                public void handleRobotComponent(RobotComponent self) {
-                    addName(self.getFullName());
-                }
-            });
-	} catch (JSONException ex) {
-	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+            load(source);
 	} catch (IOException ex) {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
-	} catch (Validator.InvalidException ex) {
-	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	}
+        filePath = path.getAbsolutePath();
 	saved = true;
+    }
+    
+    /**
+     * Load the RobotTree from a yaml string.
+     * @param path 
+     */
+    public void load(String text) {
+        System.out.println("Loading from: String");
+        StringReader source = new StringReader(text);
+        load(source);
+        System.out.println("Loaded");
+    }
+    
+    /**
+     * Load the RobotTree from a yaml string.
+     * @param path 
+     */
+    public void load(Reader in) {
+        System.out.println("Loading");
+        newFile(Palette.getInstance());
+
+        Yaml yaml = new Yaml();
+//        System.out.println(yaml.load(in));
+        Map<String, Object> details = (Map<String, Object>) yaml.load(in);
+        RobotComponent root = new RobotComponent();
+        
+        root.visit(new RobotVisitor() {
+            @Override
+            public Object visit(RobotComponent self, Object...extra) {
+                Map<String, Object> details = (Map<String, Object>) extra[0];
+                self.setRobotTree(robot);
+                self.setName((String) details.get("Name"));
+                self.setBaseType((String) details.get("Base"));
+                self.setConfiguration((Map<String, String>) details.get("Configuration"));
+                for (Object childDescription : (List) details.get("Children")) {
+                    RobotComponent child = new RobotComponent();
+                    child.visit(this, (Map<String, Object>) childDescription);
+                    self.add(child);
+                }
+                return null;
+            }
+        }, details);
+        
+        treeModel.setRoot(root);
+        
+        // Validate loaded ports
+        ((RobotComponent) treeModel.getRoot()).walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                // Validate
+                Set<String> used = new HashSet<String>();
+                for (Property property : self.getBase().getProperties()) {
+                    String validatorName = property.getValidator();
+                    Validator validator = robot.getValidator(validatorName);
+                    if (validator != null) {
+                        String prefix = validator.getPrefix(property.getName());
+                        if (!used.contains(prefix)) {
+                            used.add(prefix);
+                            try {
+                                validator.claim(property.getName(), self.getProperty(property.getName()), self);
+                            } catch (InvalidException ex) {
+                                Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        update();
+        System.out.println("Loaded");
+        
+        // Add names to used names list
+        walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                addName(self.getFullName());
+            }
+        });
     }
     
     public void load() {
@@ -256,28 +325,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         else if (result == JFileChooser.APPROVE_OPTION) {
             filePath = fileChooser.getSelectedFile().getName();
         }
-        load(filePath);
-    }
-    
-    public void decodeAndLoad(String in) throws JSONException, InvalidException {
-	    System.out.println("Loading from String");
-	    StringReader source = new StringReader(in);
-	    JSONTokener tokener;
-	    tokener = new JSONTokener(source);
-	    JSONObject json;
-	    json = new JSONObject(tokener);
-	    treeModel.setRoot(RobotComponent.decodeFromJSON(json, this));
-	    update();
-	    System.out.println("Loaded");
-	    source.close();
-            
-            usedNames = new HashSet<String>();
-            walk(new RobotWalker() {
-                @Override
-                public void handleRobotComponent(RobotComponent self) {
-                    addName(self.getFullName());
-                }
-            });
+        load(new File(filePath));
     }
 
     public void walk(RobotWalker walker) {
@@ -428,16 +476,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         if (undoHistory.size() > 1) {
             System.out.println("Undoing");
             undoHistory.pollLast();
-            try {
-                decodeAndLoad(undoHistory.pollLast());
-            } catch (JSONException ex) {
-                Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvalidException ex) {
-                Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            load(undoHistory.pollLast());
         }
         tree.setSelectionRow(0);
-//        valueChanged(null);
     }
 
     /**

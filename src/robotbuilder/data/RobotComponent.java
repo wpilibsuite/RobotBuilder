@@ -22,9 +22,15 @@ public class RobotComponent extends DefaultMutableTreeNode {
     private PaletteComponent base;
     private RobotTree robot;
     private Map<String, String> configuration = new HashMap<String, String>();
+
     private Map<String, JComboBox> combos = new HashMap<String, JComboBox>();
     private Map<String, JFileChooser> filechoosers = new HashMap<String, JFileChooser>();
 
+    public RobotComponent() {
+        super();
+        System.out.println("Creating robot component");
+    }
+    
     public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
         this.name = name;
         this.base = base;
@@ -220,6 +226,31 @@ public class RobotComponent extends DefaultMutableTreeNode {
     public void setProperty(String key, String val) {
         configuration.put(key, val);
     }
+    
+    public Map<String, String> getConfiguration() {
+        return configuration;
+    }
+    public void setConfiguration(Map<String, String> configuration) {
+        this.configuration = configuration;
+    }
+    
+    public Vector<DefaultMutableTreeNode> getChildren() {
+        if (children != null)
+            return children;
+        else
+            return new Vector<DefaultMutableTreeNode>();
+    }
+    public void setChildren(Vector<DefaultMutableTreeNode> children) {
+        this.children = children;
+    }
+    
+    public String getBaseType() {
+        return base.getName();
+    }
+    public void setBaseType(String baseType) {
+        this.base = Palette.getInstance().getItem(baseType);
+    }
+
 
     /**
      * @param component The component type to check.
@@ -315,6 +346,10 @@ public class RobotComponent extends DefaultMutableTreeNode {
         }
         walker.handleRobotComponent(this);
     }
+    
+    public <T> T visit(RobotVisitor<T> visitor, Object...extra) {
+        return visitor.visit(this, extra);
+    }
 
     public String getSubsystem() {
         if (getBase().getType().equals("Subsystem")) 
@@ -341,5 +376,9 @@ public class RobotComponent extends DefaultMutableTreeNode {
             }
         }
         return names;
+    }
+
+    public void setRobotTree(RobotTree robot) {
+        this.robot = robot;
     }
 }
