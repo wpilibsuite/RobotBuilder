@@ -596,6 +596,18 @@ Palette:
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
             default: "1"
           #Button("")
+      - !Component
+        name: Kinect Stick
+        type: Joystick
+        help: A joystick controlled by arm movement in the Microsoft Kinect Station.  1 is the left arm, and 2 is the right arm
+        properties:
+          - !Property
+            name: Number
+            type: Integer
+            choices: ["1", "2"]
+            validator: Joystick
+            default: 1
+          
 
   - Commands:
       - !Component
