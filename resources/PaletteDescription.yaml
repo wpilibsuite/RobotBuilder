@@ -177,9 +177,8 @@ Palette:
             extension: null
             folder: true
             default: ""
-          - !Property
+          - !StringProperty
             name: Java Package
-            type: String
             default: ""
           - !BooleanProperty
             name: Export Subsystems
