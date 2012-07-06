@@ -101,6 +101,12 @@ public class PaletteComponent {
 //            System.out.println("\t\t" + k + ": " + properties.get(k));
         }
     }
+    
+    @Override
+    public int hashCode() {
+        return 3 * name.hashCode() +
+                5 * type.hashCode();
+    }
 
     
     public String getHelpFile() {

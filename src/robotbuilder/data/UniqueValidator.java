@@ -17,7 +17,7 @@ import robotbuilder.data.properties.ChoicesProperty;
 public class UniqueValidator implements Validator {
     private String name;
     LinkedList<String> fields;
-    Map<Map<String, Object>, String> claims = new HashMap<Map<String,Object>, String>();
+    Map<Map<String, Object>, Pair> claims = new HashMap<Map<String,Object>, Pair>();
     
     public UniqueValidator() {}
 
@@ -29,7 +29,8 @@ public class UniqueValidator implements Validator {
     @Override
     public boolean isValid(RobotComponent component, Property property) {
         String prefix = getPrefix(property.getName());
-        return claims.containsValue(component.toString()+"-"+prefix);
+        Pair pair = new Pair(component, prefix);
+        return claims.containsValue(pair);
     }
 
     @Override
@@ -42,8 +43,8 @@ public class UniqueValidator implements Validator {
 
     @Override
     public String getError(RobotComponent component, Property property) {
-        String claimant = claims.get(getMap(component, getPrefix(property.getName())));
-        return "This port is in use by "+claimant+" please change this to an unused port.";
+        Pair claimant = claims.get(getMap(component, getPrefix(property.getName())));
+        return "This port is in use by "+claimant.toString()+" please change this to an unused port.";
     }
     
     @Override
@@ -103,7 +104,8 @@ public class UniqueValidator implements Validator {
             throw new InvalidException();
         }
             
-        claims.put(values, comp.toString()+"-"+prefix);
+        Pair pair = new Pair(comp, prefix);
+        claims.put(values, pair);
     }
 
     /**
@@ -154,8 +156,8 @@ public class UniqueValidator implements Validator {
      * @return 
      */
     private boolean hasClaim(RobotComponent component, String prefix) {
-        String index = component.toString()+"-"+prefix;
-        return claims.containsValue(index);
+        Pair pair = new Pair(component, prefix);
+        return claims.containsValue(pair);
     }
     
     /**
@@ -211,6 +213,7 @@ public class UniqueValidator implements Validator {
         this.fields = fields;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -223,6 +226,39 @@ public class UniqueValidator implements Validator {
      */
     public static class InvalidException extends Throwable {
         public InvalidException() {
+        }
+    }
+    
+    static class Pair {
+        RobotComponent comp;
+        String prefix;
+        
+        Pair(RobotComponent comp, String prefix) {
+            this.comp = comp;
+            this.prefix = prefix;
+        }
+        
+        @Override
+        public String toString() {
+            return comp.toString() + ": " + prefix;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 5;
+            hash = 53 * hash + (this.comp != null ? this.comp.hashCode() : 0);
+            hash = 53 * hash + (this.prefix != null ? this.prefix.hashCode() : 0);
+            return hash;
+        }
+        
+        @Override
+        public boolean equals(Object oth) {
+            if (oth instanceof Pair) {
+                Pair other = (Pair) oth;
+                return comp.equals(other.comp) 
+                        && prefix.equals(other.prefix);
+            }
+            return false;
         }
     }
 }

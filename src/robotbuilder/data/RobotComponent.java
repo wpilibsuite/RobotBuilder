@@ -102,6 +102,11 @@ public class RobotComponent extends DefaultMutableTreeNode {
     }
     
     @Override
+    public int hashCode() {
+        return base.hashCode();
+    }
+    
+    @Override
     public String toString() {
         return name;
     }
