@@ -14,7 +14,11 @@ import java.util.Map;
  */
 public class PaletteComponent {
     private String name; //  the name of the palette component
-    // the metadata for the component (type, etc.)
+    // The metadata for the component (type, etc.)
+    private String type; // the type of the data
+    // Children that this can support having
+    private HashMap<String, Integer> supports = new HashMap<String, Integer>(); 
+    
     private HashMap<String, String> metaData = new HashMap<String, String>(); 
     // set of properties for the component
     private HashMap<String, Property> properties = new HashMap<String, Property>();
@@ -43,5 +47,13 @@ public class PaletteComponent {
             String k = (String) key;
             System.out.println("\t\t" + k + ": " + properties.get(k));
         }
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    public void addSupport(String key, Integer val) {
+        supports.put(key, val);
     }
 }

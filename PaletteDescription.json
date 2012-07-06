@@ -4,6 +4,8 @@
 	"Order": ["Organization", "Sensors", "Actuators"],
 	"Organization" : {
 	    "Subsystem" : {
+	    "Type": "Organization",
+	    "Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Organization": "unlimited"},
 		"Properties" : {
 		    "Type" : {
                         "Type" : "Subsystem",
@@ -13,6 +15,8 @@
 		}
 	    },
 	    "PIDController" : {
+		"Type": "Organization",
+		"Supports": {"Sensor": 1, "Actuator": 1},
 		"Properties" : {
 		    "Input" : {
                         "Type" : "Actuator",
@@ -27,6 +31,7 @@
 	},
         "Sensors": {
             "Gyro" : {
+		"Type": "Sensor",
                 "Properties" : {
                     "Input channel" : {
                         "Type" : "AnalogInput",
@@ -39,6 +44,7 @@
                 }
             },
             "Accelerometer" : {
+		"Type": "Sensor",
                 "Properties" : {
                     "Input channel" : {
                         "Type" : "AnalogInput"
@@ -46,6 +52,7 @@
                 }
             },
             "Quadrature encoder" : {
+		"Type": "Sensor",
                 "Properties" : {
                     "AChannel" : {
                         "Type" : "DigitalInput"
@@ -56,6 +63,7 @@
                 }
             },
             "Potentiometer" : {
+		"Type": "Sensor",
                 "Properties" : {
                     "Input channel" : {
                         "Type" : "AnalogChannel"
@@ -63,6 +71,7 @@
                 }
             },
             "Limit switch" : {
+		"Type": "Sensor",
                 "Properties" : {
                     "Input channel" : {
                         "Type" : "DigitalInput"
@@ -72,6 +81,7 @@
         },
         "Actuators" : {
             "Victor" : {
+		"Type": "Actuator",
                 "Properties" : {
                     "PWM port" : {
                         "Type" : "PWMInput"
@@ -79,6 +89,7 @@
                 }
             },
             "Jaguar" : {
+		"Type": "Actuator",
                 "Properties" : {
                     "PWM port" : {
                         "Type" : "PWMInput"

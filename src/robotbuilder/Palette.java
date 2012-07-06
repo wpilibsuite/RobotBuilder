@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -30,9 +31,11 @@ import robotbuilder.data.Property;
  * @author brad
  */
 public class Palette extends JPanel {
+    public static final int UNLIMITED = -1;
     
     private JTree paletteTree;
     static private Palette instance = null;
+    private Map<String, PaletteComponent> paletteItems;
     
     private Palette() {
         FileReader file;
@@ -87,6 +90,7 @@ public class Palette extends JPanel {
      * @param jSONObject The JSON object that corresponds to this level
      */
     private void createTree(DefaultMutableTreeNode root, JSONObject jSONObject) {
+        // Allow order to be imposed on the palette
         Iterator<String> i;
         JSONArray order = jSONObject.optJSONArray("Order");
         if (order != null) {
@@ -97,6 +101,7 @@ public class Palette extends JPanel {
             
         while (i.hasNext()) {
             String key = i.next();
+            System.out.println(key);
             JSONObject child;
             try {
                 child = (JSONObject) jSONObject.get(key);
@@ -124,6 +129,30 @@ public class Palette extends JPanel {
 
     private PaletteComponent createPaletteComponent(String key, JSONObject child) {
         PaletteComponent component = new PaletteComponent(key);
+        paletteItems.put(key, component);
+        component.setType(child.optString("Type"));
+        // Add Drop support
+        JSONObject supports = child.optJSONObject("Supports");
+        if (supports != null) {
+            for (Iterator i = supports.keys(); i.hasNext();) {
+                try {
+                    String name = (String) i.next();
+                    Object val = supports.get(name);
+                    if (val instanceof String) {
+                        assert ((String) val).equals("unlimited");
+                        component.addSupport(name, UNLIMITED);
+                    } else if (val instanceof Integer) {
+                        component.addSupport(name, (Integer) val);
+                    } else {
+                        System.out.println("Unsupported class: "+val.getClass());
+                    }
+                } catch (JSONException ex) {
+                    Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+                
+        // Add Properties
         try {
             JSONObject props = child.getJSONObject("Properties");
             for (Iterator i = props.keys(); i.hasNext();) {
