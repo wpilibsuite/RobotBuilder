@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,8 @@ import javax.swing.tree.TreeSelectionModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.yaml.snakeyaml.TypeDescription;
+import org.yaml.snakeyaml.Yaml;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
@@ -161,6 +164,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public void save(String path) {
 	try {
+            //Constructor constructor = new Constructor();
+            //constructor.addTypeDescription(new TypeDescription(RobotComponent.class, "!Component"));
+            //Yaml yaml = new Yaml(constructor);
 	    System.out.println("Saving to: " + path);
 	    FileWriter save = new FileWriter(path);
 	    JSONObject robot = ((RobotComponent) treeModel.getRoot()).encodeAsJSON();

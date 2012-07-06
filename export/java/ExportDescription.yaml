@@ -126,6 +126,9 @@ Instructions:
   Accelerometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "Accelerometer"
+    Extra: >-
+      #constant($Name).setSensitivity(${Volts_Per_G});
+              #constant($Name).setZero(${Zero_G_Volts});
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
