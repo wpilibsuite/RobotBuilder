@@ -57,6 +57,14 @@ public class RobotComponent extends DefaultMutableTreeNode {
         this(name, Palette.getInstance().getItem(type), robot);
     }
     
+    /**
+     * Gets the PaletteComponent of the specified type.
+     * @param type The type of the component.
+     */
+    public static PaletteComponent getPaletteComponent(String type) {
+        return Palette.getInstance().getItem(type);
+    }
+    
     public Property getProperty(String key) {
         return properties.get(key);
     }
@@ -216,5 +224,9 @@ public class RobotComponent extends DefaultMutableTreeNode {
 
     public RobotTree getRobotTree() {
         return robot;
+    }
+    
+    public void addChild(RobotComponent child) {
+        if(this.allowsChildren && this.supports(child)) this.add(child);
     }
 }

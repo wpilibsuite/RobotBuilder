@@ -101,7 +101,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
 	}
-        
+        //<editor-fold desc="Right click stuff" defaultstate="collapsed">
         tree.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -118,18 +118,29 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         final JMenu actuatorMenu    = new JMenu("Add Actuators");
                         final JMenu pneumaticMenu   = new JMenu("Add Pneumatics");
                         
-                        final RobotComponent selected = (RobotComponent) path.getLastPathComponent();
-                        RobotComponent toAdd = null;
-                        final String name  = selected.toString();
-                        final String type  = selected.getBaseType();
+                        final RobotComponent selected = (RobotComponent) path.getLastPathComponent(); // The component that's been clicked
+                        RobotComponent componentToAdd = null;
+                        
+                        final String name          = selected.toString();
+                        final String selectedType  = selected.getBase().getName(); // Subsystem -> Subsystem, 
+                        String gottenType          = selected.getBase().getType(); // Victor -> Actuator, Gyro -> PIDSource, etc.
+                        
+                        if(gottenType.equals("PIDSource")) gottenType = "Sensor"; // PIDSource -> Sensor
+                        final String componentType = gottenType;
                         
                         final int numSupports = 25;
                         
                         final JMenuItem componentNameItem = new JMenuItem(name.toUpperCase()); // shows the name of the selected component
-                        System.out.println("\nComponent name: "+name);
-                        System.out.println("Component type: "+type+"\n");
+                        
+                        System.out.println("\nComponent name: \""+name+"\"");
+                        System.out.println("Type of selected component: \""+selectedType+"\"");
+                        System.out.println("Given type of selected component: \""+gottenType+"\"");
+                        System.out.println("Base type of component: \""+componentType+"\"\n");
                         
                         final JMenuItem delete = new JMenuItem("Delete");
+                        delete.setAction(new DeleteItemAction("Delete", selected));
+//                        final JMenuItem wipe = new JMenuItem("Clear");
+//                        wipe.setAction(new ClearAction("Clear", selected));
                         final JMenuItem cancel = new JMenuItem("Cancel");
                         
                         componentNameItem.setEnabled(false);
@@ -139,17 +150,17 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         
                         
                         //<editor-fold defaultstate="collapsed" desc="Main folders: Subsystems, OI, and Commands">
-                        if(type.equals("Subsystems")){
+                        if(selectedType.equals("Subsystems")){
                             delete.setEnabled(false);
                             addActions[0] = new JMenuItem("Add Subsystem");
                             addActions[1] = new JMenuItem("Add PID Subsystem");
                             
-                        } else if(type.equals("OI")){
+                        } else if(selectedType.equals("OI")){
                             delete.setEnabled(false);
                             addActions[0] = new JMenuItem("Add Joystick");
                             addActions[1] = new JMenuItem("Add Joystick Button");
                             
-                        } else if(type.equals("Commands")){
+                        } else if(selectedType.equals("Commands")){
                             delete.setEnabled(false);
                             addActions[0] = new JMenuItem("Add Command");
                             addActions[1] = new JMenuItem("Add Command Group");
@@ -157,13 +168,13 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         }
                         //</editor-fold>
                         //<editor-fold defaultstate="collapsed" desc="Robot Drives">
-                        else if(type.equals("Robot Drive 4")|| type.equals("Robot Drive 2")) {
+                        else if(selectedType.equals("Robot Drive 4")|| selectedType.equals("Robot Drive 2")) {
                             addActions[0] = new JMenuItem("Add Victor");
                             addActions[1] = new JMenuItem("Add Jaguar");
                         }
                         //</editor-fold>
                         //<editor-fold defaultstate="collapsed" desc="Subsystem Menus and Choices">
-                        if(type.equals("Subsystem") || type.equals("PID Subsystem") || type.equals("PID Controller")){
+                        if(selectedType.equals("Subsystem") || selectedType.equals("PID Subsystem") || selectedType.equals("PID Controller")){
                             subsystemAdds[0]  = new JMenuItem("Add PID Controller");
                             subsystemAdds[1]  = new JMenuItem("Add Robot Drive 2");
                             subsystemAdds[2]  = new JMenuItem("Add Robot Drive 4");
@@ -204,27 +215,28 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         componentNameItem.setEnabled(false);
                         mainMenu.add(componentNameItem);
                         
-                        if(type.equals("Subsystem") || type.equals("PID Subsystem")){
+                        if(selectedType.equals("Subsystem") || selectedType.equals("PID Subsystem")){
                             mainMenu.add(controllerMenu);
                             mainMenu.add(actuatorMenu);
                             mainMenu.add(sensorMenu);
                             mainMenu.add(pneumaticMenu);
-                        } else if(type.equals("PID Controller")) {
+                        } else if(selectedType.equals("PID Controller")) {
                             mainMenu.add(actuatorMenu);
                             mainMenu.add(sensorMenu);
                         }
                         
                         for(int i = 0; i < subsystemAdds.length && subsystemAdds[i] != null; i++) {
-                            toAdd = new RobotComponent(subsystemAdds[i].getText().substring(4), type, robot);
-                            subsystemAdds[i].setAction(new AddItemAction(subsystemAdds[i].getText(), tree, selected, toAdd));
+//                            componentToAdd = new RobotComponent(subsystemAdds[i].getText().substring(4), selectedType, robot);
+                            subsystemAdds[i].setAction(new AddItemAction(subsystemAdds[i].getText(), selected, componentToAdd));
                         }
                         
                         for(int i = 0; i < addActions.length && addActions[i] != null; i++) {
-                            toAdd = new RobotComponent(addActions[i].getText().substring(4), addActions[i].getText().substring(4), robot);
+//                            componentToAdd = new RobotComponent(addActions[i].getText().substring(4), addActions[i].getText().substring(4), robot);
                             mainMenu.add(addActions[i]);
-                            addActions[i].setAction(new AddItemAction(addActions[i].getText(), tree, selected, toAdd));
+                            addActions[i].setAction(new AddItemAction(addActions[i].getText(), selected, componentToAdd));
                         }
                         
+//                        mainMenu.add(wipe);
                         mainMenu.add(delete);
                         mainMenu.add(cancel);
                         mainMenu.show(tree, bounds.x, bounds.y + bounds.height);
@@ -234,6 +246,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             }
             
         });
+        //</editor-fold>
     }
 
     /**
@@ -521,7 +534,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * <li>If the dialog is closed in any way, the application will <u>not</u>
      * close and will <u>not</u> save.
      * </ul>
-     * @return If it's okay to close the application frame.
+     * @return True if it's okay to close the application frame, else false.
      */
     boolean OKToClose() {
 	String[] options = {"Save", "Discard", "Cancel"};
@@ -552,15 +565,13 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     public void newFile(Palette palette) {
-	//if (OKToClose()) {
-	    DefaultMutableTreeNode root = makeTreeRoot();
-	    treeModel.setRoot(root);
-	    tree.setSelectionPath(new TreePath(root));
-            usedNames = new HashSet<String>();
-            validators = palette.getValidators();
-	    saved = true;
-            MainFrame.getInstance().prefs.put("FileName", "");
-	//}
+        DefaultMutableTreeNode root = makeTreeRoot();
+        treeModel.setRoot(root);
+        tree.setSelectionPath(new TreePath(root));
+        usedNames = new HashSet<String>();
+        validators = palette.getValidators();
+        saved = true;
+        MainFrame.getInstance().prefs.put("FileName", "");
     }
 
     /**
@@ -585,17 +596,17 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     public Iterable<RobotComponent> getCommands() {
-        final LinkedList<RobotComponent> subsystems = new LinkedList<RobotComponent>();
+        final LinkedList<RobotComponent> commands = new LinkedList<RobotComponent>();
         walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) {
                 if (self.getBase().getType().equals("Command")) {
-                    subsystems.add(self);
+                    commands.add(self);
                 }
             }
         });
         
-        return subsystems;
+        return commands;
     }
 
     public boolean isRobotValid() {
@@ -733,7 +744,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
 		@Override
 		public Object getTransferData(DataFlavor df) throws UnsupportedFlavorException, IOException {
-                    System.out.print("Transfer data: "+data);
+//                    System.out.print("Transfer data: "+data);
                     return data;
 		}
 	    };
@@ -835,10 +846,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * {@link RobotTree} via right-click menus.
      */
     private class AddItemAction extends AbstractAction {
-        /** The JTree */
-//        JTree tree;
         /** The currently selected node */
-        RobotComponent selectedNode;
+        RobotComponent selectedComponent;
         /** The node to add */
         RobotComponent childToAdd;
         String name;
@@ -846,7 +855,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         /**
          * Creates a new {@code AddItemAction} based on
          * <ul>
-         * <li>The {@code RobotComponent} that has been right clicked.
+         * <li>The {@link JMenuItem} that has been right clicked.
          * <li>The name of said {@code RobotComponent}.
          * <li>The {@code JTree} that contains this {@code RobotComponent}.
          * <li>The {@code RobotComponent} that is to be added.
@@ -857,7 +866,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
          * @param childToAdd The {@code RobotComponent} to add when this is clicked.
          */
         public AddItemAction(String name, 
-                            JTree tree, 
                             RobotComponent selectedNode, 
                             RobotComponent childToAdd) {
             
@@ -865,8 +873,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             putValue(Action.SHORT_DESCRIPTION, (new StringBuffer(name)).insert(4, "a ").toString());
             
             this.name = name;
-//            this.tree = tree;
-            this.selectedNode = selectedNode;
+            this.selectedComponent = selectedNode;
             this.childToAdd = childToAdd;
         }
 
@@ -875,33 +882,80 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
          * @inheritdoc
          */
         public void actionPerformed(ActionEvent e) {
-            if(tree != null && selectedNode != null && childToAdd != null){
-                JMenuItem source = (JMenuItem) e.getSource();
-                System.out.println("Menu item \""+source.getText()+"\" selected.");
-                
-                RobotComponent toAdd = new RobotComponent(generateName(name.substring(4), selectedNode.getSubsystem()), source.getText().substring(4), robot);
-                selectedNode.add(toAdd);
-                tree.expandRow(selectedNode.getLevel());
-                treeModel.reload(selectedNode);
-                update();
-                takeSnapshot();
-                System.out.println("Item \""+source.getText().substring(4)+"\" added.");
-            } else {
-                System.out.println(tree.getName()+" "+selectedNode+" "+childToAdd);
+            JMenuItem source = (JMenuItem) e.getSource();     // The menu item that's been clicked
+            String nameToAdd = source.getText().substring(4); // Removes the "Add " in the beginning
+
+            System.out.println("\nCreating component...");
+            /* 
+            * Step one:   generate new name based off previous instances of this type of RobotComponent
+            * Step two:   get the PaletteComponent of this type (e.g. "Gyro")
+            */
+            RobotComponent toAdd = new RobotComponent(
+                    getDefaultComponentName(RobotComponent.getPaletteComponent(nameToAdd), selectedComponent.getSubsystem()), 
+                    nameToAdd, 
+                    robot);
+            System.out.println("Component created\n");
+
+            selectedComponent.addChild(toAdd);
+            tree.expandRow(selectedComponent.getLevel());
+            treeModel.reload(selectedComponent);
+            update();
+            takeSnapshot();
+            System.out.println("Item \""+toAdd.getFullName()+"\" added.");
+        }
+    }
+    
+    private class DeleteItemAction extends AbstractAction {
+        private RobotComponent target;
+        
+        public DeleteItemAction(String name, RobotComponent target) {
+            putValue(Action.NAME, name);
+            putValue(Action.SHORT_DESCRIPTION, "Delete this component.");
+            
+            this.target = target;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Removing \""+target.getName()+"\"...");
+            int option = JOptionPane.showConfirmDialog(tree, 
+                                                       "Delete \""+target.getName()+"\"?", 
+                                                       "Delete", 
+                                                       JOptionPane.YES_NO_OPTION);
+            switch(option) {
+                case JOptionPane.YES_OPTION:
+                    target.removeFromParent();
+                    update();
+                    takeSnapshot();
+                    System.out.println("\""+target.getName()+"\" removed");
+                    break;
+                default:
+                    System.out.println("Cancelled.");
+                    return;
             }
+            
         }
         
-        private String generateName(String wantedName, String subsystem) {
-            int i = 0;
-            String givenName;
-            while (true) {
-                i++;
-                givenName = wantedName + " " + i;
-                if (!usedNames.contains(subsystem+givenName)) {
-                    usedNames.add(subsystem+givenName);
-                    return givenName;
-                }
-            }
+    }
+    
+    private class ClearAction extends AbstractAction {
+        
+        private String name;
+        private RobotComponent selected;
+        
+        public ClearAction(String name, RobotComponent selected) {
+            putValue(Action.NAME, name);
+            putValue(Action.SHORT_DESCRIPTION, "Clear the components within this.");
+            this.name = name;
+            this.selected = selected;
         }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            selected.removeAllChildren();
+            update();
+            takeSnapshot();
+        }
+        
     }
 }
