@@ -92,7 +92,7 @@ public class ActionsClass {
             @Override
             public boolean accept(File file) {
                 for (String path : file.list()) {
-                    if (path.equals("ExportDescription.json")) return true;
+                    if (path.equals("ExportDescription.yaml")) return true;
                 }
                 return false;
             }
@@ -101,7 +101,7 @@ public class ActionsClass {
         LinkedList<ExporterAction> results = new LinkedList<ExporterAction>();
         for (File dir : dirs) {
             try {
-                results.add(new ExporterAction(new File(dir.getAbsolutePath()+File.separator+"ExportDescription.json")));
+                results.add(new ExporterAction(new File(dir.getAbsolutePath()+File.separator+"ExportDescription.yaml")));
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ActionsClass.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {

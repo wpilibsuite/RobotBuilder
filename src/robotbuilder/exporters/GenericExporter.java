@@ -41,27 +41,28 @@ public class GenericExporter {
     
     public GenericExporter(File descriptionFile) throws FileNotFoundException, JSONException {
         path = descriptionFile.getParent()+File.separator;
-        JSONObject description = openJson(descriptionFile);
-        name = description.getString("Name");
-        type = description.getString("Type");
-        filesPath = description.getString("Files");
-        begin_modification = description.optString("Begin Modification");
-        end_modification = description.optString("End Modification");
-        String _ = eval(new File(path+description.getString("Macros"))); // Loads Macros Globally
-        showOnToolbar = description.getBoolean("Toolbar");
-        if (description.has("Required Properties")) {
-            for (Object prop : description.getJSONArray("Required Properties").getIterable()) {
-                requires.add((String) prop);
+        Yaml yaml = new Yaml();
+        Map<String, Object> description = (Map<String, Object>) yaml.load(new FileReader(descriptionFile));;
+        name = (String) description.get("Name");
+        type = (String) description.get("Type");
+        filesPath = (String) description.get("Files");
+        begin_modification = (String) description.get("Begin Modification");
+        end_modification = (String) description.get("End Modification");
+        String _ = eval(new File(path+(String) description.get("Macros"))); // Loads Macros Globally
+        showOnToolbar = (Boolean) description.get("Toolbar");
+        if (description.containsKey("Required Properties")) {
+            for (String prop : ((ArrayList<String>) description.get("Required Properties"))) {
+                requires.add(prop);
             }
         }
-        for (Object pair : description.getJSONArray("Vars").getIterable()) {
-            JSONObject obj = (JSONObject) pair;
-            vars.put(obj.getString("Name"), obj.getString("Value"));
-            varKeys.add(obj.getString("Name"));
+        Map<String, String> variables = ((Map<String, String>) description.get("Vars"));
+        for (String var : variables.keySet()) {
+            vars.put(var, variables.get(var));
+            varKeys.add(var);
         }
-        if (description.has("Instructions")) {
-            loadExportDescription(description.getJSONObject("Defaults"), 
-                    description.getJSONObject("Instructions"));
+        if (description.containsKey("Instructions")) {
+            loadExportDescription((Map<String, Map<String, String>>) description.get("Defaults"), 
+                    (Map<String, Map<String, String>>) description.get("Instructions"));
         }
     }
     
@@ -97,17 +98,10 @@ public class GenericExporter {
         Collection<ExportFile> newFiles = getFiles();
         for (ExportFile file : newFiles) {
             file.export(this);
+
         }
         
         System.out.println(name+" Export Finished");
-    }
-    
-    private JSONObject openJson(File file) throws FileNotFoundException, JSONException {
-        FileReader fileReader;
-        fileReader = new FileReader(file);
-        JSONTokener tokener;
-        tokener = new JSONTokener(fileReader);
-        return new JSONObject(tokener);
     }
     
     /**
@@ -116,38 +110,29 @@ public class GenericExporter {
      * @param path The path to the export descriptions file.
      * @param properties The properties that each component must have.
      */
-    private void loadExportDescription(JSONObject defaultsObject, JSONObject componentsObject) throws JSONException {
-        // Load the defaults
-        Map<String, Map<String, String>> defaults = new HashMap<String, Map<String, String>>();
-        for (Object key : defaultsObject.names().getIterable()) {
-            Map<String, String> defaultMap = new HashMap<String, String>();
-            JSONObject defaultObject = defaultsObject.getJSONObject((String) key);
-            for (Object objectKey : defaultObject.names().getIterable()) {
-                defaultMap.put((String) objectKey, defaultObject.getString((String) objectKey));
-            }
-            defaults.put((String) key, defaultMap);
-        }
-        
+    private void loadExportDescription(Map<String, Map<String, String>> defaults, 
+            Map<String, Map<String, String>> components) throws JSONException {
         // Load the intstructions to export items from the palette
         componentInstructions = new HashMap<String, Map<String, String>>();
-        for (Object key : componentsObject.names().getIterable()) {
-            Map<String, String> componentMap = new HashMap<String, String>();
-            JSONObject component = componentsObject.getJSONObject((String) key);
-            JSONArray componentDefaults = component.getJSONArray("Defaults");
+        for (String key : components.keySet()) {
+            Map<String, String> componentBase = components.get(key);
+            Map<String, String> component = new HashMap<String, String>();
+            String[] componentDefaults = componentBase.get("Defaults").split(",");
             for (String instructionKey : DESCRIPTION_PROPERTIES) {
-                String instruction = component.optString(instructionKey, null);
+                String instruction = componentBase.get(instructionKey);
                 // If the instruction isn't defined, load it from a default.
                 // Earlier defaults take precedence.
-                for (Object aDefault : componentDefaults.getIterable()) {
+                for (String aDefault : componentDefaults){
                     if (instruction == null) {
-                        Map<String, String> defMap = defaults.get((String) aDefault);
+                        Map<String, String> defMap = defaults.get(aDefault);
                         if (defMap != null) instruction = defMap.get(instructionKey);
                     } else break;
                 }
                 assert instruction != null; // TODO: Deal with more elegantly
-                componentMap.put(instructionKey, instruction);
+                component.put(instructionKey, instruction);
             }
-            componentInstructions.put((String) key, componentMap);
+            System.out.println("\t"+key+": "+component+"\n\n");
+            componentInstructions.put(key, component);
         }
     }
     
@@ -295,6 +280,7 @@ public class GenericExporter {
      * @return Whether or not it is a member of the specified category.
      */
     public boolean exportsTo(String category, RobotComponent comp) { // TODO: Make macro
+        System.out.println(comp+" in "+category+"?");
         return category.equals(componentInstructions.get(comp.getBase().getName()).get("Export"));
     }
 

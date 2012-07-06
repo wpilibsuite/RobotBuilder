@@ -1,0 +1,9 @@
+Name: Wiring Table
+Type: Wiring
+Toolbar: true
+Files: files.yaml
+Required Properties:
+  - Wiring File
+Vars: 
+  export-path: ${robot.getProperty('Wiring File')}
+Macros: macros.vm
