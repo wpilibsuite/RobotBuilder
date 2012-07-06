@@ -6,6 +6,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.InputEvent;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
@@ -21,6 +22,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.RobotComponent;
 
@@ -118,6 +120,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             JSONObject robot = ((RobotComponent) treeModel.getRoot()).encodeAsJSON();
             System.out.println("Encoded to: "+robot);
             robot.write(save);
+
             System.out.println("Written");
             save.close();
         } catch (JSONException ex) {
@@ -128,18 +131,21 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
     
     /**
-     * Load the RobotTree from a JSON.
+     * Load the RobotTree from a json.
      * @param filePath 
      */
     public void load(String filePath) {
         try {
-            System.out.println("Saving to: "+filePath);
-            FileWriter save = new FileWriter(filePath);
-            JSONObject robot = ((RobotComponent) treeModel.getRoot()).encodeAsJSON();
-            System.out.println("Encoded to: "+robot);
-            robot.write(save);
-            System.out.println("Written");
-            save.close();
+            System.out.println("Loading from: "+filePath);
+            FileReader source = new FileReader(filePath);
+            JSONTokener tokener;
+            tokener = new JSONTokener(source);
+            JSONObject json;
+            json = new JSONObject(tokener);
+            treeModel.setRoot(RobotComponent.decodeFromJSON(json, this));
+            update();
+            System.out.println("Loaded");
+            source.close();
         } catch (JSONException ex) {
             Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

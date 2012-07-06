@@ -907,6 +907,15 @@ public class JSONArray {
         }
     }
     
+    public Iterable getIterable() {
+        return new Iterable() {
+            @Override
+            public Iterator iterator() {
+                return getIterator();
+            }
+        };
+    }
+    
     public Iterator getIterator() {
         final JSONArray self = this;
         return new Iterator() {

@@ -14,6 +14,7 @@ public class ActionsClass {
     AbstractAction newAction = new NewAction();
     AbstractAction saveAction;
     AbstractAction saveAsAction = new SaveAsAction();
+    AbstractAction openAction;
     AbstractAction cppAction = new CppAction();
     AbstractAction javaAction = new JavaAction();
     AbstractAction labViewAction = new LabViewAction();
@@ -22,6 +23,7 @@ public class ActionsClass {
 
     public ActionsClass(RobotTree robotTree) {
         saveAction = new SaveAction(robotTree);
+        openAction = new OpenAction(robotTree);
     }
 
     public JMenuBar getMenuBar() {
@@ -31,6 +33,7 @@ public class ActionsClass {
         fileMenu.add(newAction);
         fileMenu.add(saveAction);
         fileMenu.add(saveAsAction);
+        fileMenu.add(openAction);
         fileMenu.add(new JSeparator());
         fileMenu.add(exitAction);
         menu.add(fileMenu);
@@ -57,6 +60,7 @@ public class ActionsClass {
         
         bar.add(newAction);
         bar.add(saveAction);
+        bar.add(openAction);
         bar.add(cppAction);
         bar.add(javaAction);
         bar.add(labViewAction);

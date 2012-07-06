@@ -49,17 +49,18 @@ public class RobotComponent extends DefaultMutableTreeNode {
     public Object getValue(String key) {
         if (combos.get(key) == null && base.getProperties().get(key).getChoices() != null) {
             combos.put(key, new JComboBox(base.getProperties().get(key).getChoices()));
+            combos.get(key).setSelectedItem(getProperty(key));
         }
         if (combos.get(key) != null) {
             return combos.get(key);
         } else {
-            return configuration.get(key);
+            return getProperty(key);
         }
     }
 
     public void setValue(String key, String val) {
         if (combos.get(key) != null) combos.get(key).setSelectedItem(val);
-        configuration.put(key, val);
+        setProperty(key, val);
         System.out.println(key+" ==> "+val+" ==> "+combos.get(key).getSelectedItem());
     }
     
@@ -132,6 +133,30 @@ public class RobotComponent extends DefaultMutableTreeNode {
         }
         self.put("Children", children);
         
+        return self;
+    }
+
+    /**
+     * Decode this RobotComponent and all it's subcomponents from a JSONObject.
+     * @return A RobotComponent representing this component.
+     */
+    public static RobotComponent decodeFromJSON(JSONObject json, RobotTree robot) throws JSONException {
+        RobotComponent self = new RobotComponent(json.getString("Name"), 
+                Palette.getInstance().getItem(json.getString("Base")),
+                robot);
+        JSONObject configuration = json.getJSONObject("Configuration");
+        System.out.println(configuration);
+        System.out.println(configuration.names());
+        if (configuration.names() != null) {
+            for (Object config : configuration.names().getIterable()) {
+                System.out.println((String) config + "=>" + configuration.getString((String) config));
+                self.setProperty((String) config, configuration.getString((String) config));
+            }
+        }
+        JSONArray children = json.getJSONArray("Children");
+        for (Object child : children.getIterable()) {
+            self.add(decodeFromJSON((JSONObject) child, robot));
+        }
         return self;
     }
 }
