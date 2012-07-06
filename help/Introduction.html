@@ -26,7 +26,7 @@
 
     <h2>Getting Started</h2>
     <p>This section will take you through the basics of using
-       RobotBuilder to develop a relatively simple robot. We will
+       RobotBuilder to develop a simple robot with tank drive. We will
        cover:</p>
     <ul>
       <li>Subsystems: The physical parts of your robot.</li>
@@ -37,9 +37,74 @@
     </ul>
 
     <h3>Subsystems</h3>
+
+    <p>Subsystems are RobotBuilders way of organizing your robot. A
+       subsystem should represent a distinct part of the robot that
+       performs a particular subset of tasks. For example, a Drive
+       Train consists of a series of motors that drive it and maybe
+       some encoders to measure it's speed and distance. For more,
+       see: <a href="Subsystem.html">Subsystems</a>
+       and <a href="Subsystem.html">Subsystem</a>
+
+    <h4>Creating the Drive Train</h4>
+    <p>The first step on the way to a fully functional subsystem is to
+       create the subsystem, so that it exists in your robot tree.</p>
+    <p>To create the Drive Train subsystem:</p>
+    <ul>
+      <li>Click on "Subsystem" in the palette on the left.</li>
+      <li>Drag it over Subsystems in the robot tree and release.</li>
+      <p>A new subystem has been created.</p>
+    </ul>
     
-    <p>RobotBuilder is an application designed to aid the robot
-       development process. Robot builder can help you:</p>
+    <h4>Naming the Drive Train</h4>
+    <p>After you have a subsytem created, it is very helpful to give
+       it a name.</p>
+    <p>To name the subsystem:</p>
+    <ul>
+      <li>Click on the newly created "Subsystem 1".</li>
+      <p>It's properties will appear on the right.</p>
+      <li>Double click the cell to the right of name, that contains "Subsystem 1".</li>
+      <li>Edit it to read "Drive Train".</li>
+      <p>It's new name appears in the tree.</p>
+    </ul>
+    
+    <h4>Adding a Robot Drive to the Drive Train</h4>
+    <p>The easiest way to make your robot drive is to us the
+       RobotDrive object in WPILib. It provides methods for tank
+       drive, arcade drive and mechanum drive.</p>
+    <p>To add a robot drive to your Drive Train:</p>
+    <ul>
+      <li>Click on "Robot Drive 2" in the palette on the left.</li>
+      <li>Drag it over "Drive Train" in the robot tree and release.</li>
+      <p>Your Drive Train now has a robot drive object.</p>
+      <li>Rename it to "Robot Drive", the same way you renamed the "Drive Train".</li>
+    </ul>
+    
+    <h4>Adding Motors to the Robot Drive</h4>
+    <p>The RobotDrive object needs motors for bothi it's left and and
+       it's right side.</p>
+    <p>To add motors to your robot drive:</p>
+    <ul>
+      <li>Click on "Jaguar" in the palette on the left.</li>
+      <li>Drag it over "Robot Drive" in the robot tree and release.</li>
+      <li>Rename it to "Left Jaguar", the same way you renamed the "Drive Train".</li>
+      <li>Click on "Jaguar" in the palette on the left.</li>
+      <li>Drag it over "Robot Drive" in the robot tree and release.</li>
+      <li>Rename it to "Right Jaguar", the same way you renamed the "Drive Train".</li>
+    </ul>
+    
+    <h4>Checking That the Motors are Correctly Assigned</h4>
+    <p>The RobotDrive object tries to guess which motors are which,
+       but it's helpful to check that they are correctly assigned to
+       the proper side.</p>
+    <p>To add motors to your robot drive:</p>
+    <ul>  
+      <li>Click on "Robot Drive".</li>
+      <li>Make sure that the "Left Motor" property is set to "Left Jaguar", if not click on it and select "Left Jaguar".</li>
+      <li>Make sure that the "Right Motor" property is set to "Right Jaguar", if not click on it and select "Right Jaguar".</li>
+    </ul>
+
+    <p>You now have a subsystem representing your robots Drive Train!</p>
     
     <h3>Commands</h3>
     
