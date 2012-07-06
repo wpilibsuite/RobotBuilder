@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import robotbuilder.MainFrame;
 import robotbuilder.RobotTree;
 import robotbuilder.exporters.JavaExporter;
 
@@ -17,17 +18,17 @@ import robotbuilder.exporters.JavaExporter;
 public class JavaAction extends AbstractAction {
     RobotTree robot;
 
-    public JavaAction(RobotTree robot) {
+    public JavaAction() {
         putValue(Action.NAME, "Java");
         putValue(Action.SHORT_DESCRIPTION, "Generate Java code");
-        this.robot = robot;
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
         System.out.append("Generate Java code");
         try {
-            new JavaExporter().export(robot, "/home/alex/scratch/RobotBuilderTest");
+            new JavaExporter().export(MainFrame.getInstance().getCurrentRobotTree(),
+                    "/home/alex/scratch/RobotBuilderTest");
         } catch (IOException ex) {
             Logger.getLogger(JavaAction.class.getName()).log(Level.SEVERE, null, ex);
         }

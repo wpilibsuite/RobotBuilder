@@ -47,7 +47,7 @@ public class MainFrame extends JFrame {
         add(palette, BorderLayout.WEST);
         add(robotStuff, BorderLayout.CENTER);
         
-        ActionsClass actions = new ActionsClass(robotTree);
+        ActionsClass actions = new ActionsClass();
         setJMenuBar(actions.getMenuBar());
         
         statusPanel = new StatusPanel();
