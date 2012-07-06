@@ -14,16 +14,11 @@ import java.util.Hashtable;
 public class RobotComponent {
     private String key;
     private String ports;
-    private String className;
     private Hashtable<String, String> properties;
     
     public RobotComponent(String key) {
         properties = new Hashtable<String, String>();
         this.key = key;
-    }
-    
-    public void addClassName(String className) {
-        this.className = className;
     }
     
     public void addProperty(String propName, String propType) {
@@ -37,7 +32,6 @@ public class RobotComponent {
     
     public void print() {
         System.out.println("Component: " + key);
-        System.out.println("\tClassName: " + className);
         for (Enumeration keys = properties.keys(); keys.hasMoreElements(); ) {
             String k = (String) keys.nextElement();
             System.out.println("\t\t" + k + ": " + properties.get(k));

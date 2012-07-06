@@ -24,8 +24,9 @@ import robotbuilder.data.RobotComponent;
 public class Palette extends JPanel {
     
     private JTree paletteTree;
+    static private Palette instance = null;
     
-    public Palette() {
+    private Palette() {
         FileReader file;
         try {
             file = new FileReader((new File("PaletteDescription.json")).getAbsolutePath());
@@ -54,6 +55,12 @@ public class Palette extends JPanel {
         
         add(paletteTree);
      }
+    
+    public static Palette getInstance() {
+        if (instance == null)
+            instance = new Palette();
+        return instance;
+    }
 
     /**
      * Build the palette tree recursively by traversing the JSON data object
@@ -70,7 +77,7 @@ public class Palette extends JPanel {
                 Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
                 return;
             }
-            if (!child.has("ClassName")) {
+            if (!child.has("Properties")) {
                 try {
                     DefaultMutableTreeNode node = new DefaultMutableTreeNode(key);
                     root.add(node);
@@ -93,10 +100,12 @@ public class Palette extends JPanel {
             JSONObject props = child.getJSONObject("Properties");
             for (Iterator i = props.keys(); i.hasNext();) {
                 String name = (String) i.next();
-                String value = props.getString(name);
-                component.addProperty(name, value);
+                JSONObject values = props.getJSONObject(name);
+                for (Iterator v = values.keys(); v.hasNext(); ) {
+                    System.out.println((String)v.next());
+                }
+                component.addProperty(name, "Properties");
             }
-            component.addClassName(child.getString("ClassName"));
         } catch (JSONException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
         }

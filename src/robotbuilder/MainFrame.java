@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         ActionsClass actions = new ActionsClass();
         setJMenuBar(actions.getMenuBar());
         
-        palette = new Palette();
+        palette = Palette.getInstance();
         properties = new PropertiesDisplay();
         robotTree = new RobotTree(properties);
         JSplitPane robotStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, robotTree, properties);

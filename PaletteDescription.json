@@ -3,65 +3,63 @@
     "Palette": {
         "Sensors": {
             "Gyro" : {
-                "ClassName" : "Gyro",
                 "Properties" : {
-                    "Input channel" : "AnalogInput",
-                    "Sensitivity" : "Double"
+                    "Input channel" : {
+                        "Type" : "AnalogInput",
+                        "Default" : "1/1",
+                    },
+                    "Sensitivity" : {
+                        "Type" : "Double",
+                        "Default" : "1.25"
+                    }
                 }
             },
             "Accelerometer" : {
-                "ClassName" : "Accelerometer",
                 "Properties" : {
-                    "Input channel" : "AnalogInput",
+                    "Input channel" : {
+                        "Type" : "AnalogInput"
+                    }
                 }
-                
             },
             "Quadrature encoder" : {
-                "ClassName" : "Encoder",
                 "Properties" : {
-                    "AChannel" : "DigitalInput",
-                    "BChannel" : "DigitalInput"
+                    "AChannel" : {
+                        "Type" : "DigitalInput"
+                    },
+                    "BChannel" : {
+                        "Type" : "DigitalInput"
+                    }
                 }
             },
             "Potentiometer" : {
-                "ClassName" : "AnalogChannel",
                 "Properties" : {
-                    "Input channel" : "AnalogInput"
+                    "Input channel" : {
+                        "Type" : "AnalogChannel"
+                    }
                 }
             },
             "Limit switch" : {
-                "ClassName" : "DigitalInput",
                 "Properties" : {
-                    "Input channel" : "DigitalInput"
+                    "Input channel" : {
+                        "Type" : "DigitalInput"
+                    }
                 }
             }
         },
         "Speed controllers" : {
             "Victor" : {
-                "ClassName" : "Victor",
                 "Properties" : {
-                    "PWM port" : "PWMInput"
+                    "PWM port" : {
+                        "Type" : "PWMInput"
+                    }
                 }
             },
             "Jaguar" : {
-                "ClassName" : "Jaguar",
                 "Properties" : {
-                    "PWM port" : "PWMInput"
+                    "PWM port" : {
+                        "Type" : "PWMInput"
+                    }
                 }
-            }
-        },
-        "Operator input" : {
-            "Joystick analog" : {
-                
-            },
-            "Joystick button" : {
-                
-            },
-            "Extended I/O digital input" : {
-                
-            },
-            "Extended I/O analog input" : {
-                
             }
         }
     }
