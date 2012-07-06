@@ -307,7 +307,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param name The name being freed
      */
     public void removeName(String name) {
+        System.out.println("Removing name: "+name);
 	usedNames.remove(name);
+        System.out.println("Used names: "+usedNames);
     }
 
     /**
@@ -925,6 +927,12 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             switch(option) {
                 case JOptionPane.YES_OPTION:
                     target.removeFromParent();
+                    target.walk(new RobotWalker() {
+                        @Override
+                        public void handleRobotComponent(RobotComponent self) {
+                            MainFrame.getInstance().getCurrentRobotTree().removeName(self.getFullName());
+                        }
+                    });
                     update();
                     takeSnapshot();
                     System.out.println("\""+target.getName()+"\" removed");

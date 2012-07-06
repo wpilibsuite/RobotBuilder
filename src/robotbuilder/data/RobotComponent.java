@@ -204,7 +204,10 @@ public class RobotComponent extends DefaultMutableTreeNode {
      * @return The full name of this component including it's subsystem name.
      */
     public String getFullName() {
-        return getSubsystem()+name;
+        if (getBase().getType().equals("Subsystem")) 
+            return name;
+        else
+            return getSubsystem()+name;
     }
     
     public Vector<String> getChildrenOfTypeNames(String type) {
