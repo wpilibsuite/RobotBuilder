@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLDocument;
 
 /**
@@ -55,6 +57,21 @@ public class MainFrame extends JFrame {
         properties = new PropertiesDisplay();
         robotTree = new RobotTree(properties);
         help = new JEditorPane();
+        help.setEditable(false);
+        help.addHyperlinkListener(new HyperlinkListener() {
+            @Override
+            public void hyperlinkUpdate(HyperlinkEvent he) {
+                System.out.println(he.getURL().toExternalForm());
+                System.out.println(he.getEventType());
+                if (he.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
+                    try {
+                        help.setPage(he.getURL());
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
         setHelp("help/Limit Switch.html");
         JScrollPane helpScrollPane = new JScrollPane(help);
         helpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
