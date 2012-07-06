@@ -12,7 +12,6 @@ import javax.swing.Action;
 import org.json.JSONException;
 import robotbuilder.MainFrame;
 import robotbuilder.exporters.GenericExporter;
-import robotbuilder.exporters.WiringExporter;
 
 /**
  *
@@ -39,11 +38,5 @@ public class WiringDiagramAction extends AbstractAction {
         } catch (JSONException ex) {
             Logger.getLogger(JavaAction.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        try {
-//            new WiringExporter().export(MainFrame.getInstance().getCurrentRobotTree());
-//        } catch (IOException ex) {
-//            Logger.getLogger(JavaAction.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
-    
 }

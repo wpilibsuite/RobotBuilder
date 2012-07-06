@@ -13,7 +13,6 @@ import org.json.JSONException;
 import robotbuilder.MainFrame;
 import robotbuilder.RobotTree;
 import robotbuilder.exporters.GenericExporter;
-import robotbuilder.exporters.JavaExporter;
 
 /**
  *
@@ -30,11 +29,6 @@ public class JavaAction extends AbstractAction {
     public void actionPerformed(ActionEvent ae) {
         System.out.println("Generate Java code");
         try {
-            //        try {
-            //            new JavaExporter().export(MainFrame.getInstance().getCurrentRobotTree());
-            //        } catch (IOException ex) {
-            //            Logger.getLogger(JavaAction.class.getName()).log(Level.SEVERE, null, ex);
-            //        }
             GenericExporter exporter = new GenericExporter(new File("export/java/ExportDescription.json"));
             System.out.println(exporter);
             exporter.export(MainFrame.getInstance().getCurrentRobotTree());
