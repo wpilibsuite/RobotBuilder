@@ -1,9 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package robotbuilder.data;
 
+package robotbuilder.data;
 
 /**
  *
@@ -18,6 +14,7 @@ public class RobotComponent {
         this.base = base;
     }
     
+    @Override
     public String toString() {
         return name;
     }

@@ -5,6 +5,7 @@
 package robotbuilder.data;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 /**
@@ -24,37 +25,27 @@ public class PaletteComponent {
         return instances.get(className);
     }
     
-    private String key;
-    private String ports;
-    private String className;
-    private Hashtable<String, String> properties;
+    private String name;
+    private HashMap<String, String> metaData = new HashMap<String, String>();
+    private HashMap<String, Property[]> properties = new HashMap<String, Property[]>();
     
-    public PaletteComponent(String key) {
-        properties = new Hashtable<String, String>();
-        this.key = key;
-    }
-    
-    public void addClassName(String className) {
-        // TODO: Deal with className changes
-        assert this.className == null;
-        this.className = className;
-        instances.put(className, this);
+    public PaletteComponent(String name) {
+        this.name = name;
     }
     
     public void addProperty(String propName, String propType) {
-        properties.put(propName, propType);
+        properties.put(propName, null);
     }
     
     @Override
     public String toString() {
-        return key;
+        return name;
     }
     
     public void print() {
-        System.out.println("Component: " + key);
-        System.out.println("\tClassName: " + className);
-        for (Enumeration keys = properties.keys(); keys.hasMoreElements(); ) {
-            String k = (String) keys.nextElement();
+        System.out.println("Component: " + name);
+        for (String key: properties.keySet()) {
+            String k = (String) key;
             System.out.println("\t\t" + k + ": " + properties.get(k));
         }
     }
