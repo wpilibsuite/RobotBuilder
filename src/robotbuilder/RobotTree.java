@@ -337,7 +337,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private RobotTree robot = this;
 
     boolean OKToClose() {
-	String[] options = {"Discard", "Cancel", "Save"};
+	String[] options = {"Save", "Discard", "Cancel"};
 	if (saved) {
 	    return true;
 	}
@@ -348,18 +348,20 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		JOptionPane.QUESTION_MESSAGE,
 		null,
 		options,
-		options[2]);
-	if (value == 2) {
-	    System.out.println("Save");
-	    save();
-	} else if (value == 1) {
-	    System.out.println("Cancel");
-	} else {
-	    System.out.println("Discard");
-	    treeModel.setRoot(null);
-	    return true;
-	}
-	return false;
+		options[0]);
+        switch(value){
+            case JOptionPane.YES_OPTION:
+                System.out.println("Save");
+                save();
+                return true;
+            case JOptionPane.NO_OPTION:
+                System.out.println("Discarded changes");
+                return true;
+            case JOptionPane.CANCEL_OPTION:
+                System.out.println("Cancelled closure");
+                return false;
+            default: return false;
+        }
     }
 
     public void newFile(Palette palette) {
