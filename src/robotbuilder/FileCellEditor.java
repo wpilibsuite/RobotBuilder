@@ -25,8 +25,8 @@ public class FileCellEditor extends AbstractCellEditor implements TableCellEdito
     public Component getTableCellEditorComponent(JTable table,
             Object value, boolean isSelected, int row, int column) {
         
-        System.out.println("Value: "+value);
-        System.out.println("Type: "+value.getClass());
+        //System.out.println("Value: "+value);
+        //System.out.println("Type: "+value.getClass());
         
         fileChooser.showDialog(table, "Select");
         return null;
@@ -35,9 +35,9 @@ public class FileCellEditor extends AbstractCellEditor implements TableCellEdito
     @Override
     public Object getCellEditorValue() {
         try {
-            System.out.println("Filechooser: "+fileChooser);
-            System.out.println("Selection: "+fileChooser.getSelectedFile());
-            System.out.println("Path: "+fileChooser.getSelectedFile().getPath());
+            //System.out.println("Filechooser: "+fileChooser);
+            //System.out.println("Selection: "+fileChooser.getSelectedFile());
+            //System.out.println("Path: "+fileChooser.getSelectedFile().getPath());
             return fileChooser.getSelectedFile().getPath();
         } catch (NullPointerException e) {
             return "";

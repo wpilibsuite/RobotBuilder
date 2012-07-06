@@ -66,6 +66,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
             // Provide a file chooser for 
             if (filechoosers.get(key) == null) {
                 JFileChooser fc;
+                System.out.println("File: "+getProperty(key));
                 if (getProperty(key).equals("")) {
                     fc = new JFileChooser((String) null);
                 } else {
@@ -83,6 +84,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
     public void setValue(String key, String val) {
         if (combos.get(key) != null) combos.get(key).setSelectedItem(val);
         setProperty(key, val);
+        System.out.println(key+" => "+val);
     }
     
     @Override

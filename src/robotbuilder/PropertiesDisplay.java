@@ -63,7 +63,7 @@ class PropertiesDisplay extends JPanel {
         }
 
         @Override
-        public TableCellRenderer getCellRenderer(int row, int column) {
+        public TableCellRenderer getCellRenderer(final int row, final int column) {
             final Object value = super.getValueAt(row, column);
             if (value != null) {
                 if (value instanceof JComboBox) {
@@ -79,11 +79,13 @@ class PropertiesDisplay extends JPanel {
                         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                             System.out.println("Render component fetched.");
                             try {
-                                System.out.println("Filechooser: "+value);
-                                System.out.println("Directory: "+((JFileChooser) value).getCurrentDirectory());
-                                System.out.println("Selection: "+((JFileChooser) value).getSelectedFile());
-                                System.out.println("Path: "+((JFileChooser) value).getSelectedFile().getPath());
-                                return new JLabel(((JFileChooser) value).getSelectedFile().getPath());
+                                //System.out.println("Filechooser: "+value);
+                                //System.out.println("Directory: "+((JFileChooser) value).getCurrentDirectory());
+                                //System.out.println("Selection: "+((JFileChooser) value).getSelectedFile());
+                                //System.out.println("Path: "+((JFileChooser) value).getSelectedFile().getPath());
+                                String path = ((JFileChooser) value).getSelectedFile().getPath();
+                                setValueAt(path, row, column);
+                                return new JLabel(path);
                             } catch (NullPointerException e) {
                                 return new JLabel("Select Folder");
                             }
