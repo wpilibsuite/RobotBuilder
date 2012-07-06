@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import robotbuilder.RobotTree;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
@@ -50,7 +52,7 @@ public class JavaExporter extends AbstractExporter {
      * @return The String of import statements
      */
     private String generateImports(RobotTree robot) {
-        final Set<String> imports = new HashSet<String>();
+        final Set<String> imports = new TreeSet<String>();
         robot.walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) {
@@ -62,7 +64,7 @@ public class JavaExporter extends AbstractExporter {
         
         String out = "";
         for (String imp : imports) {
-            out += imp + "\n";
+            if (!"".equals(imp)) out += imp + "\n";
         }
         return out;
     }
@@ -74,13 +76,13 @@ public class JavaExporter extends AbstractExporter {
             public void handleRobotComponent(RobotComponent self) {
                 String instruction = componentInstructions.get(self.getBase().getName()).get("Declaration");
                 String className = componentInstructions.get(self.getBase().getName()).get("ClassName");
-                declarations.add("    "+substitute(instruction, self, className));
+                declarations.add(substitute(instruction, self, className));
             }
         });
         
         String out = "";
         for (String dec : declarations) {
-            out += dec + "\n";
+            if (!"".equals(dec)) out += "    " + dec + "\n";
         }
         return out;
     }
@@ -94,14 +96,14 @@ public class JavaExporter extends AbstractExporter {
                 String extraInstruction = componentInstructions.get(self.getBase().getName()).get("Extra");
                 String className = componentInstructions.get(self.getBase().getName()).get("ClassName");
                 System.out.println(self.getBase().getName()+": "+className+" -- "+instruction+" -- "+extraInstruction);
-                constructions.add("        "+substitute(instruction, self, className));
-                constructions.add("        "+substitute(extraInstruction, self, className));
+                constructions.add(substitute(instruction, self, className));
+                constructions.add(substitute(extraInstruction, self, className));
             }
         });
         
         String out = "";
         for (String cons : constructions) {
-            out += cons + "\n";
+            if (!"".equals(cons)) out += "        " + cons + "\n";
         }
         return out;
     }

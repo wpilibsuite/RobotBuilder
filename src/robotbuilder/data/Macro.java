@@ -23,8 +23,8 @@ public class Macro {
         this.name = name;
     }
     
-    public void addExpansion(String name, String type, String defaultValue, LinkedList<Object> choices) {
-        expansions.add(new Expansion(name, type, defaultValue, choices));
+    public void addExpansion(String name, String type, String defaultValue, String defaultDefault, LinkedList<Object> choices) {
+        expansions.add(new Expansion(name, type, defaultValue, defaultDefault, choices));
     }
 
     /**
@@ -38,8 +38,14 @@ public class Macro {
             try {
                 JSONObject expanded = new JSONObject();
                 expanded.put("Type", expansion.type);
-                String defaultVal = prop.optString(expansion.defaultValue);
-                if (defaultVal != null) expanded.put("Default", defaultVal);
+                String defaultVal = prop.optString(expansion.defaultValue, null);
+                if (defaultVal != null) {
+                    System.out.println("Default[0]: "+defaultVal);
+                    expanded.put("Default", defaultVal);
+                } else {
+                    System.out.println("Default[1]: "+expansion.defaultDefault);
+                    expanded.put("Default", expansion.defaultDefault);
+                }
                 expanded.put("Choices", expansion.choices);
                 props.put(key+" "+expansion.name, expanded);
             } catch (JSONException ex) {
@@ -51,13 +57,14 @@ public class Macro {
     }
     
     private class Expansion {
-        String name, type, defaultValue;
+        String name, type, defaultValue, defaultDefault;
         LinkedList<Object> choices;
 
-        public Expansion(String name, String type, String defaultValue, LinkedList<Object> choices) {
+        public Expansion(String name, String type, String defaultValue, String defaultDefault, LinkedList<Object> choices) {
             this.name = name;
             this.type = type;
             this.defaultValue = defaultValue;
+            this.defaultDefault = defaultDefault;
             this.choices = choices;
         }
     }

@@ -237,8 +237,8 @@ public class Palette extends JPanel {
                     for (Iterator c = values.optJSONArray("Choices").getIterator(); c.hasNext();) {
                         choices.add(c.next());
                     }
-                    System.out.println("Adding expansion: "+name+" "+values.getString("Type")+" "+values.optString("Default")+" "+choices);
-                    macro.addExpansion(name, values.getString("Type"), values.optString("Default"), choices);
+                    System.out.println("Adding expansion: "+name+" "+values.getString("Type")+" "+values.optString("Default")+" "+values.optString("_Default")+" "+choices);
+                    macro.addExpansion(name, values.getString("Type"), values.optString("Default"), values.optString("_Default"), choices);
                 }
             } catch (JSONException ex) {
                 Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);

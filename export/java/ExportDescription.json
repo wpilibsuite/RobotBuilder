@@ -18,7 +18,7 @@
 	    "Construction": "${Name} = new ${ClassName}(${Input Module (Digital)}, ${Input Port (Digital)});"
 	},
 	"PWMOutput": {
-	    "Construction": "${Name} = new ${ClassName}(${Input Module (Digital)}, ${Input Port (PWM)});"
+	    "Construction": "${Name} = new ${ClassName}(${Output Module (Digital)}, ${Output Port (PWM)});"
 	}
     },
     "Palette": {

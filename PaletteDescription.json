@@ -6,12 +6,14 @@
 		"Module (Analog)" : {
                     "Type" : "Module (Analog)",
 		    "Choices" : ["1", "2"],
-		    "Default" : "Default Module"
+		    "Default" : "Default Module",
+		    "_Default" : "1"
                 },
 		"Port (Analog)" : {
                     "Type" : "Port (Analog)",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8"],
-		    "Default" : "Default Port"
+		    "Default" : "Default Port",
+		    "_Default" : "1"
                 },
 	    }
 	},
@@ -20,12 +22,14 @@
 		"Module (Digital)" : {
                     "Type" : "Module (Digital)",
 		    "Choices" : ["1", "2"],
-		    "Default" : "Default Module"
+		    "Default" : "Default Module",
+		    "_Default" : "1"
                 },
 		"Port (Digital)" : {
                     "Type" : "Port (Digital)",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"],
-		    "Default" : "Default Port"
+		    "Default" : "Default Port",
+		    "_Default" : "1"
                 },
 	    }
 	},
@@ -34,12 +38,14 @@
 		"Module (Digital)" : {
                     "Type" : "Module (Digital)",
 		    "Choices" : ["1", "2"],
-		    "Default" : "Default Module"
+		    "Default" : "Default Module",
+		    "_Default" : "1"
                 },
 		"Port (PWM)" : {
                     "Type" : "Port (PWM)",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-		    "Default" : "Default Port"
+		    "Default" : "Default Port",
+		    "_Default" : "1"
                 },
 	    }
 	}
@@ -133,7 +139,7 @@
             "Victor" : {
 		"Type": "Actuator",
                 "Properties" : {
-                    "PWM port" : {
+                    "Output" : {
                         "Type" : "PWMInput"
                     }
                 }
@@ -141,7 +147,7 @@
             "Jaguar" : {
 		"Type": "Actuator",
                 "Properties" : {
-                    "PWM port" : {
+                    "Output" : {
                         "Type" : "PWMInput"
                     }
                 }

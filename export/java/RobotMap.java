@@ -1,7 +1,6 @@
 package ${package};
 
 ${imports}
-
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -9,9 +8,7 @@ ${imports}
  * floating around.
  */
 public class RobotMap {
-    ${declarations}
-
+${declarations}
     public static void init() {
-	${constructions}
-    }
+${constructions}    }
 }
