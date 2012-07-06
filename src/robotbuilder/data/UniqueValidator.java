@@ -143,12 +143,6 @@ public class UniqueValidator implements Validator {
                 System.out.println("\t"+prefix+prop+" => "+selection.get(prop));
                 component.setProperty(prefix+prop, selection.get(prop));
             }
-            try {
-                claim(property, component.getProperty(property).getValue(), component);
-    //            claims.put(selection, component.toString()+"-"+prefix);
-            } catch (InvalidException ex) {
-                Logger.getLogger(UniqueValidator.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
     
