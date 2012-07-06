@@ -323,12 +323,12 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	int i = 0;
 	String name;
 	while (true) {
-	    i++;
-	    name = componentType.toString() + " " + i;
+	    name = componentType.toString() + (i == 0 ? "" : " " + i);
 	    if (!usedNames.contains(subsystem+name)) {
 		usedNames.add(subsystem+name);
 		return name;
 	    }
+            i++;
 	}
     }
 
