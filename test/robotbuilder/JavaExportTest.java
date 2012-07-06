@@ -63,7 +63,12 @@ public class JavaExportTest {
         GenericExporter exporter = new GenericExporter("/export/java/");
         exporter.export(tree);
 
-        Process p = Runtime.getRuntime().exec("ant compile", null, new File("test-resources/RobotBuilderTestProject/"));
+        Process p;
+        try {
+            p = Runtime.getRuntime().exec("ant compile", null, new File("test-resources/RobotBuilderTestProject/"));
+        } catch (IOException ex) { // Catch for windows
+            p = Runtime.getRuntime().exec("ant.bat compile", null, new File("test-resources/RobotBuilderTestProject/"));
+        }
         p.waitFor();
         String output = "";
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
