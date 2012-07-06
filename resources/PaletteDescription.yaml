@@ -523,7 +523,7 @@ Palette:
         properties:
           #DigitalChannel("Output")
       - !Component
-        name: Relay
+        name: Spike
         type: Actuator
         help: A motor controller that can run forwards/backwards/stopped; typically used for compressors
         properties:

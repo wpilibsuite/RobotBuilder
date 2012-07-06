@@ -238,7 +238,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "DigitalOutput"
     Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_Digital});"
-  Relay:
+  Spike:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
 
