@@ -50,9 +50,13 @@ public abstract class Property {
      * @param value 
      */
     public void setValue(Object value) {
-        update();
-        if (!getValue().equals(value)) {
-            component.getRobotTree().takeSnapshot();
+        try {
+            update();
+            if (!getValue().equals(value)) {
+                component.getRobotTree().takeSnapshot();
+            }
+        } catch (NullPointerException ex) {
+            
         }
     }
     

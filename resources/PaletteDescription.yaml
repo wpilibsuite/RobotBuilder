@@ -113,7 +113,7 @@
 - !TypeSelectionProperty
             name: $Name Command
             type: Command
-            default: 1
+            default: None
           - !ChoicesProperty
             name: $Name When to Run
             choices: [whileHeld, whenPressed, whenReleased]

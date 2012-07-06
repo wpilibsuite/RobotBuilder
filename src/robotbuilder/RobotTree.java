@@ -288,7 +288,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                 self.setRobotTree(robot);
                 self.setName((String) details.get("Name"));
                 self.setBaseType((String) details.get("Base"));
-                self.setProperties((Map<String, Property>) details.get("Configuration"));
+                self.setProperties((Map<String, Property>) details.get("Properties"));
+                for (Property property : self.getProperties().values()) {
+                    property.setComponent(self);
+                }
                 for (Object childDescription : (List) details.get("Children")) {
                     RobotComponent child = new RobotComponent();
                     child.visit(this, (Map<String, Object>) childDescription);

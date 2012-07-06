@@ -50,6 +50,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
     }
     
     public boolean isValid() {
+        System.out.println(name+" properties: "+properties);
         for (Property property : properties.values()) {
             property.update();
             if (!property.isValid()) {

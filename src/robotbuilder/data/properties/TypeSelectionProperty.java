@@ -54,7 +54,7 @@ public class TypeSelectionProperty extends Property {
         super.update();
         Object selection = getValue();
         Vector<String> options = component.getRobotTree().getNamesOfType(type);
-        options.add(0, (String) defaultValue);
+        options.add(0, defaultValue.toString());
         combo = new JComboBox(options);
         combo.setSelectedIndex(0);
         if (options.contains(selection)) {
