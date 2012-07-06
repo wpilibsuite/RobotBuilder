@@ -44,8 +44,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     
     private Preferences prefs;
 
-    private String currentFile = null;
-
     private JFileChooser fileChooser = new JFileChooser();
     
     private Deque<String> undoHistory = new LinkedList<String>();
@@ -94,6 +92,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     
     public Validator getValidator(String name) {
         return validators.get(name);
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 
     /**
