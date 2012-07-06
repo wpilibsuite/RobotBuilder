@@ -66,7 +66,6 @@ public class RobotComponent extends DefaultMutableTreeNode {
     public void setValue(String key, String val) {
         if (combos.get(key) != null) combos.get(key).setSelectedItem(val);
         setProperty(key, val);
-        System.out.println(key+" ==> "+val+" ==> "+combos.get(key).getSelectedItem());
     }
     
     @Override

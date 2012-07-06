@@ -53,7 +53,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	this.properties = properties;
 	this.properties.setRobotTree(this);
 	setLayout(new BorderLayout());
-	DefaultMutableTreeNode root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Folder"), this);
+	DefaultMutableTreeNode root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Robot"), this);
 	treeModel = new DefaultTreeModel(root);
 	tree = new JTree(treeModel);
 	tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);

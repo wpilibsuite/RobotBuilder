@@ -127,18 +127,22 @@ public class Palette extends JPanel {
             }
             if (!child.has("Properties")) {
                 try {
-                    //TODO: create the PaletteItem here
-                    DefaultMutableTreeNode node = new DefaultMutableTreeNode(key);
-                    root.add(node);
+                    DefaultMutableTreeNode node = null;
+                    if (!key.equals("Hidden") && root != null) {
+                        //TODO: create the PaletteItem here
+                        node = new DefaultMutableTreeNode(key);
+                        root.add(node);
+                    }
                     createTree(node, jSONObject.getJSONObject(key));
                 } catch (JSONException ex) {
                     Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            else {
+            } else {
                 PaletteComponent component = createPaletteComponent(key, child);
-                DefaultMutableTreeNode node = new DefaultMutableTreeNode(component);
-                root.add(node);
+                if (root != null) {
+                    DefaultMutableTreeNode node = new DefaultMutableTreeNode(component);
+                    root.add(node);
+                }
             }
         }
     }

@@ -51,7 +51,23 @@
 	}
     },
     "Palette": {
-	"Order": ["Organization", "Sensors", "Actuators"],
+	"Order": ["Organization", "Sensors", "Actuators", "Hidden"],
+	"Hidden" : {
+	    "Robot" : {
+		"Type": "Organization",
+		"Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Organization": "unlimited"},
+		"Properties": {
+		    "Java Project": {
+                        "Type" : "Folder",
+                        "Default" : "",
+		    },
+		    "Java Path": {
+                        "Type" : "String",
+                        "Default" : "com.usfirst.teamNNNN.robot2013"
+		    }
+		}
+	    },
+	},
 	"Organization" : {
 	    "Folder" : {
 		"Type": "Organization",
