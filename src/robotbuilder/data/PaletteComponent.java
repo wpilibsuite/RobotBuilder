@@ -4,11 +4,8 @@
  */
 package robotbuilder.data;
 
+import java.util.*;
 import robotbuilder.data.properties.Property;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -21,7 +18,9 @@ public class PaletteComponent {
     private String type; // The type of the data
     private String help; // The help text for this component.
     /** Type and quantity of children that this type of component can support. */
-    private Map<String, Integer> supports = new HashMap<String, Integer>(); 
+    private Map<String, Integer> supports = new HashMap<String, Integer>();
+    /** String representations of PaletteComponent types */
+    private static Map<String, PaletteComponent> types = new HashMap<String, PaletteComponent>();
     // set of properties for the component
     private Map<String, Property> properties = new HashMap<String, Property>();
     private List<String> propertiesKeys = new ArrayList<String>();
@@ -34,9 +33,14 @@ public class PaletteComponent {
     public String getName() {
         return name;
     }
+    
+    public static PaletteComponent getComponentByName(String type) {
+        return (PaletteComponent)types.get(type);
+    }
 
     public void setType(String type) {
         this.type = type;
+        types.put(type, this);
     }
     public String getType() {
         return type;

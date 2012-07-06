@@ -25,6 +25,12 @@ public class RobotComponent extends DefaultMutableTreeNode {
         super();
     }
     
+    /**
+     * Creates a new RobotComponent.
+     * @param name The name of the new component.
+     * @param base The PaletteComponent that will be exported.
+     * @param robot The RobotTree that contains this.
+     */
     public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
         super();
         this.name = name;
@@ -39,6 +45,16 @@ public class RobotComponent extends DefaultMutableTreeNode {
             properties.get(propName).setUnique();
         }
         robot.addName(name);
+    }
+    
+    /**
+     * Creates a new RobotComponent.
+     * @param name The name of the new component.
+     * @param type The type of the new component (like in the {@link Palette}).
+     * @param robot The RobotTree that this will be created in.
+     */
+    public RobotComponent(String name, String type, RobotTree robot) {
+        this(name, Palette.getInstance().getItem(type), robot);
     }
     
     public Property getProperty(String key) {

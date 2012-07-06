@@ -3,10 +3,13 @@ package robotbuilder;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Rectangle;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.*;
@@ -68,6 +71,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                 }
             }
         };
+        tree.setName("Robot Tree");
 	tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 	tree.addTreeSelectionListener(this);
 	tree.setDropMode(DropMode.ON_OR_INSERT);
@@ -97,6 +101,139 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
 	}
+        
+        tree.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(SwingUtilities.isRightMouseButton(e)) { // Right click only
+                    
+                    TreePath path = tree.getPathForLocation(e.getX(), e.getY());
+                    Rectangle bounds = tree.getUI().getPathBounds(tree, path);
+                    
+                    if (bounds != null && bounds.contains(e.getX(), e.getY())) {
+                        
+                        final JPopupMenu mainMenu   = new JPopupMenu(); // main menu; encapsulates everything
+                        final JMenu controllerMenu  = new JMenu("Add Controllers");
+                        final JMenu sensorMenu      = new JMenu("Add Sensors");
+                        final JMenu actuatorMenu    = new JMenu("Add Actuators");
+                        final JMenu pneumaticMenu   = new JMenu("Add Pneumatics");
+                        
+                        final RobotComponent selected = (RobotComponent) path.getLastPathComponent();
+                        RobotComponent toAdd = null;
+                        final String name  = selected.toString();
+                        final String type  = selected.getBaseType();
+                        
+                        final int numSupports = 25;
+                        
+                        final JMenuItem componentNameItem = new JMenuItem(name.toUpperCase()); // shows the name of the selected component
+                        System.out.println("\nComponent name: "+name);
+                        System.out.println("Component type: "+type+"\n");
+                        
+                        final JMenuItem delete = new JMenuItem("Delete");
+                        final JMenuItem cancel = new JMenuItem("Cancel");
+                        
+                        componentNameItem.setEnabled(false);
+                        
+                        JMenuItem[] addActions    = new JMenuItem[3];
+                        JMenuItem[] subsystemAdds = new JMenuItem[numSupports];
+                        
+                        
+                        //<editor-fold defaultstate="collapsed" desc="Main folders: Subsystems, OI, and Commands">
+                        if(type.equals("Subsystems")){
+                            delete.setEnabled(false);
+                            addActions[0] = new JMenuItem("Add Subsystem");
+                            addActions[1] = new JMenuItem("Add PID Subsystem");
+                            
+                        } else if(type.equals("OI")){
+                            delete.setEnabled(false);
+                            addActions[0] = new JMenuItem("Add Joystick");
+                            addActions[1] = new JMenuItem("Add Joystick Button");
+                            
+                        } else if(type.equals("Commands")){
+                            delete.setEnabled(false);
+                            addActions[0] = new JMenuItem("Add Command");
+                            addActions[1] = new JMenuItem("Add Command Group");
+                            addActions[2] = new JMenuItem("Add PID Command");
+                        }
+                        //</editor-fold>
+                        //<editor-fold defaultstate="collapsed" desc="Robot Drives">
+                        else if(type.equals("Robot Drive 4")|| type.equals("Robot Drive 2")) {
+                            addActions[0] = new JMenuItem("Add Victor");
+                            addActions[1] = new JMenuItem("Add Jaguar");
+                        }
+                        //</editor-fold>
+                        //<editor-fold defaultstate="collapsed" desc="Subsystem Menus and Choices">
+                        if(type.equals("Subsystem") || type.equals("PID Subsystem") || type.equals("PID Controller")){
+                            subsystemAdds[0]  = new JMenuItem("Add PID Controller");
+                            subsystemAdds[1]  = new JMenuItem("Add Robot Drive 2");
+                            subsystemAdds[2]  = new JMenuItem("Add Robot Drive 4");
+                            for(int i = 0; i < 3; i++)
+                                controllerMenu.add(subsystemAdds[i]);
+                            
+                            subsystemAdds[3]  = new JMenuItem("Add Gyro");
+                            subsystemAdds[4]  = new JMenuItem("Add Accelerometer");
+                            subsystemAdds[5]  = new JMenuItem("Add Quadrature Encoder");
+                            subsystemAdds[6]  = new JMenuItem("Add Indexed Encoder");
+                            subsystemAdds[7]  = new JMenuItem("Add Gear Tooth Sensor");
+                            subsystemAdds[8]  = new JMenuItem("Add Potentiometer");
+                            subsystemAdds[9]  = new JMenuItem("Add Analog Input");
+                            subsystemAdds[10] = new JMenuItem("Add Limit Switch");
+                            subsystemAdds[11] = new JMenuItem("Add Digital Input");
+                            subsystemAdds[12] = new JMenuItem("Add Ultrasonic");
+                            for(int i = 3; i < 12; i++)
+                                sensorMenu.add(subsystemAdds[i]);
+
+                            subsystemAdds[13] = new JMenuItem("Add Victor");
+                            subsystemAdds[14] = new JMenuItem("Add Jaguar");
+                            subsystemAdds[15] = new JMenuItem("Add Servo");
+                            subsystemAdds[16] = new JMenuItem("Add Digital Output");
+                            subsystemAdds[17] = new JMenuItem("Add Spike");
+                            for(int i = 13; i < 17; i++)
+                                actuatorMenu.add(subsystemAdds[i]);
+
+                            subsystemAdds[18] = new JMenuItem("Add Compressor");
+                            subsystemAdds[19] = new JMenuItem("Add Solenoid");
+                            subsystemAdds[20] = new JMenuItem("Add Relay Solenoid");
+                            subsystemAdds[21] = new JMenuItem("Add Double Solenoid");
+                            subsystemAdds[22] = new JMenuItem("Add Relay Double Solenoid");
+                            for(int i = 18; i < 22; i++)
+                                pneumaticMenu.add(subsystemAdds[i]);
+                        }
+                        //</editor-fold>
+                        
+                        componentNameItem.setEnabled(false);
+                        mainMenu.add(componentNameItem);
+                        
+                        if(type.equals("Subsystem") || type.equals("PID Subsystem")){
+                            mainMenu.add(controllerMenu);
+                            mainMenu.add(actuatorMenu);
+                            mainMenu.add(sensorMenu);
+                            mainMenu.add(pneumaticMenu);
+                        } else if(type.equals("PID Controller")) {
+                            mainMenu.add(actuatorMenu);
+                            mainMenu.add(sensorMenu);
+                        }
+                        
+                        for(int i = 0; i < subsystemAdds.length && subsystemAdds[i] != null; i++) {
+                            toAdd = new RobotComponent(subsystemAdds[i].getText().substring(4), type, robot);
+                            subsystemAdds[i].setAction(new AddItemAction(subsystemAdds[i].getText(), tree, selected, toAdd));
+                        }
+                        
+                        for(int i = 0; i < addActions.length && addActions[i] != null; i++) {
+                            toAdd = new RobotComponent(addActions[i].getText().substring(4), addActions[i].getText().substring(4), robot);
+                            mainMenu.add(addActions[i]);
+                            addActions[i].setAction(new AddItemAction(addActions[i].getText(), tree, selected, toAdd));
+                        }
+                        
+                        mainMenu.add(delete);
+                        mainMenu.add(cancel);
+                        mainMenu.show(tree, bounds.x, bounds.y + bounds.height);
+                            
+                    }
+                }
+            }
+            
+        });
     }
 
     /**
@@ -680,6 +817,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    System.out.println("newNode=" + newNode);
 	    saved = false;
 	    treeModel.insertNodeInto(newNode, parentNode, childIndex);
+            treeModel.reload(parentNode); // reloads the tree without reverting to the root
 	    System.out.println("childIndex=" + childIndex);
 	    tree.makeVisible(path.pathByAddingChild(newNode));
 	    System.out.print("--");
@@ -690,5 +828,80 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    return true;
 	    //return delegate.importData(support);
 	}
+    }
+    
+    /**
+     * Used for adding a {@link RobotComponent} to the 
+     * {@link RobotTree} via right-click menus.
+     */
+    private class AddItemAction extends AbstractAction {
+        /** The JTree */
+//        JTree tree;
+        /** The currently selected node */
+        RobotComponent selectedNode;
+        /** The node to add */
+        RobotComponent childToAdd;
+        String name;
+        
+        /**
+         * Creates a new {@code AddItemAction} based on
+         * <ul>
+         * <li>The {@code RobotComponent} that has been right clicked.
+         * <li>The name of said {@code RobotComponent}.
+         * <li>The {@code JTree} that contains this {@code RobotComponent}.
+         * <li>The {@code RobotComponent} that is to be added.
+         * </ul>
+         * @param name The name of the {@code AddItemAction}.
+         * @param tree The {@code JTree} that contains the selected {@code RobotComponent}
+         * @param selectedNode The {@code RobotComponent} that has been right clicked ("selected").
+         * @param childToAdd The {@code RobotComponent} to add when this is clicked.
+         */
+        public AddItemAction(String name, 
+                            JTree tree, 
+                            RobotComponent selectedNode, 
+                            RobotComponent childToAdd) {
+            
+            putValue(Action.NAME, name);
+            putValue(Action.SHORT_DESCRIPTION, (new StringBuffer(name)).insert(4, "a ").toString());
+            
+            this.name = name;
+//            this.tree = tree;
+            this.selectedNode = selectedNode;
+            this.childToAdd = childToAdd;
+        }
+
+        @Override
+        /**
+         * @inheritdoc
+         */
+        public void actionPerformed(ActionEvent e) {
+            if(tree != null && selectedNode != null && childToAdd != null){
+                JMenuItem source = (JMenuItem) e.getSource();
+                System.out.println("Menu item \""+source.getText()+"\" selected.");
+                
+                RobotComponent toAdd = new RobotComponent(generateName(name.substring(4), selectedNode.getSubsystem()), source.getText().substring(4), robot);
+                selectedNode.add(toAdd);
+                tree.expandRow(selectedNode.getLevel());
+                treeModel.reload(selectedNode);
+                update();
+                takeSnapshot();
+                System.out.println("Item \""+source.getText().substring(4)+"\" added.");
+            } else {
+                System.out.println(tree.getName()+" "+selectedNode+" "+childToAdd);
+            }
+        }
+        
+        private String generateName(String wantedName, String subsystem) {
+            int i = 0;
+            String givenName;
+            while (true) {
+                i++;
+                givenName = wantedName + " " + i;
+                if (!usedNames.contains(subsystem+givenName)) {
+                    usedNames.add(subsystem+givenName);
+                    return givenName;
+                }
+            }
+        }
     }
 }
