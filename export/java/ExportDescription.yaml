@@ -67,11 +67,18 @@ Instructions:
     ClassName: "SendablePIDController"
     Import: "import edu.wpi.first.wpilibj.smartdashboard.*;"
     Construction: "#constant($Name) = new ${ClassName}(${P}, ${I}, ${D}, ${F}, #constant($Input), #constant($Output), ${Period});"
-    Extra: |
+    Extra: >
       #constant($Name).setContinuous(${Continuous});
-      #if (${Limit_Input})\n        #constant($Name).setInputRange(${Minimum_Input}, ${Maximum_Input});#end
-      #if (${Limit_Output})\n        #constant($Name).setInputRange(${Minimum_Output}, ${Maximum_Output});#end
-      #if (${Send_to_SmartDashboard})\n        SmartDashboard.putData(\"${Name}\", #constant($Name));#end
+      #if( "$Limit_Input" == "true" )
+      
+              #constant($Name).setInputRange(${Minimum_Input}, ${Maximum_Input});#end
+      #if( "$Limit_Output" == "true" )
+
+      #constant($Name).setInputRange(${Minimum_Output}, ${Maximum_Output});#end
+      #if( "$Send_to_SmartDashboard" == "true" )
+
+              SmartDashboard.putData("${Name}", #constant($Name));#end
+      
   Robot Drive 2:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
@@ -79,8 +86,9 @@ Instructions:
   Robot Drive 4:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
-    Construction: |
-        #constant($Name) = new ${ClassName}(#constant($Left_Front_Motor), #constant($Left_Rear_Motor)
+    Construction: >
+      #constant($Name) = new ${ClassName}(#constant($Left_Front_Motor), #constant($Left_Rear_Motor)
+      
                     #constant($Right_Front_Motor), #constant($Right_Rear_Motor));
 
   Gyro:

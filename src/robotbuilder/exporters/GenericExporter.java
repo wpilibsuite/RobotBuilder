@@ -10,10 +10,7 @@ import javax.swing.JOptionPane;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -70,6 +67,7 @@ public class GenericExporter {
     }
     
     public void export(RobotTree robotTree) throws IOException {
+        // Check that all necessary properties are filled in.
         RobotComponent robot = robotTree.getRoot();
         for (String prop : requires) {
             String state = robot.getProperty(prop);
@@ -96,12 +94,10 @@ public class GenericExporter {
         }
         System.out.println();
         
-        Yaml yaml = new Yaml();
         // Export to all files
         Collection<ExportFile> newFiles = getFiles();
         for (ExportFile file : newFiles) {
             file.export(this);
-
         }
         
         System.out.println(name+" Export Finished");
