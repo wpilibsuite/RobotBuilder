@@ -72,7 +72,7 @@ public class MainFrame extends JFrame {
                 }
             }
         });
-        setHelp("help/Limit Switch.html");
+        setHelp("help/Introduction.html");
         JScrollPane helpScrollPane = new JScrollPane(help);
         helpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         

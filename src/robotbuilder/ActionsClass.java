@@ -26,6 +26,7 @@ public class ActionsClass {
 //    AbstractAction cppAction = new CppAction();
 //    AbstractAction javaAction = new JavaAction();;
 //    AbstractAction labViewAction = new LabViewAction();
+    AbstractAction gettingStartedAction = new GettingStartedAction();
     AbstractAction aboutAction = new AboutAction();
 //    AbstractAction wiringDiagramAction = new WiringDiagramAction();
     private LinkedList<ExporterAction> exporters;
@@ -58,6 +59,7 @@ public class ActionsClass {
         menu.add(generateMenu);
 
         JMenu helpMenu = new JMenu("Help");
+        helpMenu.add(gettingStartedAction);
         helpMenu.add(aboutAction);
         menu.add(helpMenu);
         
@@ -81,6 +83,7 @@ public class ActionsClass {
 //        bar.add(cppAction);
 //        bar.add(javaAction);
 //        bar.add(labViewAction);
+        bar.add(gettingStartedAction);
         return bar;
     }
     
