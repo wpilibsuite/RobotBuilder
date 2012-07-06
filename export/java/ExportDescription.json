@@ -54,6 +54,9 @@
 	
 	"Subsystem" : {
 	    "Defaults": ["None"],
+	    "Export": "CommandBase",
+	    "Import": "import ${package}.subsystems.${Class Name};",
+	    "Construction": "${Class Name} ${Short Name} = new ${Class Name}();"
 	},
 	
 	"PID Controller" : {

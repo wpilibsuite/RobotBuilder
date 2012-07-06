@@ -38,6 +38,8 @@ public abstract class AbstractExporter {
     public abstract String getShortName(String s);
     public abstract String getClassName(RobotComponent comp);
     public abstract String getClassName(String s);
+    
+    protected String _package = "";
 
     protected Map<String, Map<String, String>> componentInstructions;
     
@@ -120,8 +122,10 @@ public abstract class AbstractExporter {
     protected String substitute(String template, RobotComponent comp, String className) {
         //System.out.println(comp);
         template = substitute(template, "Name", getFullName(comp));
+        template = substitute(template, "Class Name", getClassName(comp));
         template = substitute(template, "Short Name", getShortName(comp));
         template = substitute(template, "ClassName", className);
+        template = substitute(template, "package", _package);
         for (String property : comp.getPropertyKeys()) {
             //System.out.println("\t"+property);
             String type = comp.getBase().getProperty(property).getType();
