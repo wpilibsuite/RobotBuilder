@@ -22,9 +22,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
-import robotbuilder.data.PaletteComponent;
-import robotbuilder.data.Property;
-import robotbuilder.data.Validator;
+import robotbuilder.data.*;
 
 /**
  * The Palette is the set of components that can be used to create the robot
@@ -54,7 +52,8 @@ public class Palette extends JPanel implements TreeSelectionListener {
         Constructor constructor = new Constructor();
         constructor.addTypeDescription(new TypeDescription(PaletteComponent.class, "!Component"));
         constructor.addTypeDescription(new TypeDescription(Property.class, "!Property"));
-        constructor.addTypeDescription(new TypeDescription(Validator.class, "!Validator"));
+        constructor.addTypeDescription(new TypeDescription(ExistsValidator.class, "!ExistsValidator"));
+        constructor.addTypeDescription(new TypeDescription(UniqueValidator.class, "!UniqueValidator"));
         Yaml yaml = new Yaml(constructor);
         Map<String, Object> description = (Map<String, Object>) yaml.load(writer.toString());
         

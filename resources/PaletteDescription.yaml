@@ -144,37 +144,35 @@
 #end            
 
 Validators:
-  - !Validator
+  - !ExistsValidator
+    name: DropdownSelected
+    ignore: [null, "null", "", "0", "No Choices Available"]
+  - !UniqueValidator
     name: AnalogInput
-    type: Unique
     fields: [Channel (Analog), Module (Analog)]
-  - !Validator
+  - !UniqueValidator
+    name: AnalogInput
+    fields: [Channel (Analog), Module (Analog)]
+  - !UniqueValidator
     name: DigitalChannel
-    type: Unique
     fields: [Channel (Digital), Module (Digital)]
-  - !Validator
+  - !UniqueValidator
     name: PWMOutput
-    type: Unique
     fields: [Channel (PWM), Module (Digital)]
-  - !Validator
-    name: USB Port
-    type: Unique
+  - !UniqueValidator
+    name: Joystick
     fields: [Number]
-  - !Validator
+  - !UniqueValidator
     name: KinectJoystick
-    type: Unique
     fields: [Number]
-  - !Validator
+  - !UniqueValidator
     name: RelayOutput
-    type: Unique
     fields: [Channel (Relay), Module (Digital)]
-  - !Validator
+  - !UniqueValidator
     name: Solenoid
-    type: Unique
     fields: [Channel, Module]
-  - !Validator
+  - !UniqueValidator
     name: NetworkButton
-    type: Unique
     fields: [String, String]
     
 Palette:
@@ -250,10 +248,12 @@ Palette:
           - !Property
             name: Input
             type: Sensor
+            validator: DropdownSelected
             default: "0"
           - !Property
             name: Output
             type: Actuator
+            validator: DropdownSelected
             default: "0"
           - !Property
             name: P
@@ -312,6 +312,7 @@ Palette:
           - !Property
             name: Left Motor
             type: Actuator
+            validator: DropdownSelected
             default: "0"
           - !Property
             name: Left Motor Inverted
@@ -320,6 +321,7 @@ Palette:
           - !Property
             name: Right Motor
             type: Actuator
+            validator: DropdownSelected
             default: "1"
           - !Property
             name: Right Motor Inverted
@@ -350,6 +352,7 @@ Palette:
           - !Property
             name: Left Front Motor
             type: Actuator
+            validator: DropdownSelected
             default: "0"
           - !Property
             name: Left Front Motor Inverted
@@ -358,6 +361,7 @@ Palette:
           - !Property
             name: Left Rear Motor
             type: Actuator
+            validator: DropdownSelected
             default: "1"
           - !Property
             name: Left Rear Motor Inverted
@@ -366,6 +370,7 @@ Palette:
           - !Property
             name: Right Front Motor
             type: Actuator
+            validator: DropdownSelected
             default: "2"
           - !Property
             name: Right Front Motor Inverted
@@ -374,6 +379,7 @@ Palette:
           - !Property
             name: Right Rear Motor
             type: Actuator
+            validator: DropdownSelected
             default: "3"
           - !Property
             name: Right Rear Motor Inverted

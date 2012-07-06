@@ -1,6 +1,8 @@
 package robotbuilder;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -15,13 +17,10 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
+import javax.swing.tree.*;
 import org.yaml.snakeyaml.Yaml;
+import robotbuilder.data.UniqueValidator.InvalidException;
 import robotbuilder.data.*;
-import robotbuilder.data.Validator.InvalidException;
 
 /**
  *
@@ -78,6 +77,22 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         ToolTipManager.sharedInstance().registerComponent(tree);
 
         validators = palette.getValidators();
+        
+        tree.setCellRenderer(new DefaultTreeCellRenderer() {
+            @Override
+            public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+                Component renderer = super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+                RobotComponent comp = (RobotComponent) value;
+                
+                if (comp.isValid()) {
+                    renderer.setForeground(Color.black);
+                } else {
+                    renderer.setForeground(Color.red);
+                }
+                
+                return renderer;
+            }
+        });
         
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
@@ -263,8 +278,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         System.out.println("Loading");
         newFile(Palette.getInstance());
 
-//        Yaml yaml = new Yaml();
-//        System.out.println(yaml.load(in));
         Map<String, Object> details = (Map<String, Object>) new Yaml().load(in);
         RobotComponent root = new RobotComponent();
         
@@ -291,21 +304,11 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         ((RobotComponent) treeModel.getRoot()).walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) {
-                // Validate
-                Set<String> used = new HashSet<String>();
-                for (Property property : self.getBase().getProperties()) {
-                    String validatorName = property.getValidator();
+                for (String property : self.getBase().getPropertiesKeys()) {
+                    String validatorName = self.getBase().getProperty(property).getValidator();
                     Validator validator = robot.getValidator(validatorName);
                     if (validator != null) {
-                        String prefix = validator.getPrefix(property.getName());
-                        if (!used.contains(prefix)) {
-                            used.add(prefix);
-                            try {
-                                validator.claim(property.getName(), self.getProperty(property.getName()), self);
-                            } catch (InvalidException ex) {
-                                Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
+                        validator.update(self, property, self.getProperty(property));
                     }
                 }
             }

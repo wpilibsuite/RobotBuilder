@@ -2,9 +2,8 @@
 package robotbuilder;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
@@ -13,8 +12,6 @@ import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.Validator;
-import robotbuilder.data.Validator.InvalidException;
-import sun.security.validator.ValidatorException;
 
 /**
  *
@@ -78,7 +75,9 @@ class PropertiesDisplay extends JPanel {
                             try {
                                 return new JLabel(((JComboBox) value).getSelectedItem().toString());
                             } catch (NullPointerException ex) {
-                                return new JLabel("No Choices Available");
+                                JLabel label = new JLabel("No Choices Available");
+                                label.setBackground(Color.red);
+                                return label;
                             }
                         }
                     };
@@ -92,7 +91,9 @@ class PropertiesDisplay extends JPanel {
                                 setValueAt(path, row, column);
                                 return new JLabel(path);
                             } catch (NullPointerException e) {
-                                return new JLabel("Click to Select");
+                                JLabel label = new JLabel("Click to Select");
+                                label.setBackground(Color.red);
+                                return label;
                             }
                         }
                     };
@@ -168,34 +169,14 @@ class PropertiesDisplay extends JPanel {
                 String validatorName = currentComponent.getBase().getProperty(key).getValidator();
                 if (validatorName != null && !"".equals(validatorName)) {
                     Validator validator = robot.getValidator(validatorName);
-                    try {
-                        validator.release(currentComponent);
-                        validator.claim(key, (String) val, currentComponent);
-                    } catch (Validator.InvalidException e) {
-                        try {
-                            validator.claim(currentComponent);
-                        } catch (InvalidException ex) {
-                            Logger.getLogger(PropertiesDisplay.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        JOptionPane.showMessageDialog(MainFrame.getInstance(),
-                                "You already have a component using this port", "Already used", JOptionPane.ERROR_MESSAGE);
-                        currentComponent.setValue(key, currentComponent.getProperty(key));
-                        return;
+                    if (validator != null) {
+                        validator.update(currentComponent, key, val.toString());
                     }
                 }
                 System.out.println("\tAssigning..");
-                if (val instanceof String)
-                    currentComponent.setValue(key, (String) val);
-                else if (val instanceof Boolean)
-                    currentComponent.setValue(key, ((Boolean) val).toString());
-                else if (val instanceof Double)
-                    currentComponent.setValue(key, ((Double) val).toString());
-                else if (val instanceof Integer)
-                    currentComponent.setValue(key, ((Integer) val).toString());
+                currentComponent.setValue(key, val.toString());
             }
             robot.update();
-//            robot.takeSnapshot();
-//            System.out.println("Value:_"+val+ ", Row: " +row +", Column: "+ column);
         }
     }
 }

@@ -8,7 +8,7 @@ import javax.swing.JFileChooser;
 import javax.swing.tree.DefaultMutableTreeNode;
 import robotbuilder.Palette;
 import robotbuilder.RobotTree;
-import robotbuilder.data.Validator.InvalidException;
+import robotbuilder.data.UniqueValidator.InvalidException;
 
 /**
  *
@@ -25,10 +25,10 @@ public class RobotComponent extends DefaultMutableTreeNode {
 
     public RobotComponent() {
         super();
-//        System.out.println("Creating robot component");
     }
     
     public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
+        super();
         this.name = name;
         this.base = base;
         this.robot = robot;
@@ -39,32 +39,16 @@ public class RobotComponent extends DefaultMutableTreeNode {
         this(name, base, robot);
         
         if (autogenerate) {
-            //// Set unique validated ports to be some unused value
-            Map<String, LinkedList<String>> prefixes = new HashMap<String, LinkedList<String>>();
-            Map<String, Validator> validators = new HashMap<String, Validator>();
-            // Get the validated properties
+            // Initialize validation of the properties
             for (String property : getBase().getPropertiesKeys()) {
+                System.out.println(property);
                 String validatorName = getBase().getProperty(property).getValidator();
-                if (validatorName != null && !validatorName.equals("")) {
-                    Validator validator = robot.getValidator(validatorName);
-                    String prefix = validator.getPrefix(property);
-                    if (prefixes.get(prefix) == null) {
-                        prefixes.put(prefix, new LinkedList<String>());
-                        validators.put(prefix, validator);
-                    }
-                    prefixes.get(prefix).add(property);
-                }
-            }
-            // Get the unique value
-            for (String prefix : prefixes.keySet()) {
-                Validator validator = validators.get(prefix);
-                Map<String, String[]> choices = new HashMap<String, String[]>();
-                for (String property : prefixes.get(prefix)) {
-                    choices.put(property.replace(prefix, ""), getBase().getProperty(property).getChoices());
-                }
-                Map<String, String> free = validator.getFree(choices);
-                for (String suffix : free.keySet()) {
-                    setProperty(prefix+suffix, free.get(suffix));
+                System.out.println(validatorName);
+                Validator validator = robot.getValidator(validatorName);
+                System.out.println(validator);
+                if (validator != null) {
+                    validator.update(this, property, getProperty(property));
+                    System.out.println("Updated..");
                 }
             }
         }
@@ -206,6 +190,16 @@ public class RobotComponent extends DefaultMutableTreeNode {
         }
     }
     
+    public boolean isValid() {
+        for (String propName : getPropertyKeys()) {
+            Validator validator = robot.getValidator(getBase().getProperty(propName).getValidator());
+            if (validator != null && !validator.isValid(this, propName)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     @Override
     public String toString() {
         return name;
@@ -214,7 +208,6 @@ public class RobotComponent extends DefaultMutableTreeNode {
     public String getName() {
         return name;
     }
-    
     public final void setName(String name) {
         robot.removeName(this.name);
         this.name = name;
