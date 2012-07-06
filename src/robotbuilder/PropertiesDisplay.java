@@ -30,6 +30,7 @@ class PropertiesDisplay extends JPanel {
 	propTable = new PropertiesTable(propTableModel);
         add(new JScrollPane(propTable), BorderLayout.CENTER);
         propTable.setFillsViewportHeight(true);
+        propTable.getTableHeader().setReorderingAllowed(false);
     }
 
     void setCurrentComponent(DefaultMutableTreeNode node) {
