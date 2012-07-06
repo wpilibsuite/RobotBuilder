@@ -1,6 +1,30 @@
 
 {
     "Palette": {
+	"Order": ["Organization", "Sensors", "Actuators"],
+	"Organization" : {
+	    "Subsystem" : {
+		"Properties" : {
+		    "Type" : {
+                        "Type" : "Subsystem",
+                        "Default" : "Subsystem",
+			"Choices" : ["Subsystem", "PIDSubsystem"]
+                    }
+		}
+	    },
+	    "PIDController" : {
+		"Properties" : {
+		    "Input" : {
+                        "Type" : "Actuator",
+			"Choices" : "Children"
+                    },
+		    "Output" : {
+                        "Type" : "Sensor",
+			"Choices" : "Children"
+                    },
+		}
+	    }
+	},
         "Sensors": {
             "Gyro" : {
                 "Properties" : {
@@ -46,7 +70,7 @@
                 }
             }
         },
-        "Speed controllers" : {
+        "Actuators" : {
             "Victor" : {
                 "Properties" : {
                     "PWM port" : {

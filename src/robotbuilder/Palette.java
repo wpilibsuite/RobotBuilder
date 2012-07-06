@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -86,8 +87,16 @@ public class Palette extends JPanel {
      * @param jSONObject The JSON object that corresponds to this level
      */
     private void createTree(DefaultMutableTreeNode root, JSONObject jSONObject) {
-        for (Iterator i = jSONObject.keys(); i.hasNext(); ) {
-            String key = (String) i.next();
+        Iterator<String> i;
+        JSONArray order = jSONObject.optJSONArray("Order");
+        if (order != null) {
+            i = order.getIterator();
+        } else {
+            i = jSONObject.keys();
+        }
+            
+        while (i.hasNext()) {
+            String key = i.next();
             JSONObject child;
             try {
                 child = (JSONObject) jSONObject.get(key);

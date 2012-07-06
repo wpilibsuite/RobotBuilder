@@ -24,6 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import com.sun.org.apache.xpath.internal.axes.SelfIteratorNoPredicate;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -32,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A JSONArray is an ordered sequence of values. Its external text form is a
@@ -902,5 +905,32 @@ public class JSONArray {
         } catch (IOException e) {
            throw new JSONException(e);
         }
+    }
+    
+    public Iterator getIterator() {
+        final JSONArray self = this;
+        return new Iterator() {
+            int i = 0;
+
+            @Override
+            public boolean hasNext() {
+                return i < self.length();
+            }
+
+            @Override
+            public Object next() {
+                try {
+                    return self.get(i++);
+                } catch (JSONException ex) {
+                    Logger.getLogger(JSONArray.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new RuntimeException(ex);
+                }
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
     }
 }
