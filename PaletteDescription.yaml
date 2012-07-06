@@ -155,7 +155,7 @@ Palette:
             type: Actuator
             default: "0"
           - !Property
-            name: P,
+            name: P
             type: Double
             default: "1"
           - !Property
@@ -213,9 +213,33 @@ Palette:
             type: Actuator
             default: "0"
           - !Property
+            name: Left Motor Inverted
+            type: Boolean
+            default: "false"
+          - !Property
             name: Right Motor
             type: Actuator
             default: "1"
+          - !Property
+            name: Right Motor Inverted
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Sensitivity
+            type: Double
+            default: "0.5"
+          - !Property
+            name: Maximum Output
+            type: Double
+            default: "1"
+          - !Property
+            name: Safety Enabled
+            type: Boolean
+            default: "true"
+          - !Property
+            name: Safety Expiration Time
+            type: Double
+            default: ".1"
       - !Component
         name: Robot Drive 4
         type: Controller
@@ -227,17 +251,49 @@ Palette:
             type: Actuator
             default: "0"
           - !Property
+            name: Left Front Motor Inverted
+            type: Boolean
+            default: "false"
+          - !Property
             name: Left Rear Motor
             type: Actuator
             default: "1"
+          - !Property
+            name: Left Rear Motor Inverted
+            type: Boolean
+            default: "false"
           - !Property
             name: Right Front Motor
             type: Actuator
             default: "2"
           - !Property
+            name: Right Front Motor Inverted
+            type: Boolean
+            default: "false"
+          - !Property
             name: Right Rear Motor
             type: Actuator
             default: "3"
+          - !Property
+            name: Right Rear Motor Inverted
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Sensitivity
+            type: Double
+            default: "0.5"
+          - !Property
+            name: Maximum Output
+            type: Double
+            default: "1"
+          - !Property
+            name: Safety Enabled
+            type: Boolean
+            default: "true"
+          - !Property
+            name: Safety Expiration Time
+            type: Double
+            default: ".1"
 
   - Sensors:
       - !Component

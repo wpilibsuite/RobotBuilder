@@ -66,7 +66,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "SendablePIDController"
     Import: "import edu.wpi.first.wpilibj.smartdashboard.*;"
-    Construction: "#constant($Name) = new ${ClassName}(${P}, ${I}, ${D}, ${F}, #constant($Input), #constant($Output), ${Period});"
+    Construction: "#constant($Name) = new ${ClassName}($P, $I, $D, $F, #constant($Input), #constant($Output), $Period);"
     Extra: >
       #constant($Name).setContinuous(${Continuous});
       #if( "$Limit_Input" == "true" )
@@ -74,7 +74,7 @@ Instructions:
               #constant($Name).setInputRange(${Minimum_Input}, ${Maximum_Input});#end
       #if( "$Limit_Output" == "true" )
 
-      #constant($Name).setInputRange(${Minimum_Output}, ${Maximum_Output});#end
+              #constant($Name).setOutputRange(${Minimum_Output}, ${Maximum_Output});#end
       #if( "$Send_to_SmartDashboard" == "true" )
 
               SmartDashboard.putData("${Name}", #constant($Name));#end
@@ -82,14 +82,42 @@ Instructions:
   Robot Drive 2:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
+    Import: "import edu.wpi.first.wpilibj.RobotDrive.MotorType;"
     Construction: "#constant($Name) = new ${ClassName}(#constant($Left_Motor), #constant($Right_Motor));"
+    Extra: >
+      #constant($Name).setSafetyEnabled($Safety_Enabled);
+              #constant($Name).setExpiration($Safety_Expiration_Time);
+              #constant($Name).setSensitivity($Sensitivity);
+              #constant($Name).setMaxOutput($Maximum_Output);
+      #if( "$Left_Motor_Inverted" == "true")
+              #constant($Name).setInvertedMotor(MotorType.kFrontLeft, true);#end
+      #if( "$Right_Motor_Inverted" == "true")
+
+              #constant($Name).setInvertedMotor(MotorType.kFrontRight, true);#end
+              
   Robot Drive 4:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
-    Construction: >
-      #constant($Name) = new ${ClassName}(#constant($Left_Front_Motor), #constant($Left_Rear_Motor)
-      
+    Import: "import edu.wpi.first.wpilibj.RobotDrive.MotorType;"
+    Construction: >-
+      #constant($Name) = new ${ClassName}(#constant($Left_Front_Motor), #constant($Left_Rear_Motor),
                     #constant($Right_Front_Motor), #constant($Right_Rear_Motor));
+    Extra: >
+      #constant($Name).setSafetyEnabled($Safety_Enabled);
+              #constant($Name).setExpiration($Safety_Expiration_Time);
+              #constant($Name).setSensitivity($Sensitivity);
+              #constant($Name).setMaxOutput($Maximum_Output);
+      #if( "$Left_Front_Motor_Inverted" == "true")
+              #constant($Name).setInvertedMotor(MotorType.kFrontLeft, true);#end
+      #if( "$Left_Rear_Motor_Inverted" == "true")
+
+              #constant($Name).setInvertedMotor(MotorType.kRearLeft, true);#end
+      #if( "$Right_Front_Motor_Inverted" == "true")
+
+              #constant($Name).setInvertedMotor(MotorType.kFrontRight, true);#end
+      #if( "$Right_Rear_Motor_Inverted" == "true")
+
+              #constant($Name).setInvertedMotor(MotorType.kRearRight, true);#end
 
   Gyro:
     Defaults: "AnalogInput,Component,None"
