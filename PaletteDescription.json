@@ -91,6 +91,10 @@
 	"PWMOutput" : {
 	    "Type": "Unique",
 	    "Fields": ["Channel (PWM)", "Module (Digital)"]
+	},
+	"Joystick" : {
+	    "Type": "Unique",
+	    "Fields": ["Number"]
 	}
     },
     "Palette": {
@@ -405,6 +409,7 @@
 			"Name" : "Number",
                         "Type" : "Integer",
 			"Choices" : ["1", "2", "3", "4"],
+			"Validator": "Joystick",
 			"Default" : "1"
                     }
                 ]
