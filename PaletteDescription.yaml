@@ -133,7 +133,7 @@ Palette:
           - !Property
             name: Default Command
             type: Command
-            default: "1"
+            default: "None"
             
   - Controllers:
       - !Component
@@ -440,7 +440,7 @@ Palette:
           - !Property
             name: Requires
             type: Subsystem
-            default: "1"
+            default: "None"
       - !Component
         name: Command Group
         type: Command
