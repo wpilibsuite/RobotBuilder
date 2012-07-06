@@ -116,7 +116,7 @@
 		"Type": "Sensor",
                 "Properties" : {
                     "Input" : {
-                        "Type" : "AnalogChannel"
+                        "Type" : "AnalogInput"
                     }
                 }
             },
