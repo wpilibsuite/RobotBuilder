@@ -451,6 +451,18 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         return subsystems;
     }
 
+    public boolean isRobotValid() {
+        final boolean valid[] = {true};
+        walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                if (!self.isValid()) valid[0] = false;
+            }
+        });
+        
+        return valid[0];
+    }
+
     public Vector<String> getJoystickNames() {
         final Vector<String> joystickNames = new Vector<String>();
         walk(new RobotWalker() {
