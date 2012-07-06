@@ -28,7 +28,7 @@
   update: None
   variables:
     command-name: ${command.name}
-#else
+#elseif($command.base.name == "Command")
 - !File
   export: $package-path/commands/#class($command.name).java
   source: $exporter-path/Command.java
@@ -37,6 +37,15 @@
     requires: $exporter-path/Command-requires.java
   variables:
     command-name: ${command.name}
+#else
+- !File
+  export: $package-path/commands/#class($command.name).java
+  source: $exporter-path/PIDCommand.java
+  modifications:
+    requires: $exporter-path/Command-requires.java
+  variables:
+    command-name: ($command.name)
+    
 #end 
 #end 
 #end

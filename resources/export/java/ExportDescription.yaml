@@ -60,7 +60,7 @@ Vars:
     
 Macros: macros.vm
 
-Post Export Action: "netbeans --open $project"
+##Post Export Action: "netbeans --open $project"
 
 Instruction Names: ["Export", "Import", "Declaration", "Construction", "Extra", "ClassName"]
 
