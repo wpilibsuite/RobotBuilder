@@ -39,6 +39,9 @@ class ExportFile extends File {
                 fileContext.put(key, exporter.eval(vars.get(key), fileContext));
             }
         }
+        
+        backup(exporter); // Create a backup for the user!
+        
         // Export
         if (!this.exists() || update.equals("Overwrite")) {
             FileWriter out = new FileWriter(this);
@@ -60,4 +63,10 @@ class ExportFile extends File {
         }
     }
     
+    void backup(GenericExporter exporter) throws IOException {
+        File backup = new File(this.getAbsoluteFile()+"~");
+        FileWriter out = new FileWriter(backup);
+        out.write(exporter.openFile(this.getAbsolutePath()));
+        out.close();
+    }
 }
