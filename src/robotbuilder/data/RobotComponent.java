@@ -140,10 +140,12 @@ public class RobotComponent extends DefaultMutableTreeNode {
                     old = getProperty(key);
                 }
                 Vector<String> choices = null;
-                if (property.getType().equals("Joystick"))
+                if (property.getType().equals("Joystick")) {
                     choices = robot.getJoystickNames();
-                else if (property.getType().equals("Command"))
+                } else if (property.getType().equals("Command")) {
                     choices = robot.getCommandNames();
+                    choices.add(0, "None");
+                }
                 JComboBox combo = new JComboBox(choices);
                 combos.put(key, combo);
                 if (choices.contains(old)) {

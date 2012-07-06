@@ -145,10 +145,9 @@
 		"Help": "A functional part of your robot that groups the sensors and actuators together.",
 		"Properties" : [
 		    {
-			"Name": "Type",
-			"Type" : "Subsystem",
-			"Default" : "Subsystem",
-			"Choices" : ["Subsystem", "PIDSubsystem"]
+			"Name" : "Default Command",
+			"Type" : "Command",
+			"Default" : "1"
                     },
 		]
 	    }
