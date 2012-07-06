@@ -78,7 +78,7 @@
 	    },
 	    "Subsystem" : {
 		"Type": "Organization",
-		"Supports": {"Sensor": "unlimited", "Actuator": "unlimited"},
+		"Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Organization": "unlimited"},
 		"Help": "A functional part of your robot that groups the sensors and actuators together.",
 		"Properties" : {
 		    "Type" : {
