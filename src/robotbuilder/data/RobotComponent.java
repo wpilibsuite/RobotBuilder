@@ -3,6 +3,7 @@ package robotbuilder.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import robotbuilder.RobotTree;
 
 /**
  *
@@ -11,11 +12,15 @@ import java.util.Map;
 public class RobotComponent {
     private String name;
     private PaletteComponent base;
+    private RobotTree robot;
     private Map<String, String> configuration = new HashMap<String, String>();
 
-    public RobotComponent(String name, PaletteComponent base) {
+    public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
+        //setName(name);
         this.name = name;
         this.base = base;
+        this.robot = robot;
+        robot.addName(name);
     }
     
     public Map<String, Property> getProperties() {
@@ -39,8 +44,10 @@ public class RobotComponent {
         return name;
     }
     
-    public void setName(String name) {
+    public final void setName(String name) {
+        robot.removeName(this.name);
         this.name = name;
+        robot.addName(name);
     }
 
     public void setProperty(String key, String val) {

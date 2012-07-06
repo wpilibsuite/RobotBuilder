@@ -7,8 +7,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.InputEvent;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -26,7 +25,7 @@ import robotbuilder.data.RobotComponent;
  * nodes that represent the various components that can be used to build
  * the robot. This is constructed by the user by dragging palette items to the tree.
  */
-class RobotTree extends JPanel implements TreeSelectionListener {
+public class RobotTree extends JPanel implements TreeSelectionListener {
     
     private JTree tree;
     private DefaultTreeModel treeModel;
@@ -73,6 +72,22 @@ class RobotTree extends JPanel implements TreeSelectionListener {
             }
         }
     }
+    
+    /**
+     * Add a name to the used names list.
+     * @param name The name being used
+     */
+    public void addName(String name) {
+        usedNames.add(name);
+    }
+    
+    /**
+     * Remove a name from the used nomes list.
+     * @param name The name being freed
+     */
+    public void removeName(String name) {
+        usedNames.remove(name);
+    }
 
     @Override
     public void valueChanged(TreeSelectionEvent tse) {
@@ -94,6 +109,7 @@ class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     public static DataFlavor ROBOT_COMPONENT_FLAVOR = new DataFlavor(RobotComponent.class, "Robot Component Flavor");
+    private RobotTree robot = this;
     /**
      * A transfer handler for that wraps the default transfer handler of RobotTree.
      * 
@@ -124,7 +140,6 @@ class RobotTree extends JPanel implements TreeSelectionListener {
             TreePath path = dl.getPath();
             if (path == null) return false;
             return true;
-            //return true;
         }
         
         @Override
@@ -150,13 +165,6 @@ class RobotTree extends JPanel implements TreeSelectionListener {
                     return currentNode.getUserObject();
                 }
             };
-//            try {
-//                Method method = delegate.getClass().getDeclaredMethod("createTransferable", JComponent.class);
-//                method.setAccessible(true);
-//                return (Transferable) method.invoke(delegate, c);
-//            } catch (Exception e) {
-//                return super.createTransferable(c);
-//            }
         }
         
         @Override
@@ -169,15 +177,6 @@ class RobotTree extends JPanel implements TreeSelectionListener {
             System.out.println(source.getClass());
             currentNode.removeFromParent();
             ((DefaultTreeModel) tree.getModel()).reload();
-            //((MutableTreeNode) currentNode.getParent()).remove(currentNode);
-//            try {
-//                Method method = delegate.getClass().getDeclaredMethod("exportDone", JComponent.class, Transferable.class,
-//                        int.class);
-//                method.setAccessible(true);
-//                method.invoke(delegate, source, data, action);
-//            } catch (Exception e) {
-//            }
-//            }
         }
         
         @Override
@@ -208,20 +207,23 @@ class RobotTree extends JPanel implements TreeSelectionListener {
             }
             DefaultMutableTreeNode newNode;
             if (support.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                System.out.println("Importing from palette");
                 String data;
                 try {
                     data = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
                 } catch (UnsupportedFlavorException e) {
+                    System.out.println("UFE");
                     return false;
                 } catch (IOException e) {
+                    System.out.println("IOE");
                     return false;
                 }
                 System.out.println("Data: " + data);
                 PaletteComponent base = Palette.getInstance().getItem(data);
                 assert base != null; // TODO: Handle more gracefully
-                newNode = new DefaultMutableTreeNode(new RobotComponent(getDefaultComponentName(base), base));
+                newNode = new DefaultMutableTreeNode(new RobotComponent(getDefaultComponentName(base), base, robot));
             } else if (support.getTransferable().isDataFlavorSupported(ROBOT_COMPONENT_FLAVOR)) {
-                System.out.println("Importing a robot component");
+                System.out.println("Moving a robot component");
                 RobotComponent data;
                 try {
                     data = (RobotComponent) support.getTransferable().getTransferData(ROBOT_COMPONENT_FLAVOR);
@@ -237,6 +239,7 @@ class RobotTree extends JPanel implements TreeSelectionListener {
             } else {
                 return false;
             }
+            System.out.println("newNode="+newNode);
             DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode)path.getLastPathComponent();
             treeModel.insertNodeInto(newNode, parentNode, childIndex);
             tree.makeVisible(path.pathByAddingChild(newNode));
