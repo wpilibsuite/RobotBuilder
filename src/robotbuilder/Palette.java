@@ -6,14 +6,13 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -25,6 +24,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.reader.StreamReader;
 import robotbuilder.data.Macro;
 import robotbuilder.data.Macro.Expansion;
 import robotbuilder.data.PaletteComponent;
@@ -47,13 +47,8 @@ public class Palette extends JPanel implements TreeSelectionListener {
     private Map<String, Validator> validators = new HashMap<String, Validator>();
     
     private Palette() {
-        FileReader file;
-        try {
-            file = new FileReader((new File("PaletteDescription.yaml")).getAbsolutePath());
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
+        InputStreamReader in;
+        in = new InputStreamReader(this.getClass().getResourceAsStream("/PaletteDescription.yaml"));
 
         Constructor constructor = new Constructor();
         constructor.addTypeDescription(new TypeDescription(Expansion.class, "!Expansion"));
@@ -61,7 +56,7 @@ public class Palette extends JPanel implements TreeSelectionListener {
         constructor.addTypeDescription(new TypeDescription(Property.class, "!Property"));
         constructor.addTypeDescription(new TypeDescription(Validator.class, "!Validator"));
         Yaml yaml = new Yaml(constructor);
-        Map<String, Object> description = (Map<String, Object>) yaml.load(file);
+        Map<String, Object> description = (Map<String, Object>) yaml.load(in);
         
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Palette");
         generateMacros((Map<String, ArrayList<Expansion>>) description.get("Macros"));

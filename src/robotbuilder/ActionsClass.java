@@ -1,13 +1,12 @@
 
 package robotbuilder;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.swing.*;
+import org.yaml.snakeyaml.Yaml;
 import robotbuilder.actions.*;
 
 /**
@@ -15,7 +14,7 @@ import robotbuilder.actions.*;
  * @author brad
  */
 public class ActionsClass {
-    static File EXPORTERS_PATH = new File("export/");
+    static String EXPORTERS_PATH = "/export/";
 
     AbstractAction exitAction = new ExitAction();
     AbstractAction newAction = new NewAction();
@@ -83,23 +82,16 @@ public class ActionsClass {
     }
     
     private LinkedList<ExporterAction> getExporters() {
-        File[] dirs = EXPORTERS_PATH.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                for (String path : file.list()) {
-                    if (path.equals("ExportDescription.yaml")) return true;
-                }
-                return false;
-            }
-        });
+        System.out.println(this.getClass().getResource(EXPORTERS_PATH));
+        System.out.println(this.getClass().getResource(EXPORTERS_PATH+"exporters.yaml"));
+        Yaml yaml = new Yaml();
+        InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream(EXPORTERS_PATH+"exporters.yaml"));
+        List<String> exporterNames = (List<String>) yaml.load(in);
         
         LinkedList<ExporterAction> results = new LinkedList<ExporterAction>();
-        for (File dir : dirs) {
-            try {
-                results.add(new ExporterAction(new File(dir.getAbsolutePath()+File.separator+"ExportDescription.yaml")));
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(ActionsClass.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        for (String exporter : exporterNames) {
+            String resource = EXPORTERS_PATH+exporter+"/";
+            results.add(new ExporterAction(resource));
         }
         return results;
     }

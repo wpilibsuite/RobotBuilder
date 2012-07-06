@@ -35,13 +35,12 @@ public class GenericExporter {
     private LinkedList<String> varKeys = new LinkedList<String>();
     private Map<String, Map<String, String>> componentInstructions;
     
-    public GenericExporter(File descriptionFile) throws FileNotFoundException {
-        path = descriptionFile.getParent()+File.separator;
-        System.out.println("PATH: "+path+" -- "+(new File("")).getAbsolutePath());
-        path = path.replace((new File("")).getAbsolutePath()+File.separator, "");
-        System.out.println("PATH: "+path+" -- "+(new File("")).getAbsolutePath());
+    public GenericExporter(String path) {
+        this.path = path;
         Yaml yaml = new Yaml();
-        Map<String, Object> description = (Map<String, Object>) yaml.load(new FileReader(descriptionFile));;
+        System.out.println(this.getClass().getResource(path+"ExportDescription.yaml"));
+        Map<String, Object> description = (Map<String, Object>) yaml.load(
+                new InputStreamReader(this.getClass().getResourceAsStream(path+"ExportDescription.yaml")));
         name = (String) description.get("Name");
         type = (String) description.get("Type");
         filesPath = (String) description.get("Files");
@@ -143,14 +142,14 @@ public class GenericExporter {
         return filesYaml;
     }
 
-    String eval(File file, Context context) throws FileNotFoundException {
-        FileReader fileReader;
-        fileReader = new FileReader(file);
+    String eval(File file, Context context) {
+        InputStreamReader in;
+        in = new InputStreamReader(this.getClass().getResourceAsStream(file.getAbsolutePath()));
         StringWriter w = new StringWriter();
-        Velocity.evaluate(context, w, name+" Exporter: "+file.getName(), fileReader);
+        Velocity.evaluate(context, w, name+" Exporter: "+file.getName(), in);
         return w.toString();
     }
-    String eval(File file) throws FileNotFoundException {
+    String eval(File file) {
         return eval(file, rootContext);
     }
     

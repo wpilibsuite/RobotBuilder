@@ -85,7 +85,7 @@ public class MainFrame extends JFrame {
                 }
             }
         });
-        setHelp("help/Introduction.html");
+        setHelp("/help/Introduction.html");
         JScrollPane helpScrollPane = new JScrollPane(help);
         helpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
@@ -141,7 +141,7 @@ public class MainFrame extends JFrame {
     
     public void setHelp(String file) {
         try {
-            help.setPage(new File(file).toURL());
+            help.setPage(this.getClass().getResource(file));
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }

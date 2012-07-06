@@ -42,7 +42,7 @@ public class GettingStartedAction extends AbstractAction {
             }
         });
         try {
-            help.setPage(new File("help/Introduction.html").toURL());
+            help.setPage(this.getClass().getResource("/help/Introduction.html"));
         } catch (IOException ex) {
             Logger.getLogger(GettingStartedAction.class.getName()).log(Level.SEVERE, null, ex);
         }

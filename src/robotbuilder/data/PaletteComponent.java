@@ -96,6 +96,6 @@ public class PaletteComponent {
 
     
     public String getHelpFile() {
-        return "help/"+name+".html";
+        return "/help/"+name+".html";
     }
 }

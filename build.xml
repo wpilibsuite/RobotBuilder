@@ -13,9 +13,17 @@
 
     <target name="-post-jar">
       <jar destfile="${dist.jar}" update="true">
-	<fileset dir="help" includes="*"/>
-	<fileset dir="export" includes="**/*"/>
+	<fileset dir="" includes="PaletteDescription.yaml"/>
+	<fileset dir="" includes="help/**"/>
+	<fileset dir="" includes="export/**"/>
       </jar>
+    </target>
+
+    <target depends="init,compile,compile,jar,-post-jar" description="Run a main class." name="run">
+      <exec executable="java">
+	<arg value="-jar"/>
+	<arg value="${dist.jar}"/>
+      </exec>
     </target>
     
     <!--
