@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-import org.json.JSONException;
 import robotbuilder.actions.*;
 
 /**
@@ -99,8 +98,6 @@ public class ActionsClass {
             try {
                 results.add(new ExporterAction(new File(dir.getAbsolutePath()+File.separator+"ExportDescription.yaml")));
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(ActionsClass.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (JSONException ex) {
                 Logger.getLogger(ActionsClass.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

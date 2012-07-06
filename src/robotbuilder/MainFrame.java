@@ -116,7 +116,7 @@ public class MainFrame extends JFrame {
     public void openDefaultFile() {
         String fileName = prefs.get("FileName", "");
         if (fileName.length() > 0)
-            robotTree.load(fileName);
+            robotTree.load(new File(fileName));
     }
     
     public void closeWindow() {

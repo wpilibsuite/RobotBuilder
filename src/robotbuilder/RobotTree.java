@@ -19,17 +19,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-import org.yaml.snakeyaml.Dumper;
-import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-import org.yaml.snakeyaml.introspector.BeanAccess;
-import org.yaml.snakeyaml.introspector.PropertyUtils;
-import org.yaml.snakeyaml.nodes.*;
-import org.yaml.snakeyaml.representer.Representer;
 import robotbuilder.data.*;
 import robotbuilder.data.Validator.InvalidException;
 
@@ -170,8 +160,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             save.write(this.encode());
 	    System.out.println("Written");
 	    save.close();
-	} catch (JSONException ex) {
-	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	} catch (IOException ex) {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	}
@@ -197,7 +185,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         save(filePath);
     }
     
-    public String encode() throws JSONException {
+    public String encode() {
         Object out = ((RobotComponent) treeModel.getRoot()).visit(new RobotVisitor() {
             @Override
             public Object visit(RobotComponent self, Object...extra) {
@@ -465,11 +453,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     
     private void saveState() {
         System.out.println("State Changed");
-        try {
-            undoHistory.addLast(encode());
-        } catch (JSONException ex) {
-            Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        undoHistory.addLast(encode());
     }
     
     public void undo() {

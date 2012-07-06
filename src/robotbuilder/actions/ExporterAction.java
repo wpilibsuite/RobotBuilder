@@ -9,9 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import org.json.JSONException;
 import robotbuilder.MainFrame;
-import robotbuilder.RobotTree;
 import robotbuilder.exporters.GenericExporter;
 
 /**
@@ -21,7 +19,7 @@ import robotbuilder.exporters.GenericExporter;
 public class ExporterAction extends AbstractAction {
     GenericExporter exporter;
     
-    public ExporterAction(File description) throws FileNotFoundException, JSONException {
+    public ExporterAction(File description) throws FileNotFoundException {
         exporter = new GenericExporter(description);
         putValue(Action.NAME, exporter.getName());
         putValue(Action.SHORT_DESCRIPTION, exporter.getDescription());

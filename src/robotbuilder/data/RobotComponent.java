@@ -6,9 +6,6 @@ import java.util.*;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.tree.DefaultMutableTreeNode;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import robotbuilder.Palette;
 import robotbuilder.RobotTree;
 import robotbuilder.data.Validator.InvalidException;
@@ -280,63 +277,6 @@ public class RobotComponent extends DefaultMutableTreeNode {
      */
     public boolean supports(RobotComponent data) {
         return children.contains(data) || this.supports(data.getBase());
-    }
-
-    /**
-     * Encode this RobotComponent and all it's subcomponents as a JSONObject.
-     * @return A JSONObject representing this component.
-     */
-    public JSONObject encodeAsJSON() throws JSONException {
-        JSONObject self = new JSONObject();
-        self.put("Name", name);
-        self.put("Base", base.getName());
-        self.put("Configuration", configuration);
-        JSONArray children = new JSONArray();
-        for (Enumeration i = this.children(); i.hasMoreElements();) {
-            RobotComponent child= (RobotComponent) i.nextElement();
-            children.put(child.encodeAsJSON());
-        }
-        self.put("Children", children);
-        
-        return self;
-    }
-
-    /**
-     * Decode this RobotComponent and all it's subcomponents from a JSONObject.
-     * @return A RobotComponent representing this component.
-     */
-    public static RobotComponent decodeFromJSON(JSONObject json, RobotTree robot) throws JSONException, InvalidException {
-        RobotComponent self = new RobotComponent(json.getString("Name"), 
-                Palette.getInstance().getItem(json.getString("Base")),
-                robot);
-        JSONObject configuration = json.getJSONObject("Configuration");
-        if (configuration.names() != null) {
-            for (Object config : configuration.names().getIterable()) {
-                self.setProperty((String) config, configuration.getString((String) config));
-            }
-        }
-        
-        // Validate
-        Set<String> used = new HashSet<String>();
-        for (Property property : self.getBase().getProperties()) {
-            String validatorName = property.getValidator();
-            Validator validator = robot.getValidator(validatorName);
-            if (validator != null) {
-                String prefix = validator.getPrefix(property.getName());
-                if (!used.contains(prefix)) {
-                    used.add(prefix);
-                    validator.claim(property.getName(), self.getProperty(property.getName()), self);
-                }
-            }
-        }
-        
-        // Handle children
-        JSONArray children = json.getJSONArray("Children");
-        for (Object child : children.getIterable()) {
-            self.add(decodeFromJSON((JSONObject) child, robot));
-        }
-        
-        return self;
     }
     
     public void walk(RobotWalker walker) {

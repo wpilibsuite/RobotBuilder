@@ -4,12 +4,8 @@
  */
 package robotbuilder.data;
 
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *

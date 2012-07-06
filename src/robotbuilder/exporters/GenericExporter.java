@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
-import org.json.JSONException;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -36,7 +35,7 @@ public class GenericExporter {
     private LinkedList<String> varKeys = new LinkedList<String>();
     private Map<String, Map<String, String>> componentInstructions;
     
-    public GenericExporter(File descriptionFile) throws FileNotFoundException, JSONException {
+    public GenericExporter(File descriptionFile) throws FileNotFoundException {
         path = descriptionFile.getParent()+File.separator;
         System.out.println("PATH: "+path+" -- "+(new File("")).getAbsolutePath());
         path = path.replace((new File("")).getAbsolutePath()+File.separator, "");
@@ -110,7 +109,7 @@ public class GenericExporter {
      * @param properties The properties that each component must have.
      */
     private void loadExportDescription(Map<String, Map<String, String>> defaults, 
-            Map<String, Map<String, String>> components) throws JSONException {
+            Map<String, Map<String, String>> components) {
         // Load the intstructions to export items from the palette
         componentInstructions = new HashMap<String, Map<String, String>>();
         for (String key : components.keySet()) {
