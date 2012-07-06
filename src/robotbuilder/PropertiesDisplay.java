@@ -41,7 +41,15 @@ class PropertiesDisplay extends JPanel {
     
     class PropertiesTableModel extends AbstractTableModel {
 
-	@Override
+        @Override
+	public String getColumnName(int col) {
+            if (col == 0)
+                return "Property";
+            else
+                return "Value";
+        }
+        
+        @Override
 	public int getRowCount() {
             if (currentComponent == null) {
                 return 0;
