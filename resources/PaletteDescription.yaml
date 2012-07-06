@@ -246,7 +246,7 @@ Palette:
       - !Component
         name: Subsystem
         type: Subsystem
-        supports: {Sensor: -1, Actuator: -1, Controller: -1, Pneumatic: -1}
+        supports: {Sensor: -1, Actuator: -1, Controller: -1, PIDSource: -1, PIDOutput: -1}
         help: A functional part of your robot that groups the sensors and actuators together.
         properties:
           - !TypeSelectionProperty
@@ -258,7 +258,7 @@ Palette:
       - !Component
         name: PID Controller
         type: Controller
-        supports: {Sensor: 1, Actuator: 1}
+        supports: {PIDSource: 1, PIDOutput: 1}
         help: PIDControllers allow control of an actuator based off of feedback from a sensor.
         properties:
           - !BooleanProperty
@@ -266,12 +266,12 @@ Palette:
             default: false
           - !ChildSelectionProperty
             name: Input
-            type: Sensor
+            type: PIDSource
             validators: [DropdownSelected]
             default: 0
           - !ChildSelectionProperty
             name: Output
-            type: Actuator
+            type: PIDOutput
             validators: [DropdownSelected]
             default: 0
           - !DoubleProperty
@@ -313,7 +313,7 @@ Palette:
       - !Component
         name: Robot Drive 2
         type: Controller
-        supports: {Actuator: 2}
+        supports: {PIDOutput: 2}
         help: RobotDrive handles tank drive, arcade drive and mecanum drive.
         properties:
           - !ChildSelectionProperty
@@ -347,7 +347,7 @@ Palette:
       - !Component
         name: Robot Drive 4
         type: Controller
-        supports: {"Actuator": 4}
+        supports: {PIDOutput: 4}
         help: RobotDrive handles tank drive, arcade drive and mecanum drive.
         properties:
           - !ChildSelectionProperty
@@ -398,7 +398,7 @@ Palette:
   - Sensors:
       - !Component
         name: Gyro
-        type: Sensor
+        type: PIDSource
         help: An analog angular rate sensor.
         properties:
           #AnalogInput("Input")
@@ -407,7 +407,7 @@ Palette:
             default: 1.25
       - !Component
         name: Accelerometer
-        type: Sensor
+        type: PIDSource
         help: An analog acceleration sensor.
         properties:
           #AnalogInput("Input")
@@ -419,7 +419,7 @@ Palette:
             default: 2.5
       - !Component
         name: Quadrature Encoder
-        type: Sensor
+        type: PIDSource
         help: A digital sensor that can be used to calculate the speed and distance rotated.
         properties:
           #DigitalChannel("Channel A")
@@ -440,7 +440,7 @@ Palette:
             default: "kRate"
       - !Component
         name: Indexed Encoder
-        type: Sensor
+        type: PIDSource
         help: A digital sensor that can be used to calculate the speed and distance rotated.
         properties:
           #DigitalChannel("Channel A")
@@ -467,13 +467,13 @@ Palette:
             default: false
       - !Component
         name: Potentiometer
-        type: Sensor
+        type: PIDSource
         help: An rotational analog sensor that can be used to determine the position of an axle.
         properties:
           #AnalogInput("Input")
       - !Component
         name: Analog Input
-        type: Sensor
+        type: PIDSource
         help: A generic analog input.
         properties:
           #AnalogInput("Input")
@@ -491,7 +491,7 @@ Palette:
           #DigitalChannel("Input")
       - !Component
         name: Ultrasonic
-        type: Sensor
+        type: PIDSource
         help: A range finding sensor based off of sound reflections.
         properties:
           #DigitalChannel("Ping")
@@ -500,13 +500,13 @@ Palette:
   - Actuators:
       - !Component
         name: Victor
-        type: Actuator
+        type: PIDOutput
         help: A PWM speed controller that allows you to set the speed of a motor.
         properties:
           #PWMOutput("Output")
       - !Component
         name: Jaguar
-        type: Actuator
+        type: PIDOutput
         help: A PWM speed controller that allows you to set the speed of a motor.
         properties:
           #PWMOutput("Output")
@@ -533,26 +533,26 @@ Palette:
   - Pneumatics:
       - !Component
         name: Compressor
-        type: Pneumatic
+        type: Actuator
         help: A pneumatic compressor on your robot.
         properties:
           #DigitalChannel("Pressure Switch")
           #RelayOutput("Spike")
       - !Component
         name: Solenoid
-        type: Pneumatic
+        type: Actuator
         help: A linear actuator used to open and close valves that runs off of the solenoid module.
         properties:
           #Solenoid("Output")
       - !Component
         name: Relay Solenoid
-        type: Pneumatic
+        type: Actuator
         help: A linear actuator used to open and close valves that runs off of a relay.
         properties:
           #RelayOutput("Output")
       - !Component
         name: Double Solenoid
-        type: Pneumatic
+        type: Actuator
         help: A double-action linear actuator used to open and close valves that runs off of the Solenoid Module.
         properties:
           #Solenoid("Forward")
