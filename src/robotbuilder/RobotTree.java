@@ -7,10 +7,7 @@ import java.awt.Rectangle;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
@@ -247,6 +244,56 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             
         });
         //</editor-fold>
+        tree.setFocusable(true);
+        this.setFocusable(true);
+        tree.addKeyListener(new KeyAdapter(){
+            
+            boolean ctrlDown = false;
+            @Override
+            public void keyTyped(KeyEvent e) {
+                int keyCode = e.getExtendedKeyCode();
+                char keyChar = e.getKeyChar();
+                System.out.println("Modifiers: \""+e.getModifiersEx()+"\"");
+                ctrlDown = (e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0;
+                System.out.println("Control down = "+ctrlDown);
+
+                TreePath path = tree.getSelectionPath();
+                RobotComponent selected = (RobotComponent) path.getLastPathComponent();
+                System.out.println("Key \""+keyCode+"\" typed.");
+                System.out.println("Key char \""+keyChar+"\"");
+
+                if(keyChar == KeyEvent.VK_BACK_SPACE || keyChar == KeyEvent.VK_DELETE) {
+
+                    if(!selected.getBase().toString().equals("Subsystems") &&
+                    !selected.getBase().toString().equals("OI") &&
+                    !selected.getBase().toString().equals("Commands") &&
+                    !selected.getBase().toString().equals("Robot")) {
+
+                        selected.removeFromParent();
+                        selected.walk(new RobotWalker() {
+                            @Override
+                            public void handleRobotComponent(RobotComponent self) {
+                                MainFrame.getInstance().getCurrentRobotTree().removeName(self.getFullName());
+                            }
+                        });
+                        update();
+                        takeSnapshot();
+                        System.out.println("\""+selected.getName()+"\" removed");
+                    } else {
+                        JOptionPane.showMessageDialog(MainFrame.getInstance(), 
+                                                      "Cannot delete \""+selected+"\"", 
+                                                      "Cannot Delete", 
+                                                      JOptionPane.ERROR_MESSAGE);
+                    }
+//                } else if((e.getKeyCode() == KeyEvent.VK_C) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+//                    System.out.println("Copy");
+//                } else if((e.getKeyCode() == KeyEvent.VK_X) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+//                    System.out.println("Cut");
+//                } else if((e.getKeyCode() == KeyEvent.VK_V) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+//                    System.out.println("Paste");
+                }
+            }
+        });
     }
 
     /**
