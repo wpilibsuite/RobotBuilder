@@ -4,3 +4,5 @@
 save.yaml
 *~
 *#
+/test-resources/RobotBuilderTestProject/build/
+/test-resources/RobotBuilderTestProject/nbproject/private/
