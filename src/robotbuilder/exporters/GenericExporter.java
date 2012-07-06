@@ -192,6 +192,19 @@ public class GenericExporter {
         return components;
     }
     
+    // Getters and such
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return getName();
+    }
+
+    public boolean isOnToolbar() {
+        return showOnToolbar;
+    }
+    
     //// Everything below is used by the java export as $helper.* and should be
     //// cleaned up and ported to macros.
     
