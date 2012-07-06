@@ -79,7 +79,7 @@
 	    {
 		"Name": "Robot",
 		"Type": "Robot",
-		"Supports": {"Subsystem": "unlimited", "Controller": "unlimited", "Sensor": "unlimited", "Actuator": "unlimited", "OI": "1"},
+		"Supports": {"Subsystems": 1, "OI": 1, "Commands": 1, },
 		"Help": "Your Robot!",
 		"Properties": [
 		    {
@@ -100,14 +100,32 @@
 		]
 	    },
 	    {
+		"Name": "Subsystems",
+		"Type": "Subsystems",
+		"Supports": {"Subsystem": "unlimited"},
+		"Help": "The subsystems that make up your robot.",
+		"Properties": [
+
+		]
+	    },
+	    {
 		"Name": "OI",
 		"Type": "OI",
-		"Supports": {"Button": "unlimited", "Joystick": "4"},
+		"Supports": {"Button": "unlimited", "Joystick": 4},
 		"Help": "Your operator interface!",
 		"Properties": [
 
 		]
 	    },
+	    {
+		"Name": "Commands",
+		"Type": "Commands",
+		"Supports": {"Command": "unlimited"},
+		"Help": "The commands that control what actions your robot performs.",
+		"Properties": [
+
+		]
+	    }
 	],
 	"Subsystems" : [
 	    {
