@@ -1,0 +1,18 @@
+declarations=OI-declarations.java,constructors=OI-constructors.java:$package-path/OI.java
+constructors=CommandBase-constructors.java:$package-path/commands/CommandBase.java
+
+## Export Commands as files
+#if ($export-commands)
+#foreach ($command in $commands)
+#if ($command.base.name == "Command Group")#else
+requires=Command-requires.java:$package-path/commands/#class($command.name).java:command-name=${command.name}
+#end 
+#end 
+#end
+
+## Export Subsystems as files
+#if ($export-subsystems)
+#foreach ($subsystem in $subsystems)
+declarations=Subsystem-declarations.java,default_command=Subsystem-default_command.java:$package-path/subsystems/#class($subsystem.name).java:subsystem-name=${subsystem.name}
+#end
+#end

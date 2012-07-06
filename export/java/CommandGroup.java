@@ -1,5 +1,5 @@
 package ${package}.commands;
-#set($command = $helper.getByName($command, $robot))
+#set($command = $helper.getByName($command-name, $robot))
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**

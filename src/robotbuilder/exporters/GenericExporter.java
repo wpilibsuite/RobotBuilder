@@ -6,6 +6,8 @@ package robotbuilder.exporters;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Pattern;
+import javax.sound.midi.Patch;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
@@ -16,6 +18,7 @@ import org.json.JSONTokener;
 import robotbuilder.RobotTree;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
+import sun.misc.Regexp;
 
 /**
  *
@@ -25,7 +28,7 @@ public class GenericExporter {
     private final static String[] DESCRIPTION_PROPERTIES = {"Export", "Import", "Declaration",
         "Construction", "Extra", "ClassName", "Subsystem Export", "Template"};
     
-    private String name, type, filesPath;
+    private String name, type, newFilesPath, modifiedFilesPath, begin_modification, end_modification;
     private boolean showOnToolbar;
     private String path;
     private Context rootContext = new VelocityContext();
@@ -38,7 +41,10 @@ public class GenericExporter {
         JSONObject description = openJson(descriptionFile);
         name = description.getString("Name");
         type = description.getString("Type");
-        filesPath = description.getString("New Files");
+        newFilesPath = description.getString("New Files");
+        modifiedFilesPath = description.getString("Modified Files");
+        begin_modification = description.getString("Begin Modification");
+        end_modification = description.getString("End Modification");
         String _ = eval(new File(path+description.getString("Macros")));
         showOnToolbar = description.getBoolean("Toolbar");
         for (Object pair : description.getJSONArray("Vars").getIterable()) {
@@ -55,6 +61,7 @@ public class GenericExporter {
         RobotComponent robot = robotTree.getRoot();
         rootContext.put("robot", robot);
         rootContext.put("helper", this);
+        rootContext.put("exporter-path", path);
         rootContext.put("components", getComponents(robot));
         rootContext.put("export-subsystems", robot.getProperty("Export Subsystems").equals("true"));
         rootContext.put("subsystems", robotTree.getSubsystems());
@@ -64,15 +71,19 @@ public class GenericExporter {
             System.out.println("Var: "+key+" = "+eval(vars.get(key)));
             rootContext.put(key, eval(vars.get(key)));
         }
+        System.out.println();
         
         // Generate new files
-        System.out.println();
-        LinkedList<ExportFile> files = getFiles();
-        for (ExportFile file : files) {
+        LinkedList<ExportFile> newFiles = getNewFiles();
+        for (ExportFile file : newFiles) {
             file.export();
         }
         
-        // TODO: Update existing files
+        // Update existing files
+        LinkedList<ModifiedFile> modifiedFiles = getModifiedFiles();
+        for (ModifiedFile file : modifiedFiles) {
+            file.export();
+        }
         
         System.out.println(name+" Export Finished");
     }
@@ -126,14 +137,31 @@ public class GenericExporter {
         }
     }
     
-    private LinkedList<ExportFile> getFiles() throws FileNotFoundException {
+    private LinkedList<ExportFile> getNewFiles() throws FileNotFoundException {
         LinkedList<ExportFile> files = new LinkedList<ExportFile>();
-        String filesString = eval(new File(path+filesPath));
+        String filesString = eval(new File(path+newFilesPath));
         for (String line : filesString.split("\n")) {
             System.out.println("Line: "+line);
             if (line.contains(":")) {
                 String[] split = line.split(":");
                 ExportFile file = new ExportFile(split[1], new File(path+split[0]));
+                for (int i = 2; i < split.length; i++) {
+                    file.addVar(split[i]);
+                }
+                files.add(file);
+            }
+        }
+        return files;
+    }
+    
+    private LinkedList<ModifiedFile> getModifiedFiles() throws FileNotFoundException {
+        LinkedList<ModifiedFile> files = new LinkedList<ModifiedFile>();
+        String filesString = eval(new File(path+modifiedFilesPath));
+        for (String line : filesString.split("\n")) {
+            System.out.println("Line: "+line);
+            if (line.contains(":")) {
+                String[] split = line.split(":");
+                ModifiedFile file = new ModifiedFile(split[1], split[0]);
                 for (int i = 2; i < split.length; i++) {
                     file.addVar(split[i]);
                 }
@@ -196,7 +224,7 @@ public class GenericExporter {
     //// Everything below is used by the java export as $helper.* and should be
     //// cleaned up and ported to macros.
     
-    public String classOf(RobotComponent comp) {
+    public String classOf(RobotComponent comp) { // TODO: Make macro
         final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
         return instructions.get("ClassName");
     }
@@ -207,7 +235,7 @@ public class GenericExporter {
      * @param category The category to look for.
      * @return The resulting imports.
      */
-    public String getImports(RobotComponent robot, final String category) {
+    public String getImports(RobotComponent robot, final String category) { // TODO: make macro
         System.out.println("Getting imports");
         final Set<String> imports = new TreeSet<String>();
         System.out.println(robot);
@@ -235,7 +263,7 @@ public class GenericExporter {
      * @param comp The component.
      * @return Whether or not it is a member of the specified category.
      */
-    public boolean exportsTo(String category, RobotComponent comp) {
+    public boolean exportsTo(String category, RobotComponent comp) { // TODO: Make macro
         return category.equals(componentInstructions.get(comp.getBase().getName()).get("Export"));
     }
     
@@ -243,7 +271,7 @@ public class GenericExporter {
      * @param comp The robot component as the base.
      * @return The declaration string
      */
-    public String getDeclaration(RobotComponent comp) {
+    public String getDeclaration(RobotComponent comp) { // TODO: Make macro
         final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
         return eval(instructions.get("Declaration"), getContext(comp));
     }
@@ -252,7 +280,7 @@ public class GenericExporter {
      * @param comp The robot component as the base.
      * @return The declaration string
      */
-    public String getConstructor(RobotComponent comp) {
+    public String getConstructor(RobotComponent comp) { // TODO: Make macro
         final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
         return eval(instructions.get("Construction"), getContext(comp));
     }
@@ -261,12 +289,12 @@ public class GenericExporter {
      * @param comp The robot component as the base.
      * @return The declaration string
      */
-    public String getExtra(RobotComponent comp) {
+    public String getExtra(RobotComponent comp) { // TODO: Make macro
         final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
         return eval(instructions.get("Extra"), getContext(comp));
     }
     
-    public RobotComponent getByName(final String name, RobotComponent robot) {
+    public RobotComponent getByName(final String name, RobotComponent robot) { // TODO: Make macro
         final RobotComponent[] component = new RobotComponent[1];
         robot.walk(new RobotWalker() {
             @Override
@@ -298,6 +326,67 @@ public class GenericExporter {
                 FileWriter writer = new FileWriter(this);
                 writer.write(eval(template, fileContext));
                 writer.close();
+            }
+        }
+
+        private void addVar(String var) {
+            String[] split = var.split("=");
+            vars.put(split[0], split[1]);
+        }
+    }
+    
+    // UTILITIES
+    protected String openFile(String path) throws IOException {
+        BufferedReader reader = new BufferedReader( new FileReader (path));
+        String line  = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        String ls = System.getProperty("line.separator");
+        while( ( line = reader.readLine() ) != null ) {
+            stringBuilder.append( line );
+            stringBuilder.append( ls );
+        }
+        return stringBuilder.toString();
+    }
+    
+    class ModifiedFile extends File {
+        Map <String, String> sources = new HashMap<String, String>();
+        Map <String, String> vars = new HashMap<String, String>();
+
+        public ModifiedFile(String pathname, String ids) {
+            super(pathname);
+            System.out.println(ids);
+            for (String pair : ids.split(",")) {
+                String[] split = pair.split("=");
+                sources.put(split[0], path+split[1]);
+            }
+        }
+        
+        public void export() throws IOException {
+            if (this.exists()) {
+                Context fileContext = new VelocityContext(rootContext);
+                for (String key : vars.keySet()) {
+                    fileContext.put(key, eval(vars.get(key), fileContext));
+                }
+                
+                String file = openFile(this.getAbsolutePath());
+                
+                for (String id : sources.keySet()) {
+                    Context idContext = new VelocityContext(fileContext);
+                    idContext.put("id", id);
+                    String beginning = eval(begin_modification, idContext);
+                    String end = eval(end_modification, idContext);
+                    System.out.println(id);
+                    System.out.println(this);
+                    System.out.println("("+beginning+")([\\s\\S]*?)("+end+")");
+                    System.out.println(eval(new File(sources.get(id)), idContext));
+                    file = file.replaceAll("("+beginning+")([\\s\\S]*?)("+end+")",
+                            "$1\n"+eval(new File(sources.get(id)), idContext)+"\n    $3");
+                }
+                
+                
+                FileWriter out = new FileWriter(this);
+                out.write(file);
+                out.close();
             }
         }
 

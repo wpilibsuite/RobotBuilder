@@ -6,9 +6,9 @@ CommandBase.java:$package-path/commands/CommandBase.java
 #if ($export-commands)
 #foreach ($command in $commands)
 #if ($command.base.name == "Command Group")
-CommandGroup.java:$package-path/commands/#class($command.name).java:command=${command.name}
+CommandGroup.java:$package-path/commands/#class($command.name).java:command-name=${command.name}
 #else
-Command.java:$package-path/commands/#class($command.name).java:command=${command.name}
+Command.java:$package-path/commands/#class($command.name).java:command-name=${command.name}
 #end 
 #end 
 #end
@@ -16,6 +16,6 @@ Command.java:$package-path/commands/#class($command.name).java:command=${command
 ## Export Subsystems as files
 #if ($export-subsystems)
 #foreach ($subsystem in $subsystems)
-Subsystem.java:$package-path/subsystems/#class($subsystem.name).java:subsystem=${subsystem.name}
+Subsystem.java:$package-path/subsystems/#class($subsystem.name).java:subsystem-name=${subsystem.name}
 #end
 #end
