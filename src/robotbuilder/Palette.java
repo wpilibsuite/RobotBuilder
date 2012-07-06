@@ -42,7 +42,7 @@ public class Palette extends JPanel implements TreeSelectionListener {
     
     private Palette() {
         InputStreamReader in;
-        in = new InputStreamReader(this.getClass().getResourceAsStream("/PaletteDescription.yaml"));
+        in = new InputStreamReader(Utils.getResourceAsStream("/PaletteDescription.yaml"));
         
         // Apply macros, if any
         StringWriter writer = new StringWriter();

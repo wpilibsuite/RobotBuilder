@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import robotbuilder.MainFrame;
+import robotbuilder.Utils;
 
 /**
  *
@@ -42,7 +43,7 @@ public class GettingStartedAction extends AbstractAction {
             }
         });
         try {
-            help.setPage(this.getClass().getResource("/help/Introduction.html"));
+            help.setPage(Utils.getResource("/help/Introduction.html"));
         } catch (IOException ex) {
             Logger.getLogger(GettingStartedAction.class.getName()).log(Level.SEVERE, null, ex);
         }

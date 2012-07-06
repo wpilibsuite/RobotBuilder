@@ -19,12 +19,27 @@
       <delete dir="${dist.dir}/lib" />
     </target>
 
-    <target depends="init,compile,compile,jar,-post-jar" description="Run a main class." name="run">
-      <exec executable="java">
-	<arg value="-jar"/>
-	<arg value="${dist.jar}"/>
-      </exec>
-    </target>
+    <!-- <target depends="init,compile,compile,jar,-post-jar" description="Run a main class." name="run"> -->
+    <!--   <exec executable="java"> -->
+    <!-- 	<arg value="-jar"/> -->
+    <!-- 	<arg value="${dist.jar}"/> -->
+    <!--   </exec> -->
+    <!-- </target> -->
+
+    <!-- <target depends="init,compile,jar,-post-jar" name="-debug-start-debuggee"> -->
+    <!--   <java classname="${main.class}"  dir="${work.dir}" fork="true"> -->
+    <!-- 	<arg value="-jar ${dist.jar}"/> -->
+    <!-- 	<jvmarg value="-Xrunjdwp:transport=${debug-transport},address=${jpda.address}"/> -->
+    <!--     <jvmarg value="-Dfile.encoding=${runtime.encoding}"/> -->
+    <!--     <redirector errorencoding="${runtime.encoding}" inputencoding="${runtime.encoding}" outputencoding="${runtime.encoding}"/> -->
+    <!--     <jvmarg line="${run.jvmargs}"/> -->
+    	<!-- <arg value="-Xdebug"/> -->
+    	<!-- <arg value="-Xrunjdwp:transport=dt_socket"/> -->
+    	<!-- <arg value="server=commander"/> -->
+    	<!-- <arg value="address=4242"/> -->
+    	<!-- <arg value="suspend=y"/> -->
+    <!--   </java> -->
+    <!-- </target> -->
     
     <!--
 

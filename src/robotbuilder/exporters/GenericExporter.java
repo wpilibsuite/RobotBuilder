@@ -17,6 +17,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import robotbuilder.MainFrame;
 import robotbuilder.RobotTree;
+import robotbuilder.Utils;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
 
@@ -49,9 +50,8 @@ public class GenericExporter {
         
         // Load YAML Description
         Yaml yaml = new Yaml();
-        System.out.println(this.getClass().getResource(path+"ExportDescription.yaml"));
         Map<String, Object> description = (Map<String, Object>) yaml.load(
-                new InputStreamReader(this.getClass().getResourceAsStream(path+"ExportDescription.yaml")));
+                new InputStreamReader(Utils.getResourceAsStream(path+"ExportDescription.yaml")));
         name = (String) description.get("Name");
         type = (String) description.get("Type");
         filesPath = (String) description.get("Files");
@@ -155,7 +155,7 @@ public class GenericExporter {
 
     String evalResource(String resource, Context context) {
         InputStreamReader in;
-        in = new InputStreamReader(this.getClass().getResourceAsStream(resource));
+        in = new InputStreamReader(Utils.getResourceAsStream(resource));
         StringWriter w = new StringWriter();
         ve.evaluate(context, w, name+" Exporter: "+resource, in);
         return w.toString();

@@ -2,12 +2,7 @@
 package robotbuilder;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.DropTarget;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -18,8 +13,6 @@ import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-import javax.swing.text.html.HTMLDocument;
-import robotbuilder.data.RobotComponent;
 
 /**
  *
@@ -141,7 +134,7 @@ public class MainFrame extends JFrame {
     
     public void setHelp(String file) {
         try {
-            help.setPage(this.getClass().getResource(file));
+            help.setPage(Utils.getResource(file));
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
