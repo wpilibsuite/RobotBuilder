@@ -10,9 +10,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +25,11 @@ import javax.swing.tree.TreeSelectionModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
+import org.yaml.snakeyaml.TypeDescription;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 import robotbuilder.data.Macro;
+import robotbuilder.data.Macro.Expansion;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.Property;
 import robotbuilder.data.Validator;
@@ -49,29 +52,26 @@ public class Palette extends JPanel implements TreeSelectionListener {
     private Palette() {
         FileReader file;
         try {
-            file = new FileReader((new File("PaletteDescription.json")).getAbsolutePath());
+            file = new FileReader((new File("PaletteDescription.yaml")).getAbsolutePath());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
-        JSONTokener tokener;
-        tokener = new JSONTokener(file);
-        JSONObject json;
-        try {
-            json = new JSONObject(tokener);
-        } catch (JSONException ex) {
-            Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
+
+        Constructor constructor = new Constructor();
+        constructor.addTypeDescription(new TypeDescription(Expansion.class, "!Expansion"));
+        constructor.addTypeDescription(new TypeDescription(PaletteComponent.class, "!Component"));
+        constructor.addTypeDescription(new TypeDescription(ArrayList.class, "!Properties"));
+        constructor.addTypeDescription(new TypeDescription(Property.class, "!Property"));
+        constructor.addTypeDescription(new TypeDescription(Validator.class, "!Validator"));
+        Yaml yaml = new Yaml(constructor);
+        Map<String, Object> description = (Map<String, Object>) yaml.load(file);
         
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Palette");
-        try {
-            generateMacros(json.getJSONObject("Macros"));
-            createTree(root, json.getJSONObject("Palette"));
-            loadValidators(json.getJSONObject("Validators"));
-        } catch (JSONException ex) {
-            Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        generateMacros((Map<String, ArrayList<Expansion>>) description.get("Macros"));
+        createPalette(root, (ArrayList<Map<String, ArrayList<PaletteComponent>>>) description.get("Palette"));
+        loadValidators((ArrayList<Validator>) description.get("Validators"));
+
         paletteTree = new JTree(root) {
             @Override
             public String getToolTipText(MouseEvent e) {
@@ -124,157 +124,59 @@ public class Palette extends JPanel implements TreeSelectionListener {
      * @param root The parent tree node
      * @param jSONObject The JSON object that corresponds to this level
      */
-    private void createTree(DefaultMutableTreeNode root, JSONObject jSONObject) {
+    private void createPalette(DefaultMutableTreeNode root, ArrayList<Map<String, ArrayList<PaletteComponent>>> sections) {
         // Allow order to be imposed on the palette
-        Iterator<String> i;
-        JSONArray order = jSONObject.optJSONArray("Order");
-        if (order != null) {
-            i = order.getIterator();
-        } else {
-            i = jSONObject.keys();
-        }
-            
-        while (i.hasNext()) {
-            String key = i.next();
+        for (Map<String, ArrayList<PaletteComponent>> section : sections) {
+            String key = section.keySet().iterator().next();
+            ArrayList<PaletteComponent> items = section.get(key);
             System.out.println(key);
-            JSONArray child;
-            try {
-                child = (JSONArray) jSONObject.get(key);
-            } catch (JSONException ex) {
-                Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
-                return;
+            DefaultMutableTreeNode node = null;
+            if (!key.equals("Hidden")) {
+                node = new DefaultMutableTreeNode(key);
+                root.add(node);
             }
-            try {
-                DefaultMutableTreeNode node = null;
-                if (!key.equals("Hidden") && root != null) {
-                    //TODO: create the PaletteItem here
-                    node = new DefaultMutableTreeNode(key);
-                    root.add(node);
-                }
-                createTree(node, jSONObject.getJSONArray(key));
-            } catch (JSONException ex) {
-                Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
+            for (PaletteComponent item : items) {
+                createPaletteComponent(node, item);
             }
         }
     }
-    
-    public void createTree(DefaultMutableTreeNode root, JSONArray jSONArray) {
-        for (Object i : jSONArray.getIterable()) {
-            try {
-                JSONObject child = (JSONObject) i;
-                PaletteComponent component = createPaletteComponent(child.getString("Name"), child);
-                if (root != null) {
-                    DefaultMutableTreeNode node = new DefaultMutableTreeNode(component);
-                    root.add(node);
-                }
-            } catch (JSONException ex) {
-                Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
+    private void createPaletteComponent(DefaultMutableTreeNode root, PaletteComponent component) {
+        System.out.println("\t"+component.getName());
+        paletteItems.put(component.getName(), component);
+        
+        // Macro expand the properties
+        List<Property> properties = new ArrayList<Property>();
+        for (Property property : component.getProperties()) {
+            if (macros.containsKey(property.getType())) {
+                properties.addAll(macros.get(property.getType()).expand(properties, property));
+            } else {
+                properties.add(property);
             }
         }
-    }
-
-    private PaletteComponent createPaletteComponent(String key, JSONObject child) {
-        PaletteComponent component = new PaletteComponent(key);
-        paletteItems.put(key, component);
-        component.setType(child.optString("Type"));
-        component.setHelp(child.optString("Help"));
-        // Add Drop support
-        JSONObject supports = child.optJSONObject("Supports");
-        if (supports != null) {
-            for (Iterator i = supports.keys(); i.hasNext();) {
-                try {
-                    String name = (String) i.next();
-                    Object val = supports.get(name);
-                    if (val instanceof String) {
-                        assert ((String) val).equals("unlimited");
-                        component.addSupport(name, UNLIMITED);
-                    } else if (val instanceof Integer) {
-                        component.addSupport(name, (Integer) val);
-                    } else {
-                        System.out.println("Unsupported class: "+val.getClass());
-                    }
-                } catch (JSONException ex) {
-                    Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        component.setProperties(properties);
+        
+        if (root != null) {
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(component);
+            root.add(node);
         }
-                
-        // Add Properties
-        try {
-            JSONArray props = macroExpand(child.getJSONArray("Properties"));
-            for (Object i : props.getIterable()) {
-                JSONObject property = (JSONObject) i;
-                Property prop = new Property(property.getString("Name"), property.getString("Type"), property.optString("Default"));
-                JSONArray jsonchoices = property.optJSONArray("Choices");
-                String[] choices = null;
-                if (jsonchoices != null) {
-                    choices = new String[jsonchoices.length()];
-                    for (int j = 0; j < jsonchoices.length(); j++) {
-                        choices[j] = jsonchoices.getString(j);
-                    }
-                }
-                prop.setChoices(choices);
-                prop.setValidator(property.optString("Validator", ""));
-                component.addProperty(property.getString("Name"), prop);
-            }
-        } catch (JSONException ex) {
-            Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        component.print();
-        return component;
-    }
-
-    /**
-     * Expand the properties based on any loaded macros.
-     * @param props The properties to expand
-     * @return The expanded properties
-     */
-    private JSONArray macroExpand(JSONArray props) {
-        JSONArray out = new JSONArray();
-        for (Object i : props.getIterable()) {
-            try {
-                JSONObject prop = (JSONObject) i;
-                if (macros.containsKey(prop.optString("Type"))) {
-                    System.out.println("Expanding property "+prop.getString("Name"));
-                    Macro macro = macros.get(prop.optString("Type"));
-                    out = macro.expand(prop.getString("Name"), prop, out);
-                } else {
-                    out = out.put(prop);
-                }
-            } catch (JSONException ex) {
-                Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return out;
     }
 
     /**
      * Generate a series of macros described in json.
      * @param jsonObject 
      */
-    private void generateMacros(JSONObject json) {
-        for (Iterator macroNames = json.keys(); macroNames.hasNext(); ) {
-            String macroName = (String) macroNames.next();
-            JSONObject macroDef = json.optJSONObject(macroName);
+    private void generateMacros(Map<String, ArrayList<Expansion>> macrosToCreate) {
+        for (String macroName : macrosToCreate.keySet()) {
+            ArrayList<Expansion> expansions = macrosToCreate.get(macroName);
             
-            Macro macro = new Macro(macroName, macroDef);
+            Macro macro = new Macro(macroName, expansions);
             macros.put(macroName, macro);
         }
     }
     
-    private void loadValidators(JSONObject json) throws JSONException {
-        for (Iterator validatorNames = json.keys(); validatorNames.hasNext(); ) {
-            String name = (String) validatorNames.next();
-            JSONObject object = json.getJSONObject(name);
-            LinkedList<String> fields = null;
-            if (object.has("Fields")) {
-                fields = new LinkedList<String>();
-                for (Object c : object.optJSONArray("Fields").getIterable()) {
-                    fields.add((String) c);
-                }
-            }
-            Validator validator = new Validator(name, object.getString("Type"), fields);
-            validators.put(name, validator);
+    private void loadValidators(ArrayList<Validator> validatorsToAdd) {
+        for (Validator validator : validatorsToAdd) {
+            validators.put(validator.getName(), validator);
         }
     }
     

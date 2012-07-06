@@ -4,10 +4,7 @@
  */
 package robotbuilder.data;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.*;
 
 /**
  *
@@ -23,16 +20,52 @@ public class PaletteComponent {
     private Map<String, Integer> supports = new HashMap<String, Integer>(); 
     // set of properties for the component
     private Map<String, Property> properties = new HashMap<String, Property>();
-    private LinkedList<String> propertiesKeys = new LinkedList<String>();
+    private List<String> propertiesKeys = new ArrayList<String>();
     
-    public PaletteComponent(String name) {
+    public PaletteComponent() {}
+    
+    public void setName(String name) {
         this.name = name;
     }
+    public String getName() {
+        return name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    public String getType() {
+        return type;
+    }
     
-    public void addProperty(String propName, Property property) {
-        System.out.println(property);
-        properties.put(propName, property);
-        propertiesKeys.add(propName);
+    public void setSupports(Map<String, Integer> supports) {
+        this.supports = supports;
+    }
+    public Map<String, Integer> getSupports() {
+        return supports;
+    }
+        
+    public void setHelp(String help) {
+        this.help = help;
+    }
+    public String getHelp() {
+        return help;
+    }
+    
+    public void setProperties(List<Property> properties) {
+        this.properties = new HashMap<String, Property>();
+        this.propertiesKeys = new ArrayList<String>();
+        for (Property property : properties) {
+            this.properties.put(property.getName(), property);
+            this.propertiesKeys.add(property.getName());
+        }
+    }
+    public List<Property> getProperties() {
+        List<Property> out = new ArrayList<Property>();
+        for (String key : propertiesKeys) {
+            out.add(properties.get(key));
+        }
+        return out;
     }
     
     public Property getProperty(String propName) {
@@ -40,20 +73,14 @@ public class PaletteComponent {
     }
     
     
-    private Map<String, Property> getProperties() {
-        return properties;
-    }
     
-    public LinkedList<String> getPropertiesKeys() {
+    public List<String> getPropertiesKeys() {
         return propertiesKeys;
-    }
-    
-    public String getName() {
-        return name;
     }
     
     @Override
     public String toString() {
+        //return "<PaletteComponent: "+name+">";
         return name;
     }
     
@@ -67,31 +94,8 @@ public class PaletteComponent {
         }
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setHelp(String help) {
-        this.help = help;
-    }
-
-    public String getHelp() {
-        return help;
-    }
     
     public String getHelpFile() {
         return "help/"+name+".html";
-    }
-    
-    public void addSupport(String key, Integer val) {
-        supports.put(key, val);
-    }
-    
-    public Map<String, Integer> getSupports() {
-        return supports;
     }
 }

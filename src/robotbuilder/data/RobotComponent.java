@@ -42,7 +42,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
             // Get the validated properties
             for (String property : getBase().getPropertiesKeys()) {
                 String validatorName = getBase().getProperty(property).getValidator();
-                if (!validatorName.equals("")) {
+                if (validatorName != null && !validatorName.equals("")) {
                     Validator validator = robot.getValidator(validatorName);
                     String prefix = validator.getPrefix(property);
                     if (prefixes.get(prefix) == null) {
@@ -288,14 +288,14 @@ public class RobotComponent extends DefaultMutableTreeNode {
         
         // Validate
         Set<String> used = new HashSet<String>();
-        for (String property : self.getBase().getPropertiesKeys()) {
-            String validatorName = self.getBase().getProperty(property).getValidator();
+        for (Property property : self.getBase().getProperties()) {
+            String validatorName = property.getValidator();
             Validator validator = robot.getValidator(validatorName);
             if (validator != null) {
-                String prefix = validator.getPrefix(property);
+                String prefix = validator.getPrefix(property.getName());
                 if (!used.contains(prefix)) {
                     used.add(prefix);
-                    validator.claim(property, self.getProperty(property), self);
+                    validator.claim(property.getName(), self.getProperty(property.getName()), self);
                 }
             }
         }

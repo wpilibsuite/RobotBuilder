@@ -17,6 +17,8 @@ public class Property {
     private String[] choices;
     private String validator;
     
+    public Property() {}
+    
     public Property(String name, String type) {
         this.name = name;
         this.type = type;
@@ -32,45 +34,40 @@ public class Property {
     public void setName(String name) {
         this.name = name;
     }
-    
     public String getName() {
         return name;
-    }
-    
-    public String getType() {
-        return type;
     }
     
     public void setType(String type) {
         this.type = type;
     }
-    
-    public String getDefault() {
-        return defaultValue;
+    public String getType() {
+        return type;
     }
     
     public void setDefault(String defaultValue) {
         this.defaultValue = defaultValue;
     }
-    
-    public String[] getChoices() {
-        return choices;
+    public String getDefault() {
+        return defaultValue;
     }
 
     public void setChoices(String[] choices) {
         this.choices = choices;
+    }    
+    public String[] getChoices() {
+        return choices;
     }
 
+    public void setValidator(String validator) {
+        this.validator = validator;
+    }
     public String getValidator() {
         return validator;
     }
     
-    public void setValidator(String validator) {
-        this.validator = validator;
-    }
-    
     @Override
     public String toString() {
-        return name + "\n\ttype: " + type + "\n\tdefault: " + defaultValue;
+        return name + "  --  {type: " + type + ", default: " + defaultValue + "}";
     }
 }

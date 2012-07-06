@@ -1,0 +1,353 @@
+Macros:
+  $AnalogInput:
+    - !Expansion
+      name: Module (Analog)
+      type: Module (Analog)
+      choices: ["1", "2"]
+      validator: AnalogInput
+      default: Default Module
+      defaultDefault: "1"
+    - !Expansion
+      name: Channel (Analog)
+      type: Channel (Analog)
+      choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+      validator: AnalogInput
+      default: Default Channel
+      defaultDefault: "1"
+  $DigitalInput:
+    - !Expansion
+      name: Module (Digital)
+      type: Module (Digital)
+      choices: ["1", "2"]
+      validator: DigitalInput
+      default: Default Module
+      defaultDefault: "1"
+    - !Expansion
+      name: Channel (Digital)
+      type: Channel (Digital)
+      validator: DigitalInput
+      choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"]
+      default: Default Channel
+      defaultDefault: "1"
+  $PWMOutput:
+    - !Expansion
+      name: Module (Digital)
+      type: Module (Digital)
+      choices: ["1", "2"]
+      validator: PWMOutput
+      default: Default Module
+      defaultDefault: "1"
+    - !Expansion
+      name: Channel (PWM)
+      type: Channel (PWM)
+      validator: PWMOutput
+      choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+      default: Default Channel
+      defaultDefault: "1"
+  $Button:
+    - !Expansion
+      name: Command
+      type: Command
+      default: Default Command
+      defaultDefault: "1"
+    - !Expansion
+      name: When to Run
+      type: String
+      choices: [whileHeld, whenPressed, whenReleased]
+      default: Default Run Time
+      default: Default Run Time
+      defaultDefault: whileHeld
+
+Validators:
+  - !Validator
+    name: AnalogInput
+    type: Unique
+    fields: [Channel (Analog), Module (Analog)]
+  - !Validator
+    name: DigitalInput
+    type: Unique
+    fields: [Channel (Digital), Module (Digital)]
+  - !Validator
+    name: PWMOutput
+    type: Unique
+    fields: [Channel (PWM), Module (Digital)]
+  - !Validator
+    name: Joystick
+    type: Unique
+    fields: [Number]
+    
+Palette:
+  - Hidden:
+      - !Component
+        name: Robot
+        type: Robot
+        supports: {Subsystems: 1, OI: 1, Commands: 1}
+        help: Your Robot!
+        properties:
+          - !Property
+            name: Java Project
+            type: Folder
+            default: ""
+          - !Property
+            name: Java Package
+            type: String
+            default: ""
+          - !Property
+            name: Export Subsystems
+            type: Boolean
+            default: "true"
+          - !Property
+            name: Export Commands
+            type: Boolean
+            default: "true"
+          - !Property
+            name: Wiring File
+            type: File
+            default: ""
+      - !Component
+        name: Subsystems
+        type: Subsystems
+        supports: {Subsystem: -1}
+        help: The subsystems that make up your robot.
+        properties: []
+      - !Component
+        name: OI
+        type: OI
+        supports: {Button: -1, Joystick: 4}
+        help: Your operator interface!
+        properties: []
+      - !Component
+        name: Commands
+        type: Commands
+        supports: {Command: -1}
+        help: The commands that control what actions your robot performs.
+        properties: []
+        
+  - Subsystems:
+      - !Component
+        name: Subsystem
+        type: Subsystem
+        supports: {Sensor: -1, Actuator: -1, Controller: -1}
+        help: A functional part of your robot that groups the sensors and actuators together.
+        properties:
+          - !Property
+            name: Default Command
+            type: Command
+            default: "1"
+            
+  - Controllers:
+      - !Component
+        name: PID Controller
+        type: Controller
+        supports: {Sensor: 1, Actuator: 1}
+        help: PIDControllers allow control of an actuator based off of feedback from a sensor.
+        properties:
+          - !Property
+            name: Send to SmartDashboard
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Input
+            type: Sensor
+            default: "0"
+          - !Property
+            name: Output
+            type: Actuator
+            default: "0"
+          - !Property
+            name: P,
+            type: Double
+            default: "1"
+          - !Property
+            name: I
+            type: Double
+            default: "0"
+          - !Property
+            name: D
+            type: Double
+            default: "0"
+          - !Property
+            name: F
+            type: Double
+            default: "0"
+          - !Property
+            name: Period
+            type: Integer
+            default: "50"
+          - !Property
+            name: Continuous
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Limit Input
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Minimum Input
+            type: Double
+            default: "0"
+          - !Property
+            name: Maximum Input
+            type: Double
+            default: "5"
+          - !Property
+            name: Limit Output
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Minimum Output
+            type: Double
+            default: "-1"
+          - !Property
+            name: Maximum Output
+            type: Double
+            default: "1"
+      - !Component
+        name: Robot Drive 2
+        type: Controller
+        supports: {Actuator: 2}
+        help: RobotDrive handles tank drive, arcade drive and mecanum drive.
+        properties:
+          - !Property
+            name: Left Motor
+            type: Actuator
+            default: "0"
+          - !Property
+            name: Right Motor
+            type: Actuator
+            default: "1"
+      - !Component
+        name: Robot Drive 4
+        type: Controller
+        supports: {"Actuator": 4}
+        help: RobotDrive handles tank drive, arcade drive and mecanum drive.
+        properties:
+          - !Property
+            name: Left Front Motor
+            type: Actuator
+            default: "0"
+          - !Property
+            name: Left Rear Motor
+            type: Actuator
+            default: "1"
+          - !Property
+            name: Right Front Motor
+            type: Actuator
+            default: "2"
+          - !Property
+            name: Right Rear Motor
+            type: Actuator
+            default: "3"
+
+  - Sensors:
+      - !Component
+        name: Gyro
+        type: Sensor
+        help: An analog angular rate sensor.
+        properties:
+          - !Property
+            name: Input
+            type: $AnalogInput
+          - !Property
+            name: Sensitivity
+            type: Double
+            default: "1.25"
+      - !Component
+        name: Accelerometer
+        type: Sensor
+        help: An analog acceleration sensor.
+        properties:
+          - !Property
+            name: Input
+            type: $AnalogInput
+      - !Component
+        name: Quadrature Encoder
+        type: Sensor
+        help: A digital sensor that can be used to calculate the speed and distance rotated.
+        properties:
+          - !Property
+            name: Channel A
+            type: $DigitalInput
+          - !Property
+            name: Channel B
+            type: $DigitalInput
+      - !Component
+        name: Potentiometer
+        type: Sensor
+        help: An rotational analog sensor that can be used to determine the position of an axel.
+        properties:
+          - !Property
+            name: Input
+            type: $AnalogInput
+      - !Component
+        name: Limit Switch
+        type: Sensor
+        help: A digital sensor that can be used to detect presses.
+        properties:
+          - !Property
+            name: Input
+            type: $DigitalInput
+
+  - Actuators:
+      - !Component
+        name: Victor
+        type: Actuator
+        help: A PWM speed controller that allows you to set the speed of a motor.
+        properties:
+          - !Property
+            name: Output
+            type: $PWMOutput
+      - !Component
+        name: Jaguar
+        type: Actuator
+        help: A PWM speed controller that allows you to set the speed of a motor.
+        properties:
+          - !Property
+            name: Output
+            type: $PWMOutput
+
+  - OI:
+      - !Component
+        name: Joystick
+        type: Joystick
+        help: A joystick that drivers can use as input.
+        properties:
+          - !Property
+            name: Number
+            type: Integer
+            choices: ["1", "2", "3", "4"]
+            validator: Joystick
+            default: 1
+      - !Component
+        name: Joystick Button
+        type: Button
+        help: A joystick button that binds a driver action to a command.
+        properties:
+          - !Property
+            name: Joystick
+            type: Joystick
+            default: "1"
+          - !Property
+            name: Button
+            type: Integer
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+            default: "1"
+          - !Property
+            name: ""
+            type: $Button
+
+  - Commands:
+      - !Component
+        name: Command
+        type: Command
+        help: A command, someone really needs to update the help.
+        properties:
+          - !Property
+            name: Requires
+            type: Subsystem
+            default: "1"
+      - !Component
+        name: Command Group
+        type: Command
+        help: A command group, someone really needs to update the help.
+        properties: []

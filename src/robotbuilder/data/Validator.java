@@ -14,6 +14,8 @@ public class Validator {
     private String name, type;
     LinkedList<String> fields;
     Set<Map<String, String>> used = new HashSet<Map<String,String>>();
+    
+    public Validator() {}
 
     public Validator(String name, String type, LinkedList<String> fields) {
         this.name = name;
@@ -138,10 +140,37 @@ public class Validator {
             }
         }
     }
+    
+    //// YAML Getters and Setters
+    public LinkedList<String> getFields() {
+        return fields;
+    }
 
+    public void setFields(LinkedList<String> fields) {
+        this.fields = fields;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * An exception for invalid claims.
+     */
     public static class InvalidException extends Throwable {
         public InvalidException() {
         }
     }
-    
 }

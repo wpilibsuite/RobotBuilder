@@ -4,13 +4,12 @@
  */
 package robotbuilder.data;
 
-import java.util.LinkedList;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import robotbuilder.Palette;
 
 /**
  *
@@ -18,85 +17,89 @@ import robotbuilder.Palette;
  */
 public class Macro {
     private String name;
-    LinkedList<Expansion> expansions = new LinkedList<Expansion>();
+    ArrayList<Expansion> expansions = new ArrayList<Expansion>();
 
-    public Macro(String name, JSONObject macroDef) {
+    public Macro(String name, ArrayList<Expansion> expansions) {
         System.out.println("Creating macro "+name);
         this.name = name;
-        try {
-            JSONArray props = macroDef.getJSONArray("Properties");
-            for (Object i : props.getIterable()) {
-                JSONObject property = (JSONObject) i;
-                LinkedList<Object> choices = null;
-                if (property.has("Choices")) {
-                    choices = new LinkedList<Object>();
-                    for (Object c : property.optJSONArray("Choices").getIterable()) {
-                        choices.add(c);
-                    }
-                }
-                System.out.println("Adding expansion: "+property.getString("Name")
-                        +" "+property.getString("Type")+" "+property.optString("Default")
-                        +" "+property.optString("DefaultDefault")+" "+choices);
-                addExpansion(property.getString("Name"),
-                        property.getString("Type"), property.optString("Default"),
-                        property.optString("DefaultDefault"), choices, property.optString("Validator"));
-            }
-        } catch (JSONException ex) {
-            Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.expansions = expansions;
     }
     
-    private void addExpansion(String name, String type, String defaultValue, String defaultDefault, LinkedList<Object> choices, String validator) {
-        expansions.add(new Expansion(name, type, defaultValue, defaultDefault, choices, validator));
-    }
 
-    /**
-     * 
-     * @param key
-     * @param prop
-     * @param props 
-     */
-    public JSONArray expand(String key, JSONObject prop, JSONArray props) {
+    public List<Property> expand(List<Property> properties, Property property) {
+        List<Property> out = new ArrayList<Property>();
         for (Expansion expansion : expansions) {
-            try {
-                JSONObject expanded = new JSONObject();
-                if (!prop.getString("Name").equals("")) {
-                    expanded.put("Name", prop.get("Name") +" "+expansion.name);
-                } else {
-                    expanded.put("Name", expansion.name);
-                }
-                expanded.put("Type", expansion.type);
-                String defaultVal = prop.optString(expansion.defaultValue, null);
-                if (defaultVal != null) {
-                    expanded.put("Default", defaultVal);
-                } else {
-                    expanded.put("Default", expansion.defaultDefault);
-                }
-                if (expansion.choices != null) {
-                    expanded.put("Choices", expansion.choices);
-                }
-                if (expansion.validator != null) {
-                    expanded.put("Validator", expansion.validator);
-                }
-                props = props.put(expanded);
-            } catch (JSONException ex) {
-                Logger.getLogger(Macro.class.getName()).log(Level.SEVERE, null, ex);
+            Property expanded = new Property();
+            expanded.setName(property.getName() +" "+expansion.name);
+            expanded.setType(expansion.type);
+            
+            String defaultVal = property.getDefault();
+            if (defaultVal != null) {
+                // TODO: set to get the default from the object.
+                expanded.setDefault(defaultVal);
+            } else {
+                expanded.setDefault(expansion.defaultDefault);
             }
+            
+            if (expansion.choices != null)
+                expanded.setChoices(expansion.choices.toArray(new String[0]));
+            expanded.setValidator(expansion.validator);
+            
+            out.add(expanded);
         }
-        return props;
+        return out;
+    }
+
+    public String getName() {
+        return name;
     }
     
-    private class Expansion {
+    /**
+     * A utility object for nicely loading Yaml macros.
+     */
+    public static class Expansion {
         String name, type, defaultValue, defaultDefault, validator;
-        LinkedList<Object> choices;
+        ArrayList<String> choices;
 
-        public Expansion(String name, String type, String defaultValue, String defaultDefault,
-                LinkedList<Object> choices, String validator) {
-            this.name = name;
-            this.type = type;
-            this.defaultValue = defaultValue;
-            this.defaultDefault = defaultDefault;
+        public ArrayList<String> getChoices() {
+            return choices;
+        }
+        public void setChoices(ArrayList<String> choices) {
             this.choices = choices;
+        }
+
+        public String getDefaultDefault() {
+            return defaultDefault;
+        }
+        public void setDefaultDefault(String defaultDefault) {
+            this.defaultDefault = defaultDefault;
+        }
+
+        public String getDefault() {
+            return defaultValue;
+        }
+        public void setDefault(String defaultValue) {
+            this.defaultValue = defaultValue;
+        }
+
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getType() {
+            return type;
+        }
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getValidator() {
+            return validator;
+        }
+        public void setValidator(String validator) {
             this.validator = validator;
         }
     }
