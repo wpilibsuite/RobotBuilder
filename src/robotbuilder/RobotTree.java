@@ -94,7 +94,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	String name;
 	while (true) {
 	    i++;
-	    name = componentType.toString().replaceAll(" ", "_") + "_" + i;
+	    name = componentType.toString() + " " + i;
 	    if (!usedNames.contains(name)) {
 		usedNames.add(name);
 		return name;

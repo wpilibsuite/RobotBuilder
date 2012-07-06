@@ -43,7 +43,7 @@ public class WiringExporter extends AbstractExporter {
     }
 
     private String generateDIO(final int module, RobotTree robot) {
-        Map<Integer, String> mapping = filterComponents("Module (Digital)", "Port (Digital)", module, robot);
+        Map<Integer, String> mapping = filterComponents("Module (Digital)", "Channel (Digital)", module, robot);
         
         String out = "";
         
@@ -57,7 +57,7 @@ public class WiringExporter extends AbstractExporter {
 
     
     private String generatePWM(int module, RobotTree robot) {
-        Map<Integer, String> mapping = filterComponents("Module (Digital)", "Port (PWM)", module, robot);
+        Map<Integer, String> mapping = filterComponents("Module (Digital)", "Channel (PWM)", module, robot);
         
         String out = "";
         
@@ -70,7 +70,7 @@ public class WiringExporter extends AbstractExporter {
     }
     
     private String generateAnalog(int module, RobotTree robot) {
-        Map<Integer, String> mapping = filterComponents("Module (Analog)", "Port (Analog)", module, robot);
+        Map<Integer, String> mapping = filterComponents("Module (Analog)", "Channel (Analog)", module, robot);
         
         String out = "";
         

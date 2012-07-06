@@ -11,10 +11,10 @@
 		    "DefaultDefault" : "1"
                 },
 		{
-		    "Name" : "Port (Analog)",
-                    "Type" : "Port (Analog)",
+		    "Name" : "Channel (Analog)",
+                    "Type" : "Channel (Analog)",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8"],
-		    "Default" : "Default Port",
+		    "Default" : "Default Channel",
 		    "DefaultDefault" : "1"
                 },
 	    ]
@@ -29,10 +29,10 @@
 		    "DefaultDefault" : "1"
                 },
 		{
-		    "Name" : "Port (Digital)",
-                    "Type" : "Port (Digital)",
+		    "Name" : "Channel (Digital)",
+                    "Type" : "Channel (Digital)",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"],
-		    "Default" : "Default Port",
+		    "Default" : "Default Channel",
 		    "DefaultDefault" : "1"
                 },
 	    ]
@@ -47,10 +47,10 @@
 		    "DefaultDefault" : "1"
                 },
 		{
-		    "Name" : "Port (PWM)",
-                    "Type" : "Port (PWM)",
+		    "Name" : "Channel (PWM)",
+                    "Type" : "Channel (PWM)",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-		    "Default" : "Default Port",
+		    "Default" : "Default Channel",
 		    "DefaultDefault" : "1"
                 },
 	    ]
@@ -229,7 +229,7 @@
                     {
 			"Name" : "Input",
                         "Type" : "AnalogInput",
-                        "Default Port" : "1",
+                        "Default Channel" : "1",
                         "Default Module" : "1"
                     },
                     {
@@ -256,11 +256,11 @@
 		"Help": "A digital sensor that can be used to calculate the speed and distance rotated.",
                 "Properties" : [
                     {
-			"Name" : "A Channel",
+			"Name" : "Channel A",
                         "Type" : "DigitalInput"
                     },
                     {
-			"Name" : "B Channel",
+			"Name" : "Channel B",
                         "Type" : "DigitalInput"
                     }
                 ]

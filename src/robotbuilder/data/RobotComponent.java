@@ -226,7 +226,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
     }
 
     public String getFullName() {
-        return name.toUpperCase();
+        return name.toUpperCase().replace(" ", "_");
     }
     
     public Vector<String> getChildrenOfTypeNames(String type) {
