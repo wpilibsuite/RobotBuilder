@@ -207,6 +207,13 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    update();
 	    System.out.println("Loaded");
 	    source.close();
+            
+            walk(new RobotWalker() {
+                @Override
+                public void handleRobotComponent(RobotComponent self) {
+                    addName(self.getFullName());
+                }
+            });
 	} catch (JSONException ex) {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	} catch (IOException ex) {

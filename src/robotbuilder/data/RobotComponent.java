@@ -247,11 +247,11 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 Palette.getInstance().getItem(json.getString("Base")),
                 robot);
         JSONObject configuration = json.getJSONObject("Configuration");
-        System.out.println(configuration);
-        System.out.println(configuration.names());
+        //System.out.println(configuration);
+        //System.out.println(configuration.names());
         if (configuration.names() != null) {
             for (Object config : configuration.names().getIterable()) {
-                System.out.println((String) config + "=>" + configuration.getString((String) config));
+                //System.out.println((String) config + "=>" + configuration.getString((String) config));
                 self.setProperty((String) config, configuration.getString((String) config));
             }
         }
