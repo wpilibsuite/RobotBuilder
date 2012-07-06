@@ -34,8 +34,10 @@ public class Palette extends JPanel {
         root.add(sensorsNode);
         root.add(motorsNode);
         root.add(OINode);
+
         JTree paletteTree = new JTree(root);
+        paletteTree.setDragEnabled(true);
+        
         add(paletteTree);
      }
-
 }
