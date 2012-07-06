@@ -322,14 +322,6 @@ Palette:
         properties:
           #DigitalInput("Channel A")
           #DigitalInput("Channel B")
-## Add a seperate indexed encoder?
-## - !Property
-##   name: Has Index
-##   type: Boolean
-##   default: "false"
-## - !Property
-##   name: Index
-##   type: $DigitalInput
           - !Property
             name: Reverse Direction
             type: Boolean
@@ -348,11 +340,27 @@ Palette:
             type: String
             choices: [kDistance, kRate]
             default: "kRate"
-## Which one should we choose
-## - !Property
-##   name: Maximum Period (Min Rate??)
-##   type: Double
-##   default: "0"
+      - !Component
+        name: Indexed Encoder
+        type: Sensor
+        help: A digital sensor that can be used to calculate the speed and distance rotated.
+        properties:
+          #DigitalInput("Channel A")
+          #DigitalInput("Channel B")
+          #DigitalInput("Index")
+          - !Property
+            name: Reverse Direction
+            type: Boolean
+            default: "false"
+          - !Property
+            name: Distance Per Pulse
+            type: Double
+            default: "1"
+          - !Property
+            name: PID Source
+            type: String
+            choices: [kDistance, kRate]
+            default: "kRate"
       - !Component
         name: Potentiometer
         type: Sensor

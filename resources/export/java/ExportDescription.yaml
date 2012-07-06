@@ -139,7 +139,16 @@ Instructions:
     Extra: >-
       #constant($Name).setDistancePerPulse(${Distance_Per_Pulse});
               #constant($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
-      
+  Indexed Encoder:
+    Defaults: "DigitalInput,Component,None"
+    ClassName: "Encoder"
+    Import: >-
+      import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+      import edu.wpi.first.wpilibj.Encoder.PIDSourceParameter;
+    Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Index_Module_Digital}, ${Index_Channel_Digital}, ${Reverse_Direction});"
+    Extra: >-
+      #constant($Name).setDistancePerPulse(${Distance_Per_Pulse});
+              #constant($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
