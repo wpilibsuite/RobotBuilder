@@ -318,7 +318,7 @@ Palette:
         properties:
           - !ChildSelectionProperty
             name: Left Motor
-            type: Actuator
+            type: PIDOutput
             validators: [DropdownSelected]
             default: 0
           - !BooleanProperty
@@ -326,7 +326,7 @@ Palette:
             default: false
           - !ChildSelectionProperty
             name: Right Motor
-            type: Actuator
+            type: PIDOutput
             validators: [DropdownSelected]
             default: 1
           - !BooleanProperty
@@ -352,7 +352,7 @@ Palette:
         properties:
           - !ChildSelectionProperty
             name: Left Front Motor
-            type: Actuator
+            type: PIDOutput
             validators: [DropdownSelected]
             default: 0
           - !BooleanProperty
@@ -360,7 +360,7 @@ Palette:
             default: false
           - !ChildSelectionProperty
             name: Left Rear Motor
-            type: Actuator
+            type: PIDOutput
             validators: [DropdownSelected]
             default: 1
           - !BooleanProperty
@@ -368,7 +368,7 @@ Palette:
             default: false
           - !ChildSelectionProperty
             name: Right Front Motor
-            type: Actuator
+            type: PIDOutput
             validators: [DropdownSelected]
             default: 2
           - !BooleanProperty
@@ -376,7 +376,7 @@ Palette:
             default: false
           - !ChildSelectionProperty
             name: Right Rear Motor
-            type: Actuator
+            type: PIDOutput
             validators: [DropdownSelected]
             default: 3
           - !BooleanProperty

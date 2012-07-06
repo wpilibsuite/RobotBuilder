@@ -144,9 +144,9 @@ Instructions:
               #constant($Name).setExpiration($Safety_Expiration_Time);
               #constant($Name).setSensitivity($Sensitivity);
               #constant($Name).setMaxOutput($Maximum_Output);
-      #if( "$Left_Motor_Inverted" == "true")
+      #if($Left_Motor_Inverted)
               #constant($Name).setInvertedMotor(MotorType.kFrontLeft, true);#end
-      #if( "$Right_Motor_Inverted" == "true")
+      #if($Right_Motor_Inverted)
 
               #constant($Name).setInvertedMotor(MotorType.kFrontRight, true);#end
               
@@ -162,15 +162,15 @@ Instructions:
               #constant($Name).setExpiration($Safety_Expiration_Time);
               #constant($Name).setSensitivity($Sensitivity);
               #constant($Name).setMaxOutput($Maximum_Output);
-      #if( "$Left_Front_Motor_Inverted" == "true")
+      #if($Left_Front_Motor_Inverted)
               #constant($Name).setInvertedMotor(MotorType.kFrontLeft, true);#end
-      #if( "$Left_Rear_Motor_Inverted" == "true")
+      #if($Left_Rear_Motor_Inverted)
 
               #constant($Name).setInvertedMotor(MotorType.kRearLeft, true);#end
-      #if( "$Right_Front_Motor_Inverted" == "true")
+      #if($Right_Front_Motor_Inverted)
 
               #constant($Name).setInvertedMotor(MotorType.kFrontRight, true);#end
-      #if( "$Right_Rear_Motor_Inverted" == "true")
+      #if($Right_Rear_Motor_Inverted)
 
               #constant($Name).setInvertedMotor(MotorType.kRearRight, true);#end
 
@@ -207,7 +207,7 @@ Instructions:
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
-    Extra: "#if($Direction_Sensitive == 'true')#constant($Name).enableDirectionSensing($Direction_Sensitive);#end"
+    Extra: "#if($Direction_Sensitive)#constant($Name).enableDirectionSensing($Direction_Sensitive);#end"
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
