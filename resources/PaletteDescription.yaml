@@ -114,6 +114,32 @@
             choices: [whileHeld, whenPressed, whenReleased]
             default: whileHeld
 #end
+#macro( Ultrasonic $Name )
+- !Property
+            name: $Name Ping Module (Digital)
+            type: Module (Digital)
+            choices: ["1", "2"]
+            validator: Ultrasonic
+            default: "1"
+          - !Property
+            name: $Name Ping Channel (PWM)
+            type: Channel (PWM)
+            validator: Ultrasonic
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+            default: "1"
+          - !Property
+            name: $Name Echo Module (Digital)
+            type: Module (Digital)
+            choices: ["1", "2"]
+            validator: Ultrasonic
+            default: "1"
+          - !Property
+            name: $Name Echo Channel (PWM)
+            type: Channel (PWM)
+            validator: Ultrasonic
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+            default: "1"
+#end
 
 Validators:
   - !Validator
@@ -132,6 +158,10 @@ Validators:
     name: Joystick
     type: Unique
     fields: [Number]
+  - !Validator
+    name: Ultrasonic
+    type: Unique
+    fields: [Channel (PWM), Module (Digital), Channel (PWM), Module (Digital)]
     
 Palette:
   - Hidden:
@@ -457,6 +487,12 @@ Palette:
         help: A generic digital input.
         properties:
           #DigitalInput("Input")
+      - !Component
+        name: Ultrasonic
+        type: Sensor
+        help: A range finding sensor based off of sound reflections.
+        properties:
+          #Ultrasonic("Sensor")
 
   - Actuators:
       - !Component
@@ -469,6 +505,18 @@ Palette:
         name: Jaguar
         type: Actuator
         help: A PWM speed controller that allows you to set the speed of a motor.
+        properties:
+          #PWMOutput("Output")
+      - !Component
+        name: Servo
+        type: Actuator
+        help: A controllable motor; typically has a limited rotation.
+        properties:
+          #PWMOutput("Output")
+      - !Component
+        name: Digital Output
+        type: Actuator
+        help: A simple on/off output.
         properties:
           #PWMOutput("Output")
 
@@ -519,8 +567,3 @@ Palette:
             name: Requires
             type: Subsystem
             default: "None"
-          - !Property
-            name: Order of execution
-            type: Integer
-            choices: ["Sequential", "Parallel"]
-            default: "Sequential"

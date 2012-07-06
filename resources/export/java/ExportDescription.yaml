@@ -78,7 +78,7 @@ Defaults:
   AnalogInput:
     Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Analog}, ${Input_Channel_Analog});"
   DigitalInput:
-      Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Digital}, ${Input_Channel_Digital});"
+    Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Digital}, ${Input_Channel_Digital});"
   PWMOutput:
     Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_PWM});"
   OI:
@@ -210,6 +210,9 @@ Instructions:
   Digital Input:
     Defaults: "DigitalInput,Component,None"
     ClassName: "DigitalInput"
+  Ultrasonic:
+    Defaults: "DigitalInput,Component,None"
+    ClassName: "Ultrasonic"
       
   Victor:
     Defaults: "PWMOutput,Component,None"
@@ -217,6 +220,12 @@ Instructions:
   Jaguar:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Jaguar"
+  Servo:
+    Defaults: "PWMOutput,Component,None"
+    ClassName: "Servo"
+  Digital Output:
+    Defaults: "PWMOutput,Component,None"
+    ClassName: "DigitalOutput"
       
   Joystick:
     Defaults: "OI,None"
