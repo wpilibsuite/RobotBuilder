@@ -6,6 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import robotbuilder.ActionsClass;
 import robotbuilder.MainFrame;
+import robotbuilder.Palette;
 
 /**
  *
@@ -21,7 +22,7 @@ public class NewAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-	MainFrame.getInstance().getCurrentRobotTree().newFile();
+	MainFrame.getInstance().getCurrentRobotTree().newFile(Palette.getInstance());
     }
     
 }

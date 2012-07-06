@@ -28,6 +28,7 @@ import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
 import robotbuilder.data.Validator;
+import sun.security.validator.ValidatorException;
 
 /**
  *
@@ -223,6 +224,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	} catch (IOException ex) {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+	} catch (Validator.InvalidException ex) {
+	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	saved = true;
     }
@@ -288,11 +291,13 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	return false;
     }
 
-    public void newFile() {
+    public void newFile(Palette palette) {
 	if (OKToClose()) {
 	    DefaultMutableTreeNode root = makeTreeRoot();
 	    treeModel.setRoot(root);
 	    tree.setSelectionPath(new TreePath(root));
+            usedNames = new HashSet<String>();
+            validators = palette.getValidators();
 	    saved = true;
             MainFrame.getInstance().prefs.put("FileName", "");
 	}

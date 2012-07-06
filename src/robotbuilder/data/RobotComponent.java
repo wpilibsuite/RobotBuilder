@@ -2,10 +2,7 @@
 package robotbuilder.data;
 
 import java.io.File;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -14,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import robotbuilder.Palette;
 import robotbuilder.RobotTree;
+import robotbuilder.data.Validator.InvalidException;
 
 /**
  *
@@ -242,23 +240,36 @@ public class RobotComponent extends DefaultMutableTreeNode {
      * Decode this RobotComponent and all it's subcomponents from a JSONObject.
      * @return A RobotComponent representing this component.
      */
-    public static RobotComponent decodeFromJSON(JSONObject json, RobotTree robot) throws JSONException {
+    public static RobotComponent decodeFromJSON(JSONObject json, RobotTree robot) throws JSONException, InvalidException {
         RobotComponent self = new RobotComponent(json.getString("Name"), 
                 Palette.getInstance().getItem(json.getString("Base")),
                 robot);
         JSONObject configuration = json.getJSONObject("Configuration");
-        //System.out.println(configuration);
-        //System.out.println(configuration.names());
         if (configuration.names() != null) {
             for (Object config : configuration.names().getIterable()) {
-                //System.out.println((String) config + "=>" + configuration.getString((String) config));
                 self.setProperty((String) config, configuration.getString((String) config));
             }
         }
+        
+        // Validate
+        Set<String> used = new HashSet<String>();
+        for (String property : self.getBase().getPropertiesKeys()) {
+            String validatorName = self.getBase().getProperties().get(property).getValidator();
+            if (!used.contains(validatorName)) {
+                used.add(validatorName);
+                if (!"".equals(validatorName)) {
+                    Validator validator = robot.getValidator(validatorName);
+                    validator.claim(self);
+                }
+            }
+        }
+        
+        // Handle children
         JSONArray children = json.getJSONArray("Children");
         for (Object child : children.getIterable()) {
             self.add(decodeFromJSON((JSONObject) child, robot));
         }
+        
         return self;
     }
     
