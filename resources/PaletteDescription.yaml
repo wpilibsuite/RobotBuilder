@@ -1,3 +1,65 @@
+## This file describes the palette for RobotBuilder. The format is
+## YAML 1.1 (http://www.yaml.org/) pre-processed with Velocity macros
+## (velocity.apache.org). This file is broken into three sections:
+##
+## - The macros for generating common types.
+##
+##   The macros are very simple, they define a simple template that
+##   gets substituted where they are called, with substitution
+##   where-ever the dollar sign sigil appears before a variable
+##   name. For more information, see:
+##   velocity.apache.org/engine/devel/user-guide.html#Velocimacro_Miscellany
+##
+##   NOTE: Be very careful about white space and macros, YAML is white
+##   space sensitive.
+##
+##   They are defined as:
+##   #macro( macroname $arg1 $arg2 ... $argN )
+##      [body]
+##   #end
+##
+##   They are called as:
+##   #macroname($var1 $var2 ... $varN)
+##
+## - The validators for ensuring that certain properties are unique.
+##
+##   The validators control if and how a property is validated. The
+##   only currently supported validator type is unique, though more
+##   will be added in the future.
+##
+##   They are define as:
+##   - !Validator
+##     name: A name for this validator, must be unique among validators.
+##     type: Unique is currently the only  supported type
+##     fields: A list of fields that the combination of should be unique.
+##
+## - The palette
+##
+##   The palette is broken into multiple sections. Each section
+##   contains a list of components that should be displayed in that
+##   section.
+##
+##   A component is defined as:
+##   - !Component
+##     name: The unique name of this component
+##     type: The type of this component
+##     supports: Optional. A map of the types supported and the number
+##               supported. -1 denotes unlimited.
+##     help: Tooltip helf for this component, it shows up when the
+##           mouse hovers.
+##     properties: A list of properties
+##
+##   A property is defined as:
+##   - !Property
+##     name: The name of this property, should be unique within this component
+##     type: The type of this property, affects how it is displayed.
+##           Valid types include: Integer, Double, Boolean, File,
+##           Folder, Subsystem, Command, Sensor, Actuator.
+##     choices: Optional. List of choices to present to the user.
+##     validator: Optional. The validator that should be used to
+##                validate this property.
+##     default: The default value when no other is presented.
+
 ## Macros:
 #macro( AnalogInput $Name )
 - !Property
