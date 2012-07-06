@@ -13,9 +13,7 @@
 
     <target name="-post-jar">
       <jar destfile="${dist.jar}" update="true">
-	<fileset dir="" includes="PaletteDescription.yaml"/>
-	<fileset dir="" includes="help/**"/>
-	<fileset dir="" includes="export/**"/>
+	<fileset dir="resources" includes="**"/>
       </jar>
     </target>
 
