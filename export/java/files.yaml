@@ -1,0 +1,51 @@
+- Export: $package-path/RobotMap.java
+  Source: RobotMap.java
+  Update: Overwrite
+  
+- Export: $package-path/OI.java
+  Source: OI.java
+  Update: Modify
+  Modifications:
+    Declarations: OI-declarations.java,constructors
+    Constructors: OI-constructors.java
+
+- Export: $package-path/commands/CommandBase.java
+  Source: CommandBase.java
+  Update: Modify
+  Modifications:
+    Constructors: CommandBase-constructors.java
+
+## Export Commands as files
+#if ($export-commands)
+#foreach ($command in $commands)
+#if ($command.base.name == "Command Group")
+- Export: $package-path/commands/#class($command.name).java
+  Source: CommandGroup.java
+  Update: None
+  Variables:
+    command-name: ${command.name}
+#else
+- Export: $package-path/commands/#class($command.name).java
+  Source: Command.java
+  Update: Modify
+  Modifications:
+    Requires: Command-requires.java
+  Variables:
+    command-name: ${command.name}
+#end 
+#end 
+#end
+
+## Export Subsystems as files
+#if ($export-subsystems)
+#foreach ($subsystem in $subsystems)
+- Export: $package-path/subsystems/#class($subsystem.name).java
+  Source: Subsystem.java
+  Update: Modify
+  Modifications:
+    Declarations: Subsystem-declarations.java
+    Default_Command: Subsystem-default_command.java
+  Variables: 
+    subsystem-name: ${subsystem.name}
+#end
+#end

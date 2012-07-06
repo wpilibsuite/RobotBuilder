@@ -6,8 +6,6 @@ package robotbuilder.exporters;
 
 import java.io.*;
 import java.util.*;
-import java.util.regex.Pattern;
-import javax.sound.midi.Patch;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
@@ -15,10 +13,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.yaml.snakeyaml.Yaml;
 import robotbuilder.RobotTree;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
-import sun.misc.Regexp;
 
 /**
  *
@@ -28,7 +26,7 @@ public class GenericExporter {
     private final static String[] DESCRIPTION_PROPERTIES = {"Export", "Import", "Declaration",
         "Construction", "Extra", "ClassName", "Subsystem Export", "Template"};
     
-    private String name, type, newFilesPath, modifiedFilesPath, begin_modification, end_modification;
+    private String name, type, filesPath, begin_modification, end_modification;
     private boolean showOnToolbar;
     private String path;
     private Context rootContext = new VelocityContext();
@@ -41,8 +39,7 @@ public class GenericExporter {
         JSONObject description = openJson(descriptionFile);
         name = description.getString("Name");
         type = description.getString("Type");
-        newFilesPath = description.getString("New Files");
-        modifiedFilesPath = description.getString("Modified Files");
+        filesPath = description.getString("Files");
         begin_modification = description.getString("Begin Modification");
         end_modification = description.getString("End Modification");
         String _ = eval(new File(path+description.getString("Macros")));
@@ -73,15 +70,9 @@ public class GenericExporter {
         }
         System.out.println();
         
-        // Generate new files
-        LinkedList<ExportFile> newFiles = getNewFiles();
+        // Export to all files
+        LinkedList<ExportFile> newFiles = getFiles();
         for (ExportFile file : newFiles) {
-            file.export();
-        }
-        
-        // Update existing files
-        LinkedList<ModifiedFile> modifiedFiles = getModifiedFiles();
-        for (ModifiedFile file : modifiedFiles) {
             file.export();
         }
         
@@ -137,36 +128,14 @@ public class GenericExporter {
         }
     }
     
-    private LinkedList<ExportFile> getNewFiles() throws FileNotFoundException {
+    private LinkedList<ExportFile> getFiles() throws FileNotFoundException {
         LinkedList<ExportFile> files = new LinkedList<ExportFile>();
-        String filesString = eval(new File(path+newFilesPath));
-        for (String line : filesString.split("\n")) {
-            System.out.println("Line: "+line);
-            if (line.contains(":")) {
-                String[] split = line.split(":");
-                ExportFile file = new ExportFile(split[1], new File(path+split[0]));
-                for (int i = 2; i < split.length; i++) {
-                    file.addVar(split[i]);
-                }
-                files.add(file);
-            }
-        }
-        return files;
-    }
-    
-    private LinkedList<ModifiedFile> getModifiedFiles() throws FileNotFoundException {
-        LinkedList<ModifiedFile> files = new LinkedList<ModifiedFile>();
-        String filesString = eval(new File(path+modifiedFilesPath));
-        for (String line : filesString.split("\n")) {
-            System.out.println("Line: "+line);
-            if (line.contains(":")) {
-                String[] split = line.split(":");
-                ModifiedFile file = new ModifiedFile(split[1], split[0]);
-                for (int i = 2; i < split.length; i++) {
-                    file.addVar(split[i]);
-                }
-                files.add(file);
-            }
+        String filesString = eval(new File(path+filesPath));
+        Yaml yaml = new Yaml();
+        ArrayList filesYaml = (ArrayList) yaml.load(filesString);
+        System.out.print(filesYaml.getClass());
+        for (Object fileYaml: filesYaml) {
+            files.add(new ExportFile((Map<String, Object>) fileYaml));
         }
         return files;
     }
@@ -309,29 +278,49 @@ public class GenericExporter {
     
     class ExportFile extends File {
         File template;
+        String update;
+        Map <String, String> modifications = new HashMap<String, String>();
         Map <String, String> vars = new HashMap<String, String>();
 
-        public ExportFile(String pathname, File template) {
-            super(pathname);
-            this.template = template;
+        private ExportFile(Map<String, Object> map) {
+            super((String) map.get("Export"));
+            System.out.println(this);
+            template = new File(path + ((String) map.get("Source")));
+            update = (String) map.get("Update");
+            modifications = (Map<String, String>) map.get("Modifications");
+            vars = (Map<String, String>) map.get("Variables");
         }
         
         public void export() throws IOException {
-            if (!this.exists()) {
-                Context fileContext = new VelocityContext(rootContext);
+            // Build the context
+            Context fileContext = new VelocityContext(rootContext);
+            if (vars != null) {
                 for (String key : vars.keySet()) {
                     fileContext.put(key, eval(vars.get(key), fileContext));
                 }
-                
-                FileWriter writer = new FileWriter(this);
-                writer.write(eval(template, fileContext));
-                writer.close();
             }
-        }
-
-        private void addVar(String var) {
-            String[] split = var.split("=");
-            vars.put(split[0], split[1]);
+            
+            // Export
+            if (!this.exists() || update.equals("Overwrite")) {
+                FileWriter out = new FileWriter(this);
+                out.write(eval(template, fileContext));
+                out.close();
+            } else if (update.equals("Modify")) {
+                String file = openFile(this.getAbsolutePath());
+                
+                for (String id : modifications.keySet()) {
+                    Context idContext = new VelocityContext(fileContext);
+                    idContext.put("id", id);
+                    String beginning = eval(begin_modification, idContext);
+                    String end = eval(end_modification, idContext);
+                    file = file.replaceAll("("+beginning+")([\\s\\S]*?)("+end+")",
+                            "$1\n"+eval(new File(path+modifications.get(id)), idContext)+"\n    $3");
+                }
+                
+                FileWriter out = new FileWriter(this);
+                out.write(file);
+                out.close();
+            }
         }
     }
     
@@ -346,53 +335,5 @@ public class GenericExporter {
             stringBuilder.append( ls );
         }
         return stringBuilder.toString();
-    }
-    
-    class ModifiedFile extends File {
-        Map <String, String> sources = new HashMap<String, String>();
-        Map <String, String> vars = new HashMap<String, String>();
-
-        public ModifiedFile(String pathname, String ids) {
-            super(pathname);
-            System.out.println(ids);
-            for (String pair : ids.split(",")) {
-                String[] split = pair.split("=");
-                sources.put(split[0], path+split[1]);
-            }
-        }
-        
-        public void export() throws IOException {
-            if (this.exists()) {
-                Context fileContext = new VelocityContext(rootContext);
-                for (String key : vars.keySet()) {
-                    fileContext.put(key, eval(vars.get(key), fileContext));
-                }
-                
-                String file = openFile(this.getAbsolutePath());
-                
-                for (String id : sources.keySet()) {
-                    Context idContext = new VelocityContext(fileContext);
-                    idContext.put("id", id);
-                    String beginning = eval(begin_modification, idContext);
-                    String end = eval(end_modification, idContext);
-                    System.out.println(id);
-                    System.out.println(this);
-                    System.out.println("("+beginning+")([\\s\\S]*?)("+end+")");
-                    System.out.println(eval(new File(sources.get(id)), idContext));
-                    file = file.replaceAll("("+beginning+")([\\s\\S]*?)("+end+")",
-                            "$1\n"+eval(new File(sources.get(id)), idContext)+"\n    $3");
-                }
-                
-                
-                FileWriter out = new FileWriter(this);
-                out.write(file);
-                out.close();
-            }
-        }
-
-        private void addVar(String var) {
-            String[] split = var.split("=");
-            vars.put(split[0], split[1]);
-        }
     }
 }
