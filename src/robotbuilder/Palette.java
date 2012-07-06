@@ -1,6 +1,7 @@
 
 package robotbuilder;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Iterator;
@@ -27,7 +28,7 @@ public class Palette extends JPanel {
     public Palette() {
         FileReader file;
         try {
-            file = new FileReader("/Users/brad/Dropbox/Projects/NetBeansProjects/RobotBuilder/PaletteDescription.json");
+            file = new FileReader((new File("PaletteDescription.json")).getAbsolutePath());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
             return;
