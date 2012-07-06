@@ -56,7 +56,8 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 combos.get(key).setSelectedItem(getProperty(key));
             }
             return combos.get(key);
-        } else if (property.getType().equals("Actuator")) {
+        } else if (property.getType().equals("Actuator") ||
+                property.getType().equals("Sensor")) {
             return combos.get(key);
         } else if (property.getType().equals("Folder")) {
             // Provide a file chooser for 
@@ -102,7 +103,8 @@ public class RobotComponent extends DefaultMutableTreeNode {
         // Update list of actuators
         for (String key : getBase().getProperties().keySet()) {
             Property property = base.getProperties().get(key);
-            if (property.getType().equals("Actuator")) {
+            if (property.getType().equals("Actuator") ||
+                    property.getType().equals("Sensor")) {
                 // Provide a JComboBox of actuators
                 System.out.println("Updating: "+key);
                 Object old;
@@ -111,7 +113,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 } else {
                     old = getProperty(key);
                 }
-                final Vector<String> childrenNames = getChildrenNames();
+                final Vector<String> childrenNames = getChildrenOfTypeNames(property.getType());
                 JComboBox combo = new JComboBox(childrenNames);
                 combos.put(key, combo);
                 if (childrenNames.contains(old)) {
@@ -237,11 +239,13 @@ public class RobotComponent extends DefaultMutableTreeNode {
         return name.toUpperCase();
     }
     
-    public Vector<String> getChildrenNames() {
+    public Vector<String> getChildrenOfTypeNames(String type) {
         if (children == null) return new Vector<String>();
         Vector<String> names = new Vector<String>();
         for (Object child : children) {
-            names.add(((RobotComponent) child).getFullName());
+            if (type.equals(((RobotComponent) child).getBase().getType())) {
+                names.add(((RobotComponent) child).getFullName());
+            }
         }
         return names;
     }
