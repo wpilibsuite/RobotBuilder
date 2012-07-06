@@ -230,7 +230,7 @@ Instructions:
     ClassName: "Jaguar"
   Victor:
     Defaults: "PWMOutput,Component,None"
-    ClassName: "Relay"
+    ClassName: "Victor"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
