@@ -123,10 +123,25 @@
                     },
 		}
 	    },
-	    "Robot Drive" : {
+	    "Robot Drive 2" : {
+		"Type": "Organization",
+		"Supports": {"Actuator": 2},
+		"Help": "RobotDrive handles tank drive, arcade drive and mecanum drive.",
+		"Properties" : {
+		    "Left Motor" : {
+                        "Type" : "Actuator",
+			"Default" : "0"
+                    },
+		    "Right Motor" : {
+                        "Type" : "Actuator",
+			"Default" : "1"
+                    }
+		}
+	    },
+	    "Robot Drive 4" : {
 		"Type": "Organization",
 		"Supports": {"Actuator": 4},
-		"Help": "PIDControllers allow control of an actuator based off of feedback from a sensor.",
+		"Help": "RobotDrive handles tank drive, arcade drive and mecanum drive.",
 		"Properties" : {
 		    "Left Front Motor" : {
                         "Type" : "Actuator",
