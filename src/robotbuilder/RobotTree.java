@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -89,6 +90,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
     private RobotComponent makeTreeRoot() {
 	RobotComponent root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Robot"), this);
+        root.add(new RobotComponent("Operator Interface", Palette.getInstance().getItem("OI"), this));
 	return root;
     }
 
@@ -294,6 +296,20 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         });
         
         return subsystems;
+    }
+
+    public Vector<String> getJoystickNames(String type) {
+        final Vector<String> joystickNames = new Vector<String>();
+        walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                if (self.getBase().getType().equals("Joystick")) {
+                    joystickNames.add(self.getName());
+                }
+            }
+        });
+        
+        return joystickNames;
     }
 
     /**

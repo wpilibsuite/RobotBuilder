@@ -1,7 +1,7 @@
 
 {
     "Macros": {
-	"AnalogInput": {
+	"$AnalogInput": {
 	    "Properties" : [
 		{
 		    "Name" : "Module (Analog)",
@@ -19,7 +19,7 @@
                 },
 	    ]
 	},
-	"DigitalInput": {
+	"$DigitalInput": {
 	    "Properties" : [
 		{
 		    "Name" : "Module (Digital)",
@@ -37,7 +37,7 @@
                 },
 	    ]
 	},
-	"PWMInput": {
+	"$PWMInput": {
 	    "Properties" : [
 		{
 		    "Name" : "Module (Digital)",
@@ -54,15 +54,32 @@
 		    "DefaultDefault" : "1"
                 },
 	    ]
+	},
+	"$Button": {
+	    "Properties" : [
+		{
+		    "Name" : "Command",
+                    "Type" : "Command",
+		    "Default" : "Default Command",
+		    "DefaultDefault" : "1"
+                },
+		{
+		    "Name" : "When to Run",
+                    "Type" : "String",
+		    "Choices" : ["whileHeld", "whenPressed", "whenReleased"],
+		    "Default" : "Default Run Time",
+		    "DefaultDefault" : "1"
+                },
+	    ]
 	}
     },
     "Palette": {
-	"Order": ["Subsystems", "Controllers", "Sensors", "Actuators", "Hidden"],
+	"Order": ["Subsystems", "Controllers", "Sensors", "Actuators", "OI", "Hidden"],
 	"Hidden" : [
 	    {
 		"Name": "Robot",
-		"Type": "Organization",
-		"Supports": {"Subsystem": "unlimited", "Controller": "unlimited", "Sensor": "unlimited", "Actuator": "unlimited"},
+		"Type": "Robot",
+		"Supports": {"Subsystem": "unlimited", "Controller": "unlimited", "Sensor": "unlimited", "Actuator": "unlimited", "OI": "1"},
 		"Help": "Your Robot!",
 		"Properties": [
 		    {
@@ -80,6 +97,15 @@
                         "Type" : "File",
                         "Default" : ""
 		    }
+		]
+	    },
+	    {
+		"Name": "OI",
+		"Type": "OI",
+		"Supports": {"Button": "unlimited", "Joystick": "4"},
+		"Help": "Your operator interface!",
+		"Properties": [
+
 		]
 	    },
 	],
@@ -238,7 +264,7 @@
                 "Properties" : [
                     {
 			"Name" : "Input",
-                        "Type" : "AnalogInput",
+                        "Type" : "$AnalogInput",
                         "Default Channel" : "1",
                         "Default Module" : "1"
                     },
@@ -256,7 +282,7 @@
                 "Properties" : [
                     {
 			"Name" : "Input",
-                        "Type" : "AnalogInput"
+                        "Type" : "$AnalogInput"
                     }
                 ]
             },
@@ -267,11 +293,11 @@
                 "Properties" : [
                     {
 			"Name" : "Channel A",
-                        "Type" : "DigitalInput"
+                        "Type" : "$DigitalInput"
                     },
                     {
 			"Name" : "Channel B",
-                        "Type" : "DigitalInput"
+                        "Type" : "$DigitalInput"
                     }
                 ]
             },
@@ -282,7 +308,7 @@
                 "Properties" : [
                     {
 			"Name" : "Input",
-                        "Type" : "AnalogInput"
+                        "Type" : "$AnalogInput"
                     }
                 ]
             },
@@ -293,7 +319,7 @@
                 "Properties" : [
                     {
 			"Name" : "Input",
-                        "Type" : "DigitalInput"
+                        "Type" : "$DigitalInput"
                     }
                 ]
             }
@@ -306,7 +332,7 @@
                 "Properties" : [
                     {
 			"Name" : "Output",
-                        "Type" : "PWMInput"
+                        "Type" : "$PWMInput"
                     }
                 ]
             },
@@ -317,10 +343,44 @@
                 "Properties" : [
                     {
 			"Name" : "Output",
-                        "Type" : "PWMInput"
+                        "Type" : "$PWMInput"
                     }
                 ]
             }
-        ]
+        ],
+	"OI" : [
+            {
+		"Name": "Joystick",
+		"Type": "Joystick",
+		"Help": "A joystick that drivers can use as input.",
+                "Properties" : [
+                    {
+			"Name" : "Number",
+                        "Type" : "Integer",
+			"Choices" : ["1", "2", "3", "4"]
+                    }
+                ]
+            },
+            {
+		"Name": "Joystick Button",
+		"Type": "Button",
+		"Help": "A joystick button that binds a driver action to a command.",
+                "Properties" : [
+                    {
+			"Name" : "Joystick",
+                        "Type" : "Joystick"
+                    },
+                    {
+			"Name" : "Button",
+                        "Type" : "Integer",
+			"Choices" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+                    },
+                    {
+			"Name" : "",
+                        "Type" : "$Button"
+                    }
+                ]
+            }
+	]
     }
 }

@@ -259,9 +259,12 @@ public class Palette extends JPanel implements TreeSelectionListener {
                 JSONArray props = macroDef.getJSONArray("Properties");
                 for (Object i : props.getIterable()) {
                     JSONObject property = (JSONObject) i;
-                    LinkedList<Object> choices = new LinkedList<Object>();
-                    for (Object c : property.optJSONArray("Choices").getIterable()) {
-                        choices.add(c);
+                    LinkedList<Object> choices = null;
+                    if (property.has("Choices")) {
+                        choices = new LinkedList<Object>();
+                        for (Object c : property.optJSONArray("Choices").getIterable()) {
+                            choices.add(c);
+                        }
                     }
                     System.out.println("Adding expansion: "+property.getString("Name") +" "+property.getString("Type")+" "+property.optString("Default")+" "+property.optString("DefaultDefault")+" "+choices);
                     macro.addExpansion(property.getString("Name"), 

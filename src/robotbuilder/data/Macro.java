@@ -38,7 +38,11 @@ public class Macro {
         for (Expansion expansion : expansions) {
             try {
                 JSONObject expanded = new JSONObject();
-                expanded.put("Name", prop.get("Name") +" "+expansion.name);
+                if (!prop.getString("Name").equals("")) {
+                    expanded.put("Name", prop.get("Name") +" "+expansion.name);
+                } else {
+                    expanded.put("Name", expansion.name);
+                }
                 expanded.put("Type", expansion.type);
                 String defaultVal = prop.optString(expansion.defaultValue, null);
                 if (defaultVal != null) {
@@ -46,7 +50,9 @@ public class Macro {
                 } else {
                     expanded.put("Default", expansion.defaultDefault);
                 }
-                expanded.put("Choices", expansion.choices);
+                if (expansion.choices != null) {
+                    expanded.put("Choices", expansion.choices);
+                }
                 props = props.put(expanded);
             } catch (JSONException ex) {
                 Logger.getLogger(Macro.class.getName()).log(Level.SEVERE, null, ex);

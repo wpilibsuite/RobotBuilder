@@ -51,7 +51,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
      */
     public Object getValue(String key) {
         Property property = base.getProperties().get(key);
-        childChange();
+        updateComboBoxes();
         if (property.getChoices() != null) {
             // Provide a JComboBox for choicse
             if (combos.get(key) == null) {
@@ -66,7 +66,8 @@ public class RobotComponent extends DefaultMutableTreeNode {
         } else if (property.getType().equals("Integer")) {
             return Integer.parseInt(getProperty(key));
         } else if (property.getType().equals("Actuator") ||
-                property.getType().equals("Sensor")) {
+                property.getType().equals("Sensor") ||
+                property.getType().equals("Joystick")) {
             return combos.get(key);
         } else if (property.getType().equals("File")) {
             // Provide a file chooser for files
@@ -103,17 +104,17 @@ public class RobotComponent extends DefaultMutableTreeNode {
         System.out.println(key+" => "+val);
     }
     
-    public void childChange() {
+    public void updateComboBoxes() {
         // Update list of actuators
         for (String key : getBase().getProperties().keySet()) {
             Property property = base.getProperties().get(key);
             if (property.getType().equals("Actuator") ||
                     property.getType().equals("Sensor")) {
-                // Provide a JComboBox of actuators
+                // Provide a JComboBox for this actuator or sensor
                 System.out.println("Updating: "+key);
-                Object old;
+                String old;
                 if (combos.get(key) != null) {
-                    old = combos.get(key).getSelectedItem();
+                    old = (String) combos.get(key).getSelectedItem();
                 } else {
                     old = getProperty(key);
                 }
@@ -125,6 +126,25 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 } else if (childrenNames.size() != 0) {
                     int defaultSelection = Integer.parseInt(getBase().getProperties().get(key).getDefault());
                     if (defaultSelection < childrenNames.size()) {
+                        combo.setSelectedIndex(defaultSelection);
+                    }
+                    setProperty(key, (String) combo.getSelectedItem());
+                }
+            } else if (property.getType().equals("Joystick")) {
+                String old;
+                if (combos.get(key) != null) {
+                    old = (String) combos.get(key).getSelectedItem();
+                } else {
+                    old = getProperty(key);
+                }
+                final Vector<String> joystickNames = robot.getJoystickNames(property.getType());
+                JComboBox combo = new JComboBox(joystickNames);
+                combos.put(key, combo);
+                if (joystickNames.contains(old)) {
+                    combo.setSelectedItem(old);
+                } else if (joystickNames.size() != 0) {
+                    int defaultSelection = Integer.parseInt(getBase().getProperties().get(key).getDefault());
+                    if (defaultSelection < joystickNames.size()) {
                         combo.setSelectedIndex(defaultSelection);
                     }
                     setProperty(key, (String) combo.getSelectedItem());
