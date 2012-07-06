@@ -67,7 +67,8 @@ public class RobotComponent extends DefaultMutableTreeNode {
             return Integer.parseInt(getProperty(key));
         } else if (property.getType().equals("Actuator") ||
                 property.getType().equals("Sensor") ||
-                property.getType().equals("Joystick")) {
+                property.getType().equals("Joystick") ||
+                property.getType().equals("Command")) {
             return combos.get(key);
         } else if (property.getType().equals("File")) {
             // Provide a file chooser for files
@@ -130,21 +131,26 @@ public class RobotComponent extends DefaultMutableTreeNode {
                     }
                     setProperty(key, (String) combo.getSelectedItem());
                 }
-            } else if (property.getType().equals("Joystick")) {
+            } else if (property.getType().equals("Joystick") ||
+                    property.getType().equals("Command")) {
                 String old;
                 if (combos.get(key) != null) {
                     old = (String) combos.get(key).getSelectedItem();
                 } else {
                     old = getProperty(key);
                 }
-                final Vector<String> joystickNames = robot.getJoystickNames(property.getType());
-                JComboBox combo = new JComboBox(joystickNames);
+                Vector<String> choices = null;
+                if (property.getType().equals("Joystick"))
+                    choices = robot.getJoystickNames();
+                else if (property.getType().equals("Command"))
+                    choices = robot.getCommandNames();
+                JComboBox combo = new JComboBox(choices);
                 combos.put(key, combo);
-                if (joystickNames.contains(old)) {
+                if (choices.contains(old)) {
                     combo.setSelectedItem(old);
-                } else if (joystickNames.size() != 0) {
+                } else if (choices.size() != 0) {
                     int defaultSelection = Integer.parseInt(getBase().getProperties().get(key).getDefault());
-                    if (defaultSelection < joystickNames.size()) {
+                    if (defaultSelection < choices.size()) {
                         combo.setSelectedIndex(defaultSelection);
                     }
                     setProperty(key, (String) combo.getSelectedItem());

@@ -300,7 +300,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         return subsystems;
     }
 
-    public Vector<String> getJoystickNames(String type) {
+    public Vector<String> getJoystickNames() {
         final Vector<String> joystickNames = new Vector<String>();
         walk(new RobotWalker() {
             @Override
@@ -312,6 +312,20 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         });
         
         return joystickNames;
+    }
+
+    public Vector<String> getCommandNames() {
+        final Vector<String> commandNames = new Vector<String>();
+        walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                if (self.getBase().getType().equals("Command")) {
+                    commandNames.add(self.getName());
+                }
+            }
+        });
+        
+        return commandNames;
     }
 
     /**
