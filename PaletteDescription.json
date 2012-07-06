@@ -94,12 +94,55 @@
 		"Help": "PIDControllers allow control of an actuator based off of feedback from a sensor.",
 		"Properties" : {
 		    "Input" : {
-                        "Type" : "Actuator",
-			"Choices" : "Children"
+                        "Type" : "Sensor",
+			"Default" : "0"
                     },
 		    "Output" : {
-                        "Type" : "Sensor",
-			"Choices" : "Children"
+                        "Type" : "Actuator",
+			"Default" : "0"
+                    },
+		    "P" : {
+                        "Type" : "Double",
+			"Default" : "1"
+                    },
+		    "I" : {
+                        "Type" : "Double",
+			"Default" : "0"
+                    },
+		    "D" : {
+                        "Type" : "Double",
+			"Default" : "0"
+                    },
+		    "F" : {
+                        "Type" : "Double",
+			"Default" : "0"
+                    },
+		    "Period" : {
+                        "Type" : "Integer",
+			"Default" : "50"
+                    },
+		}
+	    },
+	    "Robot Drive" : {
+		"Type": "Organization",
+		"Supports": {"Actuator": 4},
+		"Help": "PIDControllers allow control of an actuator based off of feedback from a sensor.",
+		"Properties" : {
+		    "Left Front Motor" : {
+                        "Type" : "Actuator",
+			"Default" : "0"
+                    },
+		    "Left Rear Motor" : {
+                        "Type" : "Actuator",
+			"Default" : "1"
+                    },
+		    "Right Front Motor" : {
+                        "Type" : "Actuator",
+			"Default" : "2"
+                    },
+		    "Right Rear Motor" : {
+                        "Type" : "Actuator",
+			"Default" : "3"
                     },
 		}
 	    }

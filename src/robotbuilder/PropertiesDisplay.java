@@ -70,7 +70,11 @@ class PropertiesDisplay extends JPanel {
                     return new TableCellRenderer() {
                         @Override
                         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                            return new JLabel(((JComboBox) value).getSelectedItem().toString());
+                            try {
+                                return new JLabel(((JComboBox) value).getSelectedItem().toString());
+                            } catch (NullPointerException ex) {
+                                return new JLabel("No Choices Available");
+                            }
                         }
                     };
                 } else if (value instanceof JFileChooser) {

@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeSet;
-import javax.swing.JFileChooser;
 import robotbuilder.RobotTree;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
@@ -98,7 +97,7 @@ public class JavaExporter extends AbstractExporter {
                 constructions.add(substitute(extraInstruction, self, className));
             }
         });
-        
+
         String out = "";
         for (String cons : constructions) {
             if (!"".equals(cons)) out += "        " + cons + "\n";

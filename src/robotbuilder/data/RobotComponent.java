@@ -1,13 +1,11 @@
 
 package robotbuilder.data;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,16 +25,11 @@ public class RobotComponent extends DefaultMutableTreeNode {
     private Map<String, JFileChooser> filechoosers = new HashMap<String, JFileChooser>();
 
     public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
-        //setName(name);
         this.name = name;
         this.base = base;
         this.robot = robot;
         robot.addName(name);
     }
-    
-//    public Map<String, Property> getProperties() {
-//        return base.getProperties();
-//    }
     
     public String getProperty(String key) {
         String val = configuration.get(key);
@@ -55,12 +48,15 @@ public class RobotComponent extends DefaultMutableTreeNode {
      */
     public Object getValue(String key) {
         Property property = base.getProperties().get(key);
+        childChange();
         if (property.getChoices() != null) {
             // Provide a JComboBox for choicse
             if (combos.get(key) == null) {
                 combos.put(key, new JComboBox(property.getChoices()));
                 combos.get(key).setSelectedItem(getProperty(key));
             }
+            return combos.get(key);
+        } else if (property.getType().equals("Actuator")) {
             return combos.get(key);
         } else if (property.getType().equals("Folder")) {
             // Provide a file chooser for 
@@ -78,6 +74,52 @@ public class RobotComponent extends DefaultMutableTreeNode {
             return filechoosers.get(key);
         } else {
             return getProperty(key);
+        }
+    }
+    
+    @Override
+    public void add(MutableTreeNode node) {
+        super.add(node);
+        childChange();
+    }
+    @Override
+    public void remove(MutableTreeNode node) {
+        super.remove(node);
+        childChange();
+    }
+    @Override
+    public void remove(int index) {
+        super.remove(index);
+        childChange();
+    }
+    @Override
+    public void removeAllChildren() {
+        super.removeAllChildren();
+        childChange();
+    }
+    
+    public void childChange() {
+        // Update list of actuators
+        for (String key : getBase().getProperties().keySet()) {
+            Property property = base.getProperties().get(key);
+            if (property.getType().equals("Actuator")) {
+                // Provide a JComboBox of actuators
+                System.out.println("Updating: "+key);
+                Object old;
+                if (combos.get(key) != null) {
+                    old = combos.get(key).getSelectedItem();
+                } else {
+                    old = getProperty(key);
+                }
+                final Vector<String> childrenNames = getChildrenNames();
+                JComboBox combo = new JComboBox(childrenNames);
+                combos.put(key, combo);
+                if (childrenNames.contains(old)) {
+                    combo.setSelectedItem(old);
+                } else if (childrenNames.size() != 0) {
+                    setProperty(key, (String) combo.getSelectedItem());
+                }
+            }
         }
     }
 
@@ -184,14 +226,23 @@ public class RobotComponent extends DefaultMutableTreeNode {
     }
     
     public void walk(RobotWalker walker) {
-        walker.handleRobotComponent(this);
         for (Enumeration i = this.children(); i.hasMoreElements();) {
             RobotComponent child = (RobotComponent) i.nextElement();
             child.walk(walker);
         }
+        walker.handleRobotComponent(this);
     }
 
     public String getFullName() {
         return name.toUpperCase();
+    }
+    
+    public Vector<String> getChildrenNames() {
+        if (children == null) return new Vector<String>();
+        Vector<String> names = new Vector<String>();
+        for (Object child : children) {
+            names.add(((RobotComponent) child).getFullName());
+        }
+        return names;
     }
 }

@@ -37,11 +37,17 @@
 	"PIDController" : {
 	    "Defaults": ["All"],
 	    "ClassName": "PIDController",
-	    "Construction": "// TODO: Construct ${Name};"
+	    "Construction": "${Name} = new ${ClassName}(${P}, ${I}, ${D}, ${F}, ${Input}, ${Output}, ${Period});"
+	},
+	"Robot Drive" : {
+	    "Defaults": ["All"],
+	    "ClassName": "RobotDrive",
+	    "Construction": "${Name} = new ${ClassName}(${Left Front Motor}, ${Left Rear Motor}, ${Right Front Motor}, ${Right Rear Motor});"
 	},
         "Gyro" : {
 	    "Defaults": ["AnalogInput", "All"],
-	    "ClassName": "Gyro"
+	    "ClassName": "Gyro",
+	    "Extra": "${Name}.setSensitivity(${Sensitivity});"
         },
         "Accelerometer" : {
 	    "Defaults": ["AnalogInput", "All"],
