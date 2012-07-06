@@ -17,7 +17,8 @@ import org.apache.velocity.context.Context;
  * @author alex
  */
 public class ExportFile {
-    private File export, source;
+    private File export;
+    private String source;
     private String update, exorterPath;
     private Map<String, String> modifications = new HashMap<String, String>();
     private Map<String, String> vars = new HashMap<String, String>();
@@ -38,7 +39,7 @@ public class ExportFile {
         // Export
         if (!export.exists() || update.equals("Overwrite")) {
             FileWriter out = new FileWriter(export);
-            out.write(exporter.evalResource(source.getAbsolutePath(), fileContext));
+            out.write(exporter.evalResource(source, fileContext));
             out.close();
         } else if (update.equals("Modify")) {
             String file = exporter.openFile(export.getAbsolutePath());
@@ -73,10 +74,10 @@ public class ExportFile {
         export = new File(path);
     }
     public String getSource() {
-        return source.getAbsolutePath();
+        return source;
     }
     public void setSource(String path) {
-        source = new File(path);
+        source = path;
     }
     public String getUpdate() {
         return update;

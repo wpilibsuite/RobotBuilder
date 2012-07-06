@@ -29,15 +29,16 @@ public class Utils {
      * @return The resource URL
      */
     public static URL getResource(String resource) {
-        URL ret = Utils.class.getResource(resource);
-        if (ret == null) {
+        if (isJarred()) {
+            return Utils.class.getResource(resource);
+        } else {
             try {
                 return new URL("File://"+PATH+resource);
             } catch (MalformedURLException ex) {
                 Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
             }
         }
-        return ret;
     }
     
     /**
@@ -46,17 +47,18 @@ public class Utils {
      * @return The resource stream
      */
     public static InputStream getResourceAsStream(String resource) {
-        System.out.println("Loading Resource: "+resource);
-        InputStream ret = Utils.class.getResourceAsStream(resource);
-        if (ret == null) {
+        if (isJarred()) {
+            System.out.println("Loading Resource: "+resource);
+            return Utils.class.getResourceAsStream(resource);
+        } else {
             try {
                 System.out.println("Loading Resource: "+PATH+resource);
                 return new FileInputStream(PATH+resource);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
             }
         }
-        return ret;
     }
 
     /**
