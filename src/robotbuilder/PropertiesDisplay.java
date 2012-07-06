@@ -195,7 +195,7 @@ class PropertiesDisplay extends JPanel {
             }
             robot.update();
 //            robot.takeSnapshot();
-            System.out.println("Value:_"+val+ ", Row: " +row +", Column: "+ column);
+//            System.out.println("Value:_"+val+ ", Row: " +row +", Column: "+ column);
         }
     }
 }

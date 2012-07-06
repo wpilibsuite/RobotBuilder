@@ -43,7 +43,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     /** The currently selected node */
     private String filePath = null;
     
-    private SimpleHistory<String> history = new SimpleHistory<String>();
+    private SimpleHistory<String> history = new SimpleHistory<String>(100);
     private int snapshots = 0;
     
     private Preferences prefs;
@@ -246,6 +246,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	}
         filePath = path.getAbsolutePath();
 	saved = true;
+        takeSnapshot();
     }
     
     /**
@@ -412,6 +413,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             validators = palette.getValidators();
 	    saved = true;
             MainFrame.getInstance().prefs.put("FileName", "");
+            takeSnapshot();
 	//}
     }
 
@@ -490,6 +492,21 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         });
         
         return subsystemNames;
+    }
+    
+    public void takeSnapshot(){
+        System.out.println("Snapshot number "+ ++snapshots +" taken.");
+        history.addState(encode());
+    }
+    
+    public void undo() {
+        System.out.println("Undo button pressed");
+        load(history.undo());
+    }
+    
+    public void redo(){
+        System.out.println("Redo button pressed");
+        load(history.redo());
     }
 
     /**

@@ -11,11 +11,15 @@ import java.util.LinkedList;
  */
 public class SimpleHistory<E> {
     
-    private Deque<E> pastAndPresent = new LinkedList<E>();
+    private Deque<E> past = new LinkedList<E>();
+    private E present = null;
     private Deque<E> future = new LinkedList<E>();
     private int timesSaved = 0;
+    private final int historyLimit;
     
-    public SimpleHistory(){}    
+    public SimpleHistory(int historyLimit){
+        this.historyLimit = historyLimit;
+    }    
         
     /**
      * Adds the given state to the history.
@@ -23,7 +27,8 @@ public class SimpleHistory<E> {
      */
     public void addState(E state){
         if(state != null && state.getClass() != null){
-            pastAndPresent.addLast(state);
+            past.addLast(present);
+            present = state;
             future.clear();
             timesSaved++;
         }
@@ -34,7 +39,7 @@ public class SimpleHistory<E> {
      * @return 
      */
     public E getCurrentState(){
-        return pastAndPresent.peekLast();
+        return present;
     }
     
     /**
@@ -42,7 +47,8 @@ public class SimpleHistory<E> {
      */
     public E undo(){
         if(canUndo()){
-            future.addLast(pastAndPresent.pollLast());
+            future.addLast(present);
+            present = past.pollLast();
         }
         return getCurrentState();
     }
@@ -52,13 +58,13 @@ public class SimpleHistory<E> {
      */
     public E redo(){
         if(canRedo()){
-            pastAndPresent.addLast(future.pollLast());
+            past.addLast(future.pollLast());
         }
         return getCurrentState();
     }
     
     public int getUndoSize(){
-        return pastAndPresent.size();
+        return past.size();
     }
     
     public int getRedoSize(){
@@ -71,7 +77,7 @@ public class SimpleHistory<E> {
      * @return True if it is possible to undo, else false.
      */
     private boolean canUndo(){
-        return !pastAndPresent.isEmpty() && pastAndPresent.size() > 0;
+        return !past.isEmpty();
     }
 
     /**
@@ -80,7 +86,7 @@ public class SimpleHistory<E> {
      * @return True if it is possible to redo, else false.
      */
     private boolean canRedo(){
-        return !future.isEmpty() && future.size() >= 0;
+        return !future.isEmpty();
     }
     
     /**
