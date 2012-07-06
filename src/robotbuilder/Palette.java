@@ -1,16 +1,11 @@
 
 package robotbuilder;
 
-import java.awt.GridLayout;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -23,6 +18,8 @@ import org.json.JSONTokener;
  * @author brad
  */
 public class Palette extends JPanel {
+    
+    private JTree paletteTree;
     
     public Palette() {
         FileReader file;
@@ -48,7 +45,7 @@ public class Palette extends JPanel {
         } catch (JSONException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
         }
-        JTree paletteTree = new JTree(root);
+        paletteTree = new JTree(root);
         paletteTree.setDragEnabled(true);
         
         add(paletteTree);

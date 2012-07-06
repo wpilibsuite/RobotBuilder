@@ -3,7 +3,7 @@
     "Palette": {
         "Sensors": {
             "Gyro" : {
-                
+
             },
             "Accelerometer" : {
                 
@@ -37,6 +37,14 @@
                 
             },
             "Extended I/O analog input" : {
+                
+            }
+        },
+        "Program structure" : {
+            "Subsystem" : {
+                
+            },
+            "Command" : {
                 
             }
         }
