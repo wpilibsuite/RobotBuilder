@@ -231,7 +231,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                 Map<String, Object> me = new HashMap<String, Object>();
                 me.put("Name", self.getName());
                 me.put("Base", self.getBaseType());
-                me.put("Configuration", self.getConfiguration());
+                me.put("Properties", self.getProperties());
                 List<Object> children = new ArrayList<Object>();
                 for (Iterator it = self.getChildren().iterator(); it.hasNext();) {
                     RobotComponent child = (RobotComponent) it.next();
@@ -288,7 +288,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                 self.setRobotTree(robot);
                 self.setName((String) details.get("Name"));
                 self.setBaseType((String) details.get("Base"));
-                self.setConfiguration((Map<String, String>) details.get("Configuration"));
+                self.setProperties((Map<String, Property>) details.get("Configuration"));
                 for (Object childDescription : (List) details.get("Children")) {
                     RobotComponent child = new RobotComponent();
                     child.visit(this, (Map<String, Object>) childDescription);
@@ -304,12 +304,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         ((RobotComponent) treeModel.getRoot()).walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) {
-                for (String property : self.getBase().getPropertiesKeys()) {
-                    String validatorName = self.getBase().getProperty(property).getValidator();
-                    Validator validator = robot.getValidator(validatorName);
-                    if (validator != null) {
-                        validator.update(self, property, self.getProperty(property));
-                    }
+                for (Property property : self.getProperties().values()) {
+                   property.update();
                 }
             }
         });
@@ -688,16 +684,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		System.out.println("Data: " + data);
 		PaletteComponent base = Palette.getInstance().getItem(data);
 		assert base != null; // TODO: Handle more gracefully
-                try {
-                    System.out.println("Creating Component...");
-                    newNode = new RobotComponent(getDefaultComponentName(base, ((RobotComponent) parentNode).getSubsystem()), base, robot, true);
-                    System.out.println("...Component Created");
-                } catch (InvalidException ex) {
-                    System.out.println("...Failed");
-                    JOptionPane.showMessageDialog(MainFrame.getInstance(),
-                            "All of the ports this component could use are taken.", "No more free ports.", JOptionPane.ERROR_MESSAGE);
-                    return false;
-                }
+                System.out.println("Creating Component...");
+                newNode = new RobotComponent(getDefaultComponentName(base, ((RobotComponent) parentNode).getSubsystem()), base, robot);
+                System.out.println("...Component Created");
 	    } else if (support.getTransferable().isDataFlavorSupported(ROBOT_COMPONENT_FLAVOR)) {
 		System.out.println("Moving a robot component");
 		try {

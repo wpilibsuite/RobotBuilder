@@ -18,10 +18,8 @@ public class RobotComponent extends DefaultMutableTreeNode {
     private String name;
     private PaletteComponent base;
     private RobotTree robot;
-    private Map<String, String> configuration = new HashMap<String, String>();
-
-    private Map<String, JComboBox> combos = new HashMap<String, JComboBox>();
-    private Map<String, JFileChooser> filechoosers = new HashMap<String, JFileChooser>();
+    private Map<String, Property> properties;
+    
 
     public RobotComponent() {
         super();
@@ -31,172 +29,27 @@ public class RobotComponent extends DefaultMutableTreeNode {
         super();
         this.name = name;
         this.base = base;
+        properties = new HashMap<String, Property>();
+        for (String propName : base.getPropertiesKeys()) {
+            properties.put(propName, base.getProperty(propName).copy());
+            properties.get(propName).setComponent(this);
+        }
         this.robot = robot;
         robot.addName(name);
     }
     
-    public RobotComponent(String name, PaletteComponent base, RobotTree robot, boolean autogenerate) throws InvalidException {
-        this(name, base, robot);
-        
-        if (autogenerate) {
-            // Initialize validation of the properties
-            for (String property : getBase().getPropertiesKeys()) {
-                System.out.println(property);
-                String validatorName = getBase().getProperty(property).getValidator();
-                System.out.println(validatorName);
-                Validator validator = robot.getValidator(validatorName);
-                System.out.println(validator);
-                if (validator != null) {
-                    if (validator instanceof UniqueValidator) {
-                        ((UniqueValidator) validator).setUnique(this, property);
-                    }
-                    validator.update(this, property, getProperty(property));
-                    System.out.println("Updated..");
-                }
-            }
-        }
-    }
-    
-    public String getProperty(String key) {
-        String val = configuration.get(key);
-        if (val == null) {
-            val = base.getProperty(key).getDefault();
-        }
-        return val;
+    public Property getProperty(String key) {
+        return properties.get(key);
     }
     
     public String[] getPropertyKeys() {
         return base.getPropertiesKeys().toArray(new String[0]);
     }
     
-    /**
-     * @return The value to render.
-     */
-    public Object getValue(String key) {
-        Property property = base.getProperty(key);
-        updateComboBoxes();
-        if (property.getChoices() != null) {
-            // Provide a JComboBox for choicse
-            if (combos.get(key) == null) {
-                combos.put(key, new JComboBox(property.getChoices()));
-                combos.get(key).setSelectedItem(getProperty(key));
-            }
-            return combos.get(key);
-        } else if (property.getType().equals("Boolean")) {
-            return getProperty(key).equals("true");
-        } else if (property.getType().equals("Double")) {
-            return Double.parseDouble(getProperty(key));
-        } else if (property.getType().equals("Integer")) {
-            return Integer.parseInt(getProperty(key));
-        } else if (property.getType().equals("Actuator") ||
-                property.getType().equals("Sensor") ||
-                property.getType().equals("Joystick") ||
-                property.getType().equals("Command") ||
-                property.getType().equals("Subsystem")) {
-            return combos.get(key);
-        } else if (property.getType().equals("File")) {
-            // Provide a file chooser for files
-            if (filechoosers.get(key) == null) {
-                JFileChooser fc = new JFileChooser();
-//                System.out.println("File: "+getProperty(key));
-                if (!getProperty(key).equals("")) {
-                    fc.setSelectedFile(new File(getProperty(key)));
-                }
-                fc.setSelectedFile(new File(getProperty(key)));
-                filechoosers.put(key, fc);
-            }
-            return filechoosers.get(key);
-        } else if (property.getType().equals("Folder")) {
-            // Provide a file chooser for folders
-            if (filechoosers.get(key) == null) {
-                JFileChooser fc = new JFileChooser();;
-//                System.out.println("Folder: "+getProperty(key));
-                if (!getProperty(key).equals("")) {
-                    fc.setSelectedFile(new File(getProperty(key)));
-                }
-                fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                filechoosers.put(key, fc);
-            }
-            return filechoosers.get(key);
-        } else {
-            return getProperty(key);
-        }
-    }
-
-    public void setValue(String key, String val) {
-        if (combos.get(key) != null) combos.get(key).setSelectedItem(val);
-        if(val != getProperty(key)){
-            System.out.println("Snapshot of "+this+" taken: tKey: "+key+"\tVal: "+val);
-            setProperty(key, val);
-            robot.takeSnapshot();
-        }
-
-//        System.out.println(key+" => "+val);
-    }
-    
-    public void updateComboBoxes() {
-        // Update list of actuators
-        for (String key : getBase().getPropertiesKeys()) {
-            Property property = base.getProperty(key);
-            if (property.getType().equals("Actuator") ||
-                    property.getType().equals("Sensor")) {
-                // Provide a JComboBox for this actuator or sensor
-                String old;
-                if (combos.get(key) != null) {
-                    old = (String) combos.get(key).getSelectedItem();
-                } else {
-                    old = getProperty(key);
-                }
-                final Vector<String> childrenNames = getChildrenOfTypeNames(property.getType());
-                JComboBox combo = new JComboBox(childrenNames);
-                combos.put(key, combo);
-                if (childrenNames.contains(old)) {
-                    combo.setSelectedItem(old);
-                } else if (!childrenNames.isEmpty()) {
-                    int defaultSelection = Integer.parseInt(getBase().getProperty(key).getDefault());
-                    if (defaultSelection < childrenNames.size()) {
-                        combo.setSelectedIndex(defaultSelection);
-                    }
-                    setProperty(key, (String) combo.getSelectedItem());
-                }
-            } else if (property.getType().equals("Joystick") ||
-                    property.getType().equals("Command") ||
-                    property.getType().equals("Subsystem")) {
-                String old;
-                if (combos.get(key) != null) {
-                    old = (String) combos.get(key).getSelectedItem();
-                } else {
-                    old = getProperty(key);
-                }
-                Vector<String> choices = null;
-                if (property.getType().equals("Joystick")) {
-                    choices = robot.getJoystickNames();
-                } else if (property.getType().equals("Command")) {
-                    choices = robot.getCommandNames();
-                    choices.add(0, "None");
-                } else if (property.getType().equals("Subsystem")) {
-                    choices = robot.getSubsystemNames();
-                    choices.add(0, "None");
-                }
-                JComboBox combo = new JComboBox(choices);
-                combos.put(key, combo);
-                if (choices.contains(old)) {
-                    combo.setSelectedItem(old);
-                } else if (!choices.isEmpty()) {
-                    int defaultSelection = Integer.parseInt(getBase().getProperty(key).getDefault());
-                    if (defaultSelection < choices.size()) {
-                        combo.setSelectedIndex(defaultSelection);
-                    }
-                    setProperty(key, (String) combo.getSelectedItem());
-                }
-            }
-        }
-    }
-    
     public boolean isValid() {
-        for (String propName : getPropertyKeys()) {
-            Validator validator = robot.getValidator(getBase().getProperty(propName).getValidator());
-            if (validator != null && !validator.isValid(this, propName)) {
+        for (Property property : properties.values()) {
+            property.update();
+            if (!property.isValid()) {
                 return false;
             }
         }
@@ -221,16 +74,16 @@ public class RobotComponent extends DefaultMutableTreeNode {
         return base;
     }
 
-    public void setProperty(String key, String val) {
-        configuration.put(key, val);
+    public void setProperty(String key, Object val) {
+        properties.get(key).setValue(val);
 //        System.out.println(key+" => "+val);
     }
     
-    public Map<String, String> getConfiguration() {
-        return configuration;
+    public Map<String, Property> getProperties() {
+        return properties;
     }
-    public void setConfiguration(Map<String, String> configuration) {
-        this.configuration = configuration;
+    public void setProperties(Map<String, Property> properties) {
+        this.properties = properties;
     }
     
     public Vector<DefaultMutableTreeNode> getChildren() {
@@ -322,5 +175,9 @@ public class RobotComponent extends DefaultMutableTreeNode {
 
     public void setRobotTree(RobotTree robot) {
         this.robot = robot;
+    }
+
+    RobotTree getRobotTree() {
+        return robot;
     }
 }

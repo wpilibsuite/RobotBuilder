@@ -5,6 +5,8 @@
 package robotbuilder.data;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,7 +15,7 @@ import java.util.*;
 public class UniqueValidator implements Validator {
     private String name;
     LinkedList<String> fields;
-    Map<Map<String, String>, String> claims = new HashMap<Map<String,String>, String>();
+    Map<Map<String, Object>, String> claims = new HashMap<Map<String,Object>, String>();
     
     public UniqueValidator() {}
 
@@ -23,13 +25,13 @@ public class UniqueValidator implements Validator {
     }
 
     @Override
-    public boolean isValid(RobotComponent component, String property) {
-        String prefix = getPrefix(property);
+    public boolean isValid(RobotComponent component, Property property) {
+        String prefix = getPrefix(property.getName());
         return claims.containsValue(component.toString()+"-"+prefix);
     }
 
     @Override
-    public void update(RobotComponent component, String property, String value) {
+    public void update(RobotComponent component, String property, Object value) {
         try {
             release(component, getPrefix(property));
             claim(property, value, component);
@@ -37,8 +39,8 @@ public class UniqueValidator implements Validator {
     }
 
     @Override
-    public String getError(RobotComponent component, String property) {
-        String claimant = claims.get(getMap(component, getPrefix(property)));
+    public String getError(RobotComponent component, Property property) {
+        String claimant = claims.get(getMap(component, getPrefix(property.getName())));
         return "This port is in use by "+claimant+" please change this to an unused port.";
     }
     
@@ -66,15 +68,12 @@ public class UniqueValidator implements Validator {
         return null;
     }
     
-    private Map<String, String> getMap(RobotComponent comp, String prefix) {
-        Map<String, String> values = new HashMap<String, String>();
+    private Map<String, Object> getMap(RobotComponent comp, String prefix) {
+        Map<String, Object> values = new HashMap<String, Object>();
         for (String prop : comp.getPropertyKeys()) {
-            String validatorName = comp.getBase().getProperty(prop).getValidator();
-            if (validatorName != null && validatorName.equals(name)) {
-                for (String field : fields) {
-                    if (prop.endsWith(field) && prop.startsWith(prefix)) {
-                        values.put(field, comp.getProperty(prop));
-                    }
+            for (String field : fields) {
+                if (prop.endsWith(field) && prop.startsWith(prefix)) {
+                    values.put(field, comp.getProperty(prop).getValue());
                 }
             }
         }
@@ -88,10 +87,10 @@ public class UniqueValidator implements Validator {
      * @param comp The component making the claim.
      * @throws robotbuilder.data.UniqueValidator.InvalidException 
      */
-    private void claim(String key, String val, RobotComponent comp) throws InvalidException {
+    private void claim(String key, Object val, RobotComponent comp) throws InvalidException {
         // Get the prefix
         String prefix = getPrefix(key);
-        Map<String, String> values = getMap(comp, prefix);
+        Map<String, Object> values = getMap(comp, prefix);
         for (String field : fields) {
             if (key.endsWith(field)) {
                 values.put(field, val);
@@ -112,7 +111,7 @@ public class UniqueValidator implements Validator {
      */
     private void release(RobotComponent comp, String prefix) {
         if (hasClaim(comp, prefix)) {
-            Map<String, String> values = getMap(comp, prefix);
+            Map<String, Object> values = getMap(comp, prefix);
             claims.remove(values);
         }
     }
@@ -123,21 +122,27 @@ public class UniqueValidator implements Validator {
      * @param property
      * @throws robotbuilder.data.UniqueValidator.InvalidException 
      */
-    public void setUnique(RobotComponent component, String property) throws InvalidException {
+    public void setUnique(RobotComponent component, String property) {
         String prefix = getPrefix(property);
         if (!hasClaim(component, prefix)) {
             Map<String, String[]> choices = new HashMap<String, String[]>();
             for (String field : fields) {
                 choices.put(field,
-                        component.getBase().getProperty(prefix+field).getChoices());
+                        ((DefaultProperty) component.getBase().getProperty(prefix+field)).getChoices());
             }
-            Map<String, String> selection = getFree(choices);
+            Map<String, String> selection;
+            try {
+                selection = getFree(choices);
+            } catch (InvalidException ex) {
+                Logger.getLogger(UniqueValidator.class.getName()).log(Level.SEVERE, null, ex);
+                return;
+            }
             for (String prop : selection.keySet()) {
                 System.out.println("\t"+prefix+prop+" => "+selection.get(prop));
                 component.setProperty(prefix+prop, selection.get(prop));
             }
             
-            update(component, property, component.getProperty(property));
+            update(component, property, component.getProperty(property).getValue());
 //            claims.put(selection, component.toString()+"-"+prefix);
         }
     }

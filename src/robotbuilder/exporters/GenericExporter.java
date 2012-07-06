@@ -79,7 +79,7 @@ public class GenericExporter {
         // Check that all necessary properties are filled in.
         RobotComponent robot = robotTree.getRoot();
         for (String prop : requires) {
-            String state = robot.getProperty(prop);
+            String state = robot.getProperty(prop).getValue().toString();
             if (state == null || state.equals("") || state.equals("None")) {
                 JOptionPane.showMessageDialog(MainFrame.getInstance(),
                                 "You need to fill in the '"+prop+"' property of your robot for this export to work.",
@@ -244,25 +244,24 @@ public class GenericExporter {
     
     
     // TODO: make macro
-    public Map<Integer, String> filterComponents(final String moduleFilter, final String portFilter, final int module, RobotComponent robot) {
-        final Map<Integer, String> mapping = new HashMap<Integer, String>();
+    public Map<String, String> filterComponents(final String moduleFilter, final String portFilter, final String module, RobotComponent robot) {
+        final Map<String, String> mapping = new HashMap<String, String>();
         robot.walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) {
-                Map<String, Integer> modules = new HashMap<String, Integer>();
-                Map<String, Integer> ports = new HashMap<String, Integer>();
+                Map<String, String> modules = new HashMap<String, String>();
+                Map<String, String> ports = new HashMap<String, String>();
                 for (String property : self.getPropertyKeys()) {
                     if (property.endsWith(moduleFilter)) {
                         String key = property.replace(moduleFilter, "");
-                        modules.put(key, Integer.parseInt(self.getProperty(property)));
+                        modules.put(key, self.getProperty(property).getValue().toString());
                     } else if (property.endsWith(portFilter)) {
                         String key = property.replace(portFilter, "");
-                        ports.put(key, Integer.parseInt(self.getProperty(property)));
+                        ports.put(key, self.getProperty(property).getValue().toString());
                     }
                 }
-                for (Iterator i = ports.keySet().iterator(); i.hasNext();) {
-                    String key = (String) i.next();
-                    if (module == modules.get(key)) {
+                for (String key : ports.keySet()) {
+                    if (module.equals(modules.get(key))) {
                         mapping.put(ports.get(key), self.getName()+" "+key);
                     }
                 }

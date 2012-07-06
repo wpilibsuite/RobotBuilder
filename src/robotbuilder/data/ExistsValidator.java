@@ -14,32 +14,32 @@ import java.util.List;
 public class ExistsValidator implements Validator {
     private String name;
     /** Values to ignore, they do not count as valid values */
-    List<String> ignore;
+    List<Object> ignore;
     
     public ExistsValidator() {}
 
-    ExistsValidator(String name, List<String> ignore) {
+    ExistsValidator(String name, List<Object> ignore) {
         this.name = name;
         this.ignore = ignore;
     }
 
     @Override
-    public void update(RobotComponent component, String property, String value) {}
+    public void update(RobotComponent component, String property, Object value) {}
 
     @Override
-    public boolean isValid(RobotComponent component, String property) {
-        return !ignore.contains(component.getProperty(property));
+    public boolean isValid(RobotComponent component, Property property) {
+        return !ignore.contains(property.getValue());
     }
 
     @Override
-    public String getError(RobotComponent component, String property) {
+    public String getError(RobotComponent component, Property property) {
         return "You need to set this value.";
     }
 
-    public List<String> getIgnore() {
+    public List<Object> getIgnore() {
         return ignore;
     }
-    public void setIgnore(List<String> ignore) {
+    public void setIgnore(List<Object> ignore) {
         this.ignore = ignore;
     }
 

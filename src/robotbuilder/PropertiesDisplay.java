@@ -10,6 +10,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import robotbuilder.data.Property;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.Validator;
 
@@ -73,11 +74,10 @@ class PropertiesDisplay extends JPanel {
                     public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                         JLabel label = new JLabel(value.toString());
                         if (row == 0) { return label; }
-                        String validatorName = currentComponent.getBase().getProperty(keys[row-1]).getValidator();
-                        Validator validator = robot.getValidator(validatorName);
-                        if (validator != null && !validator.isValid(currentComponent, keys[row-1])) {
+                        Property property = currentComponent.getProperty(keys[row-1]);
+                        if (property.isValid()) {
                             label.setForeground(Color.red);
-                            label.setToolTipText(validator.getError(currentComponent, keys[row-1]));
+                            label.setToolTipText(property.getError(currentComponent));
                         } else {
                             label.setForeground(Color.black);
                         }
@@ -154,7 +154,7 @@ class PropertiesDisplay extends JPanel {
                 if (row == 0)
                     return currentComponent.getName();
                 else
-                    return currentComponent.getValue(keys[row-1]);
+                    return currentComponent.getProperty(keys[row-1]).getDisplayValue();
             }
 	}
         
@@ -180,15 +180,7 @@ class PropertiesDisplay extends JPanel {
                 }
             } else {
                 final String key = keys[row-1];
-                String validatorName = currentComponent.getBase().getProperty(key).getValidator();
-                if (validatorName != null && !"".equals(validatorName)) {
-                    Validator validator = robot.getValidator(validatorName);
-                    if (validator != null) {
-                        validator.update(currentComponent, key, val.toString());
-                    }
-                }
-                System.out.println("\tAssigning..");
-                currentComponent.setValue(key, val.toString());
+                currentComponent.getProperty(key).setValue(val);
             }
             robot.update();
         }

@@ -66,13 +66,13 @@
             name: $Name Module (Analog)
             type: Module (Analog)
             choices: ["1", "2"]
-            validator: AnalogInput
+            validators: [AnalogInput]
             default: "1"
           - !Property
             name: $Name Channel (Analog)
             type: Channel (Analog)
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
-            validator: AnalogInput
+            validators: [AnalogInput]
             default: "1"
 #end
 #macro( DigitalChannel $Name )
@@ -80,12 +80,12 @@
             name: $Name Module (Digital)
             type: Module (Digital)
             choices: ["1", "2"]
-            validator: DigitalChannel
+            validators: [DigitalChannel]
             default: "1"
           - !Property
             name: $Name Channel (Digital)
             type: Channel (Digital)
-            validator: DigitalChannel
+            validators: [DigitalChannel]
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"]
             default: "1"
 #end
@@ -94,12 +94,12 @@
             name: $Name Module (Digital)
             type: Module (Digital)
             choices: ["1", "2"]
-            validator: PWMOutput
+            validators: [PWMOutput]
             default: "1"
           - !Property
             name: $Name Channel (PWM)
             type: Channel (PWM)
-            validator: PWMOutput
+            validators: [PWMOutput]
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
             default: "1"
 #end
@@ -108,12 +108,12 @@
             name: $Name Module (Digital)
             type: Module (Digital)
             choices: ["1", "2"]
-            validator: RelayOutput
+            validators: [RelayOutput]
             default: "1"
           - !Property
             name: $Name Channel (Relay)
             type: Channel (Relay)
-            validator: RelayOutput
+            validators: [RelayOutput]
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
             default: "1"
 #end
@@ -132,13 +132,13 @@
 - !Property
             name: $Name Module
             type: Module
-            validator: Solenoid
+            validators: [Solenoid]
             choices: ["1", "2"]
             default: "1"
           - !Property
             name: $Name Channel
             type: Channel
-            validator: Solenoid
+            validators: [Solenoid]
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
             default: "1"
 #end            
@@ -318,12 +318,12 @@ Palette:
           - !Property
             name: Input
             type: Sensor
-            validator: DropdownSelected
+            validators: [DropdownSelected]
             default: "0"
           - !Property
             name: Output
             type: Actuator
-            validator: DropdownSelected
+            validators: [DropdownSelected]
             default: "0"
           - !Property
             name: P
@@ -382,7 +382,7 @@ Palette:
           - !Property
             name: Left Motor
             type: Actuator
-            validator: DropdownSelected
+            validators: [DropdownSelected]
             default: "0"
           - !Property
             name: Left Motor Inverted
@@ -391,7 +391,7 @@ Palette:
           - !Property
             name: Right Motor
             type: Actuator
-            validator: DropdownSelected
+            validators: [DropdownSelected]
             default: "1"
           - !Property
             name: Right Motor Inverted
@@ -422,7 +422,7 @@ Palette:
           - !Property
             name: Left Front Motor
             type: Actuator
-            validator: DropdownSelected
+            validators: [DropdownSelected]
             default: "0"
           - !Property
             name: Left Front Motor Inverted
@@ -431,7 +431,7 @@ Palette:
           - !Property
             name: Left Rear Motor
             type: Actuator
-            validator: DropdownSelected
+            validators: [DropdownSelected]
             default: "1"
           - !Property
             name: Left Rear Motor Inverted
@@ -440,7 +440,7 @@ Palette:
           - !Property
             name: Right Front Motor
             type: Actuator
-            validator: DropdownSelected
+            validators: [DropdownSelected]
             default: "2"
           - !Property
             name: Right Front Motor Inverted
@@ -449,7 +449,7 @@ Palette:
           - !Property
             name: Right Rear Motor
             type: Actuator
-            validator: DropdownSelected
+            validators: [DropdownSelected]
             default: "3"
           - !Property
             name: Right Rear Motor Inverted
@@ -663,7 +663,7 @@ Palette:
             name: Number
             type: Integer
             choices: ["1", "2", "3", "4"]
-            validator: USB Port
+            validators: [USB Port]
             default: 1
       - !Component
         name: Joystick Button
