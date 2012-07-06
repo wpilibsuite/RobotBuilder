@@ -219,23 +219,25 @@ Instructions:
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
+    Construction: "#constant($Name) = new ${ClassName}(${Ping_Module_Digital}, ${Ping_Channel_Digital}, ${Echo_Module_Digital}, ${Echo_Channel_Digital});"
       
-  Victor:
-    Defaults: "PWMOutput,Component,None"
-    ClassName: "Victor"
   Jaguar:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Jaguar"
-  Relay:
+  Victor:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Relay"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
   Digital Output:
-    Defaults: "PWMOutput,Component,None"
+    Defaults: "Component,None"
     ClassName: "DigitalOutput"
-
+    Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_Digital});"
+  Relay:
+    Defaults: "Component,None"
+    ClassName: "Relay"
+    Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_Relay});"
 
   Compressor:
     Defaults: "Component,None"
