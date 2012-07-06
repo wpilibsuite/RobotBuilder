@@ -66,13 +66,12 @@ public class FileProperty extends Property {
     }
 
     @Override
-    public void setValue(Object value) {
+    public void _setValue(Object value) {
         if (extension != null && value != null
                 && !((String) value).endsWith("."+extension)) {
             value = ((String) value)+"."+extension;
         }
         System.out.println(name+" => "+value);
-        super.setValue(value);
         this.value = (String) value;
     }
 

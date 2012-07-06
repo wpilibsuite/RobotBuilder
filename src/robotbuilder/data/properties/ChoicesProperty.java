@@ -46,8 +46,7 @@ public class ChoicesProperty extends Property {
     }
 
     @Override
-    public void setValue(Object value) {
-        super.setValue(value);
+    public void _setValue(Object value) {
         this.value = value;
     }
     

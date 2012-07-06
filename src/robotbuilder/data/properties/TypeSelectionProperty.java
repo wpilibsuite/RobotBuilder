@@ -4,7 +4,6 @@
  */
 package robotbuilder.data.properties;
 
-import java.util.List;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import robotbuilder.data.RobotComponent;
@@ -44,8 +43,7 @@ public class TypeSelectionProperty extends Property {
     }
 
     @Override
-    public void setValue(Object value) {
-        super.setValue(value);
+    public void _setValue(Object value) {
         this.value = value;
     }
     
@@ -60,7 +58,7 @@ public class TypeSelectionProperty extends Property {
         if (options.contains(selection)) {
             combo.setSelectedItem(selection);
         }
-        value = combo.getSelectedItem();
+        value = combo.getSelectedItem() != null ? combo.getSelectedItem() : value;
         System.out.println("Value: "+value+"|"+combo.getSelectedIndex());
     }
     

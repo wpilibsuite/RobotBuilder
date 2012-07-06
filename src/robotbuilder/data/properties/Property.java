@@ -44,15 +44,23 @@ public abstract class Property {
     public abstract Object getValue();
     
     /**
-     * Must implement in subclasses!!!!
      * This is called to set the value of this property.
      * 
-     * @param value 
+     * @param value The previous value.
+     */
+    public abstract void _setValue(Object value);
+    
+    /**
+     * This is called to update changes and support undo.
+     * 
+     * @param prevValue The value.
      */
     public void setValue(Object value) {
+        Object prevValue = getValue();
+        _setValue(value);
         try {
             update();
-            if (!getValue().equals(value)) {
+            if (!prevValue.equals(value)) {
                 component.getRobotTree().takeSnapshot();
             }
         } catch (NullPointerException ex) {
