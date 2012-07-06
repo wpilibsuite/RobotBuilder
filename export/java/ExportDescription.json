@@ -12,13 +12,13 @@
 	    "Extra": ""
 	},
 	"AnalogInput": {
-	    "Construction": "${Name} = new ${ClassName}(${Input Module (Analog)}, ${Input Port (Analog)});"
+	    "Construction": "${Name} = new ${ClassName}(${Input Module (Analog)}, ${Input Channel (Analog)});"
 	},
 	"DigitalInput": {
-	    "Construction": "${Name} = new ${ClassName}(${Input Module (Digital)}, ${Input Port (Digital)});"
+	    "Construction": "${Name} = new ${ClassName}(${Input Module (Digital)}, ${Input Channel (Digital)});"
 	},
 	"PWMOutput": {
-	    "Construction": "${Name} = new ${ClassName}(${Output Module (Digital)}, ${Output Port (PWM)});"
+	    "Construction": "${Name} = new ${ClassName}(${Output Module (Digital)}, ${Output Channel (PWM)});"
 	}
     },
     "Palette": {
@@ -32,9 +32,10 @@
 	},
 	"PID Controller" : {
 	    "Defaults": ["All"],
-	    "ClassName": "PIDController",
+	    "ClassName": "SendablePIDController",
+	    "Import": "import edu.wpi.first.wpilibj.smartdashboard.*;",
 	    "Construction": "${Name} = new ${ClassName}(${P}, ${I}, ${D}, ${F}, ${Input}, ${Output}, ${Period});",
-	    "Extra": "${Name}.setContinuous(${Continuous});\n        if (${Limit Input}) ${Name}.setInputRange(${Minimum Input}, ${Maximum Input});\n        if (${Limit Output}) ${Name}.setInputRange(${Minimum Output}, ${Maximum Output});"
+	    "Extra": "${Name}.setContinuous(${Continuous});\n        if (${Limit Input}) ${Name}.setInputRange(${Minimum Input}, ${Maximum Input});\n        if (${Limit Output}) ${Name}.setInputRange(${Minimum Output}, ${Maximum Output});\n        if(${Send to SmartDashboard}) SmartDashboard.putData(\"${Name}\", ${Name});"
 	},
 	"Robot Drive 2" : {
 	    "Defaults": ["All"],
@@ -58,7 +59,7 @@
         "Quadrature Encoder" : {
 	    "Defaults": ["DigitalInput", "All"],
 	    "ClassName": "Encoder",
-	    "Construction": "${Name} = new ${ClassName}(${A Channel Module (Digital)}, ${A Channel Port (Digital)}, ${B Channel Module (Digital)}, ${B Channel Port (Digital)});"
+	    "Construction": "${Name} = new ${ClassName}(${Channel A Module (Digital)}, ${Channel A Channel (Digital)}, ${Channel B Module (Digital)}, ${Channel B Channel (Digital)});"
         },
         "Potentiometer" : {
 	    "Defaults": ["AnalogInput", "All"],

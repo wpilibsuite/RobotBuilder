@@ -107,6 +107,11 @@
 		"Help": "PIDControllers allow control of an actuator based off of feedback from a sensor.",
 		"Properties" : [
 		    {
+			"Name" : "Send to SmartDashboard",
+                        "Type" : "Boolean",
+			"Default" : "false"
+                    },
+		    {
 			"Name" : "Input",
                         "Type" : "Sensor",
 			"Default" : "0"
