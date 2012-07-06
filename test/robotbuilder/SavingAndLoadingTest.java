@@ -5,10 +5,9 @@
 package robotbuilder;
 
 import java.io.File;
+import static org.junit.Assert.assertEquals;
 import org.junit.*;
-import static org.junit.Assert.*;
 import robotbuilder.data.RobotComponent;
-import robotbuilder.data.RobotWalker;
 
 /**
  *
@@ -39,6 +38,7 @@ public class SavingAndLoadingTest {
     @Test
     public void saveAndLoadANewFile() {
         RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
+        tree.isRobotValid();
         RobotComponent before = tree.getRoot();
         tree.save("test/save.yaml");
         tree.load(new File("test/save.yaml"));
@@ -47,5 +47,15 @@ public class SavingAndLoadingTest {
                 before, after);
     }
     
-    // TODO: Test a more complicated robot.
+    @Test
+    public void saveAndLoadFullRobot() {
+        RobotTree tree = TestUtils.generateTestTree();
+        tree.isRobotValid();
+        RobotComponent before = tree.getRoot();
+        tree.save("test/save.yaml");
+        tree.load(new File("test/save.yaml"));
+        RobotComponent after = tree.getRoot();
+        assertEquals("Loaded file should be identical to the saved file.",
+                before, after);
+    }
 }
