@@ -154,7 +154,8 @@ class PropertiesDisplay extends JPanel {
             if (row == 0) {
                 String subsystem = currentComponent.getSubsystem();
                 String name = (String) val;
-                if (!robot.hasName(subsystem+name)) {
+                if (!robot.hasName(subsystem+name) || 
+                        (subsystem+name).equals(currentComponent.getFullName())) {
                     robot.removeName(currentComponent.getFullName());
                     currentComponent.setName(name);
                     robot.addName(subsystem+name);
