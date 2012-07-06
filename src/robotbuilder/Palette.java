@@ -24,7 +24,9 @@ import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import robotbuilder.data.*;
+import robotbuilder.data.properties.BooleanProperty;
 import robotbuilder.data.properties.ChoicesProperty;
+import robotbuilder.data.properties.DoubleProperty;
 
 /**
  * The Palette is the set of components that can be used to create the robot
@@ -55,6 +57,8 @@ public class Palette extends JPanel implements TreeSelectionListener {
         constructor.addTypeDescription(new TypeDescription(PaletteComponent.class, "!Component"));
         constructor.addTypeDescription(new TypeDescription(DefaultProperty.class, "!Property"));
         constructor.addTypeDescription(new TypeDescription(ChoicesProperty.class, "!ChoicesProperty"));
+        constructor.addTypeDescription(new TypeDescription(BooleanProperty.class, "!BooleanProperty"));
+        constructor.addTypeDescription(new TypeDescription(DoubleProperty.class, "!DoubleProperty"));
         constructor.addTypeDescription(new TypeDescription(ExistsValidator.class, "!ExistsValidator"));
         constructor.addTypeDescription(new TypeDescription(UniqueValidator.class, "!UniqueValidator"));
         Yaml yaml = new Yaml(constructor);

@@ -50,13 +50,7 @@ public class DefaultProperty extends Property {
     @Override
     public Object getDisplayValue() {
         update();
-        if (getType().equals("Boolean")) {
-            return getValue().equals("true");
-        } else if (getType().equals("Double")) {
-            return Double.parseDouble(getValue().toString());
-        } else if (getType().equals("Integer")) {
-            return Integer.parseInt(getValue().toString());
-        } else if (getType().equals("Actuator") ||
+        if (getType().equals("Actuator") ||
                 getType().equals("Sensor") ||
                 getType().equals("Joystick") ||
                 getType().equals("Command") ||

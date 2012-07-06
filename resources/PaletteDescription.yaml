@@ -180,14 +180,12 @@ Palette:
             name: Java Package
             type: String
             default: ""
-          - !Property
+          - !BooleanProperty
             name: Export Subsystems
-            type: Boolean
-            default: "true"
-          - !Property
+            default: true
+          - !BooleanProperty
             name: Export Commands
-            type: Boolean
-            default: "true"
+            default: true
           - !Property
             name: Wiring File
             type: File
@@ -300,10 +298,9 @@ Palette:
         supports: {Sensor: 1, Actuator: 1}
         help: PIDControllers allow control of an actuator based off of feedback from a sensor.
         properties:
-          - !Property
+          - !BooleanProperty
             name: Send to SmartDashboard
-            type: Boolean
-            default: "false"
+            default: false
           - !Property
             name: Input
             type: Sensor
@@ -314,54 +311,42 @@ Palette:
             type: Actuator
             validators: [DropdownSelected]
             default: "0"
-          - !Property
+          - !DoubleProperty
             name: P
-            type: Double
-            default: "1"
-          - !Property
+            default: 1
+          - !DoubleProperty
             name: I
-            type: Double
-            default: "0"
-          - !Property
+            default: 0
+          - !DoubleProperty
             name: D
-            type: Double
-            default: "0"
-          - !Property
+            default: 0
+          - !DoubleProperty
             name: F
-            type: Double
-            default: "0"
-          - !Property
+            default: 0
+          - !DoubleProperty
             name: Period
-            type: Integer
-            default: "50"
-          - !Property
+            default: 50
+          - !BooleanProperty
             name: Continuous
-            type: Boolean
-            default: "false"
-          - !Property
+            default: false
+          - !BooleanProperty
             name: Limit Input
-            type: Boolean
-            default: "false"
-          - !Property
+            default: false
+          - !DoubleProperty
             name: Minimum Input
-            type: Double
-            default: "0"
-          - !Property
+            default: 0
+          - !DoubleProperty
             name: Maximum Input
-            type: Double
-            default: "5"
-          - !Property
+            default: 5
+          - !BooleanProperty
             name: Limit Output
-            type: Boolean
-            default: "false"
-          - !Property
+            default: false
+          - !DoubleProperty
             name: Minimum Output
-            type: Double
-            default: "-1"
-          - !Property
+            default: -1
+          - !DoubleProperty
             name: Maximum Output
-            type: Double
-            default: "1"
+            default: 1
       - !Component
         name: Robot Drive 2
         type: Controller
@@ -373,35 +358,29 @@ Palette:
             type: Actuator
             validators: [DropdownSelected]
             default: "0"
-          - !Property
+          - !BooleanProperty
             name: Left Motor Inverted
-            type: Boolean
-            default: "false"
+            default: false
           - !Property
             name: Right Motor
             type: Actuator
             validators: [DropdownSelected]
             default: "1"
-          - !Property
+          - !BooleanProperty
             name: Right Motor Inverted
-            type: Boolean
-            default: "false"
-          - !Property
+            default: false
+          - !DoubleProperty
             name: Sensitivity
-            type: Double
-            default: "0.5"
-          - !Property
+            default: 0.5
+          - !DoubleProperty
             name: Maximum Output
-            type: Double
-            default: "1"
-          - !Property
+            default: 1
+          - !BooleanProperty
             name: Safety Enabled
-            type: Boolean
-            default: "true"
-          - !Property
+            default: true
+          - !DoubleProperty
             name: Safety Expiration Time
-            type: Double
-            default: ".1"
+            default: .1
       - !Component
         name: Robot Drive 4
         type: Controller
@@ -413,53 +392,45 @@ Palette:
             type: Actuator
             validators: [DropdownSelected]
             default: "0"
-          - !Property
+          - !BooleanProperty
             name: Left Front Motor Inverted
-            type: Boolean
-            default: "false"
+            default: false
           - !Property
             name: Left Rear Motor
             type: Actuator
             validators: [DropdownSelected]
             default: "1"
-          - !Property
+          - !BooleanProperty
             name: Left Rear Motor Inverted
-            type: Boolean
-            default: "false"
+            default: false
           - !Property
             name: Right Front Motor
             type: Actuator
             validators: [DropdownSelected]
             default: "2"
-          - !Property
+          - !BooleanProperty
             name: Right Front Motor Inverted
-            type: Boolean
-            default: "false"
+            default: false
           - !Property
             name: Right Rear Motor
             type: Actuator
             validators: [DropdownSelected]
             default: "3"
-          - !Property
+          - !BooleanProperty
             name: Right Rear Motor Inverted
-            type: Boolean
-            default: "false"
-          - !Property
+            default: false
+          - !DoubleProperty
             name: Sensitivity
-            type: Double
-            default: "0.5"
-          - !Property
+            default: 0.5
+          - !DoubleProperty
             name: Maximum Output
-            type: Double
-            default: "1"
-          - !Property
+            default: 1
+          - !BooleanProperty
             name: Safety Enabled
-            type: Boolean
-            default: "true"
-          - !Property
+            default: true
+          - !DoubleProperty
             name: Safety Expiration Time
-            type: Double
-            default: ".1"
+            default: .1
 
   - Sensors:
       - !Component
@@ -468,24 +439,21 @@ Palette:
         help: An analog angular rate sensor.
         properties:
           #AnalogInput("Input")
-          - !Property
+          - !DoubleProperty
             name: Sensitivity
-            type: Double
-            default: "1.25"
+            default: 1.25
       - !Component
         name: Accelerometer
         type: Sensor
         help: An analog acceleration sensor.
         properties:
           #AnalogInput("Input")
-          - !Property
+          - !DoubleProperty
             name: Volts Per G
-            type: Double
             default: "1"
-          - !Property
+          - !DoubleProperty
             name: Zero G Volts
-            type: Double
-            default: "2.5"
+            default: 2.5
       - !Component
         name: Quadrature Encoder
         type: Sensor
@@ -493,18 +461,16 @@ Palette:
         properties:
           #DigitalChannel("Channel A")
           #DigitalChannel("Channel B")
-          - !Property
+          - !BooleanProperty
             name: Reverse Direction
-            type: Boolean
-            default: "false"
+            default: false
           - !ChoicesProperty
             name: Encoding Type
             choices: [k4X, k2X, k1X]
             default: "k4X"
-          - !Property
+          - !DoubleProperty
             name: Distance Per Pulse
-            type: Double
-            default: "1"
+            default: 1
           - !ChoicesProperty
             name: PID Source
             choices: [kDistance, kRate]
@@ -517,14 +483,12 @@ Palette:
           #DigitalChannel("Channel A")
           #DigitalChannel("Channel B")
           #DigitalChannel("Index")
-          - !Property
+          - !BooleanProperty
             name: Reverse Direction
-            type: Boolean
-            default: "false"
-          - !Property
+            default: false
+          - !DoubleProperty
             name: Distance Per Pulse
-            type: Double
-            default: "1"
+            default: 1
           - !ChoicesProperty
             name: PID Source
             choices: [kDistance, kRate]
@@ -535,10 +499,9 @@ Palette:
         help: A sensor that counts the number of gear teeth that go by.
         properties:
           #DigitalChannel("Input")
-          - !Property
+          - !BooleanProperty
             name: Direction Sensitive
-            type: Boolean
-            default: "false"
+            default: false
       - !Component
         name: Potentiometer
         type: Sensor
