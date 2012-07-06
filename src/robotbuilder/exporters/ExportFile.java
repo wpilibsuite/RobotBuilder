@@ -40,7 +40,7 @@ class ExportFile extends File {
             }
         }
         
-        backup(exporter); // Create a backup for the user!
+        if (this.exists()) backup(exporter); // Create a backup for the user!
         
         // Export
         if (!this.exists() || update.equals("Overwrite")) {
