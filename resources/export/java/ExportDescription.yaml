@@ -271,8 +271,8 @@ Instructions:
     ClassName: "JoystickButton"
     Construction: "#variable($Name) = new ${ClassName}(#variable($Joystick), ${Button});"
   Kinect Joystick:
-    Defaults: "OI, None"
-    ClassName: "Joystick"
+    Defaults: "OI,None"
+    ClassName: "KinectStick"
     Construction: "#variable($Name) = new ${ClassName}(${Number});"
   Analog Button:
     Defaults: "Button,OI,None"
