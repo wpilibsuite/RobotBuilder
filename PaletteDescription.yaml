@@ -1,62 +1,57 @@
-Macros:
-  $AnalogInput:
-    - !Expansion
-      name: Module (Analog)
-      type: Module (Analog)
-      choices: ["1", "2"]
-      validator: AnalogInput
-      default: Default Module
-      defaultDefault: "1"
-    - !Expansion
-      name: Channel (Analog)
-      type: Channel (Analog)
-      choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
-      validator: AnalogInput
-      default: Default Channel
-      defaultDefault: "1"
-  $DigitalInput:
-    - !Expansion
-      name: Module (Digital)
-      type: Module (Digital)
-      choices: ["1", "2"]
-      validator: DigitalInput
-      default: Default Module
-      defaultDefault: "1"
-    - !Expansion
-      name: Channel (Digital)
-      type: Channel (Digital)
-      validator: DigitalInput
-      choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"]
-      default: Default Channel
-      defaultDefault: "1"
-  $PWMOutput:
-    - !Expansion
-      name: Module (Digital)
-      type: Module (Digital)
-      choices: ["1", "2"]
-      validator: PWMOutput
-      default: Default Module
-      defaultDefault: "1"
-    - !Expansion
-      name: Channel (PWM)
-      type: Channel (PWM)
-      validator: PWMOutput
-      choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-      default: Default Channel
-      defaultDefault: "1"
-  $Button:
-    - !Expansion
-      name: Command
-      type: Command
-      default: Default Command
-      defaultDefault: "1"
-    - !Expansion
-      name: When to Run
-      type: String
-      choices: [whileHeld, whenPressed, whenReleased]
-      default: Default Run Time
-      default: Default Run Time
-      defaultDefault: whileHeld
+## Macros:
+#macro( AnalogInput $Name )
+- !Property
+            name: $Name Module (Analog)
+            type: Module (Analog)
+            choices: ["1", "2"]
+            validator: AnalogInput
+            default: "1"
+          - !Property
+            name: $Name Channel (Analog)
+            type: Channel (Analog)
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+            validator: AnalogInput
+            default: "1"
+#end
+#macro( DigitalInput $Name )
+- !Property
+            name: $Name Module (Digital)
+            type: Module (Digital)
+            choices: ["1", "2"]
+            validator: DigitalInput
+            default: "1"
+          - !Property
+            name: $Name Channel (Digital)
+            type: Channel (Digital)
+            validator: DigitalInput
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"]
+            default: "1"
+#end
+#macro( PWMOutput $Name )          
+- !Property
+            name: $Name Module (Digital)
+            type: Module (Digital)
+            choices: ["1", "2"]
+            validator: PWMOutput
+            default: "1"
+          - !Property
+            name: $Name Channel (PWM)
+            type: Channel (PWM)
+            validator: PWMOutput
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+            default: "1"
+#end
+#macro( Button $Name )
+- !Property
+            name: $Name Command
+            type: Command
+            default: "None"
+          - !Property
+            name: $Name When to Run
+            type: String
+            choices: [whileHeld, whenPressed, whenReleased]
+            default: whileHeld
+#end
 
 Validators:
   - !Validator
@@ -301,9 +296,7 @@ Palette:
         type: Sensor
         help: An analog angular rate sensor.
         properties:
-          - !Property
-            name: Input
-            type: $AnalogInput
+          #AnalogInput("Input")
           - !Property
             name: Sensitivity
             type: Double
@@ -313,9 +306,7 @@ Palette:
         type: Sensor
         help: An analog acceleration sensor.
         properties:
-          - !Property
-            name: Input
-            type: $AnalogInput
+          #AnalogInput("Input")
           - !Property
             name: Volts Per G
             type: Double
@@ -329,20 +320,16 @@ Palette:
         type: Sensor
         help: A digital sensor that can be used to calculate the speed and distance rotated.
         properties:
-          - !Property
-            name: Channel A
-            type: $DigitalInput
-          - !Property
-            name: Channel B
-            type: $DigitalInput
-          # Add a seperate indexed encoder?
-          # - !Property
-          #   name: Has Index
-          #   type: Boolean
-          #   default: "false"
-          # - !Property
-          #   name: Index
-          #   type: $DigitalInput
+          #DigitalInput("Channel A")
+          #DigitalInput("Channel B")
+## Add a seperate indexed encoder?
+## - !Property
+##   name: Has Index
+##   type: Boolean
+##   default: "false"
+## - !Property
+##   name: Index
+##   type: $DigitalInput
           - !Property
             name: Reverse Direction
             type: Boolean
@@ -361,27 +348,23 @@ Palette:
             type: String
             choices: [kDistance, kRate]
             default: "kRate"
-          # Which one should we choose
-          # - !Property
-          #   name: Maximum Period (Min Rate??)
-          #   type: Double
-          #   default: "0"
+## Which one should we choose
+## - !Property
+##   name: Maximum Period (Min Rate??)
+##   type: Double
+##   default: "0"
       - !Component
         name: Potentiometer
         type: Sensor
         help: An rotational analog sensor that can be used to determine the position of an axel.
         properties:
-          - !Property
-            name: Input
-            type: $AnalogInput
+          #AnalogInput("Input")
       - !Component
         name: Limit Switch
         type: Sensor
         help: A digital sensor that can be used to detect presses.
         properties:
-          - !Property
-            name: Input
-            type: $DigitalInput
+          #AnalogInput("Input")
 
   - Actuators:
       - !Component
@@ -389,17 +372,13 @@ Palette:
         type: Actuator
         help: A PWM speed controller that allows you to set the speed of a motor.
         properties:
-          - !Property
-            name: Output
-            type: $PWMOutput
+          #PWMOutput("Output")
       - !Component
         name: Jaguar
         type: Actuator
         help: A PWM speed controller that allows you to set the speed of a motor.
         properties:
-          - !Property
-            name: Output
-            type: $PWMOutput
+          #PWMOutput("Output")
 
   - OI:
       - !Component
@@ -427,9 +406,7 @@ Palette:
             type: Integer
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
             default: "1"
-          - !Property
-            name: ""
-            type: $Button
+          #Button("")
 
   - Commands:
       - !Component

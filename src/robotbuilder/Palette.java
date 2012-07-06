@@ -6,27 +6,22 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
-import java.io.*;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.jar.JarFile;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import org.apache.velocity.app.VelocityEngine;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
-import org.yaml.snakeyaml.reader.StreamReader;
-import robotbuilder.data.Macro;
-import robotbuilder.data.Macro.Expansion;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.Property;
 import robotbuilder.data.Validator;
@@ -42,24 +37,28 @@ public class Palette extends JPanel implements TreeSelectionListener {
     
     private JTree paletteTree;
     static private Palette instance = null;
-    private Map<String, Macro> macros = new HashMap<String, Macro>();
     private Map<String, PaletteComponent> paletteItems = new HashMap<String, PaletteComponent>();
     private Map<String, Validator> validators = new HashMap<String, Validator>();
     
     private Palette() {
         InputStreamReader in;
         in = new InputStreamReader(this.getClass().getResourceAsStream("/PaletteDescription.yaml"));
+        
+        // Apply macros, if any
+        VelocityEngine ve = new VelocityEngine();
+        StringWriter writer = new StringWriter();
+        ve.evaluate(null, writer, "RobotBuilder:PaletteDescription.yaml", in);
+        
+        System.out.println(writer.toString());
 
         Constructor constructor = new Constructor();
-        constructor.addTypeDescription(new TypeDescription(Expansion.class, "!Expansion"));
         constructor.addTypeDescription(new TypeDescription(PaletteComponent.class, "!Component"));
         constructor.addTypeDescription(new TypeDescription(Property.class, "!Property"));
         constructor.addTypeDescription(new TypeDescription(Validator.class, "!Validator"));
         Yaml yaml = new Yaml(constructor);
-        Map<String, Object> description = (Map<String, Object>) yaml.load(in);
+        Map<String, Object> description = (Map<String, Object>) yaml.load(writer.toString());
         
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Palette");
-        generateMacros((Map<String, ArrayList<Expansion>>) description.get("Macros"));
         createPalette(root, (ArrayList<Map<String, ArrayList<PaletteComponent>>>) description.get("Palette"));
         loadValidators((ArrayList<Validator>) description.get("Validators"));
 
@@ -135,33 +134,9 @@ public class Palette extends JPanel implements TreeSelectionListener {
         System.out.println("\t"+component.getName());
         paletteItems.put(component.getName(), component);
         
-        // Macro expand the properties
-        List<Property> properties = new ArrayList<Property>();
-        for (Property property : component.getProperties()) {
-            if (macros.containsKey(property.getType())) {
-                properties.addAll(macros.get(property.getType()).expand(properties, property));
-            } else {
-                properties.add(property);
-            }
-        }
-        component.setProperties(properties);
-        
         if (root != null) {
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(component);
             root.add(node);
-        }
-    }
-
-    /**
-     * Generate a series of macros described in json.
-     * @param jsonObject 
-     */
-    private void generateMacros(Map<String, ArrayList<Expansion>> macrosToCreate) {
-        for (String macroName : macrosToCreate.keySet()) {
-            ArrayList<Expansion> expansions = macrosToCreate.get(macroName);
-            
-            Macro macro = new Macro(macroName, expansions);
-            macros.put(macroName, macro);
         }
     }
     
