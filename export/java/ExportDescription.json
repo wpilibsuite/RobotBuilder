@@ -2,7 +2,7 @@
     "Defaults": {
 	"Component": {
 	    "Export": "RobotMap",
-	    "Import": "import edu.wpi.first.wpilibj.${ClassName};",
+	    "Import": "import edu.wpi.first.wpilibj.*;",
 	    "Declaration": "public static ${ClassName} ${Name};",
 	    "Subsystem Export": "${ClassName} ${Short Name} = RobotMap.${Name};"
 	},
@@ -27,15 +27,16 @@
 	},
 	"OI": {
 	    "Export": "OI",
-	    "Import": "import edu.wpi.first.wpilibj.${ClassName};",
+	    "Import": "import edu.wpi.first.wpilibj.*;",
 	    "Declaration": "public ${ClassName} ${Name};"
 	},
 	"Button": {
-	    "Import": "import edu.wpi.first.wpilibj.buttons.${ClassName};",
+	    "Import": "import edu.wpi.first.wpilibj.buttons.*;",
 	    "Extra":  "${Name}.${When to Run}(new ${Command}());"
 	},
 	"Command": {
-	    "Export": "OI"
+	    "Export": "OI",
+	    "Import": "import ${package}.commands.*;"
 	}
     },
     "Palette": {
@@ -55,8 +56,8 @@
 	"Subsystem" : {
 	    "Defaults": ["None"],
 	    "Export": "CommandBase",
-	    "Import": "import ${package}.subsystems.${Class Name};",
-	    "Construction": "${Class Name} ${Short Name} = new ${Class Name}();"
+	    "Import": "import ${package}.subsystems.*;",
+	    "Construction": "public static ${Class Name} ${Short Name} = new ${Class Name}();"
 	},
 	
 	"PID Controller" : {

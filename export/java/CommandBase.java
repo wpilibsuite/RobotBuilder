@@ -1,9 +1,8 @@
 package ${package}.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import ${package}.OI;
-import ${package}.subsystems.ExampleSubsystem;
-${imports}
+import ${package}.*;
+import ${package}.subsystems.*;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.

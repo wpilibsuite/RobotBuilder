@@ -92,7 +92,7 @@ public class JavaExporter extends AbstractExporter {
             System.out.println("Doesn't exist, creating.");
             template = loadTemplate(COMMAND_BASE_TEMPLATE);
             template = substitute(template, "package", robot.getRoot().getProperty("Java Package"));
-            template = substitute(template, "imports", generateImports(robot.getRoot(), "CommandBase"));
+            //template = substitute(template, "imports", generateImports(robot.getRoot(), "CommandBase"));
             template = substitute(template, "constructors", generateConstructions(robot, "CommandBase"));
         }
         
@@ -291,7 +291,7 @@ public class JavaExporter extends AbstractExporter {
     }
     
     private String generateCommandRequires(RobotComponent command) {
-        return "        requires(CommandBase."+getShortName(command.getProperty("Requires"))+");";
+        return "        requires("+getShortName(command.getProperty("Requires"))+");";
     }
 
     private boolean hasRequires(RobotComponent command) {
