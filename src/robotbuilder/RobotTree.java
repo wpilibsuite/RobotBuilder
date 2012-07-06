@@ -8,6 +8,8 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.InputEvent;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -103,9 +105,14 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public void update() {
         treeModel.reload();
+        
+        for (int i = 0; i < tree.getRowCount(); i++) {
+            tree.expandRow(i);
+        }
     }
 
-    public static DataFlavor ROBOT_COMPONENT_FLAVOR = new DataFlavor(RobotComponent.class, "Robot Component Flavor");
+//    public static DataFlavor ROBOT_COMPONENT_FLAVOR = new DataFlavor(RobotComponent.class, "Robot Component Flavor");
+    public static DataFlavor ROBOT_COMPONENT_FLAVOR = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType +";class=\""+RobotComponent.class.getName() + "\"", "Robot Component Flavor");
     private RobotTree robot = this;
     /**
      * A transfer handler for that wraps the default transfer handler of RobotTree.
@@ -154,9 +161,11 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                     System.out.println("UnsupportedFlavor");
                     return false;
                 } catch (IOException e) {
+                    e.printStackTrace();
                     System.out.println("IOException");
                     return false;
                 }
+                System.out.println(data);
                 return target.supports(data);
             } else {
                 System.out.println("Unsupported flavor. The flavor you have chosen is no sufficiently delicious.");
@@ -184,7 +193,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
                 @Override
                 public Object getTransferData(DataFlavor df) throws UnsupportedFlavorException, IOException {
-                    return currentNode.getUserObject();
+                    System.out.println("Transfer: "+((JTree) c).getSelectionPath().getLastPathComponent());
+                    return ((JTree) c).getSelectionPath().getLastPathComponent();
+                    //return currentNode;
                 }
             };
         }
@@ -196,9 +207,16 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         
         @Override
         protected void exportDone(JComponent source, Transferable data, int action) {
-            System.out.println(source.getClass());
-            currentNode.removeFromParent();
-            ((DefaultTreeModel) tree.getModel()).reload();
+            System.out.println("Export ended for action: "+action);
+//            try {
+//                RobotComponent comp = ((RobotComponent) data.getTransferData(ROBOT_COMPONENT_FLAVOR));
+//                System.out.println(comp.getPath());
+//            } catch (UnsupportedFlavorException ex) {
+//                Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (IOException ex) {
+//                Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+            update();
         }
         
         @Override
@@ -261,9 +279,13 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             }
             System.out.println("newNode="+newNode);
             DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode)path.getLastPathComponent();
+            System.out.println("parentNode="+parentNode);
             treeModel.insertNodeInto(newNode, parentNode, childIndex);
+            System.out.println("childIndex="+childIndex);
             tree.makeVisible(path.pathByAddingChild(newNode));
+            System.out.print("--");
             tree.scrollRectToVisible(tree.getPathBounds(path.pathByAddingChild(newNode)));
+            System.out.println("--");
             return true;
             //return delegate.importData(support);
         }

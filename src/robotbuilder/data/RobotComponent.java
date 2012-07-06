@@ -3,7 +3,6 @@ package robotbuilder.data;
 
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.tree.DefaultMutableTreeNode;
