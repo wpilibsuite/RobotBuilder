@@ -4,21 +4,17 @@
  */
 package robotbuilder;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.TransferHandler;
 import robotbuilder.data.RobotComponent;
-import robotbuilder.data.RobotVisitor;
 import robotbuilder.data.RobotWalker;
 
 /**

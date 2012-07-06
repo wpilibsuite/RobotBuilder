@@ -549,7 +549,11 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		    return false;
 		}
 		System.out.println(data);
-                assert data != null;
+                Set<String> invalid = new HashSet();
+                invalid.add("Robot"); invalid.add("Subsystems");
+                invalid.add("OI"); invalid.add("Commands");
+                if (data == null) return false;
+                if (invalid.contains(data.getBase().getType())) return false;
 		return target.supports(data);
 	    } else {
 		System.out.println("Unsupported flavor. The flavor you have chosen is no sufficiently delicious.");
@@ -584,13 +588,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		public Object getTransferData(DataFlavor df) throws UnsupportedFlavorException, IOException {
                     System.out.print("Transfer data: "+data);
                     return data;
-                    //System.out.println("Tree: " + ((JTree) c));
-                    //System.out.println("Path: " + ((JTree) c).getSelectionPath());
-                    //if ((((JTree) c).getSelectionPath()) != null) {
-                    //    System.out.println("Transfer: " + ((JTree) c).getSelectionPath().getLastPathComponent());
-                    //    return ((JTree) c).getSelectionPath().getLastPathComponent();
-                    //} else return null;
-		    //return currentNode;
 		}
 	    };
 	}
@@ -603,14 +600,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	@Override
 	protected void exportDone(JComponent source, Transferable data, int action) {
 	    System.out.println("Export ended for action: " + action);
-//            try {
-//                RobotComponent comp = ((RobotComponent) data.getTransferData(ROBOT_COMPONENT_FLAVOR));
-//                System.out.println(comp.getPath());
-//            } catch (UnsupportedFlavorException ex) {
-//                Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (IOException ex) {
-//                Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
-//            }
 	    update();
 	}
 
