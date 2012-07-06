@@ -510,6 +510,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		    return false;
 		}
 		System.out.println(data);
+                assert data != null;
 		return target.supports(data);
 	    } else {
 		System.out.println("Unsupported flavor. The flavor you have chosen is no sufficiently delicious.");
@@ -522,7 +523,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    return new Transferable() {
 
 		DataFlavor[] flavors = {ROBOT_COMPONENT_FLAVOR};
-
+                
+                Object data = ((JTree) c).getSelectionPath().getLastPathComponent();
+                
 		@Override
 		public DataFlavor[] getTransferDataFlavors() {
 		    return flavors;
@@ -540,12 +543,14 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
 		@Override
 		public Object getTransferData(DataFlavor df) throws UnsupportedFlavorException, IOException {
-//                    System.out.println("Tree: " + ((JTree) c));
-//                    System.out.println("Path: " + ((JTree) c).getSelectionPath());
-                    if ((((JTree) c).getSelectionPath()) != null) {
-//                        System.out.println("Transfer: " + ((JTree) c).getSelectionPath().getLastPathComponent());
-                        return ((JTree) c).getSelectionPath().getLastPathComponent();
-                    } else return null;
+                    System.out.print("Transfer data: "+data);
+                    return data;
+                    //System.out.println("Tree: " + ((JTree) c));
+                    //System.out.println("Path: " + ((JTree) c).getSelectionPath());
+                    //if ((((JTree) c).getSelectionPath()) != null) {
+                    //    System.out.println("Transfer: " + ((JTree) c).getSelectionPath().getLastPathComponent());
+                    //    return ((JTree) c).getSelectionPath().getLastPathComponent();
+                    //} else return null;
 		    //return currentNode;
 		}
 	    };

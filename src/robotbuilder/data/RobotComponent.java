@@ -277,7 +277,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
      * @return Whether it can support adding another component of that type.
      */
     public boolean supports(RobotComponent data) {
-        return children.contains(data) || this.supports(data.getBase());
+        return (children != null && children.contains(data)) || this.supports(data.getBase());
     }
     
     public void walk(RobotWalker walker) {
