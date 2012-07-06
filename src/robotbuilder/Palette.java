@@ -61,6 +61,10 @@ public class Palette extends JPanel {
         paletteTree.setTransferHandler(new PaletteTransferHandler(paletteTree.getTransferHandler()));
         paletteTree.setDragEnabled(true);
         
+        for (int i = 0; i < paletteTree.getRowCount(); i++) {
+            paletteTree.expandRow(i);
+        }
+        
         add(paletteTree);
      }
     

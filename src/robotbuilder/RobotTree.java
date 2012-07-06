@@ -54,6 +54,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
         tree.setTransferHandler(new TreeTransferHandler(tree.getTransferHandler()));
         tree.setDragEnabled(true);
+        
+        for (int i = 0; i < tree.getRowCount(); i++) {
+            tree.expandRow(i);
+        }
     }
     
     /**
