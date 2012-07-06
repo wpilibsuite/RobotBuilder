@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.RobotComponent;
+import robotbuilder.data.RobotWalker;
 
 /**
  *
@@ -75,7 +76,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         String name;
         while (true) {
             i++;
-            name = componentType.toString() + " " + i;
+            name = componentType.toString().replaceAll(" ", "_") + "_" + i;
             if (!usedNames.contains(name)) {
                 usedNames.add(name);
                 return name;
@@ -155,6 +156,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
         }
         saved = true;
+    }
+    
+    public void walk(RobotWalker walker) {
+        ((RobotComponent) this.treeModel.getRoot()).walk(walker);
     }
     
     /**

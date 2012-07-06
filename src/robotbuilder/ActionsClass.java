@@ -16,7 +16,7 @@ public class ActionsClass {
     AbstractAction saveAsAction = new SaveAsAction();
     AbstractAction openAction;
     AbstractAction cppAction = new CppAction();
-    AbstractAction javaAction = new JavaAction();
+    AbstractAction javaAction;
     AbstractAction labViewAction = new LabViewAction();
     AbstractAction aboutAction = new AboutAction();
     AbstractAction wiringDiagramAction = new WiringDiagramAction();
@@ -24,6 +24,7 @@ public class ActionsClass {
     public ActionsClass(RobotTree robotTree) {
         saveAction = new SaveAction(robotTree);
         openAction = new OpenAction(robotTree);
+        javaAction = new JavaAction(robotTree);
     }
 
     public JMenuBar getMenuBar() {

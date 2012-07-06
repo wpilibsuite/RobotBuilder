@@ -176,12 +176,10 @@ public class Palette extends JPanel {
                 JSONObject values = props.getJSONObject(name);
                 Property prop = new Property(name, values.getString("Type"), values.optString("Default"));
                 JSONArray jsonchoices = values.optJSONArray("Choices");
-                System.out.println(jsonchoices);
                 String[] choices = null;
                 if (jsonchoices != null) {
                     choices = new String[jsonchoices.length()];
                     for (int j = 0; j < jsonchoices.length(); j++) {
-                        System.out.println(jsonchoices.get(j));
                         choices[j] = jsonchoices.getString(j);
                     }
                 }

@@ -3,6 +3,7 @@ package robotbuilder.data;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -31,9 +32,9 @@ public class RobotComponent extends DefaultMutableTreeNode {
         robot.addName(name);
     }
     
-    public Map<String, Property> getProperties() {
-        return base.getProperties();
-    }
+//    public Map<String, Property> getProperties() {
+//        return base.getProperties();
+//    }
     
     public String getProperty(String key) {
         String val = configuration.get(key);
@@ -41,6 +42,10 @@ public class RobotComponent extends DefaultMutableTreeNode {
             val = base.getProperties().get(key).getDefault();
         }
         return val;
+    }
+    
+    public String[] getPropertyKeys() {
+        return base.getProperties().keySet().toArray(new String[0]);
     }
     
     /**
@@ -158,5 +163,17 @@ public class RobotComponent extends DefaultMutableTreeNode {
             self.add(decodeFromJSON((JSONObject) child, robot));
         }
         return self;
+    }
+    
+    public void walk(RobotWalker walker) {
+        walker.handleRobotComponent(this);
+        for (Enumeration i = this.children(); i.hasMoreElements();) {
+            RobotComponent child = (RobotComponent) i.nextElement();
+            child.walk(walker);
+        }
+    }
+
+    public String getFullName() {
+        return name.toUpperCase();
     }
 }

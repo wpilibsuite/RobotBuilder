@@ -3,6 +3,7 @@ package robotbuilder;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.LinkedList;
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -30,8 +31,7 @@ class PropertiesDisplay extends JPanel {
 
     void setCurrentComponent(DefaultMutableTreeNode node) {
         currentComponent = (RobotComponent) node;
-        String[] type = {};
-        keys = currentComponent.getProperties().keySet().toArray(type);
+        keys = currentComponent.getPropertyKeys();
         this.updateUI();
     }
 
@@ -92,7 +92,7 @@ class PropertiesDisplay extends JPanel {
             if (currentComponent == null) {
                 return 0;
             } else {
-                return currentComponent.getProperties().size()+1;
+                return currentComponent.getPropertyKeys().length+1;
             }
 	}
 
@@ -108,7 +108,7 @@ class PropertiesDisplay extends JPanel {
                 if (row == 0)
                     return "Name";
                 else
-                    return currentComponent.getProperties().get(keys[row-1]).getName();
+                    return keys[row-1];
             } else {
                 if (row == 0)
                     return currentComponent.getName();

@@ -101,7 +101,7 @@
                     }
                 }
             },
-            "Quadrature encoder" : {
+            "Quadrature Encoder" : {
 		"Type": "Sensor",
                 "Properties" : {
                     "A Channel" : {

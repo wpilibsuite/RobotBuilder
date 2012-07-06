@@ -1,0 +1,68 @@
+{
+    "Defaults": {
+	"All": {
+	    "Import": "import edu.wpi.first.wpilibj.${ClassName};",
+	    "Declaration": "public static ${ClassName} ${Name};",
+	    "Extra": ""
+	},
+	"None": {
+	    "Import": "",
+	    "Declaration": "",
+	    "Construction": "",
+	    "Extra": ""
+	},
+	"AnalogInput": {
+	    "Construction": "${Name} = new ${ClassName}(${Input Module (Analog)}, ${Input Port (Analog)});"
+	},
+	"DigitalInput": {
+	    "Construction": "${Name} = new ${ClassName}(${Input Module (Digital)}, ${Input Port (Digital)});"
+	},
+	"PWMOutput": {
+	    "Construction": "${Name} = new ${ClassName}(${Input Module (Digital)}, ${Input Port (PWM)});"
+	}
+    },
+    "Palette": {
+	"Folder" : {
+	    "Defaults": ["None"],
+	    "ClassName": ""
+	},
+	"Subsystem" : {
+	    "Defaults": ["None"],
+	    "ClassName": ""
+	},
+	"PIDController" : {
+	    "Defaults": ["All"],
+	    "ClassName": "PIDController",
+	    "Construction": "// TODO: Construct ${Name};"
+	},
+        "Gyro" : {
+	    "Defaults": ["AnalogInput", "All"],
+	    "ClassName": "Gyro"
+        },
+        "Accelerometer" : {
+	    "Defaults": ["AnalogInput", "All"],
+	    "ClassName": "Accelerometer"
+        },
+        "Quadrature Encoder" : {
+	    "Defaults": ["DigitalInput", "All"],
+	    "ClassName": "Encoder",
+	    "Construction": "${Name} = new ${ClassName}(${A Channel Module (Digital)}, ${A Channel Port (Digital)}, ${B Channel Module (Digital)}, ${B Channel Port (Digital)});"
+        },
+        "Potentiometer" : {
+	    "Defaults": ["AnalogInput", "All"],
+	    "ClassName": "AnalogChannel"
+        },
+        "Limit switch" : {
+	    "Defaults": ["DigitalInput", "All"],
+	    "ClassName": "DigitalInput"
+        },
+        "Victor" : {
+	    "Defaults": ["PWMOutput", "All"],
+	    "ClassName": "Victor"
+        },
+        "Jaguar" : {
+	    "Defaults": ["PWMOutput", "All"],
+	    "ClassName": "Jaguar"
+        }
+    }
+}
