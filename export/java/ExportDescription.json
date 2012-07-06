@@ -120,6 +120,10 @@
 	"Command" : {
 	    "Defaults": ["Command", "None"],
 	    "Template": "Command.java"
+        },
+	"Command Group" : {
+	    "Defaults": ["Command", "None"],
+	    "Template": "CommandGroup.java"
         }
     }
 }

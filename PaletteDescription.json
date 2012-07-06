@@ -411,6 +411,14 @@
                 "Properties" : [
 
                 ]
+            },
+            {
+		"Name": "Command Group",
+		"Type": "Command",
+		"Help": "A command group, someone really needs to update the help.",
+                "Properties" : [
+
+                ]
             }
 	]
     }
