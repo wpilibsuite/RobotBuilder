@@ -30,7 +30,11 @@ public class Macro {
         List<Property> out = new ArrayList<Property>();
         for (Expansion expansion : expansions) {
             Property expanded = new Property();
-            expanded.setName(property.getName() +" "+expansion.name);
+            if (property.getName().equals("")) {
+                expanded.setName(expansion.name);
+            } else {
+                expanded.setName(property.getName() +" "+ expansion.name);
+            }
             expanded.setType(expansion.type);
             
             String defaultVal = property.getDefault();
