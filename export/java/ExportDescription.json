@@ -1,10 +1,23 @@
 {
+    "Name": "Java",
+    "Type": "Code",
+    "Toolbar": true,
+    "New Files": "files.txt",
+    "Modifie Files": "files.txt",
+    "Vars": [
+	{"Name": "project",
+	 "Value": "${robot.getProperty('Java Project')}"},
+	{"Name": "package",
+	 "Value": "${robot.getProperty('Java Package')}"},
+	{"Name": "package-path",
+	 "Value": "${project}/src/${package.replace('.', '/')}"}
+    ],
     "Defaults": {
 	"Component": {
 	    "Export": "RobotMap",
 	    "Import": "import edu.wpi.first.wpilibj.*;",
-	    "Declaration": "public static ${ClassName} ${Name};",
-	    "Subsystem Export": "${ClassName} ${Short Name} = RobotMap.${Name};"
+	    "Declaration": "public static ${ClassName} ${helper.constantName($Name)};",
+	    "Subsystem Export": "${ClassName} ${Short_Name} = RobotMap.${helper.constantName($Name)};"
 	},
 	"None": {
 	    "Export": "",
@@ -17,29 +30,29 @@
 	    "Template": ""
 	},
 	"AnalogInput": {
-	    "Construction": "${Name} = new ${ClassName}(${Input Module (Analog)}, ${Input Channel (Analog)});"
+	    "Construction": "${helper.constantName($Name)} = new ${ClassName}(${Input_Module_Analog}, ${Input_Channel_Analog});"
 	},
 	"DigitalInput": {
-	    "Construction": "${Name} = new ${ClassName}(${Input Module (Digital)}, ${Input Channel (Digital)});"
+	    "Construction": "${helper.constantName($Name)} = new ${ClassName}(${Input_Module_Digital}, ${Input_Channel_Digital});"
 	},
 	"PWMOutput": {
-	    "Construction": "${Name} = new ${ClassName}(${Output Module (Digital)}, ${Output Channel (PWM)});"
+	    "Construction": "${helper.constantName($Name)} = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_PWM});"
 	},
 	"OI": {
 	    "Export": "OI",
 	    "Import": "import edu.wpi.first.wpilibj.*;",
-	    "Declaration": "public ${ClassName} ${Name};"
+	    "Declaration": "public ${ClassName} ${helper.variableName($Name)};"
 	},
 	"Button": {
 	    "Import": "import edu.wpi.first.wpilibj.buttons.*;",
-	    "Extra":  "${Name}.${When to Run}(new ${Command}());"
+	    "Extra":  "${helper.variableName($Name)}.${When_to_Run}(new ${helper.className($Command)}());"
 	},
 	"Command": {
-	    "Export": "OI",
+	    "Export": "",
 	    "Import": "import ${package}.commands.*;"
 	}
     },
-    "Palette": {
+    "Instructions": {
 	"Robot" : {
 	    "Defaults": ["None"],
 	},
@@ -57,31 +70,31 @@
 	    "Defaults": ["None"],
 	    "Export": "CommandBase",
 	    "Import": "import ${package}.subsystems.*;",
-	    "Construction": "public static ${Class Name} ${Short Name} = new ${Class Name}();"
+	    "Construction": "public static ${helper.className($Short_Name)} ${helper.variableName($Short_Name)} = new ${helper.className($Short_Name)}();"
 	},
 	
 	"PID Controller" : {
 	    "Defaults": ["Component", "None"],
 	    "ClassName": "SendablePIDController",
 	    "Import": "import edu.wpi.first.wpilibj.smartdashboard.*;",
-	    "Construction": "${Name} = new ${ClassName}(${P}, ${I}, ${D}, ${F}, ${Input}, ${Output}, ${Period});",
-	    "Extra": "${Name}.setContinuous(${Continuous});\n        if (${Limit Input}) ${Name}.setInputRange(${Minimum Input}, ${Maximum Input});\n        if (${Limit Output}) ${Name}.setInputRange(${Minimum Output}, ${Maximum Output});\n        if(${Send to SmartDashboard}) SmartDashboard.putData(\"${Name}\", ${Name});"
+	    "Construction": "${helper.constantName($Name)} = new ${ClassName}(${P}, ${I}, ${D}, ${F}, ${helper.constantName($Input)}, ${helper.constantName($Output)}, ${Period});",
+	    "Extra": "${helper.constantName($Name)}.setContinuous(${Continuous});\n        if (${Limit_Input}) ${helper.constantName($Name)}.setInputRange(${Minimum_Input}, ${Maximum_Input});\n        if (${Limit_Output}) ${helper.constantName($Name)}.setInputRange(${Minimum_Output}, ${Maximum_Output});\n        if(${Send_to_SmartDashboard}) SmartDashboard.putData(\"${Name}\", ${helper.constantName($Name)});"
 	},
 	"Robot Drive 2" : {
 	    "Defaults": ["Component", "None"],
 	    "ClassName": "RobotDrive",
-	    "Construction": "${Name} = new ${ClassName}(${Left Motor}, ${Right Motor});"
+	    "Construction": "${helper.constantName($Name)} = new ${ClassName}(${helper.constantName($Left_Motor)}, ${helper.constantName($Right_Motor)});"
 	},
 	"Robot Drive 4" : {
 	    "Defaults": ["Component", "None"],
 	    "ClassName": "RobotDrive",
-	    "Construction": "${Name} = new ${ClassName}(${Left Front Motor}, ${Left Rear Motor}, ${Right Front Motor}, ${Right Rear Motor});"
+	    "Construction": "${helper.constantName($Name)} = new ${ClassName}(${helper.constantName($Left_Front_Motor)}, ${helper.constantName($Left_Rear_Motor)}, ${helper.constantName($Right_Front_Motor)}, ${helper.constantName($Right_Rear_Motor)});"
 	},
 	
         "Gyro" : {
 	    "Defaults": ["AnalogInput", "Component", "None"],
 	    "ClassName": "Gyro",
-	    "Extra": "${Name}.setSensitivity(${Sensitivity});"
+	    "Extra": "${helper.constantName($Name)}.setSensitivity(${Sensitivity});"
         },
         "Accelerometer" : {
 	    "Defaults": ["AnalogInput", "Component", "None"],
@@ -90,7 +103,7 @@
         "Quadrature Encoder" : {
 	    "Defaults": ["DigitalInput", "Component", "None"],
 	    "ClassName": "Encoder",
-	    "Construction": "${Name} = new ${ClassName}(${Channel A Module (Digital)}, ${Channel A Channel (Digital)}, ${Channel B Module (Digital)}, ${Channel B Channel (Digital)});"
+	    "Construction": "${helper.constantName($Name)} = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital});"
         },
         "Potentiometer" : {
 	    "Defaults": ["AnalogInput", "Component", "None"],
@@ -113,12 +126,12 @@
 	"Joystick" : {
 	    "Defaults": ["OI", "None"],
 	    "ClassName": "Joystick",
-	    "Construction": "${Name} = new ${ClassName}(${Number});"
+	    "Construction": "${helper.variableName($Name)} = new ${ClassName}(${Number});"
         },
 	"Joystick Button" : {
 	    "Defaults": ["Button", "OI", "None"],
 	    "ClassName": "JoystickButton",
-	    "Construction": "${Name} = new ${ClassName}(${Joystick}, ${Button});"
+	    "Construction": "${helper.variableName($Name)} = new ${ClassName}(${helper.variableName($Joystick)}, ${Button});"
         },
 	
 	"Command" : {

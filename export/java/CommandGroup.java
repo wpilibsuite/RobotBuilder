@@ -1,13 +1,13 @@
 package ${package}.commands;
-
+#set($command = $helper.getByName($command, $robot))
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class ${Command Name} extends CommandGroup {
+public class ${helper.className($command.name)} extends CommandGroup {
     
-    public ${Command Name}() {
+    public  ${helper.className($command.name)}() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -4,6 +4,7 @@ package robotbuilder;
 import java.awt.EventQueue;
 import java.io.File;
 import javax.swing.JFrame;
+import org.apache.velocity.app.Velocity;
 
 /**
  *
@@ -22,6 +23,8 @@ public class RobotBuilder {
                 frame.openDefaultFile();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);
+                
+                Velocity.init();
             }
         });
     }

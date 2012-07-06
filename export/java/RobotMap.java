@@ -1,6 +1,6 @@
 package ${package};
 
-${imports}
+${helper.getImports($robot, "RobotMap")}
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -8,7 +8,18 @@ ${imports}
  * floating around.
  */
 public class RobotMap {
-${declarations}
+#foreach ($component in $components)
+#if ($helper.exportsTo("RobotMap", $component))
+    $helper.getDeclaration($component)
+#end
+#end
+
     public static void init() {
-${constructions}    }
+#foreach ($component in $components)
+#if ($helper.exportsTo("RobotMap", $component))
+        $helper.getConstructor($component)
+        $helper.getExtra($component)
+#end
+#end
+    }
 }
