@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder;
 
 import robotbuilder.actions.WiringDiagramAction;
@@ -16,6 +13,7 @@ import robotbuilder.actions.SaveAsAction;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JSeparator;
 
 /**
  *
@@ -43,6 +41,7 @@ public class ActionsClass {
         fileMenu.add(newAction);
         fileMenu.add(saveAction);
         fileMenu.add(saveAsAction);
+        fileMenu.add(new JSeparator());
         fileMenu.add(exitAction);
         menu.add(fileMenu);
         
@@ -50,6 +49,7 @@ public class ActionsClass {
         generateMenu.add(cppAction);
         generateMenu.add(javaAction);
         generateMenu.add(labViewAction);
+        generateMenu.add(new JSeparator());
         generateMenu.add(wiringDiagramAction);
         menu.add(generateMenu);
 
