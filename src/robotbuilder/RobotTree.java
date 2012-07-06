@@ -5,6 +5,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -55,13 +56,24 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	setLayout(new BorderLayout());
 	RobotComponent root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Robot"), this);
 	treeModel = new DefaultTreeModel(root);
-	tree = new JTree(treeModel);
+	tree = new JTree(treeModel) {
+            @Override
+            public String getToolTipText(MouseEvent e) {
+                try {
+                    TreePath path = getClosestPathForLocation(e.getX(), e.getY());
+                    return ((RobotComponent) path.getLastPathComponent()).getBase().getHelp();
+                } catch (ClassCastException ex) { // Ignore folders
+                    return null;
+                }
+            }
+        };
 	tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 	tree.addTreeSelectionListener(this);
 	tree.setDropMode(DropMode.ON_OR_INSERT);
 	add(new JScrollPane(tree), BorderLayout.CENTER);
 	tree.setTransferHandler(new TreeTransferHandler(tree.getTransferHandler()));
 	tree.setDragEnabled(true);
+        ToolTipManager.sharedInstance().registerComponent(tree);
 
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);

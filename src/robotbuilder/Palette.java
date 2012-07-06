@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +27,7 @@ import org.json.JSONTokener;
 import robotbuilder.data.Macro;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.Property;
+import robotbuilder.data.RobotComponent;
 
 /**
  * The Palette is the set of components that can be used to create the robot
@@ -65,11 +68,22 @@ public class Palette extends JPanel {
         } catch (JSONException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
         }
-        paletteTree = new JTree(root);
+        paletteTree = new JTree(root) {
+            @Override
+            public String getToolTipText(MouseEvent e) {
+                try {
+                    TreePath path = getClosestPathForLocation(e.getX(), e.getY());
+                    return ((PaletteComponent) ((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject()).getHelp();
+                } catch (ClassCastException ex) { // Ignore folders
+                    return null;
+                }
+            }
+        };
         paletteTree.setRootVisible(false);
 	paletteTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         paletteTree.setTransferHandler(new PaletteTransferHandler(paletteTree.getTransferHandler()));
         paletteTree.setDragEnabled(true);
+        ToolTipManager.sharedInstance().registerComponent(paletteTree);
         
         for (int i = 0; i < paletteTree.getRowCount(); i++) {
             paletteTree.expandRow(i);
@@ -151,6 +165,7 @@ public class Palette extends JPanel {
         PaletteComponent component = new PaletteComponent(key);
         paletteItems.put(key, component);
         component.setType(child.optString("Type"));
+        component.setHelp(child.optString("Help"));
         // Add Drop support
         JSONObject supports = child.optJSONObject("Supports");
         if (supports != null) {
