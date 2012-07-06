@@ -58,8 +58,9 @@
     },
     "Palette": {
 	"Order": ["Subsystems", "Controllers", "Sensors", "Actuators", "Hidden"],
-	"Hidden" : {
-	    "Robot" : {
+	"Hidden" : [
+	    {
+		"Name": "Robot",
 		"Type": "Organization",
 		"Supports": {"Subsystem": "unlimited", "Controller": "unlimited", "Sensor": "unlimited", "Actuator": "unlimited"},
 		"Help": "Your Robot!",
@@ -76,9 +77,10 @@
 		    }
 		]
 	    },
-	},
-	"Subsystems" : {
-	    "Subsystem" : {
+	],
+	"Subsystems" : [
+	    {
+		"Name": "Subsystem",
 		"Type": "Subsystem",
 		"Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Controller": "unlimited"},
 		"Help": "A functional part of your robot that groups the sensors and actuators together.",
@@ -91,9 +93,10 @@
                     },
 		]
 	    }
-	},
-	"Controllers" : {
-	    "PID Controller" : {
+	],
+	"Controllers" : [
+	    {
+		"Name": "PID Controller",
 		"Type": "Controller",
 		"Supports": {"Sensor": 1, "Actuator": 1},
 		"Help": "PIDControllers allow control of an actuator based off of feedback from a sensor.",
@@ -170,7 +173,8 @@
                     },
 		]
 	    },
-	    "Robot Drive 2" : {
+	    {
+		"Name": "Robot Drive 2",
 		"Type": "Controller",
 		"Supports": {"Actuator": 2},
 		"Help": "RobotDrive handles tank drive, arcade drive and mecanum drive.",
@@ -187,7 +191,8 @@
                     }
 		]
 	    },
-	    "Robot Drive 4" : {
+	    {
+		"Name": "Robot Drive 4",
 		"Type": "Controller",
 		"Supports": {"Actuator": 4},
 		"Help": "RobotDrive handles tank drive, arcade drive and mecanum drive.",
@@ -214,9 +219,10 @@
                     },
 		]
 	    }
-	},
-        "Sensors": {
-            "Gyro" : {
+	],
+        "Sensors": [
+            {
+		"Name": "Gyro",
 		"Type": "Sensor",
 		"Help": "An analog angular rate sensor.",
                 "Properties" : [
@@ -233,7 +239,8 @@
                     }
                 ]
             },
-            "Accelerometer" : {
+            {
+		"Name": "Accelerometer",
 		"Type": "Sensor",
 		"Help": "An analog acceleration sensor.",
                 "Properties" : [
@@ -243,7 +250,8 @@
                     }
                 ]
             },
-            "Quadrature Encoder" : {
+            {
+		"Name": "Quadrature Encoder",
 		"Type": "Sensor",
 		"Help": "A digital sensor that can be used to calculate the speed and distance rotated.",
                 "Properties" : [
@@ -257,7 +265,8 @@
                     }
                 ]
             },
-            "Potentiometer" : {
+            {
+		"Name": "Potentiometer",
 		"Type": "Sensor",
 		"Help": "An rotational analog sensor that can be used to determine the position of an axel.",
                 "Properties" : [
@@ -267,7 +276,8 @@
                     }
                 ]
             },
-            "Limit Switch" : {
+            {
+		"Name": "Limit Switch",
 		"Type": "Sensor",
 		"Help": "A digital sensor that can be used to detect presses.",
                 "Properties" : [
@@ -277,9 +287,10 @@
                     }
                 ]
             }
-        },
-        "Actuators" : {
-            "Victor" : {
+        ],
+        "Actuators" : [
+            {
+		"Name": "Victor",
 		"Type": "Actuator",
 		"Help": "A PWM speed controller that allows you to set the speed of a motor.",
                 "Properties" : [
@@ -289,7 +300,8 @@
                     }
                 ]
             },
-            "Jaguar" : {
+            {
+		"Name": "Jaguar",
 		"Type": "Actuator",
 		"Help": "A PWM speed controller that allows you to set the speed of a motor.",
                 "Properties" : [
@@ -299,6 +311,6 @@
                     }
                 ]
             }
-        }
+        ]
     }
 }

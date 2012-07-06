@@ -135,31 +135,38 @@ public class Palette extends JPanel implements TreeSelectionListener {
         while (i.hasNext()) {
             String key = i.next();
             System.out.println(key);
-            JSONObject child;
+            JSONArray child;
             try {
-                child = (JSONObject) jSONObject.get(key);
+                child = (JSONArray) jSONObject.get(key);
             } catch (JSONException ex) {
                 Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
                 return;
             }
-            if (!child.has("Properties")) {
-                try {
-                    DefaultMutableTreeNode node = null;
-                    if (!key.equals("Hidden") && root != null) {
-                        //TODO: create the PaletteItem here
-                        node = new DefaultMutableTreeNode(key);
-                        root.add(node);
-                    }
-                    createTree(node, jSONObject.getJSONObject(key));
-                } catch (JSONException ex) {
-                    Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                DefaultMutableTreeNode node = null;
+                if (!key.equals("Hidden") && root != null) {
+                    //TODO: create the PaletteItem here
+                    node = new DefaultMutableTreeNode(key);
+                    root.add(node);
                 }
-            } else {
-                PaletteComponent component = createPaletteComponent(key, child);
+                createTree(node, jSONObject.getJSONArray(key));
+            } catch (JSONException ex) {
+                Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void createTree(DefaultMutableTreeNode root, JSONArray jSONArray) {
+        for (Object i : jSONArray.getIterable()) {
+            try {
+                JSONObject child = (JSONObject) i;
+                PaletteComponent component = createPaletteComponent(child.getString("Name"), child);
                 if (root != null) {
                     DefaultMutableTreeNode node = new DefaultMutableTreeNode(component);
                     root.add(node);
                 }
+            } catch (JSONException ex) {
+                Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
