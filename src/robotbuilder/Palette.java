@@ -1,16 +1,26 @@
 
 package robotbuilder;
 
+import java.awt.BorderLayout;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.InputEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JPanel;
-import javax.swing.JTree;
+import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeSelectionModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -52,6 +62,7 @@ public class Palette extends JPanel {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
         }
         paletteTree = new JTree(root);
+        paletteTree.setTransferHandler(new PaletteTransferHandler(paletteTree.getTransferHandler()));
         paletteTree.setDragEnabled(true);
         
         add(paletteTree);
@@ -117,5 +128,82 @@ public class Palette extends JPanel {
         }
         component.print();
         return component;
+    }
+
+    /**
+     * A transfer handler for that wraps the default transfer handler of Pallette.
+     * 
+     * @author Alex Henning
+     */
+    private class PaletteTransferHandler extends TransferHandler {
+        private TransferHandler delegate;
+        
+        public PaletteTransferHandler(TransferHandler delegate) {
+            this.delegate = delegate;
+        }
+        
+        @Override
+        public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
+            return delegate.canImport(comp, transferFlavors);
+        }
+        
+        @Override
+        public boolean canImport(TransferHandler.TransferSupport support) {
+            return false;
+        }
+        
+        @Override
+        protected Transferable createTransferable(final JComponent c) {
+            JTree tree = (JTree) c;
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getSelectionPath().getLastPathComponent();
+            
+            if (node.isLeaf()) {
+                try {
+                    Method method = delegate.getClass().getDeclaredMethod("createTransferable", JComponent.class);
+                    method.setAccessible(true);
+                    return (Transferable) method.invoke(delegate, c);
+                } catch (Exception e) {
+                    return super.createTransferable(c);
+                }
+            } else {
+                return null;
+            }
+        }
+        
+        @Override
+        public void exportAsDrag(JComponent comp, InputEvent event, int action) {
+            delegate.exportAsDrag(comp, event, action);
+        }
+        
+        @Override
+        protected void exportDone(JComponent source, Transferable data, int action) {
+            try {
+                Method method = delegate.getClass().getDeclaredMethod("exportDone", JComponent.class, Transferable.class,
+                        int.class);
+                method.setAccessible(true);
+                method.invoke(delegate, source, data, action);
+            } catch (Exception e) {
+            }
+        }
+        
+        @Override
+        public int getSourceActions(JComponent c) {
+            return delegate.getSourceActions(c);
+        }
+        
+        @Override
+        public Icon getVisualRepresentation(Transferable t) {
+            return delegate.getVisualRepresentation(t);
+        }
+        
+        @Override
+        public boolean importData(JComponent comp, Transferable t) {
+            return delegate.importData(comp, t);
+        }
+        
+        @Override
+        public boolean importData(TransferHandler.TransferSupport support) {
+            return delegate.importData(support);
+        }
     }
 }
