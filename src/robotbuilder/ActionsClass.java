@@ -1,20 +1,8 @@
 
 package robotbuilder;
 
-import robotbuilder.actions.WiringDiagramAction;
-import robotbuilder.actions.AboutAction;
-import robotbuilder.actions.LabViewAction;
-import robotbuilder.actions.JavaAction;
-import robotbuilder.actions.CppAction;
-import robotbuilder.actions.ExitAction;
-import robotbuilder.actions.NewAction;
-import robotbuilder.actions.SaveAction;
-import robotbuilder.actions.SaveAsAction;
-import javax.swing.AbstractAction;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JSeparator;
-import javax.swing.JToolBar;
+import javax.swing.*;
+import robotbuilder.actions.*;
 
 /**
  *
