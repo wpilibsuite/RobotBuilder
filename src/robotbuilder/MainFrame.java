@@ -82,6 +82,12 @@ public class MainFrame extends JFrame {
         setSize(prefs.getInt("Width", 100), prefs.getInt("Height", 100));
     }
     
+    public void openDefaultFile() {
+        String fileName = prefs.get("FileName", "");
+        if (fileName.length() > 0)
+            robotTree.load(fileName);
+    }
+    
     public void closeWindow() {
         if (robotTree.OKToClose()) {
             prefs.putInt("Width", getWidth());

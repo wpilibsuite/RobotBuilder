@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -46,6 +47,11 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     /** The currently selected node */
     private DefaultMutableTreeNode currentNode;
     private String filePath = null;
+    
+    private Preferences prefs;
+
+    private String currentFile = null;
+
     private JFileChooser fileChooser = new JFileChooser();
 
     public RobotTree(PropertiesDisplay properties) {
@@ -151,6 +157,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	saved = true;
+        MainFrame.getInstance().prefs.put("FileName", filePath);
     }
     
     public void save() {
@@ -263,6 +270,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    treeModel.setRoot(root);
 	    tree.setSelectionPath(new TreePath(root));
 	    saved = true;
+            MainFrame.getInstance().prefs.put("FileName", "");
 	}
     }
 
