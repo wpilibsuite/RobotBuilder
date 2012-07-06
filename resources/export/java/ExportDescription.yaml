@@ -88,7 +88,7 @@ Defaults:
     Declaration: "public ${ClassName} #variable($Name);"
   Button:
     Import: "import edu.wpi.first.wpilibj.buttons.*;"
-    Extra:  "#variable($Name).${When_to_Run}(new #class($Command)());"
+    Extra:  "#if(\"$Command\" != \"None\")#variable($Name).${When_to_Run}(new #class($Command)());#end"
   Command:
     Export: ""
     Import: "import ${package}.commands.*;"
@@ -238,7 +238,7 @@ Instructions:
 
 
   Compressor:
-    Defaults: "PWMOutput,Component,None"
+    Defaults: "Component,None"
     ClassName: "Compressor"
   Module-based Solenoid:
     Defaults: "Solenoid,Component,None"
@@ -268,11 +268,11 @@ Instructions:
   Analog Button:
     Defaults: "Button,OI,None"
     ClassName: "AnalogIOButton"
-    Construction: "#variable($Name) = new ${ClassName}(#variable($USB Port);"
+    Construction: "#variable($Name) = new ${ClassName}(#variable($Analog_Pin));"
   Digital Button:
     Defaults: "Button,OI,None"
     ClassName: "DigitalIOButton"
-    Construction: "#variable($Name) = new ${ClassName}(#variable($USB Port);"
+    Construction: "#variable($Name) = new ${ClassName}(#variable($Digital_Pin));"
 
   Command:
     Defaults: "Command,None"
