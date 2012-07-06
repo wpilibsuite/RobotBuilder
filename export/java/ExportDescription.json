@@ -13,7 +13,8 @@
 	    "Construction": "",
 	    "Extra": "",
 	    "Subsystem Export": "",
-	    "ClassName": ""
+	    "ClassName": "",
+	    "Template": ""
 	},
 	"AnalogInput": {
 	    "Construction": "${Name} = new ${ClassName}(${Input Module (Analog)}, ${Input Channel (Analog)});"
@@ -31,6 +32,7 @@
 	},
 	"Button": {
 	    "Import": "import edu.wpi.first.wpilibj.buttons.${ClassName};",
+	    "Extra":  "${Name}.${When to Run}(new ${Command}());"
 	},
 	"Command": {
 	    "Export": "OI"
@@ -117,6 +119,7 @@
 	
 	"Command" : {
 	    "Defaults": ["Command", "None"],
+	    "Template": "Command.java"
         }
     }
 }
