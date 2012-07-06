@@ -50,7 +50,7 @@ public class Validator {
             if (comp.getBase().getProperty(prop).getValidator().equals(name)) {
                 for (String field : fields) {
                     if (prop.endsWith(field) && (prefix == null || prop.startsWith(prefix))) {
-                        System.out.println("\tPrefix: "+prefix);
+//                        System.out.println("\tPrefix: "+prefix);
                         values.put(field, comp.getProperty(prop));
                     }
                 }
@@ -67,20 +67,20 @@ public class Validator {
         Map<String, String> values = getMap(comp, prefix);
         for (String field : fields) {
             if (key.endsWith(field)) {
-                System.out.println("\t- "+field);
+//                System.out.println("\t- "+field);
                 values.put(field, val);
             }
         }
         
-        System.out.println("\t"+used);
-        System.out.println("\t"+values);
+//        System.out.println("\t"+used);
+//        System.out.println("\t"+values);
         
         if (used.contains(values)) {
             throw new InvalidException();
         }
             
         used.add(values);
-        System.out.println("\t"+used);
+//        System.out.println("\t"+used);
     }
     public void claim(RobotComponent comp) throws InvalidException {
         claim("", "", comp);
@@ -113,7 +113,7 @@ public class Validator {
             
             //System.out.println(used);
             //System.out.println(values);
-            System.out.println(fieldLocation+"--"+locations);
+//            System.out.println(fieldLocation+"--"+locations);
         
             // Return it if acceptable
             if (!used.contains(values)) {

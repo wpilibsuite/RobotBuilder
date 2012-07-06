@@ -38,7 +38,7 @@ public class Trash extends JLabel {
 
             @Override
             public boolean canImport(TransferHandler.TransferSupport support) {
-                System.out.println("import[1]");
+//                System.out.println("import[1]");
                 if (support.getTransferable().isDataFlavorSupported(RobotTree.ROBOT_COMPONENT_FLAVOR)) {
                     RobotComponent node = null;
                     try {
@@ -68,9 +68,9 @@ public class Trash extends JLabel {
             @Override
             public boolean importData(TransferHandler.TransferSupport support) {
                 if (!canImport(support)) return false;
-                System.out.println("import[1]");
+//                System.out.println("import[1]");
                 if (support.getTransferable().isDataFlavorSupported(RobotTree.ROBOT_COMPONENT_FLAVOR)) {
-                    System.out.println("Moving a robot component");
+//                    System.out.println("Moving a robot component");
                     RobotComponent node = null;
                     try {
                         node = (RobotComponent) support.getTransferable().getTransferData(RobotTree.ROBOT_COMPONENT_FLAVOR);
@@ -81,7 +81,7 @@ public class Trash extends JLabel {
                         System.out.println("IOException");
                         return false;
                     }
-                    System.out.println("Imported a robot component: " + node.toString());
+//                    System.out.println("Imported a robot component: " + node.toString());
                     
                     node.walk(new RobotWalker() {
                         @Override

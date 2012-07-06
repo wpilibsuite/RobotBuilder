@@ -1,0 +1,37 @@
+Name: Test Robot
+Base: Robot
+Configuration: {Wiring File: '', Java Package: test, Java Project: 'C:\Users\Sam\Desktop\Robot
+    Builder Test', Export Subsystems: 'true'}
+Children:
+- Name: Subsystems
+  Base: Subsystems
+  Configuration: {}
+  Children:
+  - Name: Drive System
+    Base: Subsystem
+    Configuration: {Default Command: None}
+    Children:
+    - Name: Robot Drive
+      Base: Robot Drive 2
+      Configuration: {Right Motor: Drive System Right Motor, Left Motor: Drive System Left Motor}
+      Children:
+      - Name: Right Motor
+        Base: Victor
+        Configuration: {Output Module (Digital): '1', Output Channel (PWM): '1'}
+        Children: []
+      - Name: Left Motor
+        Base: Victor
+        Configuration: {Output Module (Digital): '1', Output Channel (PWM): '2'}
+        Children: []
+- Name: Operator Interface
+  Base: OI
+  Configuration: {}
+  Children:
+  - Name: Drive Stick
+    Base: Joystick
+    Configuration: {Number: '1'}
+    Children: []
+- Name: Commands
+  Base: Commands
+  Configuration: {}
+  Children: []

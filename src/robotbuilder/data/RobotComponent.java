@@ -25,7 +25,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
 
     public RobotComponent() {
         super();
-        System.out.println("Creating robot component");
+//        System.out.println("Creating robot component");
     }
     
     public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
@@ -111,7 +111,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
             // Provide a file chooser for files
             if (filechoosers.get(key) == null) {
                 JFileChooser fc = new JFileChooser();
-                System.out.println("File: "+getProperty(key));
+//                System.out.println("File: "+getProperty(key));
                 if (!getProperty(key).equals("")) {
                     fc.setSelectedFile(new File(getProperty(key)));
                 }
@@ -123,7 +123,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
             // Provide a file chooser for folders
             if (filechoosers.get(key) == null) {
                 JFileChooser fc = new JFileChooser();;
-                System.out.println("Folder: "+getProperty(key));
+//                System.out.println("Folder: "+getProperty(key));
                 if (!getProperty(key).equals("")) {
                     fc.setSelectedFile(new File(getProperty(key)));
                 }
@@ -139,7 +139,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
     public void setValue(String key, String val) {
         if (combos.get(key) != null) combos.get(key).setSelectedItem(val);
         setProperty(key, val);
-        System.out.println(key+" => "+val);
+//        System.out.println(key+" => "+val);
     }
     
     public void updateComboBoxes() {
@@ -222,7 +222,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
 
     public void setProperty(String key, String val) {
         configuration.put(key, val);
-        System.out.println(key+" => "+val);
+//        System.out.println(key+" => "+val);
     }
     
     public Map<String, String> getConfiguration() {

@@ -42,11 +42,12 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     /** The currently selected node */
     private String filePath = null;
     
+    private SimpleHistory<String> history = new SimpleHistory<String>();
+    private int snapshots = 0;
+    
     private Preferences prefs;
 
     private JFileChooser fileChooser = new JFileChooser();
-    
-    private Deque<String> undoHistory = new LinkedList<String>();
 
     public RobotTree(PropertiesDisplay properties, Palette palette) {
 	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yaml"));
@@ -124,7 +125,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     /**
-     * Remove a name from the used nomes list.
+     * Remove a name from the used names list.
      * @param name The name being freed
      */
     public void removeName(String name) {
@@ -152,7 +153,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     /**
-     * Save the RobotTree as a json.
+     * Save the RobotTree as a yaml file.
      * @param path 
      */
     public void save(String path) {
@@ -203,9 +204,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                 me.put("Children", children);
                 return me;
             }
-        }, null);
+        }, (Object[])null);
         Yaml yaml = new Yaml();
-        System.out.println(yaml.dump(out));
+//        System.out.println(yaml.dump(out));
         return yaml.dump(out);
     }
 
@@ -230,10 +231,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param path 
      */
     public void load(String text) {
-        System.out.println("Loading from: String");
-        StringReader source = new StringReader(text);
-        load(source);
-        System.out.println("Loaded");
+        System.out.println("Loading from a String");
+        load(new StringReader(text));
     }
     
     /**
@@ -244,9 +243,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         System.out.println("Loading");
         newFile(Palette.getInstance());
 
-        Yaml yaml = new Yaml();
+//        Yaml yaml = new Yaml();
 //        System.out.println(yaml.load(in));
-        Map<String, Object> details = (Map<String, Object>) yaml.load(in);
+        Map<String, Object> details = (Map<String, Object>) new Yaml().load(in);
         RobotComponent root = new RobotComponent();
         
         root.visit(new RobotVisitor() {
@@ -326,8 +325,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * Updates the UI display to adjust for changed names.
      */
     public void update() {
-	treeModel.reload();
-        saveState();
+//	treeModel.reload();
+//        if(snapshots > 0) takeSnapshot();
+//        else snapshots++;
 
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
@@ -367,7 +367,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     public void newFile(Palette palette) {
-	if (OKToClose()) {
+	//if (OKToClose()) {
 	    DefaultMutableTreeNode root = makeTreeRoot();
 	    treeModel.setRoot(root);
 	    tree.setSelectionPath(new TreePath(root));
@@ -375,7 +375,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             validators = palette.getValidators();
 	    saved = true;
             MainFrame.getInstance().prefs.put("FileName", "");
-	}
+	//}
     }
 
     /**
@@ -455,18 +455,26 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         return subsystemNames;
     }
     
-    private void saveState() {
-        System.out.println("State Changed");
-        undoHistory.addLast(encode());
+    public void takeSnapshot(){
+//        history.addState(encode());
+//        lastPlace = history.getUndoSize();
+//        System.out.println("\n\tSnap! Saved a snapshot at "+history.getUndoSize()+"!\n");
+//        testHistory.addState(text+testHistory.getUndoSize());
+        System.out.println("Snapshot taken.\n\tSnapshot number: "+ ++snapshots);
+        history.addState(encode());
+        if(history.getRedoSize() != 0){
+            history.forgetFuture();
+        }
     }
     
     public void undo() {
-        if (undoHistory.size() > 1) {
-            System.out.println("Undoing");
-            undoHistory.pollLast();
-            load(undoHistory.pollLast());
-        }
-        tree.setSelectionRow(0);
+        System.out.println("Undo button pressed");
+        load(history.undo());
+    }
+    
+    public void redo(){
+        System.out.println("Redo button pressed");
+        load(history.redo());
     }
 
     /**
@@ -556,10 +564,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
 		@Override
 		public Object getTransferData(DataFlavor df) throws UnsupportedFlavorException, IOException {
-                    System.out.println("Tree: " + ((JTree) c));
-                    System.out.println("Path: " + ((JTree) c).getSelectionPath());
+//                    System.out.println("Tree: " + ((JTree) c));
+//                    System.out.println("Path: " + ((JTree) c).getSelectionPath());
                     if ((((JTree) c).getSelectionPath()) != null) {
-                        System.out.println("Transfer: " + ((JTree) c).getSelectionPath().getLastPathComponent());
+//                        System.out.println("Transfer: " + ((JTree) c).getSelectionPath().getLastPathComponent());
                         return ((JTree) c).getSelectionPath().getLastPathComponent();
                     } else return null;
 		    //return currentNode;
@@ -665,6 +673,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    System.out.print("--");
 	    tree.scrollRectToVisible(tree.getPathBounds(path.pathByAddingChild(newNode)));
 	    System.out.println("--");
+            update();
 	    return true;
 	    //return delegate.importData(support);
 	}

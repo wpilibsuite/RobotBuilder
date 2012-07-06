@@ -4,9 +4,10 @@
  */
 package robotbuilder;
 
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import java.awt.Component;
-import javax.swing.*;
+import javax.swing.AbstractCellEditor;
+import javax.swing.JFileChooser;
+import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
 /**
