@@ -498,6 +498,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	@Override
 	public int getSourceActions(JComponent c) {
 	    //return COPY_OR_MOVE;
+            System.out.println("Supports: "+delegate.getSourceActions(c));
 	    return delegate.getSourceActions(c);
 	}
 

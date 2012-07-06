@@ -4,6 +4,10 @@ package robotbuilder;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DropTarget;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -15,6 +19,7 @@ import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLDocument;
+import robotbuilder.data.RobotComponent;
 
 /**
  *
@@ -37,6 +42,7 @@ public class MainFrame extends JFrame {
             instance = new MainFrame();
         return instance;
     }
+    private final JLabel trash;
     
     private MainFrame() {
         prefs = Preferences.userRoot().node(this.getClass().getName());
@@ -54,6 +60,13 @@ public class MainFrame extends JFrame {
         });
 
         palette = Palette.getInstance();
+        trash = new Trash();
+        
+        BorderLayout layout = new BorderLayout();
+        JPanel paletteAndTrash = new JPanel(layout);//JSplitPane(JSplitPane.VERTICAL_SPLIT, palette, trash);
+        paletteAndTrash.add(palette, BorderLayout.CENTER);
+        paletteAndTrash.add(trash, BorderLayout.SOUTH);
+        
         properties = new PropertiesDisplay();
         robotTree = new RobotTree(properties, palette);
         help = new JEditorPane();
@@ -80,7 +93,8 @@ public class MainFrame extends JFrame {
         propertiesAndHelp.setDividerLocation(300);
         JSplitPane robotStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, robotTree, propertiesAndHelp);
         robotStuff.setDividerLocation(200);
-        add(palette, BorderLayout.WEST);
+
+        add(paletteAndTrash, BorderLayout.WEST);
         add(robotStuff, BorderLayout.CENTER);
         
         ActionsClass actions = new ActionsClass();
