@@ -4,6 +4,8 @@
  */
 package robotbuilder.data.properties;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -50,9 +52,15 @@ public class FileProperty extends Property {
                 chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 chooser.setFileFilter(new FileNameExtensionFilter(extension+" file", extension));
             }
-            if (!getValue().equals("")) {
-                chooser.setSelectedFile(new File(getValue().toString()));
-            }
+            chooser.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    System.out.println(ae.getActionCommand());
+                    if (ae.getActionCommand().equals("ApproveSelection")){
+                        setValue(chooser.getSelectedFile().getPath());
+                    }
+                }
+            });
         }
         update();
         return chooser;
@@ -60,9 +68,11 @@ public class FileProperty extends Property {
 
     @Override
     public void setValue(Object value) {
-        if (extension != null && !((String) value).endsWith("."+extension)) {
+        if (extension != null && value != null
+                && !((String) value).endsWith("."+extension)) {
             value = ((String) value)+"."+extension;
         }
+        System.out.println(name+" => "+value);
         super.setValue(value);
         this.value = (String) value;
     }
@@ -84,8 +94,10 @@ public class FileProperty extends Property {
     @Override
     public void update() {
         super.update();
-        if (chooser != null && !getValue().equals(""))
+        if (chooser != null && !getValue().equals("")) {
             chooser.setSelectedFile(new File(getValue().toString()));
+            value = chooser.getSelectedFile().toString();
+        }
     }
     
 }

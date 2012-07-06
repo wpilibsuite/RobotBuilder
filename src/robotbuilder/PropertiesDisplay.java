@@ -55,9 +55,7 @@ class PropertiesDisplay extends JPanel {
             if(value != null) {
                 if (value instanceof JComboBox) {
                     return new DefaultCellEditor((JComboBox) value);
-                } else if (value instanceof JCheckBox) {
-                    return new DefaultCellEditor((JCheckBox) value);
-                }else if (value instanceof JFileChooser) {
+                } else if (value instanceof JFileChooser) {
                     return new FileCellEditor((JFileChooser) value);
                 }
                 return getDefaultEditor(value.getClass());
@@ -97,7 +95,6 @@ class PropertiesDisplay extends JPanel {
                             }
                         }
                     };
-                } else if (value instanceof JCheckBox) {
                 } else if (value instanceof JFileChooser) {
                     return new TableCellRenderer() {
                         @Override
