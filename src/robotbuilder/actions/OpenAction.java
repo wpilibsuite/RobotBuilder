@@ -6,7 +6,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import robotbuilder.ActionsClass;
 import robotbuilder.MainFrame;
-import robotbuilder.RobotTree;
 
 /**
  *
@@ -23,7 +22,7 @@ public class OpenAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent ae) {
         System.out.println("Open selected");
-        MainFrame.getInstance().getCurrentRobotTree().load("save.json");
+        MainFrame.getInstance().getCurrentRobotTree().load();
     }
     
 }

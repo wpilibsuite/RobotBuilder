@@ -133,24 +133,12 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
     /**
      * Save the RobotTree as a json.
-     * @param filePath 
+     * @param path 
      */
-    public void save() {
-	if (filePath == null) {
-	    int result = fileChooser.showSaveDialog(MainFrame.getInstance().getFrame());
-	    if (result == JFileChooser.CANCEL_OPTION) {
-		return;
-	    }
-	    else if (result == JFileChooser.ERROR_OPTION) {
-		return;
-	    }
-	    else if (result == JFileChooser.APPROVE_OPTION) {
-		filePath = fileChooser.getSelectedFile().getName() + ".json";
-	    }
-	}
+    public void save(String path) {
 	try {
-	    System.out.println("Saving to: " + filePath);
-	    FileWriter save = new FileWriter(filePath);
+	    System.out.println("Saving to: " + path);
+	    FileWriter save = new FileWriter(path);
 	    JSONObject robot = ((RobotComponent) treeModel.getRoot()).encodeAsJSON();
 	    System.out.println("Encoded to: " + robot);
 	    robot.write(save);
@@ -164,15 +152,34 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	}
 	saved = true;
     }
+    
+    public void save() {
+	if (filePath == null) {
+	    int result = fileChooser.showSaveDialog(MainFrame.getInstance().getFrame());
+	    if (result == JFileChooser.CANCEL_OPTION) {
+		return;
+	    }
+	    else if (result == JFileChooser.ERROR_OPTION) {
+		return;
+	    }
+	    else if (result == JFileChooser.APPROVE_OPTION) {
+                filePath = fileChooser.getSelectedFile().getName();
+                if (!filePath.endsWith(".json"))
+                        filePath += ".json";
+	    }
+	}
+        save(filePath);
+    }
 
     /**
      * Load the RobotTree from a json.
-     * @param filePath 
+     * @param path 
      */
-    public void load(String filePath) {
+    public void load(String path) {
+        filePath = path;
 	try {
-	    System.out.println("Loading from: " + filePath);
-	    FileReader source = new FileReader(filePath);
+	    System.out.println("Loading from: " + path);
+	    FileReader source = new FileReader(path);
 	    JSONTokener tokener;
 	    tokener = new JSONTokener(source);
 	    JSONObject json;
@@ -187,6 +194,22 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	saved = true;
+    }
+    
+    public void load() {
+	if (filePath == null) {
+	    int result = fileChooser.showOpenDialog(MainFrame.getInstance().getFrame());
+	    if (result == JFileChooser.CANCEL_OPTION) {
+		return;
+	    }
+	    else if (result == JFileChooser.ERROR_OPTION) {
+		return;
+	    }
+	    else if (result == JFileChooser.APPROVE_OPTION) {
+		filePath = fileChooser.getSelectedFile().getName();
+	    }
+	}
+        load(filePath);
     }
 
     public void walk(RobotWalker walker) {
