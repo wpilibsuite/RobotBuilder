@@ -1,7 +1,6 @@
 
 package robotbuilder.data;
 
-import java.io.File;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -66,9 +65,13 @@ public class RobotComponent extends DefaultMutableTreeNode {
         } else if (property.getType().equals("Folder")) {
             // Provide a file chooser for 
             if (filechoosers.get(key) == null) {
-                JFileChooser fc = new JFileChooser();;
+                JFileChooser fc;
                 System.out.println("File: "+getProperty(key));
-                fc.setSelectedFile(new File(getProperty(key)));
+                if (getProperty(key).equals("")) {
+                    fc = new JFileChooser((String) null);
+                } else {
+                    fc = new JFileChooser(getProperty(key));
+                }
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 filechoosers.put(key, fc);
             }
