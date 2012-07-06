@@ -10,6 +10,14 @@
 <project name="RobotBuilder" default="default" basedir=".">
     <description>Builds, tests, and runs the project RobotBuilder.</description>
     <import file="nbproject/build-impl.xml"/>
+
+    <target name="-post-jar">
+      <jar destfile="${dist.jar}" update="true">
+	<fileset dir="help" includes="*"/>
+	<fileset dir="export" includes="**/*"/>
+      </jar>
+    </target>
+    
     <!--
 
     There exist several targets which are by default empty and which can be 
