@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import robotbuilder.data.Macro;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.Property;
 
@@ -35,7 +37,8 @@ public class Palette extends JPanel {
     
     private JTree paletteTree;
     static private Palette instance = null;
-    private Map<String, PaletteComponent> paletteItems;
+    private Map<String, Macro> macros = new HashMap<String, Macro>();
+    private Map<String, PaletteComponent> paletteItems = new HashMap<String, PaletteComponent>();
     
     private Palette() {
         FileReader file;
@@ -57,6 +60,7 @@ public class Palette extends JPanel {
         
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Palette");
         try {
+            generateMacros(json.getJSONObject("Macros"));
             createTree(root, json.getJSONObject("Palette"));
         } catch (JSONException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,6 +86,18 @@ public class Palette extends JPanel {
         if (instance == null)
             instance = new Palette();
         return instance;
+    }
+    
+    /**
+     * Get the paletteItem that corresponds to a name.
+     * Each item on the palette has a unique name and this method returns the PaletteItem object that
+     * corresponds to the given name.
+     * @param name The name of the palette item
+     * @return The PaletteItem for the given name
+     */
+    public PaletteComponent getItem(String name) {
+        PaletteComponent item = paletteItems.get(name);
+        return item;
     }
     
     /**
@@ -154,13 +170,10 @@ public class Palette extends JPanel {
                 
         // Add Properties
         try {
-            JSONObject props = child.getJSONObject("Properties");
+            JSONObject props = macroExpand(child.getJSONObject("Properties"));
             for (Iterator i = props.keys(); i.hasNext();) {
                 String name = (String) i.next();
                 JSONObject values = props.getJSONObject(name);
-                for (Iterator v = values.keys(); v.hasNext(); ) {
-                    System.out.println((String)v.next());
-                }
                 component.addProperty(name, new Property(name, values.getString("Type"), values.optString("Default", null)));
             }
         } catch (JSONException ex) {
@@ -168,6 +181,60 @@ public class Palette extends JPanel {
         }
         component.print();
         return component;
+    }
+
+    /**
+     * Expand the properties based on any loaded macros.
+     * @param props The properties to expand
+     * @return The expanded properties
+     */
+    private JSONObject macroExpand(JSONObject props) {
+        LinkedList<String> keys = new LinkedList<String>();
+        for (Iterator i = props.keys(); i.hasNext(); ) {
+            keys.add((String) i.next());
+        }
+        for (String key : keys) {
+            try {
+                JSONObject prop = props.getJSONObject(key);
+                if (macros.containsKey(prop.optString("Type"))) {
+                    System.out.println("Expanding property "+key);
+                    Macro macro = macros.get(prop.optString("Type"));
+                    macro.expand(key, prop, props);
+                }
+            } catch (JSONException ex) {
+                Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return props;
+    }
+
+    /**
+     * Generate a series of macros described in json.
+     * @param jsonObject 
+     */
+    private void generateMacros(JSONObject json) {
+        for (Iterator macroNames = json.keys(); macroNames.hasNext(); ) {
+            String macroName = (String) macroNames.next();
+            JSONObject macroDef = json.optJSONObject(macroName);
+            
+            Macro macro = new Macro(macroName);
+            try {
+                JSONObject props = macroDef.getJSONObject("Properties");
+                for (Iterator i = props.keys(); i.hasNext();) {
+                    String name = (String) i.next();
+                    JSONObject values = props.getJSONObject(name);
+                    LinkedList<Object> choices = new LinkedList<Object>();
+                    for (Iterator c = values.optJSONArray("Choices").getIterator(); c.hasNext();) {
+                        choices.add(c.next());
+                    }
+                    System.out.println("Adding expansion: "+name+" "+values.getString("Type")+" "+values.optString("Default")+" "+choices);
+                    macro.addExpansion(name, values.getString("Type"), values.optString("Default"), choices);
+                }
+            } catch (JSONException ex) {
+                Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            macros.put(macroName, macro);
+        }
     }
 
     /**

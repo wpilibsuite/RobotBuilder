@@ -1,5 +1,49 @@
 
 {
+    "Macros": {
+	"AnalogInput": {
+	    "Properties" : {
+		"Module (Analog)" : {
+                    "Type" : "Module (Analog)",
+		    "Choices" : [1, 2],
+		    "Default" : "Default Module"
+                },
+		"Port (Analog)" : {
+                    "Type" : "Port (Analog)",
+		    "Choices" : [1, 2, 3, 4, 5, 6, 7, 8],
+		    "Default" : "Default Port"
+                },
+	    }
+	},
+	"DigitalInput": {
+	    "Properties" : {
+		"Module (Digital)" : {
+                    "Type" : "Module (Digital)",
+		    "Choices" : [1, 2],
+		    "Default" : "Default Module"
+                },
+		"Port (Digital)" : {
+                    "Type" : "Port (Digital)",
+		    "Choices" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14],
+		    "Default" : "Default Port"
+                },
+	    }
+	},
+	"PWMInput": {
+	    "Properties" : {
+		"Module (Digital)" : {
+                    "Type" : "Module (Digital)",
+		    "Choices" : [1, 2],
+		    "Default" : "Default Module"
+                },
+		"Port (PWM)" : {
+                    "Type" : "Port (PWM)",
+		    "Choices" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+		    "Default" : "Default Port"
+                },
+	    }
+	}
+    },
     "Palette": {
 	"Order": ["Organization", "Sensors", "Actuators"],
 	"Organization" : {
@@ -38,9 +82,10 @@
             "Gyro" : {
 		"Type": "Sensor",
                 "Properties" : {
-                    "Input channel" : {
+                    "Input" : {
                         "Type" : "AnalogInput",
-                        "Default" : "1/1",
+                        "Default Port" : "1",
+                        "Default Module" : "1"
                     },
                     "Sensitivity" : {
                         "Type" : "Double",
@@ -51,7 +96,7 @@
             "Accelerometer" : {
 		"Type": "Sensor",
                 "Properties" : {
-                    "Input channel" : {
+                    "Input" : {
                         "Type" : "AnalogInput"
                     }
                 }
@@ -59,10 +104,10 @@
             "Quadrature encoder" : {
 		"Type": "Sensor",
                 "Properties" : {
-                    "AChannel" : {
+                    "A Channel" : {
                         "Type" : "DigitalInput"
                     },
-                    "BChannel" : {
+                    "B Channel" : {
                         "Type" : "DigitalInput"
                     }
                 }
@@ -70,7 +115,7 @@
             "Potentiometer" : {
 		"Type": "Sensor",
                 "Properties" : {
-                    "Input channel" : {
+                    "Input" : {
                         "Type" : "AnalogChannel"
                     }
                 }
@@ -78,7 +123,7 @@
             "Limit switch" : {
 		"Type": "Sensor",
                 "Properties" : {
-                    "Input channel" : {
+                    "Input" : {
                         "Type" : "DigitalInput"
                     }
                 }
