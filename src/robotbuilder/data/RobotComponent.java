@@ -270,11 +270,20 @@ public class RobotComponent extends DefaultMutableTreeNode {
         walker.handleRobotComponent(this);
     }
 
+    public String getSubsystem() {
+        if (getBase().getType().equals("Subsystem")) 
+            return getName()+" ";
+        else if (getParent() == null)
+            return "";
+        else
+            return ((RobotComponent) getParent()).getSubsystem();
+    }
+    
     /**
      * @return The full name of this component including it's subsystem name.
      */
     public String getFullName() {
-        return name;
+        return getSubsystem()+name;
     }
     
     public Vector<String> getChildrenOfTypeNames(String type) {
