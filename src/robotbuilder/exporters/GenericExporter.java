@@ -6,6 +6,7 @@ package robotbuilder.exporters;
 
 import java.io.*;
 import java.util.*;
+import javax.swing.JOptionPane;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
@@ -14,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.yaml.snakeyaml.Yaml;
+import robotbuilder.MainFrame;
 import robotbuilder.RobotTree;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
@@ -30,6 +32,7 @@ public class GenericExporter {
     String path, begin_modification, end_modification;
     private boolean showOnToolbar;
     Context rootContext = new VelocityContext();
+    private LinkedList<String> requires = new LinkedList<String>();
     private Map<String, String> vars = new HashMap<String, String>();
     private LinkedList<String> varKeys = new LinkedList<String>();
     private Map<String, Map<String, String>> componentInstructions;
@@ -44,6 +47,11 @@ public class GenericExporter {
         end_modification = description.optString("End Modification");
         String _ = eval(new File(path+description.getString("Macros")));
         showOnToolbar = description.getBoolean("Toolbar");
+        if (description.has("Required Properties")) {
+            for (Object prop : description.getJSONArray("Required Properties").getIterable()) {
+                requires.add((String) prop);
+            }
+        }
         for (Object pair : description.getJSONArray("Vars").getIterable()) {
             JSONObject obj = (JSONObject) pair;
             vars.put(obj.getString("Name"), obj.getString("Value"));
@@ -56,8 +64,18 @@ public class GenericExporter {
     }
     
     public void export(RobotTree robotTree) throws IOException {
-        // Prepare the main context
         RobotComponent robot = robotTree.getRoot();
+        for (String prop : requires) {
+            String state = robot.getProperty(prop);
+            if (state == null || state.equals("") || state.equals("None")) {
+                JOptionPane.showMessageDialog(MainFrame.getInstance(),
+                                "You need to fill in the '"+prop+"' property of your robot for this export to work.",
+                                "Missing Property", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        
+        // Prepare the main context
         rootContext.put("robot", robot);
         rootContext.put("helper", this);
         rootContext.put("exporter-path", path);

@@ -3,6 +3,7 @@
     "Type": "Wiring",
     "Toolbar": true,
     "Files": "files.yaml",
+    "Required Properties": ['Wiring File'],
     "Vars": [
 	{"Name": "export-path",
 	 "Value": "${robot.getProperty('Wiring File')}"},
