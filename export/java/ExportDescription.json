@@ -26,15 +26,11 @@
 	    "Defaults": ["None"],
 	    "ClassName": ""
 	},
-	"Folder" : {
-	    "Defaults": ["None"],
-	    "ClassName": ""
-	},
 	"Subsystem" : {
 	    "Defaults": ["None"],
 	    "ClassName": ""
 	},
-	"PIDController" : {
+	"PID Controller" : {
 	    "Defaults": ["All"],
 	    "ClassName": "PIDController",
 	    "Construction": "${Name} = new ${ClassName}(${P}, ${I}, ${D}, ${F}, ${Input}, ${Output}, ${Period});"
@@ -67,7 +63,7 @@
 	    "Defaults": ["AnalogInput", "All"],
 	    "ClassName": "AnalogChannel"
         },
-        "Limit switch" : {
+        "Limit Switch" : {
 	    "Defaults": ["DigitalInput", "All"],
 	    "ClassName": "DigitalInput"
         },

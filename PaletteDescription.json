@@ -51,11 +51,11 @@
 	}
     },
     "Palette": {
-	"Order": ["Organization", "Sensors", "Actuators", "Hidden"],
+	"Order": ["Subsystems", "Controllers", "Sensors", "Actuators", "Hidden"],
 	"Hidden" : {
 	    "Robot" : {
 		"Type": "Organization",
-		"Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Organization": "unlimited"},
+		"Supports": {"Subsystem": "unlimited", "Controller": "unlimited", "Sensor": "unlimited", "Actuator": "unlimited"},
 		"Help": "Your Robot!",
 		"Properties": {
 		    "Java Project": {
@@ -69,16 +69,10 @@
 		}
 	    },
 	},
-	"Organization" : {
-	    "Folder" : {
-		"Type": "Organization",
-		"Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Organization": "unlimited"},
-		"Help": "A simple organization component that doesn't show up in your code.",
-		"Properties": {}
-	    },
+	"Subsystems" : {
 	    "Subsystem" : {
-		"Type": "Organization",
-		"Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Organization": "unlimited"},
+		"Type": "Subsystem",
+		"Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Controller": "unlimited"},
 		"Help": "A functional part of your robot that groups the sensors and actuators together.",
 		"Properties" : {
 		    "Type" : {
@@ -87,9 +81,11 @@
 			"Choices" : ["Subsystem", "PIDSubsystem"]
                     }
 		}
-	    },
-	    "PIDController" : {
-		"Type": "Organization",
+	    }
+	},
+	"Controllers" : {
+	    "PID Controller" : {
+		"Type": "Controller",
 		"Supports": {"Sensor": 1, "Actuator": 1},
 		"Help": "PIDControllers allow control of an actuator based off of feedback from a sensor.",
 		"Properties" : {
@@ -124,7 +120,7 @@
 		}
 	    },
 	    "Robot Drive 2" : {
-		"Type": "Organization",
+		"Type": "Controller",
 		"Supports": {"Actuator": 2},
 		"Help": "RobotDrive handles tank drive, arcade drive and mecanum drive.",
 		"Properties" : {
@@ -139,7 +135,7 @@
 		}
 	    },
 	    "Robot Drive 4" : {
-		"Type": "Organization",
+		"Type": "Controller",
 		"Supports": {"Actuator": 4},
 		"Help": "RobotDrive handles tank drive, arcade drive and mecanum drive.",
 		"Properties" : {
@@ -208,7 +204,7 @@
                     }
                 }
             },
-            "Limit switch" : {
+            "Limit Switch" : {
 		"Type": "Sensor",
 		"Help": "A digital sensor that can be used to detect presses.",
                 "Properties" : {

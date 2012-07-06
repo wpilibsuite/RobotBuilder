@@ -70,6 +70,10 @@ public class PaletteComponent {
         return help;
     }
     
+    public String getHelpFile() {
+        return "help/"+name+".html";
+    }
+    
     public void addSupport(String key, Integer val) {
         supports.put(key, val);
     }

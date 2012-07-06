@@ -120,13 +120,14 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
     @Override
     public void valueChanged(TreeSelectionEvent tse) {
-	DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+	RobotComponent node = (RobotComponent) tree.getLastSelectedPathComponent();
 
 	if (node == null) {
 	    return;
 	}
-	if (node instanceof DefaultMutableTreeNode) {
+	if (node instanceof RobotComponent) {
 	    properties.setCurrentComponent(node);
+            MainFrame.getInstance().setHelp(node.getBase().getHelpFile());
 	}
     }
 

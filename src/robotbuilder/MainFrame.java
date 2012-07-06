@@ -47,11 +47,7 @@ public class MainFrame extends JFrame {
         properties = new PropertiesDisplay();
         robotTree = new RobotTree(properties);
         help = new JEditorPane();
-        try {
-            help.setPage(new File("help/Limit Switch.html").toURL());
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setHelp("help/Limit Switch.html");
         JScrollPane helpScrollPane = new JScrollPane(help);
         helpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
@@ -89,5 +85,13 @@ public class MainFrame extends JFrame {
     
     public RobotTree getCurrentRobotTree() {
 	return robotTree;
+    }
+    
+    public void setHelp(String file) {
+        try {
+            help.setPage(new File(file).toURL());
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

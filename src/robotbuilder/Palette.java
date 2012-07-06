@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
@@ -35,7 +37,7 @@ import robotbuilder.data.RobotComponent;
  * are dragged to the robot tree.
  * @author brad
  */
-public class Palette extends JPanel {
+public class Palette extends JPanel implements TreeSelectionListener {
     public static final int UNLIMITED = -1;
     
     private JTree paletteTree;
@@ -84,6 +86,7 @@ public class Palette extends JPanel {
         paletteTree.setTransferHandler(new PaletteTransferHandler(paletteTree.getTransferHandler()));
         paletteTree.setDragEnabled(true);
         ToolTipManager.sharedInstance().registerComponent(paletteTree);
+        paletteTree.addTreeSelectionListener(this);
         
         for (int i = 0; i < paletteTree.getRowCount(); i++) {
             paletteTree.expandRow(i);
@@ -264,6 +267,18 @@ public class Palette extends JPanel {
             }
             macros.put(macroName, macro);
         }
+    }
+
+    @Override
+    public void valueChanged(TreeSelectionEvent tse) {
+	DefaultMutableTreeNode node = (DefaultMutableTreeNode) paletteTree.getLastSelectedPathComponent();
+
+	if (node == null) {
+	    return;
+	}
+	if (node instanceof DefaultMutableTreeNode) {
+            MainFrame.getInstance().setHelp(((PaletteComponent) node.getUserObject()).getHelpFile());
+	}
     }
 
     /**
