@@ -32,6 +32,10 @@ public abstract class AbstractExporter {
      */
     public abstract void export(RobotTree robot) throws IOException;
     
+    public abstract String getFullName(RobotComponent comp);
+    public abstract String getFullName(String s);
+    public abstract String getShortName(RobotComponent comp);
+    public abstract String getShortName(String s);
 
     protected Map<String, Map<String, String>> componentInstructions;
     
@@ -114,11 +118,17 @@ public abstract class AbstractExporter {
     
     protected String substitute(String template, RobotComponent comp, String className) {
         System.out.println(comp);
-        template = substitute(template, "Name", comp.getFullName());
+        template = substitute(template, "Name", getFullName(comp));
+        template = substitute(template, "Short Name", getShortName(comp));
         template = substitute(template, "ClassName", className);
         for (String property : comp.getPropertyKeys()) {
             System.out.println("\t"+property);
-            template = substitute(template, property, comp.getProperty(property));
+            String type = comp.getBase().getProperties().get(property).getType();
+            if (type.equals("Actuator") || type.equals("Sensor")) {
+                template = substitute(template, property, getFullName(comp.getProperty(property)));
+            } else {
+                template = substitute(template, property, comp.getProperty(property));
+            }
         }
         return template;
     }

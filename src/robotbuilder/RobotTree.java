@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -279,6 +280,20 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public RobotComponent getRoot() {
         return (RobotComponent) treeModel.getRoot();
+    }
+
+    public Iterable<RobotComponent> getSubsystems() {
+        final LinkedList<RobotComponent> subsystems = new LinkedList<RobotComponent>();
+        walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                if (self.getBase().getType().equals("Subsystem")) {
+                    subsystems.add(self);
+                }
+            }
+        });
+        
+        return subsystems;
     }
 
     /**

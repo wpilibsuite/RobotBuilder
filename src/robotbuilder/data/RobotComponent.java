@@ -237,8 +237,11 @@ public class RobotComponent extends DefaultMutableTreeNode {
         walker.handleRobotComponent(this);
     }
 
+    /**
+     * @return The full name of this component including it's subsystem name.
+     */
     public String getFullName() {
-        return name.toUpperCase().replace(" ", "_");
+        return name;
     }
     
     public Vector<String> getChildrenOfTypeNames(String type) {

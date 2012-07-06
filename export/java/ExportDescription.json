@@ -3,13 +3,15 @@
 	"All": {
 	    "Import": "import edu.wpi.first.wpilibj.${ClassName};",
 	    "Declaration": "public static ${ClassName} ${Name};",
-	    "Extra": ""
+	    "Extra": "",
+	    "Subsystem Export": "${ClassName} ${Short Name} = RobotMap.${Name};"
 	},
 	"None": {
 	    "Import": "",
 	    "Declaration": "",
 	    "Construction": "",
-	    "Extra": ""
+	    "Extra": "",
+	    "Subsystem Export": ""
 	},
 	"AnalogInput": {
 	    "Construction": "${Name} = new ${ClassName}(${Input Module (Analog)}, ${Input Channel (Analog)});"
