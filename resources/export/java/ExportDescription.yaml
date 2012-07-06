@@ -111,7 +111,7 @@ Instructions:
     Export: "CommandBase"
     Import: "import ${package}.subsystems.*;"
     Construction: "public static #class($Short_Name) #variable($Short_Name) = new #class($Short_Name)();"
-  PIDSubsystem:
+  PID Subsystem:
     Defaults: "None"
     Export: "CommandBase"
     Import: "import ${package}.subsystems.*;"
@@ -124,13 +124,13 @@ Instructions:
     Construction: "#constant($Name) = new ${ClassName}($P, $I, $D, $F, #constant($Input), #constant($Output), $Period);"
     Extra: >
       #constant($Name).setContinuous(${Continuous});
-      #if( "$Limit_Input" == "true" )
+      #if($Limit_Input)
       
               #constant($Name).setInputRange(${Minimum_Input}, ${Maximum_Input});#end
-      #if( "$Limit_Output" == "true" )
+      #if(true)
 
               #constant($Name).setOutputRange(${Minimum_Output}, ${Maximum_Output});#end
-      #if( "$Send_to_SmartDashboard" == "true" )
+      #if($Send_to_SmartDashboard)
 
               SmartDashboard.putData("${Name}", #constant($Name));#end
       

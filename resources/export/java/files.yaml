@@ -53,6 +53,20 @@
 ## Export Subsystems as files
 #if ($export-subsystems)
 #foreach ($subsystem in $subsystems)
+#if ($subsystem.base.name == "PID Subsystem")
+- !File
+  export: $package-path/subsystems/#class($subsystem.name).java
+  source: $exporter-path/PIDSubsystem.java
+  update: Modify
+  modifications:
+    declarations: $exporter-path/Subsystem-declarations.java
+    default_command: $exporter-path/Subsystem-default_command.java
+    pid: $exporter-path/PIDSubsystem-pid.java
+    source: $exporter-path/PIDSubsystem-source.java
+    output: $exporter-path/PIDSubsystem-output.java
+  variables: 
+    subsystem-name: ${subsystem.name}
+#else
 - !File
   export: $package-path/subsystems/#class($subsystem.name).java
   source: $exporter-path/Subsystem.java
@@ -62,5 +76,6 @@
     default_command: $exporter-path/Subsystem-default_command.java
   variables: 
     subsystem-name: ${subsystem.name}
+#end
 #end
 #end

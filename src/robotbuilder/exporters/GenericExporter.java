@@ -313,7 +313,7 @@ public class GenericExporter {
         robot.walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) {
-                if (self.getName().equals(name)) {
+                if (self.getFullName().equals(name)) {
                     component[0] = self;
                 }
             }

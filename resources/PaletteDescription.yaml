@@ -253,6 +253,63 @@ Palette:
             name: Default Command
             type: Command
             default: None
+      - !Component
+        name: PID Subsystem
+        type: Subsystem
+        supports: {Sensor: -1, Actuator: -1, Controller: -1, Pneumatic: -1, PIDSource: -1, PIDOutput: -1}
+        help: A PID Subsystem is one that uses a PID loop almost constantly.
+        properties:
+          - !TypeSelectionProperty
+            name: Default Command
+            type: Command
+            default: None
+##          - !BooleanProperty
+##            name: Send to SmartDashboard
+##            default: false
+          - !ChildSelectionProperty
+            name: Input
+            type: PIDSource
+            default: 0
+          - !ChildSelectionProperty
+            name: Output
+            type: PIDOutput
+            default: 0
+          - !DoubleProperty
+            name: P
+            default: 1
+          - !DoubleProperty
+            name: I
+            default: 0
+          - !DoubleProperty
+            name: D
+            default: 0
+          - !DoubleProperty
+            name: F
+            default: 0
+##          - !DoubleProperty
+##            name: Period
+##            default: 50
+          - !BooleanProperty
+            name: Continuous
+            default: false
+          - !BooleanProperty
+            name: Limit Input
+            default: false
+          - !DoubleProperty
+            name: Minimum Input
+            default: 0
+          - !DoubleProperty
+            name: Maximum Input
+            default: 5
+          - !BooleanProperty
+            name: Limit Output
+            default: false
+          - !DoubleProperty
+            name: Minimum Output
+            default: -1
+          - !DoubleProperty
+            name: Maximum Output
+            default: 1
             
   - Controllers:
       - !Component
