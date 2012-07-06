@@ -53,7 +53,7 @@
 ##   - !Property
 ##     name: The name of this property, should be unique within this component
 ##     type: The type of this property, affects how it is displayed.
-##           Valid types include: Integer, Double, Boolean, File,
+##           Valid types include: Integer, Double, Boolean, String, File,
 ##           Folder, Subsystem, Command, Sensor, Actuator.
 ##     choices: Optional. List of choices to present to the user.
 ##     validator: Optional. The validator that should be used to
@@ -423,6 +423,16 @@ Palette:
             type: String
             choices: [kDistance, kRate]
             default: "kRate"
+      - !Component
+        name: Gear Tooth Sensor
+        type: Sensor
+        help: A sensor that counts the number of gear teeth that go by.
+        properties:
+          #DigitalInput("Input")
+          - !Property
+            name: Direction Sensitive
+            type: Boolean
+            default: "false"
       - !Component
         name: Potentiometer
         type: Sensor

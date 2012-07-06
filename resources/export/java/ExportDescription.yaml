@@ -149,6 +149,10 @@ Instructions:
     Extra: >-
       #constant($Name).setDistancePerPulse(${Distance_Per_Pulse});
               #constant($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
+  Gear Tooth Sensor:
+    Defaults: "DigitalInput,Component,None"
+    ClassName: "GearTooth"
+    Extra: "#if($Direction_Sensitive == 'true')#constant($Name).enableDirectionSensing($Direction_Sensitive);#end"
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
