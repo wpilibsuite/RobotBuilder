@@ -3,6 +3,7 @@ package robotbuilder;
 
 import java.awt.EventQueue;
 import java.io.File;
+import java.util.Properties;
 import javax.swing.JFrame;
 import org.apache.velocity.app.Velocity;
 
@@ -24,7 +25,9 @@ public class RobotBuilder {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);
                 
-                Velocity.init();
+                Properties p = new Properties();
+                p.setProperty("file.resource.loader.path", (new File(".")).getAbsolutePath());
+                Velocity.init(p);
             }
         });
     }

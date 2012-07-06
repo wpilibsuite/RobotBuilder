@@ -41,6 +41,9 @@ public class GenericExporter {
     
     public GenericExporter(File descriptionFile) throws FileNotFoundException, JSONException {
         path = descriptionFile.getParent()+File.separator;
+        System.out.println("PATH: "+path+" -- "+(new File("")).getAbsolutePath());
+        path = path.replace((new File("")).getAbsolutePath()+File.separator, "");
+        System.out.println("PATH: "+path+" -- "+(new File("")).getAbsolutePath());
         Yaml yaml = new Yaml();
         Map<String, Object> description = (Map<String, Object>) yaml.load(new FileReader(descriptionFile));;
         name = (String) description.get("Name");
@@ -131,7 +134,7 @@ public class GenericExporter {
                 assert instruction != null; // TODO: Deal with more elegantly
                 component.put(instructionKey, instruction);
             }
-            System.out.println("\t"+key+": "+component+"\n\n");
+//            System.out.println("\t"+key+": "+component+"\n\n");
             componentInstructions.put(key, component);
         }
     }
@@ -252,13 +255,10 @@ public class GenericExporter {
      * @return The resulting imports.
      */
     public String getImports(RobotComponent robot, final String category) { // TODO: make macro
-        System.out.println("Getting imports");
         final Set<String> imports = new TreeSet<String>();
-        System.out.println(robot);
         robot.walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) {
-                System.out.println("\t"+self);
                 final Map<String, String> instructions = componentInstructions.get(self.getBase().getName());
                 if (category.equals(instructions.get("Export"))) {
                     String instruction = instructions.get("Import");
@@ -280,7 +280,6 @@ public class GenericExporter {
      * @return Whether or not it is a member of the specified category.
      */
     public boolean exportsTo(String category, RobotComponent comp) { // TODO: Make macro
-        System.out.println(comp+" in "+category+"?");
         return category.equals(componentInstructions.get(comp.getBase().getName()).get("Export"));
     }
 

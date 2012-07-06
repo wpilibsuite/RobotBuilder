@@ -23,6 +23,7 @@ public class ExportFile {
     private Map<String, String> vars = new HashMap<String, String>();
 
     public void export(GenericExporter exporter) throws IOException {
+        System.out.println(source+" ==> "+export);
         
         // Build the context
         Context fileContext = new VelocityContext(exporter.rootContext);
