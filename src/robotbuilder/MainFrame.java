@@ -81,11 +81,12 @@ public class MainFrame extends JFrame {
         setHelp("/help/Introduction.html");
         JScrollPane helpScrollPane = new JScrollPane(help);
         helpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        setSize(prefs.getInt("Width", 600), prefs.getInt("Height", 480));
         
         JSplitPane propertiesAndHelp = new JSplitPane(JSplitPane.VERTICAL_SPLIT, properties, helpScrollPane);
-        propertiesAndHelp.setDividerLocation(300);
+        propertiesAndHelp.setDividerLocation(getWidth()/4);
         JSplitPane robotStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, robotTree, propertiesAndHelp);
-        robotStuff.setDividerLocation(200);
+        robotStuff.setDividerLocation(getWidth()/5);
 
         add(paletteAndTrash, BorderLayout.WEST);
         add(robotStuff, BorderLayout.CENTER);
@@ -132,7 +133,7 @@ public class MainFrame extends JFrame {
 	return robotTree;
     }
     
-    public void setHelp(String file) {
+    public final void setHelp(String file) {
         try {
             help.setPage(Utils.getResource(file));
         } catch (IOException ex) {

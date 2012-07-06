@@ -227,13 +227,23 @@ Instructions:
   Digital Output:
     Defaults: "PWMOutput,Component,None"
     ClassName: "DigitalOutput"
-  Solenoid:
-    Defaults: "PWMOutput,Component,None"
-    ClassName: "Solenoid"
+
 
   Compressor:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Compressor"
+  Module-based Solenoid:
+    Defaults: "Solenoid,Component,None"
+    ClassName: "Solenoid"
+  Relay-based Solenoid:
+    Defaults: "Solenoid,Component,None"
+    ClassName: "Solenoid"
+  Module-based Double Solenoid:
+    Defaults: "Solenoid,Component,None"
+    ClassName: "DoubleSolenoid"
+  Relay-based Double Solenoid:
+    Defaults: "Solenoid,Component,None"
+    ClassName: "DoubleSolenoid"
       
   Joystick:
     Defaults: "OI,None"

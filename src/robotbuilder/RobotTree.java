@@ -35,6 +35,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private JTree tree;
     private DefaultTreeModel treeModel;
     private PropertiesDisplay properties;
+    /** Stores whether or not the RobotTree has been saved */
     private boolean saved;
     /** Names used by components during name auto-generation */
     private Set<String> usedNames = new HashSet<String>();
@@ -83,6 +84,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	}
     }
 
+    /**
+     * Creates an empty TreeRoot.
+     * @return An empty TreeRoot
+     */
     private RobotComponent makeTreeRoot() {
 	RobotComponent root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Robot"), this);
         root.add(new RobotComponent("Subsystems", Palette.getInstance().getItem("Subsystems"), this));
@@ -95,11 +100,16 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         return validators.get(name);
     }
 
+    /**
+     * Gets the file path of the save file.
+     * @return 
+     */
     public String getFilePath() {
         return filePath;
     }
 
     /**
+     * Gets the default name of a given component in the specified subsystem.
      * @param component The type of component to generate a default name for.
      * @return The default name.
      */
@@ -117,7 +127,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     /**
-     * Add a name to the used names list.
+     * Adds a name to the used names list.
      * @param name The name being used
      */
     public void addName(String name) {
@@ -125,7 +135,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     /**
-     * Remove a name from the used names list.
+     * Removes the given name from the used names list.
      * @param name The name being freed
      */
     public void removeName(String name) {
@@ -133,6 +143,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     /**
+     * Checks to see if the {@code RobotTree} already contains
+     * the given name.
      * @param name The name being checked
      */
     public boolean hasName(String name) {
@@ -153,7 +165,11 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     /**
+<<<<<<< HEAD
      * Save the RobotTree as a yaml file.
+=======
+     * Save the RobotTree as a yaml.
+>>>>>>> Added pneumatics and added some documentation in the java files.
      * @param path 
      */
     public void save(String path) {
@@ -188,6 +204,12 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         save(filePath);
     }
     
+    /**
+     * Encodes the current state of the {@code RobotTree} as a String, 
+     * which is equivalent to the contents of a {@code YAML} file that 
+     * contains the current state of the {@code RobotTree}. 
+     * @return The encoded state.
+     */
     public String encode() {
         Object out = ((RobotComponent) treeModel.getRoot()).visit(new RobotVisitor() {
             @Override
@@ -337,6 +359,22 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     public static DataFlavor ROBOT_COMPONENT_FLAVOR = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=\"" + RobotComponent.class.getName() + "\"", "Robot Component Flavor");
     private RobotTree robot = this;
 
+    /**
+     * Gets if it's okay to close the application frame.<p>
+     * A dialog appears if this hasn't been saved when the frame was told to
+     * close and gives the user four options:
+     * <ul>
+     * <li>If the <i>Save</i> option is chosen, then the frame will save
+     * and then quit.
+     * <li>If the <i>Discard</i> option is chosen, then the frame
+     * will close without saving.
+     * <li>If the <i>Cancel</i> option is chosen, the application will
+     * <u>not</u> close and will <u>not</u> save.
+     * <li>If the dialog is closed in any way, the application will <u>not</u>
+     * close and will <u>not</u> save.
+     * </ul>
+     * @return If it's okay to close the application frame.
+     */
     boolean OKToClose() {
 	String[] options = {"Save", "Discard", "Cancel"};
 	if (saved) {
