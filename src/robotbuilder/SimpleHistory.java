@@ -27,7 +27,8 @@ public class SimpleHistory<E> {
      */
     public void addState(E state){
         if(state != null && state.getClass() != null){
-            past.addLast(present);
+            if(present != null) 
+                past.addLast(present);
             present = state;
             future.clear();
             timesSaved++;

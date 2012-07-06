@@ -706,6 +706,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    tree.scrollRectToVisible(tree.getPathBounds(path.pathByAddingChild(newNode)));
 	    System.out.println("--");
             update();
+            takeSnapshot();
 	    return true;
 	    //return delegate.importData(support);
 	}
