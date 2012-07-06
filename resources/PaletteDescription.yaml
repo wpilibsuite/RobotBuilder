@@ -426,7 +426,13 @@ Palette:
       - !Component
         name: Potentiometer
         type: Sensor
-        help: An rotational analog sensor that can be used to determine the position of an axel.
+        help: An rotational analog sensor that can be used to determine the position of an axle.
+        properties:
+          #AnalogInput("Input")
+      - !Component
+        name: Analog Input
+        type: Sensor
+        help: A generic analog input.
         properties:
           #AnalogInput("Input")
       - !Component
@@ -434,7 +440,13 @@ Palette:
         type: Sensor
         help: A digital sensor that can be used to detect presses.
         properties:
-          #AnalogInput("Input")
+          #DigitalInput("Input")
+      - !Component
+        name: Digital Input
+        type: Sensor
+        help: A generic digital input.
+        properties:
+          #DigitalInput("Input")
 
   - Actuators:
       - !Component
@@ -492,4 +504,13 @@ Palette:
         name: Command Group
         type: Command
         help: A command group, someone really needs to update the help.
-        properties: []
+        properties:
+          - !Property
+            name: Requires
+            type: Subsystem
+            default: "None"
+          - !Property
+            name: Order of execution
+            type: Integer
+            choices: ["Sequential", "Parallel"]
+            default: "Sequential"

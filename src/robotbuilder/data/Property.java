@@ -1,7 +1,5 @@
 package robotbuilder.data;
 
-import javax.swing.JComboBox;
-
 /**
  * A property is one of the many values that can be set in a palette or robot component.
  * For example, a Victor PaletteComponent has a set of properties described by a name

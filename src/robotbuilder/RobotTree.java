@@ -325,9 +325,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * Updates the UI display to adjust for changed names.
      */
     public void update() {
-//	treeModel.reload();
-//        if(snapshots > 0) takeSnapshot();
-//        else snapshots++;
+	treeModel.reload();
 
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
@@ -453,28 +451,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         });
         
         return subsystemNames;
-    }
-    
-    public void takeSnapshot(){
-//        history.addState(encode());
-//        lastPlace = history.getUndoSize();
-//        System.out.println("\n\tSnap! Saved a snapshot at "+history.getUndoSize()+"!\n");
-//        testHistory.addState(text+testHistory.getUndoSize());
-        System.out.println("Snapshot taken.\n\tSnapshot number: "+ ++snapshots);
-        history.addState(encode());
-        if(history.getRedoSize() != 0){
-            history.forgetFuture();
-        }
-    }
-    
-    public void undo() {
-        System.out.println("Undo button pressed");
-        load(history.undo());
-    }
-    
-    public void redo(){
-        System.out.println("Redo button pressed");
-        load(history.redo());
     }
 
     /**
