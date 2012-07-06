@@ -76,7 +76,8 @@ class PropertiesDisplay extends JPanel {
                         String validatorName = currentComponent.getBase().getProperty(keys[row-1]).getValidator();
                         Validator validator = robot.getValidator(validatorName);
                         if (validator != null && !validator.isValid(currentComponent, keys[row-1])) {
-                            label.setForeground(Color.red);                            
+                            label.setForeground(Color.red);
+                            label.setToolTipText(validator.getError(currentComponent, keys[row-1]));
                         } else {
                             label.setForeground(Color.black);
                         }

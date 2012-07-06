@@ -11,6 +11,7 @@ package robotbuilder.data;
 public interface Validator {
     public void update(RobotComponent component, String property, String value);
     public boolean isValid(RobotComponent component, String property);
+    public String getError(RobotComponent component, String property);
     
     public String getName();
     public Validator copy();

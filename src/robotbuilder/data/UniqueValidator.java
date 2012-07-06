@@ -35,6 +35,12 @@ public class UniqueValidator implements Validator {
             claim(property, value, component);
         } catch (InvalidException _) {}
     }
+
+    @Override
+    public String getError(RobotComponent component, String property) {
+        String claimant = claims.get(getMap(component, getPrefix(property)));
+        return "This port is in use by "+claimant+" please change this to an unused port.";
+    }
     
     @Override
     public UniqueValidator copy() {

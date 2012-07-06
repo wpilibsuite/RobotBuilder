@@ -31,6 +31,11 @@ public class ExistsValidator implements Validator {
         return !ignore.contains(component.getProperty(property));
     }
 
+    @Override
+    public String getError(RobotComponent component, String property) {
+        return "You need to set this value.";
+    }
+
     public List<String> getIgnore() {
         return ignore;
     }
