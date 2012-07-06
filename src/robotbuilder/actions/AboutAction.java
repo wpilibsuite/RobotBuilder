@@ -26,7 +26,7 @@ public class AboutAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-                AboutDialog aboutDialog = new AboutDialog(MainFrame.frame,
+                AboutDialog aboutDialog = new AboutDialog(MainFrame.getInstance().getFrame(),
                                         "About RobotBuilder",
                                         "This application builds robot maps",
                                         1.0);

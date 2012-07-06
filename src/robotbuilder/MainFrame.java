@@ -2,6 +2,8 @@
 package robotbuilder;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
@@ -17,12 +19,26 @@ public class MainFrame extends JFrame {
     PropertiesDisplay properties;
     StatusPanel statusPanel;
     JToolBar toolBar;
-    public static JFrame frame;
+    private JFrame frame;
+    private static MainFrame instance = null;
 
-    public MainFrame() {
+    public static MainFrame getInstance() {
+        if (instance == null)
+            instance = new MainFrame();
+        return instance;
+    }
+    
+    private MainFrame() {
         frame = this;
         setTitle("FRC RobotBuilder");
-        
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                closeWindow();
+            }
+        });
+
         palette = Palette.getInstance();
         properties = new PropertiesDisplay();
         robotTree = new RobotTree(properties);
@@ -43,5 +59,16 @@ public class MainFrame extends JFrame {
         statusPanel.setStatus("Everything A OK");
         
         pack();
+    }
+    
+    public void closeWindow() {
+        if (robotTree.OKToClose()) {
+            setVisible(false);
+            System.exit(0);
+        }
+    }
+    
+    public JFrame getFrame() {
+        return frame;
     }
 }

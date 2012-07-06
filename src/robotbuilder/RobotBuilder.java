@@ -18,7 +18,7 @@ public class RobotBuilder {
             public void run() {
                 System.out.println(System.getProperty("java.class.path"));
                 System.out.println((new File(".")).getAbsolutePath());
-                MainFrame frame = new MainFrame();
+                MainFrame frame = MainFrame.getInstance();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(800, 400);
                 frame.setVisible(true);

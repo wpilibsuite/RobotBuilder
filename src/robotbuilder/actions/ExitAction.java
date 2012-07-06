@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import robotbuilder.ActionsClass;
+import robotbuilder.MainFrame;
 
 /**
  *
@@ -20,7 +21,7 @@ public class ExitAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        System.exit(0);
+        MainFrame.getInstance().closeWindow();
     }
     
 }

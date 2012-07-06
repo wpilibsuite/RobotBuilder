@@ -38,6 +38,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private JTree tree;
     private DefaultTreeModel treeModel;
     private PropertiesDisplay properties;
+    private boolean saved;
     
     /** Names used by components during name auto-generation */
     private Set<String> usedNames = new HashSet<String>();
@@ -45,6 +46,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private DefaultMutableTreeNode currentNode;
     
     public RobotTree(PropertiesDisplay properties) {
+        saved = true;
 	this.properties = properties;
         this.properties.setRobotTree(this);
         setLayout(new BorderLayout());
@@ -128,6 +130,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         } catch (IOException ex) {
             Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
         }
+        saved = true;
     }
     
     /**
@@ -151,6 +154,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         } catch (IOException ex) {
             Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
         }
+        saved = true;
     }
     
     /**
@@ -162,11 +166,34 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         for (int i = 0; i < tree.getRowCount(); i++) {
             tree.expandRow(i);
         }
+        saved = false;
     }
 
 //    public static DataFlavor ROBOT_COMPONENT_FLAVOR = new DataFlavor(RobotComponent.class, "Robot Component Flavor");
     public static DataFlavor ROBOT_COMPONENT_FLAVOR = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType +";class=\""+RobotComponent.class.getName() + "\"", "Robot Component Flavor");
     private RobotTree robot = this;
+
+    boolean OKToClose() {
+        String[] options = {"Discard", "Cancel", "Save"};
+        if (saved)
+            return true;
+        int value = JOptionPane.showOptionDialog(MainFrame.getInstance().getFrame(),
+                "This RobotMap has changed since it was last saved. What \nshould happen to the file?",
+                "Save file",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[2]);
+        if (value == 0)
+            save("save.json");
+        else if (value == 1)
+            System.out.println("Cancel");
+        else
+            return true;
+        return false;
+    }
+    
     /**
      * A transfer handler for that wraps the default transfer handler of RobotTree.
      * 
@@ -331,6 +358,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                 return false;
             }
             System.out.println("newNode="+newNode);
+            saved = false;
             DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode)path.getLastPathComponent();
             System.out.println("parentNode="+parentNode);
             treeModel.insertNodeInto(newNode, parentNode, childIndex);
