@@ -95,28 +95,45 @@ public class Validator {
      * @return A unused port, that has just been claimed for you
      */
     public Map<String, String> getFree(Map<String, String[]> choices) throws InvalidException {
-        Map<String, String> values = new HashMap<String, String>();
+        assert fields.size() <= 2; // TODO: buggy with more than two fields
+        Map<String, Integer> locations = new HashMap<String, Integer>();
         for (String field : fields) {
-            values.put(field, choices.get(field)[0]);
+            locations.put(field, 0);
         }
-        int fieldLocation = 0, choiceLocation = 0;
+        int fieldLocation = 0;
 
         while (true) {
+            // Generate values
+            Map<String, String> values = new HashMap<String, String>();
+            for (String field : fields) {
+                values.put(field, choices.get(field)[locations.get(field)]);
+            }
+            
+            System.out.println(used);
+            System.out.println(values);
+            System.out.println(fieldLocation+"--"+locations);
+        
+            // Return it if acceptable
             if (!used.contains(values)) {
                 used.add(values);
                 return values;
             }
             
+            // Increment to the next
             String field = fields.get(fieldLocation);
-            values.put(field, choices.get(field)[choiceLocation]);
-            choiceLocation++;
+            locations.put(field, locations.get(field)+1);
             
-            if (choiceLocation >= choices.get(field).length) {
-                choiceLocation = 0;
+            if (locations.get(field) >= choices.get(field).length) {
+                locations.put(field, 0);
                 fieldLocation++;
+                locations.put(fields.get(fieldLocation), locations.get(fields.get(fieldLocation))+1);
                 if (fieldLocation >= fields.size()) {
                     throw new InvalidException();
                 }
+            }
+            
+            if (fieldLocation > 0) {
+                fieldLocation--;
             }
         }
     }

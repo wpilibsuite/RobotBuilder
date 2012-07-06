@@ -82,15 +82,15 @@
     "Validators" : {
 	"AnalogInput" : {
 	    "Type": "Unique",
-	    "Fields": ["Module (Analog)","Channel (Analog)"]
+	    "Fields": ["Channel (Analog)", "Module (Analog)"]
 	},
 	"DigitalInput" : {
 	    "Type": "Unique",
-	    "Fields": ["Module (Digital)", "Channel (Digital)"]
+	    "Fields": ["Channel (Digital)", "Module (Digital)"]
 	},
 	"PWMOutput" : {
 	    "Type": "Unique",
-	    "Fields": ["Module (Digital)", "Channel (PWM)"]
+	    "Fields": ["Channel (PWM)", "Module (Digital)"]
 	}
     },
     "Palette": {
