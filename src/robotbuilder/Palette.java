@@ -192,12 +192,11 @@ public class Palette extends JPanel implements TreeSelectionListener {
                 
         // Add Properties
         try {
-            JSONObject props = macroExpand(child.getJSONObject("Properties"));
-            for (Iterator i = props.keys(); i.hasNext();) {
-                String name = (String) i.next();
-                JSONObject values = props.getJSONObject(name);
-                Property prop = new Property(name, values.getString("Type"), values.optString("Default"));
-                JSONArray jsonchoices = values.optJSONArray("Choices");
+            JSONArray props = macroExpand(child.getJSONArray("Properties"));
+            for (Object i : props.getIterable()) {
+                JSONObject property = (JSONObject) i;
+                Property prop = new Property(property.getString("Name"), property.getString("Type"), property.optString("Default"));
+                JSONArray jsonchoices = property.optJSONArray("Choices");
                 String[] choices = null;
                 if (jsonchoices != null) {
                     choices = new String[jsonchoices.length()];
@@ -206,7 +205,7 @@ public class Palette extends JPanel implements TreeSelectionListener {
                     }
                 }
                 prop.setChoices(choices);
-                component.addProperty(name, prop);
+                component.addProperty(property.getString("Name"), prop);
             }
         } catch (JSONException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
@@ -220,24 +219,23 @@ public class Palette extends JPanel implements TreeSelectionListener {
      * @param props The properties to expand
      * @return The expanded properties
      */
-    private JSONObject macroExpand(JSONObject props) {
-        LinkedList<String> keys = new LinkedList<String>();
-        for (Iterator i = props.keys(); i.hasNext(); ) {
-            keys.add((String) i.next());
-        }
-        for (String key : keys) {
+    private JSONArray macroExpand(JSONArray props) {
+        JSONArray out = new JSONArray();
+        for (Object i : props.getIterable()) {
             try {
-                JSONObject prop = props.getJSONObject(key);
+                JSONObject prop = (JSONObject) i;
                 if (macros.containsKey(prop.optString("Type"))) {
-                    System.out.println("Expanding property "+key);
+                    System.out.println("Expanding property "+prop.getString("Name"));
                     Macro macro = macros.get(prop.optString("Type"));
-                    macro.expand(key, prop, props);
+                    out = macro.expand(prop.getString("Name"), prop, out);
+                } else {
+                    out = out.put(prop);
                 }
             } catch (JSONException ex) {
                 Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return props;
+        return out;
     }
 
     /**
@@ -251,16 +249,17 @@ public class Palette extends JPanel implements TreeSelectionListener {
             
             Macro macro = new Macro(macroName);
             try {
-                JSONObject props = macroDef.getJSONObject("Properties");
-                for (Iterator i = props.keys(); i.hasNext();) {
-                    String name = (String) i.next();
-                    JSONObject values = props.getJSONObject(name);
+                JSONArray props = macroDef.getJSONArray("Properties");
+                for (Object i : props.getIterable()) {
+                    JSONObject property = (JSONObject) i;
                     LinkedList<Object> choices = new LinkedList<Object>();
-                    for (Iterator c = values.optJSONArray("Choices").getIterator(); c.hasNext();) {
-                        choices.add(c.next());
+                    for (Object c : property.optJSONArray("Choices").getIterable()) {
+                        choices.add(c);
                     }
-                    System.out.println("Adding expansion: "+name+" "+values.getString("Type")+" "+values.optString("Default")+" "+values.optString("_Default")+" "+choices);
-                    macro.addExpansion(name, values.getString("Type"), values.optString("Default"), values.optString("_Default"), choices);
+                    System.out.println("Adding expansion: "+property.getString("Name") +" "+property.getString("Type")+" "+property.optString("Default")+" "+property.optString("DefaultDefault")+" "+choices);
+                    macro.addExpansion(property.getString("Name"), 
+                            property.getString("Type"), property.optString("Default"),
+                            property.optString("DefaultDefault"), choices);
                 }
             } catch (JSONException ex) {
                 Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);

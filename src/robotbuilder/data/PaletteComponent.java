@@ -5,7 +5,9 @@
 package robotbuilder.data;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  *
@@ -18,9 +20,10 @@ public class PaletteComponent {
     private String type; // The type of the data
     private String help; // The help text for this component.
     /** Type and quantity of children that this type of component can support. */
-    private HashMap<String, Integer> supports = new HashMap<String, Integer>(); 
+    private Map<String, Integer> supports = new HashMap<String, Integer>(); 
     // set of properties for the component
-    private HashMap<String, Property> properties = new HashMap<String, Property>();
+    private Map<String, Property> properties = new HashMap<String, Property>();
+    private LinkedList<String> propertiesKeys = new LinkedList<String>();
     
     public PaletteComponent(String name) {
         this.name = name;
@@ -29,10 +32,15 @@ public class PaletteComponent {
     public void addProperty(String propName, Property property) {
         System.out.println(property);
         properties.put(propName, property);
+        propertiesKeys.add(propName);
     }
     
     public Map<String, Property> getProperties() {
         return properties;
+    }
+    
+    public LinkedList<String> getPropertiesKeys() {
+        return propertiesKeys;
     }
     
     public String getName() {

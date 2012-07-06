@@ -7,6 +7,7 @@ package robotbuilder.data;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,27 +34,25 @@ public class Macro {
      * @param prop
      * @param props 
      */
-    public void expand(String key, JSONObject prop, JSONObject props) {
+    public JSONArray expand(String key, JSONObject prop, JSONArray props) {
         for (Expansion expansion : expansions) {
             try {
                 JSONObject expanded = new JSONObject();
+                expanded.put("Name", prop.get("Name") +" "+expansion.name);
                 expanded.put("Type", expansion.type);
                 String defaultVal = prop.optString(expansion.defaultValue, null);
                 if (defaultVal != null) {
-                    System.out.println("Default[0]: "+defaultVal);
                     expanded.put("Default", defaultVal);
                 } else {
-                    System.out.println("Default[1]: "+expansion.defaultDefault);
                     expanded.put("Default", expansion.defaultDefault);
                 }
                 expanded.put("Choices", expansion.choices);
-                props.put(key+" "+expansion.name, expanded);
+                props = props.put(expanded);
             } catch (JSONException ex) {
                 Logger.getLogger(Macro.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        // Cleanup
-        props.remove(key);
+        return props;
     }
     
     private class Expansion {

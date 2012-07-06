@@ -3,9 +3,7 @@ package robotbuilder;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.util.EventObject;
 import javax.swing.*;
-import javax.swing.event.CellEditorListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;

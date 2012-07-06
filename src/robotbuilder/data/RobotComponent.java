@@ -40,7 +40,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
     }
     
     public String[] getPropertyKeys() {
-        return base.getProperties().keySet().toArray(new String[0]);
+        return base.getPropertiesKeys().toArray(new String[0]);
     }
     
     /**

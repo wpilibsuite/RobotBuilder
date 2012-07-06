@@ -2,52 +2,58 @@
 {
     "Macros": {
 	"AnalogInput": {
-	    "Properties" : {
-		"Module (Analog)" : {
+	    "Properties" : [
+		{
+		    "Name" : "Module (Analog)",
                     "Type" : "Module (Analog)",
 		    "Choices" : ["1", "2"],
 		    "Default" : "Default Module",
-		    "_Default" : "1"
+		    "DefaultDefault" : "1"
                 },
-		"Port (Analog)" : {
+		{
+		    "Name" : "Port (Analog)",
                     "Type" : "Port (Analog)",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8"],
 		    "Default" : "Default Port",
-		    "_Default" : "1"
+		    "DefaultDefault" : "1"
                 },
-	    }
+	    ]
 	},
 	"DigitalInput": {
-	    "Properties" : {
-		"Module (Digital)" : {
+	    "Properties" : [
+		{
+		    "Name" : "Module (Digital)",
                     "Type" : "Module (Digital)",
 		    "Choices" : ["1", "2"],
 		    "Default" : "Default Module",
-		    "_Default" : "1"
+		    "DefaultDefault" : "1"
                 },
-		"Port (Digital)" : {
+		{
+		    "Name" : "Port (Digital)",
                     "Type" : "Port (Digital)",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"],
 		    "Default" : "Default Port",
-		    "_Default" : "1"
+		    "DefaultDefault" : "1"
                 },
-	    }
+	    ]
 	},
 	"PWMInput": {
-	    "Properties" : {
-		"Module (Digital)" : {
+	    "Properties" : [
+		{
+		    "Name" : "Module (Digital)",
                     "Type" : "Module (Digital)",
 		    "Choices" : ["1", "2"],
 		    "Default" : "Default Module",
-		    "_Default" : "1"
+		    "DefaultDefault" : "1"
                 },
-		"Port (PWM)" : {
+		{
+		    "Name" : "Port (PWM)",
                     "Type" : "Port (PWM)",
 		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
 		    "Default" : "Default Port",
-		    "_Default" : "1"
+		    "DefaultDefault" : "1"
                 },
-	    }
+	    ]
 	}
     },
     "Palette": {
@@ -57,16 +63,18 @@
 		"Type": "Organization",
 		"Supports": {"Subsystem": "unlimited", "Controller": "unlimited", "Sensor": "unlimited", "Actuator": "unlimited"},
 		"Help": "Your Robot!",
-		"Properties": {
-		    "Java Project": {
+		"Properties": [
+		    {
+			"Name" : "Java Project",
                         "Type" : "Folder",
                         "Default" : "",
 		    },
-		    "Java Package": {
+		    {
+			"Name" : "Java Package",
                         "Type" : "String",
                         "Default" : "com.usfirst.teamNNNN.robot2013"
 		    }
-		}
+		]
 	    },
 	},
 	"Subsystems" : {
@@ -74,13 +82,14 @@
 		"Type": "Subsystem",
 		"Supports": {"Sensor": "unlimited", "Actuator": "unlimited", "Controller": "unlimited"},
 		"Help": "A functional part of your robot that groups the sensors and actuators together.",
-		"Properties" : {
-		    "Type" : {
-                        "Type" : "Subsystem",
-                        "Default" : "Subsystem",
+		"Properties" : [
+		    {
+			"Name": "Type",
+			"Type" : "Subsystem",
+			"Default" : "Subsystem",
 			"Choices" : ["Subsystem", "PIDSubsystem"]
-                    }
-		}
+                    },
+		]
 	    }
 	},
 	"Controllers" : {
@@ -88,150 +97,172 @@
 		"Type": "Controller",
 		"Supports": {"Sensor": 1, "Actuator": 1},
 		"Help": "PIDControllers allow control of an actuator based off of feedback from a sensor.",
-		"Properties" : {
-		    "Input" : {
+		"Properties" : [
+		    {
+			"Name" : "Input",
                         "Type" : "Sensor",
 			"Default" : "0"
                     },
-		    "Output" : {
+		    {
+			"Name" : "Output",
                         "Type" : "Actuator",
 			"Default" : "0"
                     },
-		    "P" : {
+		    {
+			"Name" : "P",
                         "Type" : "Double",
 			"Default" : "1"
                     },
-		    "I" : {
+		    {
+			"Name" : "I",
                         "Type" : "Double",
 			"Default" : "0"
                     },
-		    "D" : {
+		    {
+			"Name" : "D",
                         "Type" : "Double",
 			"Default" : "0"
                     },
-		    "F" : {
+		    {
+			"Name" : "F",
                         "Type" : "Double",
 			"Default" : "0"
                     },
-		    "Period" : {
+		    {
+			"Name" : "Period",
                         "Type" : "Integer",
 			"Default" : "50"
-                    },
-		}
+                    }
+		]
 	    },
 	    "Robot Drive 2" : {
 		"Type": "Controller",
 		"Supports": {"Actuator": 2},
 		"Help": "RobotDrive handles tank drive, arcade drive and mecanum drive.",
-		"Properties" : {
-		    "Left Motor" : {
+		"Properties" : [
+		    {
+			"Name" : "Left Motor",
                         "Type" : "Actuator",
 			"Default" : "0"
                     },
-		    "Right Motor" : {
+		    {
+			"Name" : "Right Motor",
                         "Type" : "Actuator",
 			"Default" : "1"
                     }
-		}
+		]
 	    },
 	    "Robot Drive 4" : {
 		"Type": "Controller",
 		"Supports": {"Actuator": 4},
 		"Help": "RobotDrive handles tank drive, arcade drive and mecanum drive.",
-		"Properties" : {
-		    "Left Front Motor" : {
+		"Properties" : [
+		    {
+			"Name" : "Left Front Motor",
                         "Type" : "Actuator",
 			"Default" : "0"
                     },
-		    "Left Rear Motor" : {
+		    {
+			"Name" : "Left Rear Motor",
                         "Type" : "Actuator",
 			"Default" : "1"
                     },
-		    "Right Front Motor" : {
+		    {
+			"Name" : "Right Front Motor",
                         "Type" : "Actuator",
 			"Default" : "2"
                     },
-		    "Right Rear Motor" : {
+		    {
+			"Name" : "Right Rear Motor",
                         "Type" : "Actuator",
 			"Default" : "3"
                     },
-		}
+		]
 	    }
 	},
         "Sensors": {
             "Gyro" : {
 		"Type": "Sensor",
 		"Help": "An analog angular rate sensor.",
-                "Properties" : {
-                    "Input" : {
+                "Properties" : [
+                    {
+			"Name" : "Input",
                         "Type" : "AnalogInput",
                         "Default Port" : "1",
                         "Default Module" : "1"
                     },
-                    "Sensitivity" : {
+                    {
+			"Name" : "Sensitivity",
                         "Type" : "Double",
                         "Default" : "1.25"
                     }
-                }
+                ]
             },
             "Accelerometer" : {
 		"Type": "Sensor",
 		"Help": "An analog acceleration sensor.",
-                "Properties" : {
-                    "Input" : {
+                "Properties" : [
+                    {
+			"Name" : "Input",
                         "Type" : "AnalogInput"
                     }
-                }
+                ]
             },
             "Quadrature Encoder" : {
 		"Type": "Sensor",
 		"Help": "A digital sensor that can be used to calculate the speed and distance rotated.",
-                "Properties" : {
-                    "A Channel" : {
+                "Properties" : [
+                    {
+			"Name" : "A Channel",
                         "Type" : "DigitalInput"
                     },
-                    "B Channel" : {
+                    {
+			"Name" : "B Channel",
                         "Type" : "DigitalInput"
                     }
-                }
+                ]
             },
             "Potentiometer" : {
 		"Type": "Sensor",
 		"Help": "An rotational analog sensor that can be used to determine the position of an axel.",
-                "Properties" : {
-                    "Input" : {
+                "Properties" : [
+                    {
+			"Name" : "Input",
                         "Type" : "AnalogInput"
                     }
-                }
+                ]
             },
             "Limit Switch" : {
 		"Type": "Sensor",
 		"Help": "A digital sensor that can be used to detect presses.",
-                "Properties" : {
-                    "Input" : {
+                "Properties" : [
+                    {
+			"Name" : "Input",
                         "Type" : "DigitalInput"
                     }
-                }
+                ]
             }
         },
         "Actuators" : {
             "Victor" : {
 		"Type": "Actuator",
 		"Help": "A PWM speed controller that allows you to set the speed of a motor.",
-                "Properties" : {
-                    "Output" : {
+                "Properties" : [
+                    {
+			"Name" : "Output",
                         "Type" : "PWMInput"
                     }
-                }
+                ]
             },
             "Jaguar" : {
 		"Type": "Actuator",
 		"Help": "A PWM speed controller that allows you to set the speed of a motor.",
-                "Properties" : {
-                    "Output" : {
+                "Properties" : [
+                    {
+			"Name" : "Output",
                         "Type" : "PWMInput"
                     }
-                }
+                ]
             }
         }
     }
