@@ -45,8 +45,8 @@ public class Palette extends JPanel implements TreeSelectionListener {
         in = new InputStreamReader(this.getClass().getResourceAsStream("/PaletteDescription.yaml"));
         
         // Apply macros, if any
-        VelocityEngine ve = new VelocityEngine();
         StringWriter writer = new StringWriter();
+        VelocityEngine ve = new VelocityEngine();
         ve.evaluate(null, writer, "RobotBuilder:PaletteDescription.yaml", in);
         
         System.out.println(writer.toString());

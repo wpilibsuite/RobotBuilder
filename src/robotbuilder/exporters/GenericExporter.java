@@ -8,8 +8,10 @@ import java.io.*;
 import java.util.*;
 import javax.swing.JOptionPane;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
+import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -29,6 +31,7 @@ public class GenericExporter {
     private String name, type, filesPath;
     String path, begin_modification, end_modification;
     private boolean showOnToolbar;
+    VelocityEngine ve;
     Context rootContext = new VelocityContext();
     private LinkedList<String> requires = new LinkedList<String>();
     private Map<String, String> vars = new HashMap<String, String>();
@@ -37,6 +40,14 @@ public class GenericExporter {
     
     public GenericExporter(String path) {
         this.path = path;
+        
+        // Setup velocity engine
+        Properties p = new Properties();
+        p.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        p.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        ve = new VelocityEngine(p);
+        
+        // Load YAML Description
         Yaml yaml = new Yaml();
         System.out.println(this.getClass().getResource(path+"ExportDescription.yaml"));
         Map<String, Object> description = (Map<String, Object>) yaml.load(
@@ -146,7 +157,7 @@ public class GenericExporter {
         InputStreamReader in;
         in = new InputStreamReader(this.getClass().getResourceAsStream(file.getAbsolutePath()));
         StringWriter w = new StringWriter();
-        Velocity.evaluate(context, w, name+" Exporter: "+file.getName(), in);
+        ve.evaluate(context, w, name+" Exporter: "+file.getName(), in);
         return w.toString();
     }
     String eval(File file) {
@@ -155,7 +166,7 @@ public class GenericExporter {
     
     String eval(String templateString, Context context) {
         StringWriter w = new StringWriter();
-        Velocity.evaluate(context, w, name+" Exporter", templateString);
+        ve.evaluate(context, w, name+" Exporter", templateString);
         return w.toString();
     }
     String eval(String templateString) {
