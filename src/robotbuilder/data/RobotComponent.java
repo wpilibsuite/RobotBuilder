@@ -249,7 +249,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
      * @return Whether it can support adding another component of that type.
      */
     public boolean supports(RobotComponent data) {
-        return this.supports(data.getBase());
+        return children.contains(data) || this.supports(data.getBase());
     }
 
     /**
