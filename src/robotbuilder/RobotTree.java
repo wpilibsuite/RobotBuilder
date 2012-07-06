@@ -920,30 +920,18 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Removing \""+target.getName()+"\"...");
-            int option = JOptionPane.showConfirmDialog(tree, 
-                                                       "Delete \""+target.getName()+"\"?", 
-                                                       "Delete", 
-                                                       JOptionPane.YES_NO_OPTION);
-            switch(option) {
-                case JOptionPane.YES_OPTION:
-                    target.removeFromParent();
-                    target.walk(new RobotWalker() {
-                        @Override
-                        public void handleRobotComponent(RobotComponent self) {
-                            MainFrame.getInstance().getCurrentRobotTree().removeName(self.getFullName());
-                        }
-                    });
-                    update();
-                    takeSnapshot();
-                    System.out.println("\""+target.getName()+"\" removed");
-                    break;
-                default:
-                    System.out.println("Cancelled.");
-                    return;
-            }
+            target.removeFromParent();
+            target.walk(new RobotWalker() {
+                @Override
+                public void handleRobotComponent(RobotComponent self) {
+                    MainFrame.getInstance().getCurrentRobotTree().removeName(self.getFullName());
+                }
+            });
+            update();
+            takeSnapshot();
+            System.out.println("\""+target.getName()+"\" removed");
             
         }
-        
     }
     
     private class ClearAction extends AbstractAction {
