@@ -22,7 +22,7 @@ public class RobotBuilder {
                 System.out.println((new File(".")).getAbsolutePath());
                 MainFrame frame = MainFrame.getInstance();
                 frame.openDefaultFile();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 frame.setVisible(true);
                 
                 Properties p = new Properties();
