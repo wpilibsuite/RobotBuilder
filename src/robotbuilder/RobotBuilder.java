@@ -10,7 +10,7 @@ import javax.swing.JFrame;
  * @author brad
  */
 public class RobotBuilder {
-
+    public static String VERSION = "0.0.1";
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {

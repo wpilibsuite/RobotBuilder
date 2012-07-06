@@ -244,7 +244,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         }, (Object[])null);
         Yaml yaml = new Yaml();
 //        System.out.println(yaml.dump(out));
-        return yaml.dump(out);
+        return yaml.dump("Version "+RobotBuilder.VERSION)+"\n---\n"+yaml.dump(out);
     }
 
     /**
@@ -278,8 +278,15 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     public void load(Reader in) {
         System.out.println("Loading");
         newFile(Palette.getInstance());
+        
+        Iterator docs = new Yaml().loadAll(in).iterator();
+        
+        String version = (String) docs.next();
+        System.out.println("Version: '"+version+"' == '"+RobotBuilder.VERSION+"'");
+        assert version.equals("Version "+RobotBuilder.VERSION); // TODO: handle more cleanly
+        System.out.println("Version: '"+version+"' == '"+RobotBuilder.VERSION+"'");
 
-        Map<String, Object> details = (Map<String, Object>) new Yaml().load(in);
+        Map<String, Object> details = (Map<String, Object>) docs.next();
         RobotComponent root = new RobotComponent();
         
         root.visit(new RobotVisitor() {
