@@ -30,11 +30,16 @@ public class Validator {
     }
     
     private Map<String, String> getMap(RobotComponent comp) {
+        return getMap(comp, null);
+    }
+    
+    private Map<String, String> getMap(RobotComponent comp, String prefix) {
         Map<String, String> values = new HashMap<String, String>();
         for (String prop : comp.getPropertyKeys()) {
             if (comp.getBase().getProperties().get(prop).getValidator().equals(name)) {
                 for (String field : fields) {
-                    if (prop.endsWith(field)) {
+                    if (prop.endsWith(field) && (prefix == null || prop.startsWith(prefix))) {
+                        System.out.println("\tPrefix: "+prefix);
                         values.put(field, comp.getProperty(prop));
                     }
                 }
@@ -45,7 +50,15 @@ public class Validator {
 
     public void claim(String key, String val, RobotComponent comp) throws InvalidException {
         assert type.equals("unique"); // TODO: Deal with better
-        Map<String, String> values = getMap(comp);
+        
+        // Get the prefix
+        String prefix = null;
+        for (String field : fields) {
+            if (key.endsWith(field)) {
+                prefix = key.replace(field, "");
+            }
+        }
+        Map<String, String> values = getMap(comp, prefix);
         for (String field : fields) {
             if (key.endsWith(field)) {
                 System.out.println("\t- "+field);
