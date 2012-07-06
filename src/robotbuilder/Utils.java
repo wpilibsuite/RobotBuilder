@@ -37,7 +37,6 @@ public class Utils {
      * @return The resource stream
      */
     public static InputStream getResourceAsStream(String resource) {
-        System.out.println("Loading Resource: "+resource);
         return Utils.class.getResourceAsStream(resource);
     }
 
@@ -51,7 +50,7 @@ public class Utils {
         p.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         return p;
     }
-    
+
     public static void browse(final String url) {
         try {
                 Desktop.getDesktop().browse(new URI(url));

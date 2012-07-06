@@ -603,7 +603,7 @@ Palette:
         type: Command
         help: A command group, someone really needs to update the help.
         properties:
-          - !Property
+          - !TypeSelectionProperty
             name: Requires
             type: Subsystem
             default: "None"
@@ -612,23 +612,19 @@ Palette:
         type: Command
         help: A PID command, someone really needs to update the help.
         properties:
-          - !Property
+          - !TypeSelectionProperty
             name: Requires
             type: Subsystem
             default: "None"
-          - !Property
-            name: P value
-            type: Double
-            default: "1"
-          - !Property
-            name: I value
-            type: Double
-            default: "0"
-          - !Property
-            name: D value
-            type: Double
-            default: "0"
-          - !Property
+          - !DoubleProperty
+            name: P
+            default: 1
+          - !DoubleProperty
+            name: I
+            default: 0
+          - !DoubleProperty
+            name: D
+            default: 0
+          - !DoubleProperty
             name: Update frequency (kHz)
-            type: Integer
-            default: "50"
+            default: 50
