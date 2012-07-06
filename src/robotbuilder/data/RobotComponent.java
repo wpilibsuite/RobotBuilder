@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import javax.swing.JComboBox;
 import javax.swing.tree.DefaultMutableTreeNode;
 import robotbuilder.Palette;
 import robotbuilder.RobotTree;
@@ -18,6 +19,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
     private PaletteComponent base;
     private RobotTree robot;
     private Map<String, String> configuration = new HashMap<String, String>();
+    private Map<String, JComboBox> combos = new HashMap<String, JComboBox>();
 
     public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
         //setName(name);
@@ -37,6 +39,26 @@ public class RobotComponent extends DefaultMutableTreeNode {
             val = base.getProperties().get(key).getDefault();
         }
         return val;
+    }
+    
+    /**
+     * @return The value to render.
+     */
+    public Object getValue(String key) {
+        if (combos.get(key) == null && base.getProperties().get(key).getChoices() != null) {
+            combos.put(key, new JComboBox(base.getProperties().get(key).getChoices()));
+        }
+        if (combos.get(key) != null) {
+            return combos.get(key);
+        } else {
+            return configuration.get(key);
+        }
+    }
+
+    public void setValue(String key, String val) {
+        if (combos.get(key) != null) combos.get(key).setSelectedItem(val);
+        configuration.put(key, val);
+        System.out.println(key+" ==> "+val+" ==> "+combos.get(key).getSelectedItem());
     }
     
     @Override

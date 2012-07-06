@@ -5,12 +5,12 @@
 	    "Properties" : {
 		"Module (Analog)" : {
                     "Type" : "Module (Analog)",
-		    "Choices" : [1, 2],
+		    "Choices" : ["1", "2"],
 		    "Default" : "Default Module"
                 },
 		"Port (Analog)" : {
                     "Type" : "Port (Analog)",
-		    "Choices" : [1, 2, 3, 4, 5, 6, 7, 8],
+		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8"],
 		    "Default" : "Default Port"
                 },
 	    }
@@ -19,12 +19,12 @@
 	    "Properties" : {
 		"Module (Digital)" : {
                     "Type" : "Module (Digital)",
-		    "Choices" : [1, 2],
+		    "Choices" : ["1", "2"],
 		    "Default" : "Default Module"
                 },
 		"Port (Digital)" : {
                     "Type" : "Port (Digital)",
-		    "Choices" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14],
+		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"],
 		    "Default" : "Default Port"
                 },
 	    }
@@ -33,12 +33,12 @@
 	    "Properties" : {
 		"Module (Digital)" : {
                     "Type" : "Module (Digital)",
-		    "Choices" : [1, 2],
+		    "Choices" : ["1", "2"],
 		    "Default" : "Default Module"
                 },
 		"Port (PWM)" : {
                     "Type" : "Port (PWM)",
-		    "Choices" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+		    "Choices" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
 		    "Default" : "Default Port"
                 },
 	    }

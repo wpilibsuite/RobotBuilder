@@ -2,13 +2,11 @@
 package robotbuilder;
 
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
+import java.awt.Component;
+import javax.swing.*;
+import javax.swing.table.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeCellEditor;
 import robotbuilder.data.RobotComponent;
 
 /**
@@ -25,7 +23,7 @@ class PropertiesDisplay extends JPanel {
     public PropertiesDisplay() {
         setLayout(new BorderLayout());
 	propTableModel = new PropertiesTableModel();
-	propTable = new JTable(propTableModel);
+	propTable = new PropertiesTable(propTableModel);
         add(new JScrollPane(propTable), BorderLayout.CENTER);
         propTable.setFillsViewportHeight(true);
     }
@@ -39,6 +37,44 @@ class PropertiesDisplay extends JPanel {
 
     void setRobotTree(RobotTree robot) {
         this.robot = robot;
+    }
+    
+    class PropertiesTable extends JTable {
+
+        private PropertiesTable(TableModel propTableModel) {
+            super(propTableModel);
+        }
+        
+        @Override
+        public TableCellEditor getCellEditor(int row, int column) {
+            Object value = super.getValueAt(row, column);
+            if(value != null) {
+                if(value instanceof JComboBox) {
+                    return new DefaultCellEditor((JComboBox) value);
+                }
+                return getDefaultEditor(value.getClass());
+            }
+            return super.getCellEditor(row, column);
+        }
+
+        @Override
+        public TableCellRenderer getCellRenderer(int row, int column) {
+            final Object value = super.getValueAt(row, column);
+            if(value != null) {
+                if(value instanceof JComboBox) {
+                    return new TableCellRenderer() {
+                        @Override
+                        public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
+                            System.out.println("Render component fetched.");
+                            return new JLabel(((JComboBox) value).getSelectedItem().toString());
+                        }
+                    };
+                }
+                return getDefaultRenderer(value.getClass());
+            }
+            return super.getCellRenderer(row, column);
+        }
+        
     }
     
     class PropertiesTableModel extends AbstractTableModel {
@@ -77,7 +113,9 @@ class PropertiesDisplay extends JPanel {
                 if (row == 0)
                     return currentComponent.getName();
                 else
-                    return currentComponent.getProperty(keys[row-1]);
+                    //String[] choices = {"1", "2", "3"};
+                    //return new JComboBox(choices);}
+                    return currentComponent.getValue(keys[row-1]);
             }
 	}
         
@@ -92,7 +130,7 @@ class PropertiesDisplay extends JPanel {
             if (row == 0)
                 currentComponent.setName((String) val);
             else
-                currentComponent.setProperty(keys[row-1], (String) val);
+                currentComponent.setValue(keys[row-1], (String) val);
             robot.update();
         }
     }

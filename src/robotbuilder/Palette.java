@@ -174,7 +174,19 @@ public class Palette extends JPanel {
             for (Iterator i = props.keys(); i.hasNext();) {
                 String name = (String) i.next();
                 JSONObject values = props.getJSONObject(name);
-                component.addProperty(name, new Property(name, values.getString("Type"), values.optString("Default", null)));
+                Property prop = new Property(name, values.getString("Type"), values.optString("Default"));
+                JSONArray jsonchoices = values.optJSONArray("Choices");
+                System.out.println(jsonchoices);
+                String[] choices = null;
+                if (jsonchoices != null) {
+                    choices = new String[jsonchoices.length()];
+                    for (int j = 0; j < jsonchoices.length(); j++) {
+                        System.out.println(jsonchoices.get(j));
+                        choices[j] = jsonchoices.getString(j);
+                    }
+                }
+                prop.setChoices(choices);
+                component.addProperty(name, prop);
             }
         } catch (JSONException ex) {
             Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
