@@ -55,4 +55,16 @@ public class DoubleProperty extends Property {
             return false;
         }
     }
+    
+    @Override
+    public String getError() {
+        try {
+            // Check that it's a valid double
+            Double.parseDouble((value != null) ? value : defaultValue.toString());
+            return super.getError();
+        } catch (NumberFormatException ex) {
+            String error = super.getError();
+            return name+" expects a real number. "+ (error!=null ? error : "");
+        }
+    }
 }

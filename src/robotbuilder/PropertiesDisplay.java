@@ -74,7 +74,7 @@ class PropertiesDisplay extends JPanel {
                         Property property = currentComponent.getProperty(keys[row-1]);
                         if (!property.isValid()) {
                             label.setForeground(Color.red);
-                            label.setToolTipText(property.getError(currentComponent));
+                            label.setToolTipText(property.getError());
                         } else {
                             label.setForeground(Color.black);
                         }

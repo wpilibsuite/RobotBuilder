@@ -78,7 +78,7 @@ public abstract class Property {
         return true;
     }
 
-    public String getError(RobotComponent currentComponent) {
+    public String getError() {
         if (validators == null) return null;
         String out = "";
         for (String validatorName : validators) {
