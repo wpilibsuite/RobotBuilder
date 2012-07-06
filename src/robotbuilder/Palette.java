@@ -26,7 +26,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import robotbuilder.data.*;
+import robotbuilder.data.Macro;
+import robotbuilder.data.PaletteComponent;
+import robotbuilder.data.Property;
+import robotbuilder.data.Validator;
 
 /**
  * The Palette is the set of components that can be used to create the robot
@@ -253,26 +256,7 @@ public class Palette extends JPanel implements TreeSelectionListener {
             String macroName = (String) macroNames.next();
             JSONObject macroDef = json.optJSONObject(macroName);
             
-            Macro macro = new Macro(macroName);
-            try {
-                JSONArray props = macroDef.getJSONArray("Properties");
-                for (Object i : props.getIterable()) {
-                    JSONObject property = (JSONObject) i;
-                    LinkedList<Object> choices = null;
-                    if (property.has("Choices")) {
-                        choices = new LinkedList<Object>();
-                        for (Object c : property.optJSONArray("Choices").getIterable()) {
-                            choices.add(c);
-                        }
-                    }
-                    System.out.println("Adding expansion: "+property.getString("Name") +" "+property.getString("Type")+" "+property.optString("Default")+" "+property.optString("DefaultDefault")+" "+choices);
-                    macro.addExpansion(property.getString("Name"), 
-                            property.getString("Type"), property.optString("Default"),
-                            property.optString("DefaultDefault"), choices);
-                }
-            } catch (JSONException ex) {
-                Logger.getLogger(Palette.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Macro macro = new Macro(macroName, macroDef);
             macros.put(macroName, macro);
         }
     }

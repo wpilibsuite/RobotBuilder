@@ -96,6 +96,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         root.add(new RobotComponent("Commands", Palette.getInstance().getItem("Commands"), this));
 	return root;
     }
+    
+    public Validator getValidator(String name) {
+        return validators.get(name);
+    }
 
     /**
      * @param component The type of component to generate a default name for.
