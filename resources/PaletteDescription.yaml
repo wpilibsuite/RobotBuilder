@@ -624,7 +624,7 @@ Palette:
           - !ChoicesProperty
             name: Number
             choices: ["1", "2", "3", "4"]
-            validators: [USB Port]
+            validators: [Joystick]
             default: 1
       - !Component
         name: Joystick Button
