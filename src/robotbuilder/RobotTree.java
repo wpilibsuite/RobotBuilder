@@ -320,10 +320,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @return The default name.
      */
     private String getDefaultComponentName(PaletteComponent componentType, String subsystem) {
-	int i = 0;
+	int i = 1;
 	String name;
 	while (true) {
-	    name = componentType.toString() + (i == 0 ? "" : " " + i);
+	    name = componentType.toString() + (i == 1 ? "" : " " + i);
 	    if (!usedNames.contains(subsystem+name)) {
 		usedNames.add(subsystem+name);
 		return name;
