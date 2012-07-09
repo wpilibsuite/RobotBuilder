@@ -1,10 +1,7 @@
 
 body {
    background-color: #white;
-}
-
-h1 {
-   text-align: center;
+   width: 600px;
 }
 
 h1 {
@@ -25,10 +22,30 @@ h3 {
    padding-bottom: 0px;
 }
 
+h4 {
+   margin-top: 6px;
+   padding-top: 6px;
+   margin-bottom: -4px;
+   padding-bottom: -4px;
+}
+
 img {
 }
 
 dt {
    font-size: 16;
    font-weight: bold;
+}
+
+p {
+   margin-top: 0px;
+   padding-top: 0px;
+   margin-bottom: 5px;
+   padding-bottom: 0px;
+}
+
+
+.lead {
+    font-style: italic;
+    margin-bottom: -0px;
 }
