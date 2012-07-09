@@ -47,17 +47,6 @@ public class TypeSelectionProperty extends Property {
         this.value = value;
     }
     
-    /**
-     * Called to update this with info from the palette.
-     * @param parent The property that this is a clone of.
-     */
-    @Override
-    public void update(Property parent) {
-        super.update(parent);
-        if (parent instanceof TypeSelectionProperty)
-            setType(((TypeSelectionProperty) parent).getType());
-    }
-    
     
     @Override
     public void update() {

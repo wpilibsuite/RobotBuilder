@@ -90,16 +90,6 @@ public abstract class Property {
     }
     
     /**
-     * Called to update this with info from the palette.
-     * @param parent The property that this is a clone of.
-     */
-    public void update(Property parent) {
-        setName(parent.getName());
-        setValidators(parent.getValidators());
-        setDefault(parent.getDefault());
-    }
-    
-    /**
      * A special method to deal with the UniqueValidator.
      */
     public void setUnique() {

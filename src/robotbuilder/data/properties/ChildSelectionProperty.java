@@ -48,16 +48,6 @@ public class ChildSelectionProperty extends Property {
         this.value = value;
     }
     
-    /**
-     * Called to update this with info from the palette.
-     * @param parent The property that this is a clone of.
-     */
-    public void update(Property parent) {
-        super.update(parent);
-        if (parent instanceof ChildSelectionProperty)
-            setType(((ChildSelectionProperty) parent).getType());
-    }
-    
     @Override
     public void update() {
         super.update();

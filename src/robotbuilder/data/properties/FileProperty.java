@@ -89,18 +89,6 @@ public class FileProperty extends Property {
         this.folder = folder;
     }
     
-    /**
-     * Called to update this with info from the palette.
-     * @param parent The property that this is a clone of.
-     */
-    public void update(Property parent) {
-        super.update(parent);
-        if (parent instanceof FileProperty) {
-            setFolder(((FileProperty) parent).getFolder());
-            setExtension(((FileProperty) parent).getExtension());
-        }
-    }
-    
     @Override
     public void update() {
         super.update();
