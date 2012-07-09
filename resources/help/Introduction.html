@@ -194,7 +194,7 @@
       <li>Rename it to "Slow Tank Drive Button".</li>
     </ol>
     
-    <h4>Configuring th Joystick Button</h4>
+    <h4>Configuring the Joystick Button</h4>
     <p>For the joystick button to do anything interesting, you have to
        configure it to run a command.</p>
     <p>To configure a joystick button:</p>
@@ -213,13 +213,73 @@
     
     <h3>Generating Code</h3>
     
-    <p>RobotBuilder is an application designed to aid the robot
-       development process. Robot builder can help you:</p>
+    <p>Once you've filled in RobotBuilder with the information you
+       want, it can generate all of the important files and the bulk
+       of code for an existing java project</p>
     
-    <h3>Generating Wiring Diagrams</h3>
+    <h4>Creating the Netbeans Project</h4>
+    <p>For java, it assumes that their is an existing project to put
+       the code in.</p>
+    <p>To create a netbeans project:</p>
+    <ol>
+      <li>Open up netbeans with the FRC Plugins installed.</li>
+      <li>Click new project.</li>
+      <li>Select FRC Java > CommandBasedRobotTemplateProject.</li>
+      <li>Click Next.</li>
+      <li>Set the project name to some unique name like "Test Robot".</li>
+      <li>Check the path that this project is being put, you'll need this later.</li>
+      <li>Set the package name and remember it for later.</li>
+      <p><b>Note:</b> The package path should be something unique such
+         as org.usfirst.frc####.testRobot where "####" is replaced
+         with the team number and testRobot is replaced with the current project.</p>
+      <li>Set the robot class to Robot.</li>
+      <li>Click "Finish".</li>
+    </ol>
     
-    <p>RobotBuilder is an application designed to aid the robot
-       development process. Robot builder can help you:</p>
+    <h4>Telling RobotBuilder Where the Project is</h4>
+    <p>In order to export to java, RobotBuilder needs to know where
+       your java project is and what package it is in.</p>
+    <p>To tell RobotBuilder about the java project:</p>
+    <ol>
+      <li>Open up RobotBuilder.</li>
+      <li>Select the root of your robot tree.</li>
+      <li>Select the folder for the Java Project property. This
+         should be the same folder you put the java project in.</li>
+      <li>Set the Java Package property to the package of the java project.</li>
+    </ol>
+    
+    <h4>Exporting to Java</h4>
+    <p>RobotBuilder can generate the skeleton robot code from your
+       robot model for you.</p>
+    <p>To generate the code with RobotBuilder for java:</p>
+    <ol>
+      <li>Open up RobotBuilder.</li>
+      <li>Click Generate > Java.</li>
+    </ol>
+    
+    <h3>Generating Wiring Tables</h3>
+    
+    <p>RobotBuilder can generate wiring tables to simplify wiring of
+       the robot.</p>
+    
+    <h4>Telling RobotBuilder Where to put the Table</h4>
+    <p>In order to export th table, RobotBuilder needs to know where
+       to put it.</p>
+    <p>To tell RobotBuilder where to put the wiring table:</p>
+    <ol>
+      <li>Open up RobotBuilder.</li>
+      <li>Select the root of your robot tree.</li>
+      <li>Click where it says "Click to Select" next to wiring file.</li>
+      <li>Select or create a file to export to.</li>
+    </ol>
+    
+    <h4>Exporting to a Wiring Table</h4>
+    <p>RobotBuilder can generate a wiring table for you.</p>
+    <p>To generate the wiring with RobotBuilder :</p>
+    <ol>
+      <li>Open up RobotBuilder.</li>
+      <li>Click Generate > Wiring Table.</li>
+    </ol>
     
     <h3>Filling in the Code</h3>
     
