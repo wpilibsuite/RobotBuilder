@@ -128,11 +128,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         final int numSupports = 25;
                         
                         
-                        System.out.println("\nComponent name: \""+name+"\"");
-                        System.out.println("Type of selected component: \""+selectedType+"\"");
-                        System.out.println("Given type of selected component: \""+gottenType+"\"");
-                        System.out.println("Base type of component: \""+componentType+"\"\n");
-                        
                         final JMenuItem delete = new JMenuItem("Delete");
                         delete.setAction(new DeleteItemAction("Delete", selected));
 //                        final JMenuItem wipe = new JMenuItem("Clear");
@@ -345,9 +340,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param name The name being freed
      */
     public void removeName(String name) {
-        System.out.println("Removing name: "+name);
 	usedNames.remove(name);
-        System.out.println("Used names: "+usedNames);
     }
 
     /**
@@ -810,7 +803,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	@Override
 	public int getSourceActions(JComponent c) {
 	    //return COPY_OR_MOVE;
-            System.out.println("Supports: "+delegate.getSourceActions(c));
 	    return delegate.getSourceActions(c);
 	}
 
@@ -836,7 +828,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		childIndex = tree.getModel().getChildCount(path.getLastPathComponent());
 	    }
 	    DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-	    System.out.println("parentNode=" + parentNode);
 	    DefaultMutableTreeNode newNode;
 	    if (support.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)) {
 		System.out.println("Importing from palette");
@@ -850,40 +841,29 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		    System.out.println("IOE");
 		    return false;
 		}
-		System.out.println("Data: " + data);
 		PaletteComponent base = Palette.getInstance().getItem(data);
 		assert base != null; // TODO: Handle more gracefully
-                System.out.println("Creating Component...");
                 newNode = new RobotComponent(getDefaultComponentName(base, ((RobotComponent) parentNode).getSubsystem()), base, robot);
-                System.out.println("...Component Created");
 	    } else if (support.getTransferable().isDataFlavorSupported(ROBOT_COMPONENT_FLAVOR)) {
-		System.out.println("Moving a robot component");
 		try {
 		    newNode = (RobotComponent) support.getTransferable().getTransferData(ROBOT_COMPONENT_FLAVOR);
 		} catch (UnsupportedFlavorException e) {
-		    System.out.println("UnsupportedFlavor");
 		    return false;
 		} catch (IOException e) {
-		    System.out.println("IOException");
 		    return false;
 		}
 		System.out.println("Imported a robot component: " + newNode.toString());
 	    } else {
 		return false;
 	    }
-	    System.out.println("newNode=" + newNode);
 	    saved = false;
 	    treeModel.insertNodeInto(newNode, parentNode, childIndex);
             treeModel.reload(parentNode); // reloads the tree without reverting to the root
-	    System.out.println("childIndex=" + childIndex);
 	    tree.makeVisible(path.pathByAddingChild(newNode));
-	    System.out.print("--");
 	    tree.scrollRectToVisible(tree.getPathBounds(path.pathByAddingChild(newNode)));
-	    System.out.println("--");
             update();
             takeSnapshot();
 	    return true;
-	    //return delegate.importData(support);
 	}
     }
     
@@ -961,7 +941,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Removing \""+target.getName()+"\"...");
             target.removeFromParent();
             target.walk(new RobotWalker() {
                 @Override
@@ -971,8 +950,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             });
             update();
             takeSnapshot();
-            System.out.println("\""+target.getName()+"\" removed");
-            
         }
     }
 }
