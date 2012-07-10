@@ -292,7 +292,7 @@ Palette:
           - !DoubleProperty
             name: F
             default: 0
-##          - !DoubleProperty
+##          - !IntegerProperty
 ##            name: Period
 ##            default: 50
           - !BooleanProperty
@@ -349,7 +349,7 @@ Palette:
           - !DoubleProperty
             name: F
             default: 0
-          - !DoubleProperty
+          - !IntegerProperty
             name: Period
             default: 50
           - !BooleanProperty
