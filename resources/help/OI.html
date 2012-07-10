@@ -9,49 +9,37 @@
       <center><img src="images/image.jpg" /></center>
 
     <h2>What is it?</h2>
-    <p>A paragraph or so describing what it is</p>
+      <p>The OI is the operator interface. It connects the buttons and
+         joysticks that the operator uses to the commands which they
+         should trigger.  The buttons in the OI make it really easy to
+         change the functions that each button performs as you test
+         the code and add new commands to make the operators job
+         easier.</p>
+      
+    <h2>What types of buttons are there?</h2>
+      <p>There are a number of buttons that can be used to trigger
+        commands.</p>
 
-
-    <h2>Properties</h2>
-
-    <dl>
-      <dt>Name</dt>
-      <dd>The name of this compenent.</dd>
-      <dt>Property Name)</dt>
-      <dd>A brief description of the property.</dd>
-    </dl>
-
-    <h2>Applications</h2>
-    
-    <h3>An Application</h3>
-    <p>A paragraph describing the application</p>
-    
-    <h3>An Application</h3>
-    <p>A paragraph describing the application</p>
-    
-    <h2>Usage</h2>
-    
-    <h3>Controls Usage</h3>
-    
-    <p>A paragraph</p>
-    
-    <h3>Electrical Usage</h3>
-    
-    <p>A paragraph</p>
-    
-    <h3>Physical Usage</h3>
-    
-    <p>A paragraph.</p>
-
-    <h2>See Also</h2>
-    <ul>
-      <li>
-	<a href="" >Wikipedia</a>
-      </li>
-      <li>
-	<a href="" >FIRST KOP Datasheet</a>
-      </li>
-    </ul>
-  </body>
-
+      <table>
+	<tr><th>Button</th>
+	  <th>Class</th></tr>
+	<tr><td>JoystickButton</td>
+	  <td>A button on a joystick. This is probably the most useful
+              type of button.</td></tr>
+	<tr><td>DigitalIOButton</td>
+	  <td>A button from the digital IO on the cypress module if
+               you build a custom physical OI.</td></tr>
+	<tr><td>AnalogIOButton</td>
+	  <td>A button from the analog IO on the cypress module if you
+              build a custom physical OI.</td></tr>
+	<tr><td>InternalButton</td>
+	  <td>A virtual button that can be triggered in code or put on
+              the SmartDashboard.</td></tr>
+	<tr><td>NetworkButton</td>
+	  <td>A button that is triggered by a value on a network
+             table. This is useful for allowing code not on the CRIO
+             to trigger commands.</td></tr>
+	<tr><td>Custom</td>
+	  <td>Buttons Custom buttons can be created by subclassing
+              Button and overriding the isPressed method.</td></tr>
 </html>
