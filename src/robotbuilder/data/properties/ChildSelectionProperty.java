@@ -14,9 +14,10 @@ import robotbuilder.data.RobotComponent;
  * @author Alex Henning
  */
 public class ChildSelectionProperty extends Property {
-    protected String type;
-    protected Object value;
-    protected JComboBox combo;
+    private String type;
+    private Object value;
+    private RobotComponent valueComponent;
+    private JComboBox combo;
     
     public ChildSelectionProperty() {}
     
@@ -25,6 +26,7 @@ public class ChildSelectionProperty extends Property {
         super(name, defaultValue, validators, component);
         this.type = type;
         this.value = value;
+        if (value != null) valueComponent = component.getRobotTree().getComponentByName(value.toString());
     }
 
     @Override
@@ -34,6 +36,7 @@ public class ChildSelectionProperty extends Property {
 
     @Override
     public Object getValue() {
+        if (valueComponent != null) return valueComponent.getFullName();
         return (value != null) ? value : defaultValue;
     }
     
@@ -46,16 +49,18 @@ public class ChildSelectionProperty extends Property {
     @Override
     public void _setValue(Object value) {
         this.value = value;
+        valueComponent = component.getRobotTree().getComponentByName(value.toString());
     }
     
     @Override
     public void update() {
         super.update();
         Object selection = getValue();
+        if (valueComponent != null) selection = valueComponent.getFullName();
         Vector<String> options = component.getChildrenOfTypeNames(type);
         combo = new JComboBox(options);
-        if (options.contains(selection)) {
-            combo.setSelectedItem(value);
+        if (options.indexOf(selection) != -1) {
+            combo.setSelectedItem(selection);
         } else if (defaultValue instanceof Integer &&
                 ((Integer) defaultValue) < options.size()) {
             combo.setSelectedIndex((Integer) defaultValue);
@@ -64,6 +69,7 @@ public class ChildSelectionProperty extends Property {
             combo.setSelectedItem(defaultValue);
         }
         value = combo.getSelectedItem();
+        if (value != null) valueComponent = component.getRobotTree().getComponentByName(value.toString());
     }
     
     public String getType() {

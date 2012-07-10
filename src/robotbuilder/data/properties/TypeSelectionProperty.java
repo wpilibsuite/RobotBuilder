@@ -15,6 +15,7 @@ import robotbuilder.data.RobotComponent;
 public class TypeSelectionProperty extends Property {
     protected String type;
     protected Object value;
+    private RobotComponent valueComponent;
     protected JComboBox combo;
     
     public TypeSelectionProperty() {}
@@ -24,6 +25,7 @@ public class TypeSelectionProperty extends Property {
         super(name, defaultValue, validators, component);
         this.type = type;
         this.value = value;
+        if (value != null) valueComponent = component.getRobotTree().getComponentByName(value.toString());
     }
 
     @Override
@@ -33,6 +35,7 @@ public class TypeSelectionProperty extends Property {
 
     @Override
     public Object getValue() {
+        if (valueComponent != null) return valueComponent.getFullName();
         return (value != null) ? value : defaultValue;
     }
     
@@ -45,6 +48,7 @@ public class TypeSelectionProperty extends Property {
     @Override
     public void _setValue(Object value) {
         this.value = value;
+        if (value != null) valueComponent = component.getRobotTree().getComponentByName(value.toString());
     }
     
     
@@ -52,7 +56,8 @@ public class TypeSelectionProperty extends Property {
     public void update() {
         super.update();
         Object selection = getValue();
-        Vector<String> options = component.getRobotTree().getNamesOfType(type);
+        if (valueComponent != null) selection = valueComponent.getFullName();
+        Vector<String> options = component.getRobotTree().getRoot().getChildrenOfTypeNames(type);
         options.add(0, defaultValue.toString());
         combo = new JComboBox(options);
         combo.setSelectedIndex(0);

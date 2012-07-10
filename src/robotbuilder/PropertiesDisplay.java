@@ -183,9 +183,7 @@ class PropertiesDisplay extends JPanel {
                 String name = (String) val;
                 if (!robot.hasName(subsystem+name) || 
                         (subsystem+name).equals(currentComponent.getFullName())) {
-                    robot.removeName(currentComponent.getFullName());
                     currentComponent.setName(name);
-                    robot.addName(subsystem+name);
                 } else {
                     JOptionPane.showMessageDialog(MainFrame.getInstance(),
                             "You already have a component named: "+name, "Invalid Name", JOptionPane.ERROR_MESSAGE);

@@ -645,6 +645,19 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         return commands;
     }
 
+    public RobotComponent getComponentByName(final String name) {
+        final RobotComponent[] component = new RobotComponent[1];
+        robot.walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                if (self.getFullName().equals(name)) {
+                    component[0] = self;
+                }
+            }
+        });
+        return component[0];
+    }
+
     public boolean isRobotValid() {
         final boolean valid[] = {true};
         walk(new RobotWalker() {
@@ -655,20 +668,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         });
         
         return valid[0];
-    }
-
-    public Vector<String> getNamesOfType(final String type) {
-        final Vector<String> names = new Vector<String>();
-        walk(new RobotWalker() {
-            @Override
-            public void handleRobotComponent(RobotComponent self) {
-                if (self.getBase().getType().equals(type)) {
-                    names.add(self.getName());
-                }
-            }
-        });
-        
-        return names;
     }
     
     public void takeSnapshot(){

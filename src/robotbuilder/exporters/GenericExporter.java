@@ -309,16 +309,7 @@ public class GenericExporter {
     }
 
     public RobotComponent getByName(final String name, RobotComponent robot) { // TODO: Make macro
-        final RobotComponent[] component = new RobotComponent[1];
-        robot.walk(new RobotWalker() {
-            @Override
-            public void handleRobotComponent(RobotComponent self) {
-                if (self.getFullName().equals(name)) {
-                    component[0] = self;
-                }
-            }
-        });
-        return component[0];
+        return robot.getRobotTree().getComponentByName(name);
     }
     
     // UTILITIES
