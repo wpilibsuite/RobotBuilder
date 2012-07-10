@@ -59,6 +59,7 @@ public class Palette extends JPanel implements TreeSelectionListener {
         // Properties
         constructor.addTypeDescription(new TypeDescription(StringProperty.class, "!StringProperty"));
         constructor.addTypeDescription(new TypeDescription(BooleanProperty.class, "!BooleanProperty"));
+        constructor.addTypeDescription(new TypeDescription(IntegerProperty.class, "!IntegerProperty"));
         constructor.addTypeDescription(new TypeDescription(DoubleProperty.class, "!DoubleProperty"));
         constructor.addTypeDescription(new TypeDescription(FileProperty.class, "!FileProperty"));
         constructor.addTypeDescription(new TypeDescription(ChoicesProperty.class, "!ChoicesProperty"));
