@@ -1,3 +1,35 @@
+## Netbeans Project Files
+- !File
+  export: $project/BSD_License_for_WPILib_code.txt
+  source: $exporter-path/BSD_License_for_WPILib_code.txt
+  update: None
+
+- !File
+  export: $project/build.properties
+  source: $exporter-path/build.properties
+  update: None
+
+- !File
+  export: $project/build.xml
+  source: $exporter-path/build.xml
+  update: None
+
+- !File
+  export: $project/resources/META-INF/MANIFEST.MF
+  source: $exporter-path/MANIFEST.MF
+  update: None
+
+- !File
+  export: $project/nbproject/project.xml
+  source: $exporter-path/project.xml
+  update: None
+
+- !File
+  export: $package-path/${robot-class}.java
+  source: $exporter-path/RobotTemplate.java
+  update: None
+  
+## Key Java Files
 - !File
   export: $package-path/RobotMap.java
   source: $exporter-path/RobotMap.java

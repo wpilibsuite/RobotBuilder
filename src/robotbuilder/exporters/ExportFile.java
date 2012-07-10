@@ -35,6 +35,8 @@ public class ExportFile {
         
         if (export.exists()) backup(exporter); // Create a backup for the user!
         
+        mkdir(export.getParentFile());
+        
         // Export
         if (!export.exists() || update.equals("Overwrite")) {
             FileWriter out = new FileWriter(export);
@@ -95,5 +97,15 @@ public class ExportFile {
     }
     public void setVariables(Map<String, String> vars) {
         this.vars = vars;
+    }
+
+    /**
+     * Make a directory and any directory above it if necessary.
+     * @param dir The directory to make
+     */
+    private void mkdir(File dir) {
+        if (dir.exists()) return;
+        mkdir(dir.getParentFile());
+        dir.mkdir();
     }
 }

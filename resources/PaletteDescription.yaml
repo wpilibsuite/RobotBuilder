@@ -204,14 +204,23 @@ Palette:
         supports: {Subsystems: 1, OI: 1, Commands: 1}
         help: Your Robot!
         properties:
+          - !IntegerProperty
+            name: Team Number
+            default: 0
           - !FileProperty
             name: Java Project
             extension: null
             folder: true
             default: ""
           - !StringProperty
+            name: Java Main Class
+            default: "Robot"
+          - !BooleanProperty
+            name: Use Default Java Package
+            default: true
+          - !StringProperty
             name: Java Package
-            default: ""
+            default: "org.usfirst.frc0000"
           - !BooleanProperty
             name: Export Subsystems
             default: true
