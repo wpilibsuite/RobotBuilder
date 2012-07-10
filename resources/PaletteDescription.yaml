@@ -204,6 +204,10 @@ Palette:
         supports: {Subsystems: 1, OI: 1, Commands: 1}
         help: Your Robot!
         properties:
+          - !TypeSelectionProperty
+            name: Autonomous Command
+            type: Command
+            default: None
           - !IntegerProperty
             name: Team Number
             default: 0

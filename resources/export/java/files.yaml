@@ -23,13 +23,15 @@
   export: $project/nbproject/project.xml
   source: $exporter-path/project.xml
   update: None
-
+  
+## Key Java Files
 - !File
   export: $package-path/Robot.java
   source: $exporter-path/RobotTemplate.java
-  update: None
-  
-## Key Java Files
+  update: Modify
+  modifications:
+    autonomous: $exporter-path/RobotTemplate-autonomous.java
+    
 - !File
   export: $package-path/RobotMap.java
   source: $exporter-path/RobotMap.java
