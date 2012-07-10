@@ -25,7 +25,7 @@
   update: None
 
 - !File
-  export: $package-path/${robot-class}.java
+  export: $package-path/Robot.java
   source: $exporter-path/RobotTemplate.java
   update: None
   

@@ -60,7 +60,6 @@ Vars:
   use-default-package-p: ${robot.getProperty('Use Default Java Package').getValue()}
   package: "#if($use-default-package-p)org.usfirst.frc${team-number}.${robot-name}#else${robot.getProperty('Java Package').getValue()}#end"
   package-path: ${project}/src/${package.replace('.', '/')}
-  robot-class: ${robot.getProperty('Java Main Class').getValue()}
     
 Macros: macros.vm
 

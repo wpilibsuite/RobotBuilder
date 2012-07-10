@@ -212,9 +212,6 @@ Palette:
             extension: null
             folder: true
             default: ""
-          - !StringProperty
-            name: Java Main Class
-            default: "Robot"
           - !BooleanProperty
             name: Use Default Java Package
             default: true
