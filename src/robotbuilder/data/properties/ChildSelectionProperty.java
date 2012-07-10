@@ -49,7 +49,8 @@ public class ChildSelectionProperty extends Property {
     @Override
     public void _setValue(Object value) {
         this.value = value;
-        valueComponent = component.getRobotTree().getComponentByName(value.toString());
+        if (value != null && component != null)
+            valueComponent = component.getRobotTree().getComponentByName(value.toString());
     }
     
     @Override

@@ -116,9 +116,13 @@ public class RobotComponent extends DefaultMutableTreeNode {
         return name;
     }
     public final void setName(String name) {
-        robot.removeName(getFullName());
-        this.name = name;
-        robot.addName(getFullName());
+        if (this.name != null) {
+            robot.removeName(getFullName());
+            this.name = name;
+            robot.addName(getFullName());
+        } else {
+            this.name = name;
+        }
     }
     
     public PaletteComponent getBase() {
