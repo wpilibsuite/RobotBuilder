@@ -1,12 +1,9 @@
 /build/
 /nbproject/private/
 /dist/
-save.yaml
+save*.yaml
 *~
 *#
-/test-resources/RobotBuilderTestProject/build/
-/test-resources/RobotBuilderTestProject/nbproject/private/
-/test-resources/RobotBuilderTestProject/src/robotcode/RobotMap.java
-/test-resources/RobotBuilderTestProject/src/robotcode/OI.java
-/test-resources/RobotBuilderTestProject/src/robotcode/subsystems/
-/test-resources/RobotBuilderTestProject/src/robotcode/commands/
+/test-resources/RobotBuilderTestProject/*
+/.svn/*
+wiring*.html
