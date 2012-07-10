@@ -53,15 +53,13 @@ public class JavaExportTest {
         } catch (IOException ex) { // Catch for windows
             p = Runtime.getRuntime().exec("ant.bat compile", null, new File("test-resources/RobotBuilderTestProject/"));
         }
-        p.waitFor();
-        String output = "";
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line = reader.readLine();
         while (line != null) {
-            output += line +"\n";
+            System.out.println(line);
             line = reader.readLine();
         }
-        System.out.println(output);
+        p.waitFor();
         System.out.println(p.exitValue());
         assertEquals("Exit value should be 0, compilation failed.", p.exitValue(), 0);
     }
