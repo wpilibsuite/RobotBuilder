@@ -1,6 +1,7 @@
 package robotbuilder;
 
 
+import java.io.File;
 import robotbuilder.data.RobotComponent;
 
 /*
@@ -103,5 +104,14 @@ public class TestUtils {
         autoButton.getProperty("Command").setValue("Autonomous");
         
         return tree;
+    }
+
+    static void delete(File dir) {
+        if (dir.listFiles() != null) {
+            for (File f : dir.listFiles()) {
+                delete(f);
+            }
+        }
+        dir.delete();
     }
 }

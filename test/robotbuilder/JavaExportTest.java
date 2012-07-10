@@ -28,27 +28,10 @@ public class JavaExportTest {
     
     @Before
     public void setUp() {
-        File commands = new File("test-resources/RobotBuilderTestProject/src/robotcode/commands");
-        File subsystems = new File("test-resources/RobotBuilderTestProject/src/robotcode/subsystems");
-        File robotmap = new File("test-resources/RobotBuilderTestProject/src/robotcode/RobotMap.java");
-        File oi = new File("test-resources/RobotBuilderTestProject/src/robotcode/OI.java");
-        
-        if (commands.listFiles() != null)
-            for (File child : commands.listFiles()) { child.delete(); }
-        commands.delete();
-        assertFalse(commands.exists());
-        commands.mkdir();
-
-        if (subsystems.listFiles() != null)
-            for (File child : subsystems.listFiles()) { child.delete(); }
-        subsystems.delete();
-        assertFalse(subsystems.exists());
-        subsystems.mkdir();
-
-        robotmap.delete();
-        assertFalse(robotmap.exists());
-        oi.delete();
-        assertFalse(oi.exists());
+        File project = new File("test-resources/RobotBuilderTestProject/");
+        TestUtils.delete(project);
+        assertFalse(project.exists());
+        project.mkdir();
     }
     
     @After
@@ -58,6 +41,7 @@ public class JavaExportTest {
     @Test
     public void testJavaExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
+        tree.getRoot().setName("RobotBuilderTestProject");
         tree.getRoot().getProperty("Java Project").setValue("test-resources/RobotBuilderTestProject/");
         tree.getRoot().getProperty("Java Package").setValue("robotcode");
         GenericExporter exporter = new GenericExporter("/export/java/");
