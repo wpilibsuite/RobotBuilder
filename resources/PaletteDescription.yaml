@@ -706,6 +706,16 @@ Palette:
             name: Requires
             type: Subsystem
             default: "None"
+          - !TypeSelectionProperty
+            name: Input
+            type: PIDSource
+            validators: [DropdownSelected]
+            default: "None"
+          - !TypeSelectionProperty
+            name: Output
+            type: PIDOutput
+            validators: [DropdownSelected]
+            default: "None"
           - !DoubleProperty
             name: P
             default: 1
@@ -715,6 +725,27 @@ Palette:
           - !DoubleProperty
             name: D
             default: 0
-          - !DoubleProperty
-            name: Update frequency (kHz)
+          - !IntegerProperty
+            name: Period
             default: 50
+          - !BooleanProperty
+            name: Continuous
+            default: false
+          - !BooleanProperty
+            name: Limit Input
+            default: false
+          - !DoubleProperty
+            name: Minimum Input
+            default: 0
+          - !DoubleProperty
+            name: Maximum Input
+            default: 5
+          - !BooleanProperty
+            name: Limit Output
+            default: false
+          - !DoubleProperty
+            name: Minimum Output
+            default: -1
+          - !DoubleProperty
+            name: Maximum Output
+            default: 1

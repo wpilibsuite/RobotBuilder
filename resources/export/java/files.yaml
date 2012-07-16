@@ -62,7 +62,19 @@
   update: None
   variables:
     command-name: ${command.name}
-#elseif($command.base.name == "Command")
+#elseif($command.base.name == "PID Command")
+- !File
+  export: $package-path/commands/#class($command.name).java
+  source: $exporter-path/PIDCommand.java
+  update: Modify
+  modifications:
+    pid: $exporter-path/PIDCommand-pid.java
+    requires: $exporter-path/Command-requires.java
+    source: $exporter-path/PIDCommand-source.java
+    output: $exporter-path/PIDCommand-output.java
+  variables:
+    command-name: ${command.name}
+#else
 - !File
   export: $package-path/commands/#class($command.name).java
   source: $exporter-path/Command.java
@@ -71,15 +83,6 @@
     requires: $exporter-path/Command-requires.java
   variables:
     command-name: ${command.name}
-#else
-- !File
-  export: $package-path/commands/#class($command.name).java
-  source: $exporter-path/PIDCommand.java
-  modifications:
-    requires: $exporter-path/Command-requires.java
-  variables:
-    command-name: ($command.name)
-    
 #end 
 #end 
 #end

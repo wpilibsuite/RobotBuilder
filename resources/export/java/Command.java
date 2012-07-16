@@ -1,5 +1,6 @@
 package ${package}.commands;
 #set($command = $helper.getByName($command-name, $robot))
+
 /**
  *
  */
