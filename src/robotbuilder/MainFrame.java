@@ -133,7 +133,7 @@ public class MainFrame extends JFrame {
         try {
             help.setPage(Utils.getResource(file));
         } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFrame.class.getName()).log(Level.WARNING, "Nonexistent help file: "+file);
         }
     }
 }
