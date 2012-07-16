@@ -1,10 +1,13 @@
 package ${package}.commands;
 #set($command = $helper.getByName($command-name, $robot))
 
+import edu.wpi.first.wpilibj.command.Command;
+import ${package}.Robot;
+
 /**
  *
  */
-public class  #class($command.name) extends CommandBase {
+public class  #class($command.name) extends Command {
 
     public #class($command.name)() {
         // Use requires() here to declare subsystem dependencies

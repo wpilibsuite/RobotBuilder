@@ -111,12 +111,12 @@ Instructions:
     Defaults: "None"
   Subsystem:
     Defaults: "None"
-    Export: "CommandBase"
+    Export: "Robot"
     Import: "import ${package}.subsystems.*;"
     Construction: "public static #class($Short_Name) #variable($Short_Name) = new #class($Short_Name)();"
   PID Subsystem:
     Defaults: "None"
-    Export: "CommandBase"
+    Export: "Robot"
     Import: "import ${package}.subsystems.*;"
     Construction: "public static #class($Short_Name) #variable($Short_Name) = new #class($Short_Name)();"
 

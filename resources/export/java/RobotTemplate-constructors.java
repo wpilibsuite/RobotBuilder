@@ -1,5 +1,5 @@
 #foreach ($component in $components)
-#if ($helper.exportsTo("CommandBase", $component))
+#if ($helper.exportsTo("Robot", $component))
     #constructor($component)
 
 #end
