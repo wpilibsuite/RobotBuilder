@@ -319,8 +319,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	String name;
 	while (true) {
 	    name = componentType.toString() + (i == 1 ? "" : " " + i);
-	    if (!usedNames.contains(subsystem+name)) {
-		usedNames.add(subsystem+name);
+	    if (!usedNames.contains((subsystem+name).toLowerCase())) {
+		usedNames.add((subsystem+name).toLowerCase());
 		return name;
 	    }
             i++;
@@ -332,7 +332,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param name The name being used
      */
     public void addName(String name) {
-	usedNames.add(name);
+	usedNames.add(name.toLowerCase());
     }
 
     /**
@@ -340,7 +340,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param name The name being freed
      */
     public void removeName(String name) {
-	usedNames.remove(name);
+	usedNames.remove(name.toLowerCase());
     }
 
     /**
@@ -349,7 +349,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param name The name being checked
      */
     public boolean hasName(String name) {
-	return usedNames.contains(name);
+	return usedNames.contains(name.toLowerCase());
     }
 
     @Override
