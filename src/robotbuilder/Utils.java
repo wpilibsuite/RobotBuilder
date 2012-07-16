@@ -73,4 +73,8 @@ public class Utils {
             }).run();
         }
     }
+
+    static void browse(URL url) {
+        browse(url.toString());
+    }
 }

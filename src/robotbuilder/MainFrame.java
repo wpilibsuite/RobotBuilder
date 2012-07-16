@@ -7,6 +7,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -70,7 +72,14 @@ public class MainFrame extends JFrame {
                 System.out.println(he.getEventType());
                 if (he.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
                     try {
-                        help.setPage(he.getURL());
+                        Set<String> localProtocols = new HashSet<String>();
+                        localProtocols.add("jar");
+                        localProtocols.add("file");
+                        if (localProtocols.contains(he.getURL().getProtocol())) {
+                            help.setPage(he.getURL());
+                        } else {
+                            Utils.browse(he.getURL());
+                        }
                     } catch (IOException ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
