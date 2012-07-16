@@ -145,6 +145,7 @@
 - !TypeSelectionProperty
             name: $Name Command
             type: Command
+            validators: [DropdownSelected]
             default: None
           - !ChoicesProperty
             name: $Name When to Run
@@ -167,7 +168,7 @@
 Validators:
   - !ExistsValidator
     name: DropdownSelected
-    ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available"]
+    ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
   - !UniqueValidator
     name: AnalogInput
     fields: [Channel (Analog), Module (Analog)]
@@ -273,10 +274,12 @@ Palette:
           - !ChildSelectionProperty
             name: Input
             type: PIDSource
+            validators: [DropdownSelected]
             default: 0
           - !ChildSelectionProperty
             name: Output
             type: PIDOutput
+            validators: [DropdownSelected]
             default: 0
           - !DoubleProperty
             name: P
@@ -638,6 +641,7 @@ Palette:
           - !TypeSelectionProperty
             name: Joystick
             type: Joystick
+            validators: [DropdownSelected]
             default: None
           - !ChoicesProperty
             name: Button
