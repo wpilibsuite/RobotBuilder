@@ -15,8 +15,8 @@ import robotbuilder.MainFrame;
  */
 public class RedoAction extends AbstractAction {
     public RedoAction() {
-        putValue(Action.NAME, "Undo");
-        putValue(Action.SHORT_DESCRIPTION, "Reverts your last change");
+        putValue(Action.NAME, "Redo");
+        putValue(Action.SHORT_DESCRIPTION, "Repeats the last action you undid");
     }
 
     @Override
