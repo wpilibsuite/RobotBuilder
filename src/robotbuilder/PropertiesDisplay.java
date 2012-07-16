@@ -1,9 +1,7 @@
 
 package robotbuilder;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
@@ -64,7 +62,9 @@ class PropertiesDisplay extends JPanel {
                     editor.getTableCellEditorComponent(propTable, null, true, row, column).setBackground(Color.BLUE);
                     return editor;
                 }
-                return getDefaultEditor(value.getClass());
+                DefaultCellEditor editor = (DefaultCellEditor) getDefaultEditor(value.getClass());
+                editor.setClickCountToStart(1);
+                return editor;
             }
             return super.getCellEditor(row, column);
         }
