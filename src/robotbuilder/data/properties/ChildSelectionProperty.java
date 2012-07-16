@@ -36,7 +36,8 @@ public class ChildSelectionProperty extends Property {
 
     @Override
     public Object getValue() {
-        if (valueComponent != null) return valueComponent.getFullName();
+        if (valueComponent != null && component.getChildren().contains(valueComponent))
+            return valueComponent.getFullName();
         return (value != null) ? value : defaultValue;
     }
     
