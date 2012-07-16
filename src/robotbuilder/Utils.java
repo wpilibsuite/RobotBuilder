@@ -64,8 +64,8 @@ public class Utils {
                 public void run() {
                     Process p;
                     try {
-                        System.out.println("firefox -new-tab "+url);
-                        p = Runtime.getRuntime().exec("firefox -new-tab "+url);
+                        System.out.println("chromium "+url);
+                        p = Runtime.getRuntime().exec("chromium "+url);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
