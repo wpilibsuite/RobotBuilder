@@ -167,10 +167,7 @@
 Validators:
   - !ExistsValidator
     name: DropdownSelected
-    ignore: [null, "null", "", "0", "No Choices Available"]
-  - !UniqueValidator
-    name: AnalogInput
-    fields: [Channel (Analog), Module (Analog)]
+    ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available"]
   - !UniqueValidator
     name: AnalogInput
     fields: [Channel (Analog), Module (Analog)]
@@ -192,9 +189,6 @@ Validators:
   - !UniqueValidator
     name: Solenoid
     fields: [Channel (Solenoid), Module (Solenoid)]
-  - !UniqueValidator
-    name: NetworkButton
-    fields: [String, String]
     
 Palette:
   - Hidden:
