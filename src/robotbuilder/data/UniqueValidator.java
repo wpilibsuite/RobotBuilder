@@ -38,7 +38,9 @@ public class UniqueValidator implements Validator {
         try {
             release(component, getPrefix(property));
             claim(property, value, component);
-        } catch (InvalidException _) {}
+        } catch (InvalidException ex) {
+            //Logger.getLogger(UniqueValidator.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -113,10 +115,20 @@ public class UniqueValidator implements Validator {
      * @param comp The component holding the claim.
      * @param prefix The prefix associated with the hold
      */
-    private void release(RobotComponent comp, String prefix) {
-        if (hasClaim(comp, prefix)) {
-            Map<String, Object> values = getMap(comp, prefix);
-            claims.remove(values);
+    private void release(RobotComponent component, String prefix) {
+        if (hasClaim(component, prefix)) {
+            Pair pair = new Pair(component, prefix);
+            List<Map<String, Object>> toRemove = new LinkedList<Map<String, Object>>();
+            for (Map<String, Object> key : claims.keySet()) {
+                if (claims.get(key).equals(pair)) {
+                    toRemove.add(key);
+                }
+            }
+            for (Map<String, Object> key : toRemove) {
+                claims.remove(key);
+            }
+            //Map<String, Object> values = getMap(comp, prefix);
+            //claims.remove(values);
         }
     }
     
