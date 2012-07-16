@@ -59,13 +59,11 @@ public abstract class Property {
     public void setValue(Object value) {
         Object prevValue = getValue();
         _setValue(value);
-        try {
+        if (component != null) {
             update();
             if (!prevValue.equals(value)) {
                 component.getRobotTree().takeSnapshot();
             }
-        } catch (NullPointerException ex) {
-            
         }
     }
     
