@@ -437,7 +437,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public void load(File path) {
 	try {
-	    System.out.println("Loading from: " + path);
+	    System.out.println("Loading from: " + path.getAbsolutePath());
 	    FileReader source = new FileReader(path);
             load(source);
 	} catch (IOException ex) {
@@ -532,7 +532,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             return;
         }
         else if (result == JFileChooser.APPROVE_OPTION) {
-            filePath = fileChooser.getSelectedFile().getName();
+            filePath = fileChooser.getSelectedFile().getAbsolutePath();
         }
         load(new File(filePath));
     }
