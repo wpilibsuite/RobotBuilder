@@ -45,14 +45,14 @@ public class ChoicesPropertyTest {
         assertEquals("Copy should have the same name.", cp.name, copy.name);
         assertEquals("Copy should have the same default.", cp.defaultValue, copy.defaultValue);
         assertEquals("Copy should have the same value.", cp.value, copy.value);
-        assertEquals("Copy should have the same value.", cp.choices, copy.choices);
+        assertEquals("Copy should have the same choices.", cp.choices, copy.choices);
         assertEquals("Copy should have the same validators.", cp.validators, copy.validators);
         assertEquals("Copy should have the same component.", cp.component, copy.component);
         
         assertEquals("Copy should have the same name.", cp.name, copy2.name);
         assertEquals("Copy should have the same default.", cp.defaultValue, copy2.defaultValue);
         assertEquals("Copy should have the same value.", cp.value, copy2.value);
-        assertEquals("Copy should have the same value.", cp.choices, copy2.choices);
+        assertEquals("Copy should have the same choices.", cp.choices, copy2.choices);
         assertEquals("Copy should have the same validators.", cp.validators, copy2.validators);
         assertEquals("Copy should have the same component.", cp.component, copy2.component);
     }

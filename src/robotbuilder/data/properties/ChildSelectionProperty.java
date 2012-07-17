@@ -14,14 +14,14 @@ import robotbuilder.data.RobotComponent;
  * @author Alex Henning
  */
 public class ChildSelectionProperty extends Property {
-    private String type;
-    private Object value;
-    private RobotComponent valueComponent;
-    private JComboBox combo;
+    String type;
+    Object value;
+    RobotComponent valueComponent;
+    JComboBox combo;
     
     public ChildSelectionProperty() {}
     
-    public ChildSelectionProperty(String name, Object defaultValue, String[] validators, RobotComponent component,
+    ChildSelectionProperty(String name, Object defaultValue, String[] validators, RobotComponent component,
             String type, Object value) {
         super(name, defaultValue, validators, component);
         this.type = type;
