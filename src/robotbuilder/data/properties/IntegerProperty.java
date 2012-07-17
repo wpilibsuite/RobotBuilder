@@ -60,7 +60,7 @@ public class IntegerProperty extends Property {
     public String getError() {
         try {
             // Check that it's a valid double
-            Integer.parseInt((value != null) ? value : defaultValue.toString());
+            Integer.parseInt(getValue().toString());
             return super.getError();
         } catch (NumberFormatException ex) {
             String error = super.getError();
