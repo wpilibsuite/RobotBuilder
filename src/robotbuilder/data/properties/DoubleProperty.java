@@ -60,7 +60,7 @@ public class DoubleProperty extends Property {
     public String getError() {
         try {
             // Check that it's a valid double
-            Double.parseDouble((value != null) ? value : defaultValue.toString());
+            Double.parseDouble(getValue().toString());
             return super.getError();
         } catch (NumberFormatException ex) {
             String error = super.getError();

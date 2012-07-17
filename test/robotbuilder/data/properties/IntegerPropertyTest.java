@@ -130,7 +130,7 @@ public class IntegerPropertyTest {
 
         String[] validators = {"DropdownSelected"};
         IntegerProperty ip2 = new IntegerProperty("Test", 0, validators,
-                MainFrame.getInstance().getCurrentRobotTree().getRoot(), "1.2");
+                MainFrame.getInstance().getCurrentRobotTree().getRoot(), "null");
         assertNotNull(ip2.getError());
     }
 }
