@@ -4,12 +4,14 @@
  */
 package robotbuilder.data.properties;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import org.junit.*;
 import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
+import robotbuilder.data.properties.FileProperty.ActionListenerImpl;
 
 /**
  *
@@ -104,5 +106,16 @@ public class FilePropertyTest {
         assertEquals("file.test", fp.value);
         fp.setValue("path/to/file");
         assertEquals("path/to/file.test", fp.value);
+    }
+    
+    @Test public void testActionListener() {
+        FileProperty fp = new FileProperty("Test", "", new String[0],
+                MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", false);
+        ActionListenerImpl l = new FileProperty.ActionListenerImpl(fp);
+        l.actionPerformed(new ActionEvent(this, 0, "Nothing"));
+        fp.getDisplayValue();
+        fp.chooser.setSelectedFile(new File("file"));
+        l.actionPerformed(new ActionEvent(this, 0, "ApproveSelection"));
+        assertEquals("file.test", fp.value);
     }
 }

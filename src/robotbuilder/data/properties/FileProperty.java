@@ -51,15 +51,7 @@ public class FileProperty extends Property {
                 chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 chooser.setFileFilter(new FileNameExtensionFilter(extension+" file", extension));
             }
-            chooser.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    System.out.println(ae.getActionCommand());
-                    if (ae.getActionCommand().equals("ApproveSelection")){
-                        setValue(chooser.getSelectedFile().getPath());
-                    }
-                }
-            });
+            chooser.addActionListener(new ActionListenerImpl(this));
         }
         update();
         return chooser;
@@ -95,6 +87,21 @@ public class FileProperty extends Property {
         if (chooser != null && !getValue().equals("")) {
             chooser.setSelectedFile(new File(getValue().toString()));
             value = chooser.getSelectedFile().toString();
+        }
+    }
+
+    static class ActionListenerImpl implements ActionListener {
+        FileProperty fp;
+        public ActionListenerImpl(FileProperty fp) {
+            this.fp = fp;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            System.out.println(ae.getActionCommand());
+            if (ae.getActionCommand().equals("ApproveSelection")){
+                fp.setValue(fp.chooser.getSelectedFile().getPath());
+            }
         }
     }
     
