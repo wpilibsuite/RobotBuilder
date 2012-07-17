@@ -7,9 +7,13 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="RobotBuilder" default="default" basedir=".">
+<project name="RobotBuilder" default="default" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
     <description>Builds, tests, and runs the project RobotBuilder.</description>
     <import file="nbproject/build-impl.xml"/>
+
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+      <classpath path="lib/test/jacocoant.jar"/>
+    </taskdef>
 
     <target name="-post-jar">
       <jar destfile="${dist.jar}" update="true">
@@ -18,29 +22,51 @@
       </jar>
       <delete dir="${dist.dir}/lib" />
     </target>
-
-    <!-- <target depends="init,compile,compile,jar,-post-jar" description="Run a main class." name="run"> -->
-    <!--   <exec executable="java"> -->
-    <!-- 	<arg value="-jar"/> -->
-    <!-- 	<arg value="${dist.jar}"/> -->
-    <!--   </exec> -->
-    <!-- </target> -->
-
-    <!-- <target depends="init,compile,jar,-post-jar" name="-debug-start-debuggee"> -->
-    <!--   <java classname="${main.class}"  dir="${work.dir}" fork="true"> -->
-    <!-- 	<arg value="-jar ${dist.jar}"/> -->
-    <!-- 	<jvmarg value="-Xrunjdwp:transport=${debug-transport},address=${jpda.address}"/> -->
-    <!--     <jvmarg value="-Dfile.encoding=${runtime.encoding}"/> -->
-    <!--     <redirector errorencoding="${runtime.encoding}" inputencoding="${runtime.encoding}" outputencoding="${runtime.encoding}"/> -->
-    <!--     <jvmarg line="${run.jvmargs}"/> -->
-    	<!-- <arg value="-Xdebug"/> -->
-    	<!-- <arg value="-Xrunjdwp:transport=dt_socket"/> -->
-    	<!-- <arg value="server=commander"/> -->
-    	<!-- <arg value="address=4242"/> -->
-    	<!-- <arg value="suspend=y"/> -->
-    <!--   </java> -->
-    <!-- </target> -->
     
+    <target depends="init,compile-test,-pre-test-run" if="have.tests" name="-do-test-run">
+      <property name="testincludes" value="**/*Test.java"/>
+      <property name="junit.forkmode" value="perTest"/>
+      <jacoco:coverage>
+            <junit dir="${work.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" forkmode="${junit.forkmode}" showoutput="true" tempdir="${build.dir}">
+              <batchtest todir="${build.test.results.dir}">
+                <fileset dir="${test.src.dir}" excludes="${excludes}" includes="${includes}">
+                  <filename name="${testincludes}"/>
+                </fileset>
+              </batchtest>
+              <classpath>
+                <path path="${run.test.classpath}"/>
+              </classpath>
+              <syspropertyset>
+                <propertyref prefix="test-sys-prop."/>
+                <mapper from="test-sys-prop.*" to="*" type="glob"/>
+              </syspropertyset>
+              <formatter type="brief" usefile="false"/>
+              <formatter type="xml"/>
+              <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
+              <jvmarg value="-ea"/>
+              <jvmarg line="${run.jvmargs}"/>
+            </junit>
+      </jacoco:coverage>
+      <jacoco:report>
+	<executiondata>
+          <file file="jacoco.exec"/>
+	</executiondata>
+        
+	<structure name="RobotBuilder">
+          <classfiles>
+            <fileset dir="${build.classes.dir}"/>
+          </classfiles>
+          <sourcefiles encoding="UTF-8">
+            <fileset dir="${src.dir}"/>
+          </sourcefiles>
+	</structure>
+        
+	<html destdir="${build.test.coverage.dir}"/>
+	<xml destfile="${build.dir}/test/coverage.xml"/>
+        
+      </jacoco:report>
+    </target>
+
     <!--
 
     There exist several targets which are by default empty and which can be 
