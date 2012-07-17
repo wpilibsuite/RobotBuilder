@@ -166,6 +166,12 @@
 #end            
 
 Validators:
+  - !DistinctValidator
+    name: RobotDrive2
+    fields: ["Left Motor", "Right Motor"]
+  - !DistinctValidator
+    name: RobotDrive4
+    fields: ["Left Front Motor", "Left Rear Motor", "Right Front Motor", "Right Rear Motor"]
   - !ExistsValidator
     name: DropdownSelected
     ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
@@ -383,7 +389,7 @@ Palette:
           - !ChildSelectionProperty
             name: Left Motor
             type: PIDOutput
-            validators: [DropdownSelected]
+            validators: [RobotDrive2, DropdownSelected]
             default: 0
           - !BooleanProperty
             name: Left Motor Inverted
@@ -391,7 +397,7 @@ Palette:
           - !ChildSelectionProperty
             name: Right Motor
             type: PIDOutput
-            validators: [DropdownSelected]
+            validators: [RobotDrive2, DropdownSelected]
             default: 1
           - !BooleanProperty
             name: Right Motor Inverted
@@ -417,7 +423,7 @@ Palette:
           - !ChildSelectionProperty
             name: Left Front Motor
             type: PIDOutput
-            validators: [DropdownSelected]
+            validators: [RobotDrive4, DropdownSelected]
             default: 0
           - !BooleanProperty
             name: Left Front Motor Inverted
@@ -425,7 +431,7 @@ Palette:
           - !ChildSelectionProperty
             name: Left Rear Motor
             type: PIDOutput
-            validators: [DropdownSelected]
+            validators: [RobotDrive4, DropdownSelected]
             default: 1
           - !BooleanProperty
             name: Left Rear Motor Inverted
@@ -433,7 +439,7 @@ Palette:
           - !ChildSelectionProperty
             name: Right Front Motor
             type: PIDOutput
-            validators: [DropdownSelected]
+            validators: [RobotDrive4, DropdownSelected]
             default: 2
           - !BooleanProperty
             name: Right Front Motor Inverted
@@ -441,7 +447,7 @@ Palette:
           - !ChildSelectionProperty
             name: Right Rear Motor
             type: PIDOutput
-            validators: [DropdownSelected]
+            validators: [RobotDrive4, DropdownSelected]
             default: 3
           - !BooleanProperty
             name: Right Rear Motor Inverted

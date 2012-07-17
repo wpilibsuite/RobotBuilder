@@ -22,10 +22,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
-import robotbuilder.data.ExistsValidator;
-import robotbuilder.data.PaletteComponent;
-import robotbuilder.data.UniqueValidator;
-import robotbuilder.data.Validator;
+import robotbuilder.data.*;
 import robotbuilder.data.properties.*;
 
 /**
@@ -66,6 +63,7 @@ public class Palette extends JPanel implements TreeSelectionListener {
         constructor.addTypeDescription(new TypeDescription(ChildSelectionProperty.class, "!ChildSelectionProperty"));
         constructor.addTypeDescription(new TypeDescription(TypeSelectionProperty.class, "!TypeSelectionProperty"));
         
+        constructor.addTypeDescription(new TypeDescription(DistinctValidator.class, "!DistinctValidator"));
         constructor.addTypeDescription(new TypeDescription(ExistsValidator.class, "!ExistsValidator"));
         constructor.addTypeDescription(new TypeDescription(UniqueValidator.class, "!UniqueValidator"));
         Yaml yaml = new Yaml(constructor);
