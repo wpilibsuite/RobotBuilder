@@ -68,13 +68,13 @@ public class StringPropertyTest {
         StringProperty sp = new StringProperty("Test", "Default", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "Other");
         sp.value = null;
-        assertEquals("Value should be the default value.", sp.getDisplayValue(), sp.defaultValue);
+        assertEquals("Display value should be the default value.", sp.getDisplayValue(), sp.defaultValue);
         sp.value = "Test";
-        assertEquals("Value should be \"Test\".", sp.getDisplayValue(), "Test");
+        assertEquals("Display value should be \"Test\".", sp.getDisplayValue(), "Test");
         sp.value = "";
-        assertEquals("Value should be \"\".", sp.getDisplayValue(), "");
+        assertEquals("Display value should be \"\".", sp.getDisplayValue(), "");
         sp.value = "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTest";
-        assertEquals("Value should be \"Test\".", sp.getDisplayValue(), "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTest");
+        assertEquals("Display value should be \"Test\".", sp.getDisplayValue(), "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTest");
     }
     
     @Test public void testSetValue() {
