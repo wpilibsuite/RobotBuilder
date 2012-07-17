@@ -53,7 +53,10 @@ public class ChoicesProperty extends Property {
     @Override
     public void update() {
         super.update();
-        if (combo != null) combo.setSelectedItem(getValue());
+        if (combo != null) {
+            combo.setSelectedItem(getValue());
+            value = combo.getSelectedItem();
+        }
     }
 
     public String[] getChoices() {
