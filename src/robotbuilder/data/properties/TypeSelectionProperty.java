@@ -13,10 +13,10 @@ import robotbuilder.data.RobotComponent;
  * @author Alex Henning
  */
 public class TypeSelectionProperty extends Property {
-    protected String type;
-    protected Object value;
-    private RobotComponent valueComponent;
-    protected JComboBox combo;
+    String type;
+    Object value;
+    RobotComponent valueComponent;
+    JComboBox combo;
     
     public TypeSelectionProperty() {}
     

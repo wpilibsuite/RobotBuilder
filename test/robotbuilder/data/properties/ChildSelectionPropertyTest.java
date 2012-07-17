@@ -53,8 +53,6 @@ public class ChildSelectionPropertyTest {
     public void tearDown() {
     }
     
-    String[] choices = {"1", "2", "3"};
-    
     @Test public void testCopy() {
         ChildSelectionProperty cp = new ChildSelectionProperty("Test", "0", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "Subsystem", "");
