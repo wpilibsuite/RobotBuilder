@@ -70,9 +70,8 @@ public abstract class Property {
     /**
      * @return The value to display in th properties table.
      */
-    public Object getDisplayValue() {
-        return getValue();
-    }
+    public abstract Object getDisplayValue();
+
 
     /**
      * Called to allow the property to update to changes.
