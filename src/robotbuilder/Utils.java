@@ -28,7 +28,7 @@ public class Utils {
      * @return The resource URL
      */
     public static URL getResource(String resource) {
-        return Utils.class.getResource(resource);
+        return ClasspathResourceLoader.class.getResource(resource);
     }
     
     /**
@@ -37,7 +37,8 @@ public class Utils {
      * @return The resource stream
      */
     public static InputStream getResourceAsStream(String resource) {
-        return Utils.class.getResourceAsStream(resource);
+        System.out.println("Resource Stream: "+resource+" => "+ClasspathResourceLoader.class.getResourceAsStream(resource));
+        return ClasspathResourceLoader.class.getResourceAsStream(resource);
     }
 
     /**

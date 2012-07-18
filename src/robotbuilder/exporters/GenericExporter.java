@@ -176,6 +176,7 @@ public class GenericExporter {
 
     String evalResource(String resource, Context context) {
         InputStreamReader in;
+        System.out.println(resource);
         in = new InputStreamReader(Utils.getResourceAsStream(resource));
         StringWriter w = new StringWriter();
         ve.evaluate(context, w, name+" Exporter: "+resource, in);
