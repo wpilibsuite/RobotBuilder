@@ -7,4 +7,4 @@ Required Properties:
 Vars: 
   export-path: ${robot.getProperty('Wiring File').getValue()}
 Macros: macros.vm
-Post Export Action: "#Browse:file://${export-path}"
+Post Export Action: "#if(${export-path.startsWith(\"/\")})#Browse:file://${export-path}#else#Browse:file:///${export-path}#end"
