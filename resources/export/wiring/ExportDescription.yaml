@@ -7,4 +7,5 @@ Required Properties:
 Vars: 
   export-path: ${robot.getProperty('Wiring File').getValue()}
 Macros: macros.vm
-Post Export Action: "#if(${export-path.startsWith(\"/\")})#Browse:file://${export-path}#else#Browse:file:///${export-path}#end"
+## Else deals with the hell that is windows.
+Post Export Action: "#if(${export-path.startsWith(\"/\")})#Browse:file://${export-path}#else#Browse:file:///${export-path.replace(\"\\\", \"/\").replace(\" \", \"%20\")}#end"
