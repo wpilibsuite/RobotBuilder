@@ -24,6 +24,8 @@
     </target>
     
     <target depends="init,compile-test,-pre-test-run" if="have.tests" name="-do-test-run">
+      <delete file="jacoco.exec" />
+      
       <property name="testincludes" value="**/*Test.java"/>
       <property name="junit.forkmode" value="perTest"/>
       <jacoco:coverage>
@@ -63,6 +65,69 @@
         
 	<html destdir="${build.test.coverage.dir}"/>
 	<xml destfile="${build.dir}/test/coverage.xml"/>
+        
+      </jacoco:report>
+    </target>
+
+    <target depends="init,compile-test,-pre-test-run" if="have.tests" name="full-coverage">
+      <delete file="manual.exec" />
+      
+      <property name="testincludes" value="**/*Test.java"/>
+      <property name="junit.forkmode" value="perTest"/>
+      <jacoco:coverage destfile="manual.exec">
+            <junit dir="${work.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" forkmode="${junit.forkmode}" showoutput="true" tempdir="${build.dir}">
+              <batchtest todir="${build.test.results.dir}">
+                <fileset dir="${test.src.dir}" excludes="${excludes}" includes="${includes}">
+                  <filename name="${testincludes}"/>
+                </fileset>
+              </batchtest>
+              <classpath>
+                <path path="${run.test.classpath}"/>
+              </classpath>
+              <syspropertyset>
+                <propertyref prefix="test-sys-prop."/>
+                <mapper from="test-sys-prop.*" to="*" type="glob"/>
+              </syspropertyset>
+              <formatter type="brief" usefile="false"/>
+              <formatter type="xml"/>
+              <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
+              <jvmarg value="-ea"/>
+              <jvmarg line="${run.jvmargs}"/>
+            </junit>
+      </jacoco:coverage>
+      
+      <jacoco:coverage destfile="manual.exec">
+        <java classname="${main.class}" dir="${work.dir}" fork="true">
+          <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
+          <jvmarg value="-Dfile.encoding=${runtime.encoding}"/>
+          <redirector errorencoding="${runtime.encoding}" inputencoding="${runtime.encoding}" outputencoding="${runtime.encoding}"/>
+          <jvmarg line="${run.jvmargs}"/>
+          <classpath>
+            <path path="${run.classpath}"/>
+          </classpath>
+          <syspropertyset>
+            <propertyref prefix="run-sys-prop."/>
+            <mapper from="run-sys-prop.*" to="*" type="glob"/>
+          </syspropertyset>
+        </java>
+      </jacoco:coverage>
+      
+      <jacoco:report>
+	<executiondata>
+          <file file="manual.exec"/>
+	</executiondata>
+        
+	<structure name="RobotBuilder">
+          <classfiles>
+            <fileset dir="${build.classes.dir}"/>
+          </classfiles>
+          <sourcefiles encoding="UTF-8">
+            <fileset dir="${src.dir}"/>
+          </sourcefiles>
+	</structure>
+        
+	<html destdir="${build.dir}/test/full-coverage"/>
+	<xml destfile="${build.dir}/test/full-coverage.xml"/>
         
       </jacoco:report>
     </target>
