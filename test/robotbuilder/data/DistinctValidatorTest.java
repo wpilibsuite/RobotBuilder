@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
 import robotbuilder.Palette;
 import robotbuilder.RobotTree;
+import robotbuilder.TestUtils;
 import robotbuilder.data.properties.IntegerProperty;
 import robotbuilder.data.properties.Property;
 
@@ -42,8 +43,7 @@ public class DistinctValidatorTest {
     }
     
     @Test public void testValidSetup() {
-        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        RobotTree tree = TestUtils.getNewRobotTree();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         
@@ -65,8 +65,7 @@ public class DistinctValidatorTest {
     }
     
     @Test public void testInvalidSetup() {
-        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        RobotTree tree = TestUtils.getNewRobotTree();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         
@@ -88,8 +87,7 @@ public class DistinctValidatorTest {
     }
     
     @Test public void testToggle() {
-        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        RobotTree tree = TestUtils.getNewRobotTree();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         

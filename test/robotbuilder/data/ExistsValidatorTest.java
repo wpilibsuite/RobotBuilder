@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
 import robotbuilder.Palette;
 import robotbuilder.RobotTree;
+import robotbuilder.TestUtils;
 
 /**
  *
@@ -37,8 +38,7 @@ public class ExistsValidatorTest {
     }
     
     @Test public void testValidSetup() {
-        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        RobotTree tree = TestUtils.getNewRobotTree();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         
@@ -60,8 +60,7 @@ public class ExistsValidatorTest {
     }
     
     @Test public void testInvalidSetup() {
-        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        RobotTree tree = TestUtils.getNewRobotTree();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         
@@ -76,8 +75,7 @@ public class ExistsValidatorTest {
     }
     
     @Test public void testInvalidToggle() {
-        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        RobotTree tree = TestUtils.getNewRobotTree();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         // Create an arm subsystem

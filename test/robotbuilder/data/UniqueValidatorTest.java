@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
 import robotbuilder.Palette;
 import robotbuilder.RobotTree;
+import robotbuilder.TestUtils;
 
 /**
  *
@@ -40,9 +41,7 @@ public class UniqueValidatorTest {
      * Test that the default setup is valid.
      */
     @Test public void testSimpleValidSetup() {
-        System.out.println("TEST testSimpleValidSetup:");
-        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        RobotTree tree = TestUtils.getNewRobotTree();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         
@@ -69,9 +68,7 @@ public class UniqueValidatorTest {
      * Make an invalid set up and test that it's invalid in the right way
      */
     @Test public void testSimpleInvalidSetup() {
-        System.out.println("TEST testSimpleInvalidSetup:");
-        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        RobotTree tree = TestUtils.getNewRobotTree();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         
@@ -100,9 +97,7 @@ public class UniqueValidatorTest {
      * then becomes valid again.
      */
     @Test public void testSimpleValidToggle() {
-        System.out.println("TEST testSimpleValidToggle:");
-        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        RobotTree tree = TestUtils.getNewRobotTree();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         

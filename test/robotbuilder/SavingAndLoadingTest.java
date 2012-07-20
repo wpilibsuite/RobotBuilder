@@ -38,8 +38,7 @@ public class SavingAndLoadingTest {
     
     @Test
     public void saveAndLoadANewFile() {
-        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        RobotTree tree = TestUtils.getNewRobotTree();
         tree.isRobotValid();
         RobotComponent before = tree.getRoot();
         tree.save("test/save.yaml");

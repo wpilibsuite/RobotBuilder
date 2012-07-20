@@ -35,7 +35,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private DefaultTreeModel treeModel;
     private PropertiesDisplay properties;
     /** Stores whether or not the RobotTree has been saved */
-    private boolean saved;
+    boolean saved;
     /** Names used by components during name auto-generation */
     private Set<String> usedNames = new HashSet<String>();
     private Map<String, Validator> validators;
@@ -470,13 +470,15 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     public void newFile(Palette palette) {
-        DefaultMutableTreeNode root = makeTreeRoot();
-        treeModel.setRoot(root);
-        tree.setSelectionPath(new TreePath(root));
-        usedNames = new HashSet<String>();
-        validators = palette.getValidators();
-        saved = true;
-        MainFrame.getInstance().prefs.put("FileName", "");
+        if (OKToClose()) {
+            DefaultMutableTreeNode root = makeTreeRoot();
+            treeModel.setRoot(root);
+            tree.setSelectionPath(new TreePath(root));
+            usedNames = new HashSet<String>();
+            validators = palette.getValidators();
+            saved = true;
+            MainFrame.getInstance().prefs.put("FileName", "");
+        }
     }
 
     /**

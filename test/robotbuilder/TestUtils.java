@@ -16,12 +16,21 @@ import robotbuilder.data.RobotComponent;
 public class TestUtils {
     
     /**
+     * @return A new robot tree.
+     */
+    public static RobotTree getNewRobotTree() {
+        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
+        tree.saved = true; // Hack to keep from prompting for user input.
+        tree.newFile(Palette.getInstance());
+        return tree;
+    }
+    
+    /**
      * @return A known test tree that includes a large number of items from the
      *         palette.
      */
     public static RobotTree generateTestTree() {
-        RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        RobotTree tree = getNewRobotTree();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         RobotComponent oi = (RobotComponent) robot.getChildren().elementAt(0);
