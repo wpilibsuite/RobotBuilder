@@ -8,7 +8,8 @@ import robotbuilder.data.properties.Property;
 import java.util.List;
 
 /**
- * Validates that the property has a value.
+ * Validates that the property has a value set that is not in the list of
+ * "Unset" values
  *
  * @author Alex Henning
  */
@@ -19,9 +20,10 @@ public class ExistsValidator implements Validator {
     
     public ExistsValidator() {}
 
-    ExistsValidator(String name, List<Object> ignore) {
+    ExistsValidator(String name, List<Object> ignore, String error) {
         this.name = name;
         this.ignore = ignore;
+        this.error = error;
     }
 
     @Override
@@ -34,7 +36,18 @@ public class ExistsValidator implements Validator {
 
     @Override
     public String getError(RobotComponent component, Property property) {
-        return "You need to set this value.";
+        return error;
+    }
+    
+    String error = "You need to set this value.";
+    
+    // Yaml setters and getters
+    public String getError() {
+        return error;
+    }
+    public void setError(String error) {
+        System.out.println("Setting error:"+error);
+        this.error = error;
     }
 
     public List<Object> getIgnore() {
@@ -54,6 +67,6 @@ public class ExistsValidator implements Validator {
 
     @Override
     public Validator copy() {
-        return new ExistsValidator(name, ignore);
+        return new ExistsValidator(name, ignore, error);
     }
 }

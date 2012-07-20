@@ -173,8 +173,13 @@ Validators:
     name: RobotDrive4
     fields: ["Left Front Motor", "Left Rear Motor", "Right Front Motor", "Right Rear Motor"]
   - !ExistsValidator
-    name: DropdownSelected
+    name: ChildDropdownSelected
     ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
+    error: "You must select a child of the valid type. If no options exist, drag one under this component."
+  - !ExistsValidator
+    name: TypeDropdownSelected
+    ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
+    error: "You must select a component of the valid type. If no options exist, create a new component of the right type."
   - !UniqueValidator
     name: AnalogInput
     fields: [Channel (Analog), Module (Analog)]
@@ -280,12 +285,12 @@ Palette:
           - !ChildSelectionProperty
             name: Input
             type: PIDSource
-            validators: [DropdownSelected]
+            validators: [ChildDropdownSelected]
             default: 0
           - !ChildSelectionProperty
             name: Output
             type: PIDOutput
-            validators: [DropdownSelected]
+            validators: [ChildDropdownSelected]
             default: 0
           - !DoubleProperty
             name: P
@@ -337,12 +342,12 @@ Palette:
           - !ChildSelectionProperty
             name: Input
             type: PIDSource
-            validators: [DropdownSelected]
+            validators: [ChildDropdownSelected]
             default: 0
           - !ChildSelectionProperty
             name: Output
             type: PIDOutput
-            validators: [DropdownSelected]
+            validators: [ChildDropdownSelected]
             default: 0
           - !DoubleProperty
             name: P
@@ -389,7 +394,7 @@ Palette:
           - !ChildSelectionProperty
             name: Left Motor
             type: PIDOutput
-            validators: [RobotDrive2, DropdownSelected]
+            validators: [RobotDrive2, ChildDropdownSelected]
             default: 0
           - !BooleanProperty
             name: Left Motor Inverted
@@ -397,7 +402,7 @@ Palette:
           - !ChildSelectionProperty
             name: Right Motor
             type: PIDOutput
-            validators: [RobotDrive2, DropdownSelected]
+            validators: [RobotDrive2, ChildDropdownSelected]
             default: 1
           - !BooleanProperty
             name: Right Motor Inverted
@@ -423,7 +428,7 @@ Palette:
           - !ChildSelectionProperty
             name: Left Front Motor
             type: PIDOutput
-            validators: [RobotDrive4, DropdownSelected]
+            validators: [RobotDrive4, ChildDropdownSelected]
             default: 0
           - !BooleanProperty
             name: Left Front Motor Inverted
@@ -431,7 +436,7 @@ Palette:
           - !ChildSelectionProperty
             name: Left Rear Motor
             type: PIDOutput
-            validators: [RobotDrive4, DropdownSelected]
+            validators: [RobotDrive4, ChildDropdownSelected]
             default: 1
           - !BooleanProperty
             name: Left Rear Motor Inverted
@@ -439,7 +444,7 @@ Palette:
           - !ChildSelectionProperty
             name: Right Front Motor
             type: PIDOutput
-            validators: [RobotDrive4, DropdownSelected]
+            validators: [RobotDrive4, ChildDropdownSelected]
             default: 2
           - !BooleanProperty
             name: Right Front Motor Inverted
@@ -447,7 +452,7 @@ Palette:
           - !ChildSelectionProperty
             name: Right Rear Motor
             type: PIDOutput
-            validators: [RobotDrive4, DropdownSelected]
+            validators: [RobotDrive4, ChildDropdownSelected]
             default: 3
           - !BooleanProperty
             name: Right Rear Motor Inverted
@@ -647,7 +652,7 @@ Palette:
           - !TypeSelectionProperty
             name: Joystick
             type: Joystick
-            validators: [DropdownSelected]
+            validators: [TypeDropdownSelected]
             default: None
           - !ChoicesProperty
             name: Button
@@ -715,12 +720,12 @@ Palette:
           - !TypeSelectionProperty
             name: Input
             type: PIDSource
-            validators: [DropdownSelected]
+            validators: [TypeDropdownSelected]
             default: "None"
           - !TypeSelectionProperty
             name: Output
             type: PIDOutput
-            validators: [DropdownSelected]
+            validators: [TypeDropdownSelected]
             default: "None"
           - !DoubleProperty
             name: P
