@@ -44,8 +44,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     
     private SimpleHistory<String> history = new SimpleHistory<String>();
     private int snapshots = 0;
-    
-    private Preferences prefs;
 
     private JFileChooser fileChooser = new JFileChooser();
 
@@ -422,7 +420,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
 	}
-	saved = false;
     }
 //    public static DataFlavor ROBOT_COMPONENT_FLAVOR = new DataFlavor(RobotComponent.class, "Robot Component Flavor");
     public static DataFlavor ROBOT_COMPONENT_FLAVOR = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=\"" + RobotComponent.class.getName() + "\"", "Robot Component Flavor");
@@ -542,16 +539,26 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         return valid[0];
     }
     
+    /**
+     * Takes a snapshot of the current state and dirties the save flag.
+     */
     public void takeSnapshot(){
         System.out.println("Snapshot number "+ ++snapshots +" taken.");
+        saved = false;
         history.addState(encode());
     }
     
+    /**
+     * Reverts to the previous snapshot if one exists.
+     */
     public void undo() {
         System.out.println("Undo button pressed");
         load(history.undo());
     }
     
+    /**
+     * Changes to the next snapshot if one exists.
+     */
     public void redo(){
         System.out.println("Redo button pressed");
         load(history.redo());
@@ -728,7 +735,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    } else {
 		return false;
 	    }
-	    saved = false;
 	    treeModel.insertNodeInto(newNode, parentNode, childIndex);
             treeModel.reload(parentNode); // reloads the tree without reverting to the root
 	    tree.makeVisible(path.pathByAddingChild(newNode));
