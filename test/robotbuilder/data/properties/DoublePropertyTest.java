@@ -119,28 +119,28 @@ public class DoublePropertyTest {
         DoubleProperty dp = new DoubleProperty("Test", 0.0, new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "1");
         dp.setValue("1");
-        assertNull(dp.getError());
+        assertNull(dp.getErrorMessage());
         dp.setValue("");
-        assertNotNull(dp.getError());
+        assertNotNull(dp.getErrorMessage());
         dp.setValue(false);
-        assertNotNull(dp.getError());
+        assertNotNull(dp.getErrorMessage());
         dp.setValue(3.14159);
-        assertNull(dp.getError());
+        assertNull(dp.getErrorMessage());
         dp.setValue(2);
-        assertNull(dp.getError());
+        assertNull(dp.getErrorMessage());
         dp.setValue(Double.MAX_EXPONENT);
-        assertNull(dp.getError());
+        assertNull(dp.getErrorMessage());
         dp.setValue(Double.MIN_EXPONENT);
-        assertNull(dp.getError());
+        assertNull(dp.getErrorMessage());
         dp.setValue(Double.MAX_VALUE);
-        assertNull(dp.getError());
+        assertNull(dp.getErrorMessage());
         dp.setValue(Double.MIN_VALUE);
-        assertNull(dp.getError());
+        assertNull(dp.getErrorMessage());
 
         String[] validators = {"DropdownSelected"};
         DoubleProperty dp2 = new DoubleProperty("Test", 0, validators,
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "null");
-        assertNotNull(dp2.getError());
+        assertNotNull(dp2.getErrorMessage());
     }
 
 }

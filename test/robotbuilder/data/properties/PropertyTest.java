@@ -67,6 +67,6 @@ public class PropertyTest {
         p.setName("test");
         p.setValue("2");
         p.setValidators(null);
-        p.getError();
+        p.getErrorMessage();
     }
 }

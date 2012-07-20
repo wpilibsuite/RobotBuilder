@@ -57,13 +57,13 @@ public class IntegerProperty extends Property {
     }
     
     @Override
-    public String getError() {
+    public String getErrorMessage() {
         try {
             // Check that it's a valid double
             Integer.parseInt(getValue().toString());
-            return super.getError();
+            return super.getErrorMessage();
         } catch (NumberFormatException ex) {
-            String error = super.getError();
+            String error = super.getErrorMessage();
             return name+" expects a real number. "+ (error!=null ? error : "");
         }
     }

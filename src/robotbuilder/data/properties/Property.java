@@ -114,9 +114,10 @@ public abstract class Property {
     }
 
     /**
+     * Assumes that isValid() == false, otherwise the behavior is undefined.
      * @return Description of any errors relating to this property.
      */
-    public String getError() {
+    public String getErrorMessage() {
         if (validators == null) return null;
         String out = "";
         for (String validatorName : validators) {

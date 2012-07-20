@@ -24,6 +24,7 @@ public class ActionsClass {
     AbstractAction aboutAction = new AboutAction();
     AbstractAction undoAction = new UndoAction();
     AbstractAction redoAction = new RedoAction();
+    AbstractAction verifyAction = new VerifyAction();
 
     private LinkedList<ExporterAction> exporters;
 
@@ -54,14 +55,11 @@ public class ActionsClass {
         menu.add(fileMenu);
         
         JMenu generateMenu = new JMenu("Generate");
+        generateMenu.add(verifyAction);
+        generateMenu.add(new JSeparator());
         for (ExporterAction action : exporters) {
             generateMenu.add(action);
         }
-//        generateMenu.add(cppAction);
-//        generateMenu.add(javaAction);
-//        generateMenu.add(labViewAction);
-//        generateMenu.add(new JSeparator());
-//        generateMenu.add(wiringDiagramAction);
         menu.add(generateMenu);
 
         JMenu helpMenu = new JMenu("Help");
@@ -90,6 +88,7 @@ public class ActionsClass {
         
         bar.add(undoButton);
         bar.add(redoButton);
+        bar.add(verifyAction);
         for (ExporterAction action : exporters) {
             if (action.isOnToolbar()) {
                 bar.add(action);

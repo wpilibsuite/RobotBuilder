@@ -62,7 +62,14 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             public String getToolTipText(MouseEvent e) {
                 try {
                     TreePath path = getClosestPathForLocation(e.getX(), e.getY());
-                    return ((RobotComponent) path.getLastPathComponent()).getBase().getHelp();
+                    final RobotComponent component = (RobotComponent) path.getLastPathComponent();
+                    if (component.isValid()) {
+                        return component.getBase().getHelp();
+                    } else {
+                        // HTML to get multi-line text.
+                        return "<html>"+component.getBase().getHelp()+"<br/>"+
+                                component.getErrorMessage().replace("\n", "<br/>")+"</html>";
+                    }
                 } catch (ClassCastException ex) { // Ignore folders
                     return null;
                 }

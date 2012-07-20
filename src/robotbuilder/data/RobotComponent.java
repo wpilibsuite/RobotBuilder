@@ -243,4 +243,15 @@ public class RobotComponent extends DefaultMutableTreeNode {
     public void addChild(RobotComponent child) {
         if(this.allowsChildren && this.supports(child)) this.add(child);
     }
+
+    public String getErrorMessage() {
+        String message = "";
+        for (String propertyName : getPropertyKeys()) {
+            final Property property = getProperty(propertyName);
+            if (!property.isValid()) {
+                message += property.getName()+": "+property.getErrorMessage()+"\n";
+            }
+        }
+        return message;
+    }
 }

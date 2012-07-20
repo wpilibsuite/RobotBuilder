@@ -114,23 +114,23 @@ public class IntegerPropertyTest {
         IntegerProperty ip = new IntegerProperty("Test", 0, new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "1");
         ip.setValue("1");
-        assertNull(ip.getError());
+        assertNull(ip.getErrorMessage());
         ip.setValue("");
-        assertNotNull(ip.getError());
+        assertNotNull(ip.getErrorMessage());
         ip.setValue(false);
-        assertNotNull(ip.getError());
+        assertNotNull(ip.getErrorMessage());
         ip.setValue(3.14159);
-        assertNotNull(ip.getError());
+        assertNotNull(ip.getErrorMessage());
         ip.setValue(2);
-        assertNull(ip.getError());
+        assertNull(ip.getErrorMessage());
         ip.setValue(Integer.MAX_VALUE);
-        assertNull(ip.getError());
+        assertNull(ip.getErrorMessage());
         ip.setValue(Integer.MIN_VALUE);
-        assertNull(ip.getError());
+        assertNull(ip.getErrorMessage());
 
         String[] validators = {"DropdownSelected"};
         IntegerProperty ip2 = new IntegerProperty("Test", 0, validators,
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "null");
-        assertNotNull(ip2.getError());
+        assertNotNull(ip2.getErrorMessage());
     }
 }
