@@ -331,7 +331,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public void load(Reader in) {
         System.out.println("Loading");
-        newFile(Palette.getInstance());
+        resetTree(Palette.getInstance());
         
         Iterator docs = new Yaml().loadAll(in).iterator();
         
@@ -394,17 +394,17 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
     
     public void load() {
-        int result = fileChooser.showOpenDialog(MainFrame.getInstance().getFrame());
-        if (result == JFileChooser.CANCEL_OPTION) {
-            return;
+        if (OKToClose()) {
+            int result = fileChooser.showOpenDialog(MainFrame.getInstance().getFrame());
+            if (result == JFileChooser.CANCEL_OPTION) {
+                return;
+            } else if (result == JFileChooser.ERROR_OPTION) {
+                return;
+            } else if (result == JFileChooser.APPROVE_OPTION) {
+                filePath = fileChooser.getSelectedFile().getAbsolutePath();
+            }
+            load(new File(filePath));
         }
-        else if (result == JFileChooser.ERROR_OPTION) {
-            return;
-        }
-        else if (result == JFileChooser.APPROVE_OPTION) {
-            filePath = fileChooser.getSelectedFile().getAbsolutePath();
-        }
-        load(new File(filePath));
     }
 
     public void walk(RobotWalker walker) {
@@ -471,14 +471,18 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
     public void newFile(Palette palette) {
         if (OKToClose()) {
-            DefaultMutableTreeNode root = makeTreeRoot();
-            treeModel.setRoot(root);
-            tree.setSelectionPath(new TreePath(root));
-            usedNames = new HashSet<String>();
-            validators = palette.getValidators();
+            resetTree(palette);
             saved = true;
             MainFrame.getInstance().prefs.put("FileName", "");
         }
+    }
+
+    private void resetTree(Palette palette) {
+        DefaultMutableTreeNode root = makeTreeRoot();
+        treeModel.setRoot(root);
+        tree.setSelectionPath(new TreePath(root));
+        usedNames = new HashSet<String>();
+        validators = palette.getValidators();
     }
 
     /**
@@ -763,11 +767,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
          * <ul>
          * <li>The {@link JMenuItem} that has been right clicked.
          * <li>The name of said {@code RobotComponent}.
-         * <li>The {@code JTree} that contains this {@code RobotComponent}.
          * <li>The {@code RobotComponent} that is to be added.
          * </ul>
          * @param name The name of the {@code AddItemAction}.
-         * @param tree The {@code JTree} that contains the selected {@code RobotComponent}
          * @param selectedNode The {@code RobotComponent} that has been right clicked ("selected").
          * @param childToAdd The {@code RobotComponent} to add when this is clicked.
          */
@@ -853,45 +855,47 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                     final RobotComponent selected = (RobotComponent) path.getLastPathComponent(); // The component that's been clicked
                     RobotComponent componentToAdd = null;
                     
-                    final String name          = selected.toString();
-                    final String selectedType  = selected.getBase().getName(); // Subsystem -> Subsystem, 
-                    String gottenType          = selected.getBase().getType(); // Victor -> Actuator, Gyro -> PIDSource, etc.
+                    final String selectedType  = selected.getBase().getName(); // Subsystem -> Subsystem
+                    String type                = selected.getBase().getType(); // Victor -> Actuator, Gyro -> PIDSource, etc.
                     
-                    if(gottenType.equals("PIDSource")) gottenType = "Sensor"; // PIDSource -> Sensor
-                    final String componentType = gottenType;
+                    if(type.equals("PIDSource")) type = "Sensor"; // PIDSource -> Sensor
                     
                     final int numSupports = 25;
                     
                     
                     final JMenuItem delete = new JMenuItem("Delete");
+                    boolean deleteable = true;
                     delete.setAction(new DeleteItemAction("Delete", selected));
-                    final JMenuItem cancel = new JMenuItem("Cancel");
-                    
                     
                     JMenuItem[] addActions    = new JMenuItem[3];
                     JMenuItem[] subsystemAdds = new JMenuItem[numSupports];
                     
+                    if(selectedType.equals("Robot")){ // Can't do anything with the root.
+                        return;
+                    }
                     // Main folders: Subsystems, OI, and Commands
                     if(selectedType.equals("Subsystems")){
-                        delete.setEnabled(false);
+                        deleteable = false;
                         addActions[0] = new JMenuItem("Add Subsystem");
                         addActions[1] = new JMenuItem("Add PID Subsystem");
                         
                     } else if(selectedType.equals("OI")){
-                        delete.setEnabled(false);
+                        deleteable = false;
                         addActions[0] = new JMenuItem("Add Joystick");
                         addActions[1] = new JMenuItem("Add Joystick Button");
                         
                     } else if(selectedType.equals("Commands")){
-                        delete.setEnabled(false);
+                        deleteable = false;
                         addActions[0] = new JMenuItem("Add Command");
                         addActions[1] = new JMenuItem("Add Command Group");
                         addActions[2] = new JMenuItem("Add PID Command");
                     }
                     // Robot Drives
                     else if(selectedType.equals("Robot Drive 4")|| selectedType.equals("Robot Drive 2")) {
-                        addActions[0] = new JMenuItem("Add Victor");
-                        addActions[1] = new JMenuItem("Add Jaguar");
+                        if(selected.supports(RobotComponent.getPaletteComponent("Victor"))) {
+                            addActions[0] = new JMenuItem("Add Victor");
+                            addActions[1] = new JMenuItem("Add Jaguar");
+                        }
                     }
                     // Subsystem Menus and Choices
                     if(selectedType.equals("Subsystem") || selectedType.equals("PID Subsystem") || selectedType.equals("PID Controller")){
@@ -937,10 +941,16 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         mainMenu.add(sensorMenu);
                         mainMenu.add(pneumaticMenu);
                     } else if(selectedType.equals("PID Controller")) {
-                        mainMenu.add(actuatorMenu);
-                        mainMenu.add(sensorMenu);
+                        sensorMenu.remove(sensorMenu.getItem(7)); // Removes limit switch from the menu
+                        
+                        if(selected.supports(RobotComponent.getPaletteComponent("Victor"))){ // If no actuator, show the actuator menu
+                            mainMenu.add(actuatorMenu);
+                        }
+                        if(selected.supports(RobotComponent.getPaletteComponent("Gyro"))){ // If no sensor, show the sensor menu
+                            mainMenu.add(sensorMenu);
+                        }
                     }
-                    
+                    // Adds the 
                     for(int i = 0; i < subsystemAdds.length && subsystemAdds[i] != null; i++) {
 //                            componentToAdd = new RobotComponent(subsystemAdds[i].getText().substring(4), selectedType, robot);
                         subsystemAdds[i].setAction(new AddItemAction(subsystemAdds[i].getText(), selected, componentToAdd));
@@ -952,9 +962,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                         addActions[i].setAction(new AddItemAction(addActions[i].getText(), selected, componentToAdd));
                     }
                     
-//                        mainMenu.add(wipe);
-                    mainMenu.addSeparator();
-                    mainMenu.add(delete);
+                    if(mainMenu.getSubElements().length > 0 && deleteable) mainMenu.addSeparator(); // Adds a separator above the "Delete" button
+                    if(deleteable) mainMenu.add(delete);
                     mainMenu.show(tree, bounds.x, bounds.y + bounds.height);
                         
                 }
