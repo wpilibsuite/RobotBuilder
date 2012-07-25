@@ -40,6 +40,7 @@
 ##     - Declaration: The declaration to declare a variable
 ##           representing this component.
 ##     - Construction: The constructor to create this component.
+##     - LiveWindow: Put this component on the livewindow properly.
 ##     - Extra: Extra configuration for after the constructor is done.
 ##     - ClassName: The java class name of this object.
 
@@ -65,7 +66,7 @@ Macros: macros.vm
 
 ##Post Export Action: "netbeans --open $project"
 
-Instruction Names: ["Export", "Import", "Declaration", "Construction", "Extra", "ClassName"]
+Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWindow", "Extra", "ClassName"]
 
 Defaults:
   Component:
@@ -77,6 +78,7 @@ Defaults:
     Import: ""
     Declaration: ""
     Construction: ""
+    LiveWindow: ""
     Extra: ""
     ClassName: ""
   AnalogInput:
@@ -216,6 +218,7 @@ Instructions:
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
+    LiveWindow: "sensors.addElement(new LiveWindowSendable(\"$Subsystem\", \"$Short_Name\", #constant($Name)));"
   Analog Input:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
@@ -236,6 +239,7 @@ Instructions:
   Victor:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Victor"
+    LiveWindow: "actuators.addElement(new LiveWindowSendable(\"$Subsystem\", \"$Short_Name\", #constant($Name)));"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"

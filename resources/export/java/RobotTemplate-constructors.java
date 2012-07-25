@@ -1,6 +1,6 @@
 #foreach ($component in $components)
 #if ($helper.exportsTo("Robot", $component))
-    #constructor($component)
+        #constructor($component)
 
 #end
 #end

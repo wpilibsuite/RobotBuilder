@@ -206,6 +206,8 @@ public class GenericExporter {
         context.put("ClassName", instructions.get("ClassName"));
         context.put("Name", comp.getFullName());
         context.put("Short_Name", comp.getName());
+        context.put("Subsystem", comp.getSubsystem());
+        context.put("Component", comp);
         for (String property : comp.getPropertyKeys()) {
             context.put(property.replace(" ", "_").replace("(", "").replace(")", ""),
                     comp.getProperty(property).getValue());

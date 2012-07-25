@@ -10,6 +10,7 @@ package $package;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindowCommand;
 import ${package}.commands.*;
 import ${package}.subsystems.*;
 
@@ -80,5 +81,6 @@ public class Robot extends IterativeRobot {
         // yet. Thus, their requires() statements may grab null pointers. Bad
         // news. Don't move it.
         oi = new OI();
+        (new LiveWindowCommand(RobotMap.sensors, RobotMap.actuators)).start();
     }
 }
