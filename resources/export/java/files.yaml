@@ -31,7 +31,8 @@
   update: Modify
   modifications:
     autonomous: ${exporter-path}RobotTemplate-autonomous.java
-    constructors: ${exporter-path}CommandBase-constructors.java
+    constructors: ${exporter-path}RobotTemplate-declarations.java
+    constructors: ${exporter-path}RobotTemplate-constructors.java
     
 - !File
   export: $package-path/RobotMap.java
@@ -45,13 +46,6 @@
   modifications:
     declarations: ${exporter-path}OI-declarations.java
     constructors: ${exporter-path}OI-constructors.java
-
-##- !File
-##  export: $package-path/commands/CommandBase.java
-##  source: ${exporter-path}CommandBase.java
-##  update: Modify
-##  modifications:
-##    constructors: ${exporter-path}CommandBase-constructors.java
 
 ## Export Commands as files
 #if ($export-commands)
