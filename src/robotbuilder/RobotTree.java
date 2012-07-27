@@ -149,6 +149,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                 }
             }
         });
+        saved = true;
     }
 
     /**
