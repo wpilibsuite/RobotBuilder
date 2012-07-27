@@ -49,7 +49,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
     RobotTree(PropertiesDisplay properties, Palette palette) {
 	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yaml"));
-	saved = true;
 	this.properties = properties;
 	this.properties.setRobotTree(this);
 	setLayout(new BorderLayout());
@@ -160,7 +159,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	RobotComponent root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Robot"), this);
         root.add(new RobotComponent("Subsystems", Palette.getInstance().getItem("Subsystems"), this));
         root.add(new RobotComponent("Operator Interface", Palette.getInstance().getItem("OI"), this));
-        root.add(new RobotComponent("Commands", Palette.getInstance().getItem("Commands"), this));
+        RobotComponent commands = new RobotComponent("Commands", Palette.getInstance().getItem("Commands"), this);
+        root.add(commands);
+        commands.add(new RobotComponent("Autonomous Command", Palette.getInstance().getItem("Command"), this));
+        root.getProperty("Autonomous Command")._setValue("Autonomous Command");
 	return root;
     }
     
@@ -468,7 +470,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             default: return false;
         }
     }
-
+    
     public void newFile(Palette palette) {
         if (OKToClose()) {
             resetTree(palette);
@@ -489,7 +491,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @return The root RobotComponent of the RobotTree
      */
     public RobotComponent getRoot() {
-        return (RobotComponent) treeModel.getRoot();
+        return treeModel != null ? (RobotComponent) treeModel.getRoot() : null;
     }
 
     public Iterable<RobotComponent> getSubsystems() {
