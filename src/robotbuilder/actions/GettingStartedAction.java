@@ -31,8 +31,8 @@ public class GettingStartedAction extends AbstractAction {
         help.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent he) {
-                System.out.println(he.getURL().toExternalForm());
-                System.out.println(he.getEventType());
+//                System.out.println(he.getURL().toExternalForm());
+//                System.out.println(he.getEventType());
                 if (he.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
                     try {
                         help.setPage(he.getURL());

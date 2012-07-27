@@ -154,7 +154,7 @@ public class UniqueValidator implements Validator {
                 return;
             }
             for (String prop : selection.keySet()) {
-                System.out.println("\t"+prefix+prop+" => "+selection.get(prop));
+//                System.out.println("\t"+prefix+prop+" => "+selection.get(prop));
                 component.getProperty(prefix+prop)._setValue(selection.get(prop));
                 component.getProperty(prefix+prop).update();
             }
@@ -187,8 +187,8 @@ public class UniqueValidator implements Validator {
             // Generate values
             Map<String, String> values = new HashMap<String, String>();
             for (String field : fields) {
-                System.out.println(choices.get(field));
-                System.out.println(locations.get(field));
+//                System.out.println(choices.get(field));
+//                System.out.println(locations.get(field));
                 values.put(field, choices.get(field)[locations.get(field)]);
             }
             

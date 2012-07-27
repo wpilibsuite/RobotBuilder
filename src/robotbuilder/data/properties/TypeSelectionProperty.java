@@ -48,8 +48,6 @@ public class TypeSelectionProperty extends Property {
     @Override
     public void _setValue(Object value) {
         this.value = value;
-        System.out.println("Tree: "+component.getRobotTree());
-        System.out.println("Tree: "+component.getRobotTree().getRoot());
         if (value != null && component != null && component.getRobotTree().getRoot() != null)
             valueComponent = component.getRobotTree().getComponentByName(value.toString());
     }

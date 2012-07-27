@@ -130,7 +130,6 @@ public class Palette extends JPanel implements TreeSelectionListener {
         for (Map<String, ArrayList<PaletteComponent>> section : sections) {
             String key = section.keySet().iterator().next();
             ArrayList<PaletteComponent> items = section.get(key);
-            System.out.println(key);
             DefaultMutableTreeNode node = null;
             if (!key.equals("Hidden")) {
                 node = new DefaultMutableTreeNode(key);
