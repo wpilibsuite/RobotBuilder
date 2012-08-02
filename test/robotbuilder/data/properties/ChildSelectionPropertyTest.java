@@ -21,10 +21,18 @@ public class ChildSelectionPropertyTest {
     public ChildSelectionPropertyTest() {
     }
     
-    static RobotComponent driveTrain, arm, wrist;
+    RobotComponent driveTrain, arm, wrist;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
+    
+    @Before
+    public void setUp() {
         RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
         tree.newFile(Palette.getInstance());
         RobotComponent robot = tree.getRoot();
@@ -39,14 +47,6 @@ public class ChildSelectionPropertyTest {
         // Create an wrist subsystem
         wrist = new RobotComponent("Wrist", "PID Subsystem", tree);
         subsystems.add(wrist);
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-    
-    @Before
-    public void setUp() {
     }
     
     @After

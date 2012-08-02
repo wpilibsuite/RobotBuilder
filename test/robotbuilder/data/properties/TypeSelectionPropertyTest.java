@@ -4,12 +4,17 @@
  */
 package robotbuilder.data.properties;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import org.junit.*;
 import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
 import robotbuilder.Palette;
 import robotbuilder.RobotTree;
+import robotbuilder.actions.GettingStartedAction;
 import robotbuilder.data.RobotComponent;
 
 /**
@@ -21,10 +26,18 @@ public class TypeSelectionPropertyTest {
     public TypeSelectionPropertyTest() {
     }
 
-    static RobotComponent driveTrain, arm, wrist;
+    RobotComponent driveTrain, arm, wrist;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
+    
+    @Before
+    public void setUp() {
         RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
         tree.newFile(Palette.getInstance());
         RobotComponent robot = tree.getRoot();
@@ -39,14 +52,6 @@ public class TypeSelectionPropertyTest {
         // Create an wrist subsystem
         wrist = new RobotComponent("Wrist", "PID Subsystem", tree);
         subsystems.add(wrist);
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-    
-    @Before
-    public void setUp() {
     }
     
     @After

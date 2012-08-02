@@ -25,7 +25,9 @@ public class TypeSelectionProperty extends Property {
         super(name, defaultValue, validators, component);
         this.type = type;
         this.value = value;
-        if (value != null) valueComponent = component.getRobotTree().getComponentByName(value.toString());
+        if (value != null) {
+            valueComponent = component.getRobotTree().getComponentByName(value.toString());
+        }
     }
 
     @Override
@@ -35,7 +37,7 @@ public class TypeSelectionProperty extends Property {
 
     @Override
     public Object getValue() {
-        if (valueComponent != null) return valueComponent.getFullName();
+        if (valueComponent != null) { return valueComponent.getFullName(); }
         return (value != null) ? value : defaultValue;
     }
     
@@ -48,8 +50,9 @@ public class TypeSelectionProperty extends Property {
     @Override
     public void _setValue(Object value) {
         this.value = value;
-        if (value != null && component != null && component.getRobotTree().getRoot() != null)
+        if (value != null && component != null && component.getRobotTree().getRoot() != null) {
             valueComponent = component.getRobotTree().getComponentByName(value.toString());
+        }
     }
     
     
@@ -57,7 +60,7 @@ public class TypeSelectionProperty extends Property {
     public void update() {
         super.update();
         Object selection = getValue();
-        if (valueComponent != null) selection = valueComponent.getFullName();
+        if (valueComponent != null) { selection = valueComponent.getFullName(); }
         Vector<String> options = component.getRobotTree().getRoot().getChildrenOfTypeNames(type);
         options.add(0, defaultValue.toString());
         combo = new JComboBox(options);
