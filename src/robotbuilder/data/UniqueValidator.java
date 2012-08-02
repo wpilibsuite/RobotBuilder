@@ -181,7 +181,7 @@ public class UniqueValidator implements Validator {
      * @return An unused port that can be claimed.
      */
     private Map<String, String> getFree(Map<String, String[]> choices) throws InvalidException {
-        assert fields.size() <= 2; // TODO: buggy with more than two fields
+        assert fields.size() <= 2; // Warning: Buggy with more than two fields
         Map<String, Integer> locations = new HashMap<String, Integer>();
         for (String field : fields) {
             locations.put(field, 0);
