@@ -49,6 +49,11 @@ public class DistinctValidator implements Validator {
         return "The value in this field overlaps with one of the following fields: "
                 +fields.toString()+".";
     }
+    
+    @Override
+    public void delete(RobotComponent component, String property) {
+        // Do nothing
+    }
 
     @Override
     public String getName() {

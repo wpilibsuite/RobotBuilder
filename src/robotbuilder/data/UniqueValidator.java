@@ -50,6 +50,11 @@ public class UniqueValidator implements Validator {
     }
     
     @Override
+    public void delete(RobotComponent component, String property) {
+        release(component, getPrefix(property));
+    }
+    
+    @Override
     public UniqueValidator copy() {
         LinkedList<String> newFields = new LinkedList<String>();
         for (String item : fields) {

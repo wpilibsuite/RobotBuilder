@@ -129,13 +129,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                     !selected.getBase().toString().equals("Robot")) {
                         System.out.println("Delete key pressed");
 
-                        selected.removeFromParent();
-                        selected.walk(new RobotWalker() {
-                            @Override
-                            public void handleRobotComponent(RobotComponent self) {
-                                MainFrame.getInstance().getCurrentRobotTree().removeName(self.getFullName());
-                            }
-                        });
+                        delete(selected);
                         System.out.println("Updating....");
                         update();
                         takeSnapshot();
@@ -577,6 +571,18 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         saved = true;
     }
 
+    void delete(final RobotComponent component) {
+        component.walk(new RobotWalker() {
+            @Override public void handleRobotComponent(RobotComponent self) {
+                self.handleDelete();
+                if (self != component) { delete(self); }
+            }
+        });
+        System.out.println("Deleting component: "+component);
+        removeName(component.getFullName());
+        component.removeFromParent();
+    }
+
     /**
      * A transfer handler for that wraps the default transfer handler of RobotTree.
      * 
@@ -826,13 +832,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            target.removeFromParent();
-            target.walk(new RobotWalker() {
-                @Override
-                public void handleRobotComponent(RobotComponent self) {
-                    MainFrame.getInstance().getCurrentRobotTree().removeName(self.getFullName());
-                }
-            });
+            delete(target);
             update();
             takeSnapshot();
         }

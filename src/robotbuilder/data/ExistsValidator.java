@@ -39,6 +39,11 @@ public class ExistsValidator implements Validator {
         return error;
     }
     
+    @Override
+    public void delete(RobotComponent component, String property) {
+        // Do nothing
+    }
+    
     String error = "You need to set this value.";
     
     // Yaml setters and getters

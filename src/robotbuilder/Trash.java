@@ -79,13 +79,8 @@ public class Trash extends JLabel {
                     }
 //                    System.out.println("Imported a robot component: " + node.toString());
                     
-                    node.walk(new RobotWalker() {
-                        @Override
-                        public void handleRobotComponent(RobotComponent self) {
-                            MainFrame.getInstance().getCurrentRobotTree().removeName(self.getFullName());
-                        }
-                    });
-                    node.removeFromParent();
+                    node.getRobotTree().delete(node);
+                    node.getRobotTree().takeSnapshot();
                     return true;
                 }
                 return false;

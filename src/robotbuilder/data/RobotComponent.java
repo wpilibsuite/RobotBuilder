@@ -254,4 +254,18 @@ public class RobotComponent extends DefaultMutableTreeNode {
         }
         return message;
     }
+
+    /**
+     * Handle being deleted by cleaning up validators and so forth.
+     */
+    public void handleDelete() {
+        for (Property prop : properties.values()) {
+            for (String validatorName : prop.getValidators()) {
+                Validator validator = getRobotTree().getValidator(validatorName);
+                if (validator != null) {
+                    validator.delete(this, prop.getName());
+                }
+            }
+        }
+    }
 }
