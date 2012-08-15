@@ -60,7 +60,7 @@ public class TestUtils {
         pid.getProperty("P").setValue(2);
         pid.getProperty("I").setValue(1);
         pid.getProperty("D").setValue(-1);
-        pid.getProperty("Send to SmartDashboard").setValue(true);
+//        pid.getProperty("Send to SmartDashboard").setValue(true);
         pid.getProperty("Limit Input").setValue(true);
         pid.getProperty("Continuous").setValue(true);
         RobotComponent motor = new RobotComponent("Motor", "Jaguar", tree);

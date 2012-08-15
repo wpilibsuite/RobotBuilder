@@ -17,7 +17,7 @@
 #macro( constructor $component )${helper.getInstruction($component, "Construction")}#end
 
 ## Get the livewindow instruction of a robot component
-#macro( livewindow $component )${helper.getInstruction($component, "Construction")}#end
+#macro( livewindow $component )${helper.getInstruction($component, "LiveWindow")}#end
 
 ## Get the extra instruction of a robot component
 #macro( extra $component )${helper.getInstruction($component, "Extra")}#end
