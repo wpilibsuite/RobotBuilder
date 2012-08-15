@@ -10,9 +10,6 @@ import java.util.Vector;
  * floating around.
  */
 public class RobotMap {
-    public static Vector sensors = new Vector();
-    public static Vector actuators = new Vector();
-    
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotMap", $component))
     #declaration($component)

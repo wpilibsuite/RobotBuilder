@@ -218,7 +218,7 @@ Instructions:
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
-    LiveWindow: "sensors.addElement(new LiveWindowSendable(\"$Subsystem\", \"$Short_Name\", #constant($Name)));"
+    LiveWindow: "LiveWindow.addSensor(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Analog Input:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
@@ -239,7 +239,7 @@ Instructions:
   Victor:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Victor"
-    LiveWindow: "actuators.addElement(new LiveWindowSendable(\"$Subsystem\", \"$Short_Name\", #constant($Name)));"
+    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
