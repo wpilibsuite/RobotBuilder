@@ -84,7 +84,7 @@
             <compilation-unit>
                 <package-root>src</package-root>
                 <classpath mode="boot">/home/alex/sunspotfrcsdk/lib/squawk.jar</classpath>
-                <classpath mode="compile">/home/alex/sunspotfrcsdk/lib/wpilibj.jar;/home/alex/sunspotfrcsdk/lib/networktables-crio-r173.jar</classpath>
+                <classpath mode="compile">/home/alex/NetBeansProjects/azaleasource/WPILibJ/dist/wpilibj.jar:/home/alex/sunspotfrcsdk/lib/networktables-crio-r178.jar</classpath>
                 <built-to>build</built-to>
                 <source-level>1.4</source-level>
             </compilation-unit>

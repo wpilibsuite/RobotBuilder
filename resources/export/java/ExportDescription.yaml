@@ -139,7 +139,7 @@ Instructions:
               #constant($Name).setOutputRange(${Minimum_Output}, ${Maximum_Output});#end
       #if($Send_to_SmartDashboard)
 
-              SmartDashboard.putData("${Name}", #constant($Name));#end
+              //SmartDashboard.putData("${Name}", #constant($Name));#end
       
   Robot Drive 2:
     Defaults: "Component,None"
