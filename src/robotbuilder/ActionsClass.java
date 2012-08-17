@@ -108,8 +108,6 @@ public class ActionsClass {
     }
     
     private LinkedList<ExporterAction> getExporters() {
-        System.out.println(Utils.getResource(EXPORTERS_PATH));
-        System.out.println(Utils.getResource(EXPORTERS_PATH+"exporters.yaml"));
         Yaml yaml = new Yaml();
         InputStreamReader in = new InputStreamReader(Utils.getResourceAsStream(EXPORTERS_PATH+"exporters.yaml"));
         List<String> exporterNames = (List<String>) yaml.load(in);

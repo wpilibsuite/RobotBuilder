@@ -547,7 +547,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * Takes a snapshot of the current state and dirties the save flag.
      */
     public void takeSnapshot(){
-        System.out.println("Snapshot number "+ ++snapshots +" taken.");
         saved = false;
         history.addState(encode());
     }

@@ -22,12 +22,6 @@ public class RobotBuilder {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                System.out.println(System.getProperty("java.class.path"));
-                System.out.println((new File(".")).getAbsolutePath());
-                System.out.println(UIManager.getSystemLookAndFeelClassName());
-                for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
-                    System.out.println(laf);
-                }
                 try {
                     if (!UIManager.getSystemLookAndFeelClassName().contains("MetalLookAndFeel"))
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
