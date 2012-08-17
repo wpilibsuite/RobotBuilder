@@ -151,7 +151,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @return An empty TreeRoot
      */
     private RobotComponent makeTreeRoot() {
-	RobotComponent root = new RobotComponent("Team190Robot", Palette.getInstance().getItem("Robot"), this);
+	RobotComponent root = new RobotComponent("MyRobot", Palette.getInstance().getItem("Robot"), this);
         root.add(new RobotComponent("Subsystems", Palette.getInstance().getItem("Subsystems"), this));
         root.add(new RobotComponent("Operator Interface", Palette.getInstance().getItem("OI"), this));
         RobotComponent commands = new RobotComponent("Commands", Palette.getInstance().getItem("Commands"), this);
