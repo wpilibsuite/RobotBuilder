@@ -23,8 +23,6 @@ public class ExportFile {
     private Map<String, String> vars = new HashMap<String, String>();
 
     public void export(GenericExporter exporter) throws IOException {
-        System.out.println(source+" ==> "+export);
-        
         // Build the context
         Context fileContext = new VelocityContext(exporter.rootContext);
         if (vars != null) {
@@ -49,7 +47,6 @@ public class ExportFile {
                 idContext.put("id", id);
                 String beginning = exporter.eval(exporter.begin_modification, idContext);
                 String end = exporter.eval(exporter.end_modification, idContext);
-                System.out.println(exporter.evalResource(modifications.get(id), idContext));
                 file = file.replaceAll("(" + beginning + ")([\\s\\S]*?)(" + end + ")",
                         "$1\n" + exporter.evalResource(modifications.get(id), idContext) + "\n    $3");
             }

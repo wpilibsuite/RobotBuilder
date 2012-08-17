@@ -63,7 +63,6 @@ public class FileProperty extends Property {
                 && !((String) value).endsWith("."+extension)) {
             value = ((String) value)+"."+extension;
         }
-//        System.out.println(name+" => "+value);
         this.value = (String) value;
     }
 
@@ -98,7 +97,6 @@ public class FileProperty extends Property {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-//            System.out.println(ae.getActionCommand());
             if (ae.getActionCommand().equals("ApproveSelection")){
                 fp.setValue(fp.chooser.getSelectedFile().getPath());
             }

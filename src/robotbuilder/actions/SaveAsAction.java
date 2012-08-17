@@ -26,7 +26,6 @@ public class SaveAsAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        System.out.println("Save as selected");
         fileChooser.setSelectedFile(new File(MainFrame.getInstance().getCurrentRobotTree().getFilePath()));
         String filePath;
         int result = fileChooser.showSaveDialog(MainFrame.getInstance().getFrame());

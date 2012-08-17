@@ -104,10 +104,8 @@ public class GenericExporter {
         rootContext.put("export-commands", robot.getProperty("Export Commands").getValue());
         rootContext.put("commands", robotTree.getCommands());
         for (String key : varKeys) {
-            System.out.println("Var: "+key+" = "+eval(vars.get(key)));
             rootContext.put(key, eval(vars.get(key)));
         }
-        System.out.println();
         
         // Export to all files
         Collection<ExportFile> newFiles = getFiles();
@@ -129,8 +127,6 @@ public class GenericExporter {
                 Process pr = rt.exec(action);
             }
         }
-        
-        System.out.println(name+" Export Finished");
     }
     
     /**
@@ -160,7 +156,6 @@ public class GenericExporter {
                 assert instruction != null; // TODO: Deal with more elegantly
                 component.put(instructionKey, instruction);
             }
-//            System.out.println("\t"+key+": "+component+"\n\n");
             componentInstructions.put(key, component);
         }
     }

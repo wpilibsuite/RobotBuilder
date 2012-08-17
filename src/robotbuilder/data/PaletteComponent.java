@@ -93,12 +93,8 @@ public class PaletteComponent {
     }
     
     public void print() {
-//        System.out.println("Component: " + name);
-//        System.out.println("\tType: " + getType());
-//        System.out.println("\tHelp: " + getHelp());
         for (String key: properties.keySet()) {
             String k = (String) key;
-//            System.out.println("\t\t" + k + ": " + properties.get(k));
         }
     }
     

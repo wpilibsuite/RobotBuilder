@@ -119,21 +119,16 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                     if(path != null) {
                         selected = (RobotComponent) path.getLastPathComponent();
                     } else {
-                        System.out.println("Nothing selected");
                         return;
                     }
 
                     if(!selected.getBase().toString().equals("Subsystems") &&
-                    !selected.getBase().toString().equals("OI") &&
-                    !selected.getBase().toString().equals("Commands") &&
-                    !selected.getBase().toString().equals("Robot")) {
-                        System.out.println("Delete key pressed");
-
+                            !selected.getBase().toString().equals("OI") &&
+                            !selected.getBase().toString().equals("Commands") &&
+                            !selected.getBase().toString().equals("Robot")) {
                         delete(selected);
-                        System.out.println("Updating....");
                         update();
                         takeSnapshot();
-                        System.out.println("Updated. \""+selected.getName()+"\" removed");
                     } else {
                         JOptionPane.showMessageDialog(MainFrame.getInstance(), 
                                                       "Cannot delete \""+selected+"\"!", 
@@ -240,10 +235,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     public void save(String path) {
         filePath = path;
 	try {
-	    System.out.println("Saving to: " + path);
 	    FileWriter save = new FileWriter(path);
             save.write(this.encode());
-	    System.out.println("Written");
 	    save.close();
 	} catch (IOException ex) {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
@@ -294,7 +287,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             }
         }, (Object[])null);
         Yaml yaml = new Yaml();
-//        System.out.println(yaml.dump(out));
         return yaml.dump("Version "+RobotBuilder.VERSION)+"\n---\n"+yaml.dump(out);
     }
 
@@ -304,7 +296,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public void load(File path) {
 	try {
-	    System.out.println("Loading from: " + path.getAbsolutePath());
 	    FileReader source = new FileReader(path);
             load(source);
 	} catch (IOException ex) {
@@ -318,7 +309,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param path 
      */
     public void load(String text) {
-        System.out.println("Loading from a String");
         load(new StringReader(text));
     }
     
@@ -327,15 +317,13 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param path 
      */
     public void load(Reader in) {
-        System.out.println("Loading");
         resetTree(Palette.getInstance());
         
         Iterator docs = new Yaml().loadAll(in).iterator();
         
         String version = (String) docs.next();
-        System.out.println("Version: '"+version+"' == '"+RobotBuilder.VERSION+"'");
+        // FIXME: Asserts don't normally work...
         assert version.equals("Version "+RobotBuilder.VERSION); // TODO: handle more cleanly
-        System.out.println("Version: '"+version+"' == '"+RobotBuilder.VERSION+"'");
 
         Map<String, Object> details = (Map<String, Object>) docs.next();
         RobotComponent root = new RobotComponent();
@@ -379,7 +367,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         
         properties.setCurrentComponent(root);
         update();
-        System.out.println("Loaded");
         
         // Add names to used names list
         walk(new RobotWalker() {
@@ -454,14 +441,11 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		options[0]);
         switch(value){
             case JOptionPane.YES_OPTION:
-                System.out.println("Save");
                 save();
                 return true;
             case JOptionPane.NO_OPTION:
-                System.out.println("Discarded changes");
                 return true;
             case JOptionPane.CANCEL_OPTION:
-                System.out.println("Cancelled closure");
                 return false;
             default: return false;
         }
@@ -555,7 +539,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * Reverts to the previous snapshot if one exists.
      */
     public void undo() {
-        System.out.println("Undo button pressed");
         load(history.undo());
     }
     
@@ -563,7 +546,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * Changes to the next snapshot if one exists.
      */
     public void redo(){
-        System.out.println("Redo button pressed");
         load(history.redo());
     }
     
@@ -578,7 +560,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                 if (self != component) { delete(self); }
             }
         });
-        System.out.println("Deleting component: "+component);
         removeName(component.getFullName());
         component.removeFromParent();
     }
@@ -639,7 +620,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		    System.out.println("IOException");
 		    return false;
 		}
-		System.out.println(data);
                 Set<String> invalid = new HashSet();
                 invalid.add("Robot"); invalid.add("Subsystems");
                 invalid.add("OI"); invalid.add("Commands");
@@ -690,7 +670,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
 	@Override
 	protected void exportDone(JComponent source, Transferable data, int action) {
-	    System.out.println("Export ended for action: " + action);
 	    update();
 	}
 
@@ -724,7 +703,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) path.getLastPathComponent();
 	    DefaultMutableTreeNode newNode;
 	    if (support.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)) {
-		System.out.println("Importing from palette");
 		String data;
 		try {
 		    data = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
@@ -746,7 +724,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		} catch (IOException e) {
 		    return false;
 		}
-		System.out.println("Imported a robot component: " + newNode.toString());
 	    } else {
 		return false;
 	    }
@@ -802,7 +779,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             JMenuItem source = (JMenuItem) e.getSource();     // The menu item that's been clicked
             String nameToAdd = source.getText().substring(4); // Removes the "Add " in the beginning
 
-            System.out.println("\nCreating component...");
             /* 
             * Step one:   generate new name based off previous instances of this type of RobotComponent
             * Step two:   get the PaletteComponent of this type (e.g. "Gyro")
@@ -811,12 +787,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                     getDefaultComponentName(RobotComponent.getPaletteComponent(nameToAdd), selectedComponent.getSubsystem()), 
                     nameToAdd, 
                     robot);
-            System.out.println("Component created\n");
 
             selectedComponent.addChild(toAdd);
             takeSnapshot();
             update();
-            System.out.println("Item \""+toAdd.getFullName()+"\" added.");
         }
     }
     

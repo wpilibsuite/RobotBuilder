@@ -21,7 +21,6 @@ public class OpenAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        System.out.println("Open selected");
         MainFrame.getInstance().getCurrentRobotTree().load();
     }
     

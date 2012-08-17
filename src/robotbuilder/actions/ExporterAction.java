@@ -25,7 +25,6 @@ public class ExporterAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        System.out.println("Exporting with "+exporter.getName());
         try {
             exporter.export(MainFrame.getInstance().getCurrentRobotTree());
         } catch (IOException ex) {

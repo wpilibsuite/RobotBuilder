@@ -51,7 +51,6 @@ public class ExistsValidator implements Validator {
         return error;
     }
     public void setError(String error) {
-        System.out.println("Setting error:"+error);
         this.error = error;
     }
 

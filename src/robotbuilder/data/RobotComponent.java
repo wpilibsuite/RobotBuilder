@@ -131,7 +131,6 @@ public class RobotComponent extends DefaultMutableTreeNode {
 
     public void setProperty(String key, Object val) {
         properties.get(key).setValue(val);
-//        System.out.println(key+" => "+val);
     }
     
     public Map<String, Property> getProperties() {

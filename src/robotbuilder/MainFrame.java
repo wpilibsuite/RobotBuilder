@@ -68,8 +68,6 @@ public class MainFrame extends JFrame {
         help.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent he) {
-//                System.out.println(he.getURL().toExternalForm());
-//                System.out.println(he.getEventType());
                 if (he.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
                     try {
                         Set<String> localProtocols = new HashSet<String>();

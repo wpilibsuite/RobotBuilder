@@ -48,8 +48,6 @@ public class Palette extends JPanel implements TreeSelectionListener {
         VelocityEngine ve = new VelocityEngine();
         ve.evaluate(null, writer, "RobotBuilder:PaletteDescription.yaml", in);
         
-//        System.out.println(writer.toString());
-
         Constructor constructor = new Constructor();
         constructor.addTypeDescription(new TypeDescription(PaletteComponent.class, "!Component"));
 
@@ -141,7 +139,6 @@ public class Palette extends JPanel implements TreeSelectionListener {
         }
     }
     private void createPaletteComponent(DefaultMutableTreeNode root, PaletteComponent component) {
-//        System.out.println("\t"+component.getName());
         paletteItems.put(component.getName(), component);
         
         if (root != null) {

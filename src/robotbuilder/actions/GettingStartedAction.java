@@ -36,8 +36,6 @@ public class GettingStartedAction extends AbstractAction {
         help.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent he) {
-//                System.out.println(he.getURL().toExternalForm());
-//                System.out.println(he.getEventType());
                 if (he.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
                     try {
                         help.setPage(he.getURL());
@@ -57,7 +55,6 @@ public class GettingStartedAction extends AbstractAction {
         EventQueue.invokeLater(new Runnable() {
             @Override public void run() {
                 if (MainFrame.getInstance().prefs.getBoolean("getting_started.visible", true)) {
-                    System.out.println("Showing help");
                     actionPerformed(null);
                 }
             }
