@@ -260,10 +260,12 @@ public class RobotComponent extends DefaultMutableTreeNode {
      */
     public void handleDelete() {
         for (Property prop : properties.values()) {
-            for (String validatorName : prop.getValidators()) {
-                Validator validator = getRobotTree().getValidator(validatorName);
-                if (validator != null) {
-                    validator.delete(this, prop.getName());
+            if (prop.getValidators() != null) {
+                for (String validatorName : prop.getValidators()) {
+                    Validator validator = getRobotTree().getValidator(validatorName);
+                    if (validator != null) {
+                        validator.delete(this, prop.getName());
+                    }
                 }
             }
         }
