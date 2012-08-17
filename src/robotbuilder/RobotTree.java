@@ -413,6 +413,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public void update() {
 	treeModel.reload();
+        properties.update();
 
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
@@ -814,8 +815,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             System.out.println("Component created\n");
 
             selectedComponent.addChild(toAdd);
-            update();
             takeSnapshot();
+            update();
             System.out.println("Item \""+toAdd.getFullName()+"\" added.");
         }
     }

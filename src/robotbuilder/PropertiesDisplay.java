@@ -36,6 +36,10 @@ class PropertiesDisplay extends JPanel {
         keys = currentComponent.getPropertyKeys();
         this.updateUI();
     }
+    
+    public void update() {
+        updateUI();
+    }
 
     void setRobotTree(RobotTree robot) {
         this.robot = robot;
