@@ -846,6 +846,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             if(SwingUtilities.isRightMouseButton(e)) { // Right click only
                 
                 TreePath path = tree.getPathForLocation(e.getX(), e.getY());
+                tree.setSelectionPath(path);
                 Rectangle bounds = tree.getUI().getPathBounds(tree, path);
                 
                 if (bounds != null && bounds.contains(e.getX(), e.getY())) {
