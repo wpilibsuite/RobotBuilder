@@ -257,7 +257,7 @@ public class UniqueValidator implements Validator {
         
         @Override
         public String toString() {
-            return comp.toString() + ": " + prefix;
+            return comp.getFullName() + ": " + prefix;
         }
 
         @Override
