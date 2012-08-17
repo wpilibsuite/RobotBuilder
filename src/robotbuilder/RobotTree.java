@@ -115,7 +115,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
                 char keyChar = e.getKeyChar();
                 path = tree.getSelectionPath();
 
-                if(keyChar == KeyEvent.VK_BACK_SPACE || keyChar == KeyEvent.VK_DELETE) {
+                if(keyChar == KeyEvent.VK_DELETE) {
                     if(path != null) {
                         selected = (RobotComponent) path.getLastPathComponent();
                     } else {
