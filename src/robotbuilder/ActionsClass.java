@@ -54,6 +54,18 @@ public class ActionsClass {
         fileMenu.add(exitAction);
         menu.add(fileMenu);
         
+        
+        JMenu editMenu = new JMenu("Edit");
+        JMenuItem undoItem  = new JMenuItem(undoAction);
+        JMenuItem redoItem = new JMenuItem(redoAction);
+        
+        undoItem.setAccelerator(KeyStroke.getKeyStroke("control Z"));
+        redoItem.setAccelerator(KeyStroke.getKeyStroke("control Y"));
+        
+        editMenu.add(undoItem);
+        editMenu.add(redoItem);
+        menu.add(editMenu);
+        
         JMenu generateMenu = new JMenu("Generate");
         generateMenu.add(verifyAction);
         generateMenu.add(new JSeparator());
@@ -82,9 +94,6 @@ public class ActionsClass {
         
         JButton undoButton = new JButton(undoAction);
         JButton redoButton = new JButton(redoAction);
-        
-        undoButton.registerKeyboardAction(undoAction, KeyStroke.getKeyStroke("control Z"), JComponent.WHEN_IN_FOCUSED_WINDOW);
-        undoButton.registerKeyboardAction(redoAction, KeyStroke.getKeyStroke("control Y"), JComponent.WHEN_IN_FOCUSED_WINDOW);
         
         bar.add(undoButton);
         bar.add(redoButton);
