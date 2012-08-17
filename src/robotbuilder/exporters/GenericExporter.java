@@ -263,7 +263,7 @@ public class GenericExporter {
                 }
                 for (String key : ports.keySet()) {
                     if (module.equals(modules.get(key))) {
-                        mapping.put(ports.get(key), self.getName()+" "+key);
+                        mapping.put(ports.get(key), self.getFullName()+" "+key);
                     }
                 }
             }
