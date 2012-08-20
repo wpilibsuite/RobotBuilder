@@ -34,7 +34,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
     JTree tree;
     DefaultTreeModel treeModel;
-    private PropertiesDisplay properties;
+    PropertiesDisplay properties;
     /** Stores whether or not the RobotTree has been saved */
     public boolean saved;
     /** Names used by components during name auto-generation */

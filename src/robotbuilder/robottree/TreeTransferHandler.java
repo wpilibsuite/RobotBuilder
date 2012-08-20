@@ -194,9 +194,13 @@ class TreeTransferHandler extends TransferHandler {
         robottree.treeModel.insertNodeInto(newNode, parentNode, childIndex);
         robottree.treeModel.reload(parentNode); // reloads the tree without reverting to the root
         // reloads the tree without reverting to the root
-        robottree.tree.makeVisible(path.pathByAddingChild(newNode));
-        robottree.tree.scrollRectToVisible(robottree.tree.getPathBounds(path.pathByAddingChild(newNode)));
         robottree.update();
+        robottree.tree.makeVisible(path.pathByAddingChild(newNode));
+        
+        robottree.tree.setSelectionPath(path.pathByAddingChild(newNode));
+        robottree.properties.setCurrentComponent(newNode);
+        
+        robottree.tree.scrollRectToVisible(robottree.tree.getPathBounds(path.pathByAddingChild(newNode)));
         robottree.takeSnapshot();
         return true;
     }

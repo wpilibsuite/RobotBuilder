@@ -35,7 +35,7 @@ public class PropertiesDisplay extends JPanel {
     public void setCurrentComponent(DefaultMutableTreeNode node) {
         currentComponent = (RobotComponent) node;
         keys = currentComponent.getPropertyKeys();
-        this.updateUI();
+        update();
     }
     
     public void update() {

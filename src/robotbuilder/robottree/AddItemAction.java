@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
+import javax.swing.tree.TreePath;
 import robotbuilder.MainFrame;
 import robotbuilder.data.RobotComponent;
 
@@ -68,8 +69,12 @@ class AddItemAction extends AbstractAction {
          */
         RobotComponent toAdd = new RobotComponent(tree.getDefaultComponentName(RobotComponent.getPaletteComponent(nameToAdd), selectedComponent.getSubsystem()), nameToAdd, tree);
         selectedComponent.addChild(toAdd);
-        tree.takeSnapshot();
         tree.update();
+        
+        tree.tree.setSelectionPath(new TreePath(toAdd.getPath()));
+        tree.properties.setCurrentComponent(toAdd);
+        
+        tree.takeSnapshot();
     }
     
 }
