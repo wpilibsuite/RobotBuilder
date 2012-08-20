@@ -37,7 +37,6 @@ public class MainFrame extends JFrame {
             instance = new MainFrame();
         return instance;
     }
-    private final JLabel trash;
     
     private MainFrame() {
         prefs = Preferences.userRoot().node(this.getClass().getName());
@@ -55,12 +54,8 @@ public class MainFrame extends JFrame {
         });
 
         palette = Palette.getInstance();
-        trash = new Trash();
         
         BorderLayout layout = new BorderLayout();
-        JPanel paletteAndTrash = new JPanel(layout);//JSplitPane(JSplitPane.VERTICAL_SPLIT, palette, trash);
-        paletteAndTrash.add(palette, BorderLayout.CENTER);
-        paletteAndTrash.add(trash, BorderLayout.SOUTH);
         
         properties = new PropertiesDisplay();
         robotTree = new RobotTree(properties, palette);
@@ -95,7 +90,7 @@ public class MainFrame extends JFrame {
         JSplitPane robotStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, robotTree, propertiesAndHelp);
         robotStuff.setDividerLocation(getWidth()/5);
 
-        add(paletteAndTrash, BorderLayout.WEST);
+        add(palette, BorderLayout.WEST);
         add(robotStuff, BorderLayout.CENTER);
         
         ActionsClass actions = new ActionsClass();
