@@ -205,6 +205,7 @@ public class PropertiesDisplay extends JPanel {
                 if (!robot.hasName(subsystem+name) || 
                         (subsystem+name).equals(currentComponent.getFullName())) {
                     currentComponent.setName(name);
+                    robot.update();
                 } else {
                     JOptionPane.showMessageDialog(MainFrame.getInstance(),
                             "You already have a component named: "+name, "Invalid Name", JOptionPane.ERROR_MESSAGE);
@@ -212,8 +213,10 @@ public class PropertiesDisplay extends JPanel {
             } else {
                 final String key = keys[row-1];
                 currentComponent.getProperty(key).setValue(val);
+                update();
+//                robot.update();
             }
-            robot.update();
+            //robot.update();
         }
     }
 }
