@@ -5,6 +5,7 @@
 package robotbuilder.data;
 
 import java.util.*;
+import robotbuilder.Palette;
 import robotbuilder.data.properties.Property;
 
 /**
@@ -107,5 +108,16 @@ public class PaletteComponent {
     
     public String getHelpFile() {
         return "/help/"+name+".html";
+    }
+
+    public boolean supportsChildren() {
+        for (String key : supports.keySet()) {
+            if (supports.get(key) == Palette.UNLIMITED) {
+                return true;
+            } else if (supports.get(key) > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -194,6 +194,10 @@ public class RobotComponent extends DefaultMutableTreeNode {
     public boolean supports(RobotComponent data) {
         return (children != null && children.contains(data)) || this.supports(data.getBase());
     }
+
+    public boolean supportsChildren() {
+        return base.supportsChildren();
+    }
     
     public void walk(RobotWalker walker) {
         for (Enumeration i = this.children(); i.hasMoreElements();) {

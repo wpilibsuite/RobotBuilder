@@ -83,21 +83,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
         validators = palette.getValidators();
         
-        tree.setCellRenderer(new DefaultTreeCellRenderer() {
-            @Override
-            public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-                Component renderer = super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
-                RobotComponent comp = (RobotComponent) value;
-                
-                if (comp.isValid()) {
-                    renderer.setForeground(Color.black);
-                } else {
-                    renderer.setForeground(Color.red);
-                }
-                
-                return renderer;
-            }
-        });
+        tree.setCellRenderer(new RobotTreeCellRenderer());
         
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
