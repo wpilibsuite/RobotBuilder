@@ -46,7 +46,7 @@ public class UniqueValidator implements Validator {
     @Override
     public String getError(RobotComponent component, Property property) {
         Pair claimant = claims.get(getMap(component, getPrefix(property.getName())));
-        if (claimant != null) return null;
+        if (claimant == null) return null;
         return "This port is in use by "+claimant.toString()+" please change this to an unused port.";
     }
     
