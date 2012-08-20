@@ -1,3 +1,5 @@
+// ${version-indicator}
+
 package ${package}.commands;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;

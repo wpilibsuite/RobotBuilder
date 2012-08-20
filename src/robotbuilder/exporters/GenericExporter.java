@@ -16,6 +16,7 @@ import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import robotbuilder.MainFrame;
+import robotbuilder.RobotBuilder;
 import robotbuilder.RobotTree;
 import robotbuilder.Utils;
 import robotbuilder.data.RobotComponent;
@@ -95,6 +96,8 @@ public class GenericExporter {
         }
         
         // Prepare the main context
+        rootContext.put("version", RobotBuilder.VERSION);
+        rootContext.put("version-indicator", "Generated with RobotBuilder version "+RobotBuilder.VERSION);
         rootContext.put("robot", robot);
         rootContext.put("helper", this);
         rootContext.put("exporter-path", path);

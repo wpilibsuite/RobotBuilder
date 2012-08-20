@@ -1,3 +1,5 @@
+// ${version-indicator}
+
 package ${package};
     
 ${helper.getImports($robot, "RobotMap")}

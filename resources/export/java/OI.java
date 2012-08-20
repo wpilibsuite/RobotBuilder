@@ -1,3 +1,5 @@
+// ${version-indicator}
+
 package ${package};
 
 import ${package}.commands.*;
