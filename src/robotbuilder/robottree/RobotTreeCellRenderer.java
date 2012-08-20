@@ -29,7 +29,6 @@ public class RobotTreeCellRenderer extends DefaultTreeCellRenderer {
         }
         
         if (comp.supportsChildren() && leaf) {
-            System.out.println("Using open icon.");
             setIcon(getOpenIcon());
         }
         
