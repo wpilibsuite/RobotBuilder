@@ -453,6 +453,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         if (OKToClose()) {
             resetTree(palette);
             saved = true;
+            filePath = null;
             MainFrame.getInstance().prefs.put("FileName", "");
         }
     }
