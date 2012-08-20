@@ -17,7 +17,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import robotbuilder.MainFrame;
 import robotbuilder.RobotBuilder;
-import robotbuilder.RobotTree;
+import robotbuilder.robottree.RobotTree;
 import robotbuilder.Utils;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;

@@ -4,6 +4,7 @@
  */
 package robotbuilder;
 
+import robotbuilder.robottree.RobotTree;
 import java.io.*;
 import org.junit.*;
 import static org.junit.Assert.*;

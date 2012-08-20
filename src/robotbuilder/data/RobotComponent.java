@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.tree.DefaultMutableTreeNode;
 import robotbuilder.Palette;
-import robotbuilder.RobotTree;
+import robotbuilder.robottree.RobotTree;
 import robotbuilder.data.properties.Property;
 
 /**

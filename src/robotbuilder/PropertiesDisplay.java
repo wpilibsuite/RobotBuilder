@@ -1,6 +1,7 @@
 
 package robotbuilder;
 
+import robotbuilder.robottree.RobotTree;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -15,8 +16,8 @@ import robotbuilder.data.properties.Property;
  *
  * @author brad
  */
-class PropertiesDisplay extends JPanel {
-    JTable propTable;
+public class PropertiesDisplay extends JPanel {
+    public JTable propTable;
     TableModel propTableModel;
     RobotComponent currentComponent;
     String[] keys;
@@ -31,7 +32,7 @@ class PropertiesDisplay extends JPanel {
         propTable.getTableHeader().setReorderingAllowed(false);
     }
 
-    void setCurrentComponent(DefaultMutableTreeNode node) {
+    public void setCurrentComponent(DefaultMutableTreeNode node) {
         currentComponent = (RobotComponent) node;
         keys = currentComponent.getPropertyKeys();
         this.updateUI();
@@ -41,7 +42,7 @@ class PropertiesDisplay extends JPanel {
         updateUI();
     }
 
-    void setRobotTree(RobotTree robot) {
+    public void setRobotTree(RobotTree robot) {
         this.robot = robot;
     }
     

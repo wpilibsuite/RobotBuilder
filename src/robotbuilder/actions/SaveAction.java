@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import robotbuilder.ActionsClass;
 import robotbuilder.MainFrame;
-import robotbuilder.RobotTree;
+import robotbuilder.robottree.RobotTree;
 
 /**
  *

@@ -1,12 +1,9 @@
-package robotbuilder;
+package robotbuilder.robottree;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Rectangle;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
@@ -18,6 +15,11 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.*;
 import org.yaml.snakeyaml.Yaml;
+import robotbuilder.MainFrame;
+import robotbuilder.Palette;
+import robotbuilder.PropertiesDisplay;
+import robotbuilder.RobotBuilder;
+import robotbuilder.SimpleHistory;
 import robotbuilder.data.*;
 import robotbuilder.data.properties.Property;
 
@@ -30,11 +32,11 @@ import robotbuilder.data.properties.Property;
  */
 public class RobotTree extends JPanel implements TreeSelectionListener {
 
-    private JTree tree;
-    private DefaultTreeModel treeModel;
+    JTree tree;
+    DefaultTreeModel treeModel;
     private PropertiesDisplay properties;
     /** Stores whether or not the RobotTree has been saved */
-    boolean saved;
+    public boolean saved;
     /** Names used by components during name auto-generation */
     private Set<String> usedNames = new HashSet<String>();
     private Map<String, Validator> validators;
@@ -45,7 +47,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
     private JFileChooser fileChooser = new JFileChooser();
 
-    RobotTree(PropertiesDisplay properties, Palette palette) {
+    public RobotTree(PropertiesDisplay properties, Palette palette) {
 	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yml"));
 	this.properties = properties;
 	this.properties.setRobotTree(this);
@@ -168,13 +170,20 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     public String getFilePath() {
         return filePath;
     }
+    
+    /**
+     * @return The icon used to display an open tree element.
+     */
+    public Icon getOpenIcon() {
+        return ((DefaultTreeCellRenderer) tree.getCellRenderer()).getOpenIcon(); 
+    }
 
     /**
      * Gets the default name of a given component in the specified subsystem.
      * @param component The type of component to generate a default name for.
      * @return The default name.
      */
-    private String getDefaultComponentName(PaletteComponent componentType, String subsystem) {
+    String getDefaultComponentName(PaletteComponent componentType, String subsystem) {
 	int i = 1;
 	String name;
 	while (true) {
@@ -424,7 +433,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * </ul>
      * @return True if it's okay to close the application frame, else false.
      */
-    boolean OKToClose() {
+    public boolean OKToClose() {
 	String[] options = {"Save", "Discard", "Cancel"};
 	if (saved) {
 	    return true;
@@ -552,7 +561,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         saved = true;
     }
 
-    void delete(final RobotComponent component) {
+    public void delete(final RobotComponent component) {
         component.walk(new RobotWalker() {
             @Override public void handleRobotComponent(RobotComponent self) {
                 self.handleDelete();
@@ -561,390 +570,5 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         });
         removeName(component.getFullName());
         component.removeFromParent();
-    }
-
-    /**
-     * A transfer handler for that wraps the default transfer handler of RobotTree.
-     * 
-     * @author Alex Henning
-     */
-    private class TreeTransferHandler extends TransferHandler {
-
-	private TransferHandler delegate;
-
-	public TreeTransferHandler(TransferHandler delegate) {
-	    this.delegate = delegate;
-	}
-
-	@Override
-	public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
-	    return delegate.canImport(comp, transferFlavors);
-	}
-
-	@Override
-	public boolean canImport(TransferSupport support) {
-	    if (!support.isDrop()) {
-		return false;
-	    }
-	    support.setShowDropLocation(true);
-	    JTree.DropLocation dl = (JTree.DropLocation) support.getDropLocation();
-	    TreePath path = dl.getPath();
-	    if (path == null) {
-		return false;
-	    }
-	    RobotComponent target = ((RobotComponent) path.getLastPathComponent());
-	    if (support.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)) {
-		String data;
-		try {
-		    data = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
-		} catch (UnsupportedFlavorException e) {
-		    System.out.println("UFE");
-		    return false;
-		} catch (IOException e) {
-		    System.out.println("IOE");
-		    return false;
-		}
-		PaletteComponent base = Palette.getInstance().getItem(data);
-		assert base != null; // TODO: Handle more gracefully
-		return target.supports(base);
-	    } else if (support.getTransferable().isDataFlavorSupported(ROBOT_COMPONENT_FLAVOR)) {
-		RobotComponent data;
-		try {
-		    data = (RobotComponent) support.getTransferable().getTransferData(ROBOT_COMPONENT_FLAVOR);
-		} catch (UnsupportedFlavorException e) {
-		    System.out.println("UnsupportedFlavor");
-		    return false;
-		} catch (IOException e) {
-		    e.printStackTrace();
-		    System.out.println("IOException");
-		    return false;
-		}
-                Set<String> invalid = new HashSet();
-                invalid.add("Robot"); invalid.add("Subsystems");
-                invalid.add("OI"); invalid.add("Commands");
-                if (data == null) return false;
-                if (invalid.contains(data.getBase().getType())) return false;
-		return target.supports(data);
-	    } else {
-		System.out.println("Unsupported flavor. The flavor you have chosen is no sufficiently delicious.");
-		return false;
-	    }
-	}
-
-	@Override
-	protected Transferable createTransferable(final JComponent c) {
-	    return new Transferable() {
-
-		DataFlavor[] flavors = {ROBOT_COMPONENT_FLAVOR};
-                
-                Object data = ((JTree) c).getSelectionPath().getLastPathComponent();
-                
-		@Override
-		public DataFlavor[] getTransferDataFlavors() {
-		    return flavors;
-		}
-
-		@Override
-		public boolean isDataFlavorSupported(DataFlavor df) {
-		    for (DataFlavor flavor : flavors) {
-			if (flavor.equals(df)) {
-			    return true;
-			}
-		    }
-		    return false;
-		}
-
-		@Override
-		public Object getTransferData(DataFlavor df) throws UnsupportedFlavorException, IOException {
-//                    System.out.print("Transfer data: "+data);
-                    return data;
-		}
-	    };
-	}
-
-	@Override
-	public void exportAsDrag(JComponent comp, InputEvent event, int action) {
-	    delegate.exportAsDrag(comp, event, action);
-	}
-
-	@Override
-	protected void exportDone(JComponent source, Transferable data, int action) {
-	    update();
-	}
-
-	@Override
-	public int getSourceActions(JComponent c) {
-	    //return COPY_OR_MOVE;
-	    return delegate.getSourceActions(c);
-	}
-
-	@Override
-	public Icon getVisualRepresentation(Transferable t) {
-	    return delegate.getVisualRepresentation(t);
-	}
-
-	@Override
-	public boolean importData(JComponent comp, Transferable t) {
-	    return delegate.importData(comp, t);
-	}
-
-	@Override
-	public boolean importData(TransferHandler.TransferSupport support) {
-	    if (!canImport(support)) {
-		return false;
-	    }
-	    JTree.DropLocation dl = (JTree.DropLocation) support.getDropLocation();
-	    TreePath path = dl.getPath();
-	    int childIndex = dl.getChildIndex();
-	    if (childIndex == -1) {
-		childIndex = tree.getModel().getChildCount(path.getLastPathComponent());
-	    }
-	    DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-	    DefaultMutableTreeNode newNode;
-	    if (support.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)) {
-		String data;
-		try {
-		    data = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
-		} catch (UnsupportedFlavorException e) {
-		    System.out.println("UFE");
-		    return false;
-		} catch (IOException e) {
-		    System.out.println("IOE");
-		    return false;
-		}
-		PaletteComponent base = Palette.getInstance().getItem(data);
-		assert base != null; // TODO: Handle more gracefully
-                newNode = new RobotComponent(getDefaultComponentName(base, ((RobotComponent) parentNode).getSubsystem()), base, robot);
-	    } else if (support.getTransferable().isDataFlavorSupported(ROBOT_COMPONENT_FLAVOR)) {
-		try {
-		    newNode = (RobotComponent) support.getTransferable().getTransferData(ROBOT_COMPONENT_FLAVOR);
-		} catch (UnsupportedFlavorException e) {
-		    return false;
-		} catch (IOException e) {
-		    return false;
-		}
-	    } else {
-		return false;
-	    }
-	    treeModel.insertNodeInto(newNode, parentNode, childIndex);
-            treeModel.reload(parentNode); // reloads the tree without reverting to the root
-	    tree.makeVisible(path.pathByAddingChild(newNode));
-	    tree.scrollRectToVisible(tree.getPathBounds(path.pathByAddingChild(newNode)));
-            update();
-            takeSnapshot();
-	    return true;
-	}
-    }
-    
-    /**
-     * Used for adding a {@link RobotComponent} to the 
-     * {@link RobotTree} via right-click menus.
-     */
-    private class AddItemAction extends AbstractAction {
-        /** The currently selected node */
-        RobotComponent selectedComponent;
-        /** The node to add */
-        RobotComponent childToAdd;
-        String name;
-        
-        /**
-         * Creates a new {@code AddItemAction} based on
-         * <ul>
-         * <li>The {@link JMenuItem} that has been right clicked.
-         * <li>The name of said {@code RobotComponent}.
-         * <li>The {@code RobotComponent} that is to be added.
-         * </ul>
-         * @param name The name of the {@code AddItemAction}.
-         * @param selectedNode The {@code RobotComponent} that has been right clicked ("selected").
-         * @param childToAdd The {@code RobotComponent} to add when this is clicked.
-         */
-        public AddItemAction(String name, 
-                            RobotComponent selectedNode, 
-                            RobotComponent childToAdd) {
-            
-            putValue(Action.NAME, name);
-            putValue(Action.SHORT_DESCRIPTION, (new StringBuffer(name)).insert(4, "a ").toString());
-            
-            this.name = name;
-            this.selectedComponent = selectedNode;
-            this.childToAdd = childToAdd;
-        }
-
-        @Override
-        /**
-         * @inheritdoc
-         */
-        public void actionPerformed(ActionEvent e) {
-            JMenuItem source = (JMenuItem) e.getSource();     // The menu item that's been clicked
-            String nameToAdd = source.getText().substring(4); // Removes the "Add " in the beginning
-
-            /* 
-            * Step one:   generate new name based off previous instances of this type of RobotComponent
-            * Step two:   get the PaletteComponent of this type (e.g. "Gyro")
-            */
-            RobotComponent toAdd = new RobotComponent(
-                    getDefaultComponentName(RobotComponent.getPaletteComponent(nameToAdd), selectedComponent.getSubsystem()), 
-                    nameToAdd, 
-                    robot);
-
-            selectedComponent.addChild(toAdd);
-            takeSnapshot();
-            update();
-        }
-    }
-    
-    private class DeleteItemAction extends AbstractAction {
-        private RobotComponent target;
-        
-        public DeleteItemAction(String name, RobotComponent target) {
-            putValue(Action.NAME, name);
-            putValue(Action.SHORT_DESCRIPTION, "Delete this component.");
-            
-            this.target = target;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            delete(target);
-            update();
-            takeSnapshot();
-        }
-    }
-
-    private class MouseAdapterImpl extends MouseAdapter {
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            if(SwingUtilities.isRightMouseButton(e)) { // Right click only
-                
-                TreePath path = tree.getPathForLocation(e.getX(), e.getY());
-                tree.setSelectionPath(path);
-                Rectangle bounds = tree.getUI().getPathBounds(tree, path);
-                
-                if (bounds != null && bounds.contains(e.getX(), e.getY())) {
-                    
-                    final JPopupMenu mainMenu   = new JPopupMenu(); // main menu; encapsulates everything
-                    final JMenu controllerMenu  = new JMenu("Add Controllers");
-                    final JMenu sensorMenu      = new JMenu("Add Sensors");
-                    final JMenu actuatorMenu    = new JMenu("Add Actuators");
-                    final JMenu pneumaticMenu   = new JMenu("Add Pneumatics");
-                    
-                    final RobotComponent selected = (RobotComponent) path.getLastPathComponent(); // The component that's been clicked
-                    RobotComponent componentToAdd = null;
-                    
-                    final String selectedType  = selected.getBase().getName(); // Subsystem -> Subsystem
-                    String type                = selected.getBase().getType(); // Victor -> Actuator, Gyro -> PIDSource, etc.
-                    
-                    if(type.equals("PIDSource")) type = "Sensor"; // PIDSource -> Sensor
-                    
-                    final int numSupports = 25;
-                    
-                    
-                    final JMenuItem delete = new JMenuItem("Delete");
-                    boolean deleteable = true;
-                    delete.setAction(new DeleteItemAction("Delete", selected));
-                    
-                    JMenuItem[] addActions    = new JMenuItem[3];
-                    JMenuItem[] subsystemAdds = new JMenuItem[numSupports];
-                    
-                    if(selectedType.equals("Robot")){ // Can't do anything with the root.
-                        return;
-                    }
-                    // Main folders: Subsystems, OI, and Commands
-                    if(selectedType.equals("Subsystems")){
-                        deleteable = false;
-                        addActions[0] = new JMenuItem("Add Subsystem");
-                        addActions[1] = new JMenuItem("Add PID Subsystem");
-                        
-                    } else if(selectedType.equals("OI")){
-                        deleteable = false;
-                        addActions[0] = new JMenuItem("Add Joystick");
-                        addActions[1] = new JMenuItem("Add Joystick Button");
-                        
-                    } else if(selectedType.equals("Commands")){
-                        deleteable = false;
-                        addActions[0] = new JMenuItem("Add Command");
-                        addActions[1] = new JMenuItem("Add Command Group");
-                        addActions[2] = new JMenuItem("Add PID Command");
-                    }
-                    // Robot Drives
-                    else if(selectedType.equals("Robot Drive 4")|| selectedType.equals("Robot Drive 2")) {
-                        if(selected.supports(RobotComponent.getPaletteComponent("Victor"))) {
-                            addActions[0] = new JMenuItem("Add Victor");
-                            addActions[1] = new JMenuItem("Add Jaguar");
-                        }
-                    }
-                    // Subsystem Menus and Choices
-                    if(selectedType.equals("Subsystem") || selectedType.equals("PID Subsystem") || selectedType.equals("PID Controller")){
-                        subsystemAdds[0]  = new JMenuItem("Add Robot Drive 4");
-                        subsystemAdds[1]  = new JMenuItem("Add Robot Drive 2");
-                        subsystemAdds[2]  = new JMenuItem("Add PID Controller");
-                        for(int i = 0; i < 3; i++)
-                            controllerMenu.add(subsystemAdds[i]);
-                        
-                        subsystemAdds[3]  = new JMenuItem("Add Gyro");
-                        subsystemAdds[4]  = new JMenuItem("Add Accelerometer");
-                        subsystemAdds[5]  = new JMenuItem("Add Quadrature Encoder");
-                        subsystemAdds[6]  = new JMenuItem("Add Indexed Encoder");
-                        subsystemAdds[7]  = new JMenuItem("Add Gear Tooth Sensor");
-                        subsystemAdds[8]  = new JMenuItem("Add Potentiometer");
-                        subsystemAdds[9]  = new JMenuItem("Add Analog Input");
-                        subsystemAdds[10] = new JMenuItem("Add Limit Switch");
-                        subsystemAdds[11] = new JMenuItem("Add Digital Input");
-                        subsystemAdds[12] = new JMenuItem("Add Ultrasonic");
-                        for(int i = 3; i < 12; i++)
-                            sensorMenu.add(subsystemAdds[i]);
-
-                        subsystemAdds[13] = new JMenuItem("Add Victor");
-                        subsystemAdds[14] = new JMenuItem("Add Jaguar");
-                        subsystemAdds[15] = new JMenuItem("Add Servo");
-                        subsystemAdds[16] = new JMenuItem("Add Digital Output");
-                        subsystemAdds[17] = new JMenuItem("Add Spike");
-                        for(int i = 13; i < 17; i++)
-                            actuatorMenu.add(subsystemAdds[i]);
-
-                        subsystemAdds[18] = new JMenuItem("Add Compressor");
-                        subsystemAdds[19] = new JMenuItem("Add Solenoid");
-                        subsystemAdds[20] = new JMenuItem("Add Relay Solenoid");
-                        subsystemAdds[21] = new JMenuItem("Add Double Solenoid");
-                        subsystemAdds[22] = new JMenuItem("Add Relay Double Solenoid");
-                        for(int i = 18; i < 22; i++)
-                            pneumaticMenu.add(subsystemAdds[i]);
-                    }
-                    
-                    if(selectedType.equals("Subsystem") || selectedType.equals("PID Subsystem")){
-                        mainMenu.add(controllerMenu);
-                        mainMenu.add(actuatorMenu);
-                        mainMenu.add(sensorMenu);
-                        mainMenu.add(pneumaticMenu);
-                    } else if(selectedType.equals("PID Controller")) {
-                        sensorMenu.remove(sensorMenu.getItem(7)); // Removes limit switch from the menu
-                        
-                        if(selected.supports(RobotComponent.getPaletteComponent("Victor"))){ // If no actuator, show the actuator menu
-                            mainMenu.add(actuatorMenu);
-                        }
-                        if(selected.supports(RobotComponent.getPaletteComponent("Gyro"))){ // If no sensor, show the sensor menu
-                            mainMenu.add(sensorMenu);
-                        }
-                    }
-                    // Adds the 
-                    for(int i = 0; i < subsystemAdds.length && subsystemAdds[i] != null; i++) {
-//                            componentToAdd = new RobotComponent(subsystemAdds[i].getText().substring(4), selectedType, robot);
-                        subsystemAdds[i].setAction(new AddItemAction(subsystemAdds[i].getText(), selected, componentToAdd));
-                    }
-                    
-                    for(int i = 0; i < addActions.length && addActions[i] != null; i++) {
-//                            componentToAdd = new RobotComponent(addActions[i].getText().substring(4), addActions[i].getText().substring(4), robot);
-                        mainMenu.add(addActions[i]);
-                        addActions[i].setAction(new AddItemAction(addActions[i].getText(), selected, componentToAdd));
-                    }
-                    
-                    if(mainMenu.getSubElements().length > 0 && deleteable) mainMenu.addSeparator(); // Adds a separator above the "Delete" button
-                    if(deleteable) mainMenu.add(delete);
-                    mainMenu.show(tree, bounds.x, bounds.y + bounds.height);
-                        
-                }
-            }
-        }
     }
 }

@@ -13,7 +13,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
 import robotbuilder.Palette;
-import robotbuilder.RobotTree;
+import robotbuilder.robottree.RobotTree;
 import robotbuilder.actions.GettingStartedAction;
 import robotbuilder.data.RobotComponent;
 

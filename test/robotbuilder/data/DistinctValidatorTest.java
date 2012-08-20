@@ -11,7 +11,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
 import robotbuilder.Palette;
-import robotbuilder.RobotTree;
+import robotbuilder.robottree.RobotTree;
 import robotbuilder.TestUtils;
 import robotbuilder.data.properties.IntegerProperty;
 import robotbuilder.data.properties.Property;
