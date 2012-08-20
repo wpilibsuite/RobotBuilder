@@ -236,6 +236,7 @@ Instructions:
   Jaguar:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Jaguar"
+    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Victor:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Victor"
