@@ -80,6 +80,13 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 return false;
             }
         }
+        if (children != null) {
+            for (Object comp : children) {
+                if (!((RobotComponent) comp).isValid()) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
     
@@ -249,6 +256,14 @@ public class RobotComponent extends DefaultMutableTreeNode {
             final Property property = getProperty(propertyName);
             if (!property.isValid()) {
                 message += property.getName()+": "+property.getErrorMessage()+"\n";
+            }
+        }
+        if (children != null) {
+            for (Object comp : children) {
+                String m = ((RobotComponent) comp).getErrorMessage();
+                if (m != null && !m.equals("")) {
+                    message += ""+((RobotComponent) comp).getFullName()+":\n"+m;
+                }
             }
         }
         return message;

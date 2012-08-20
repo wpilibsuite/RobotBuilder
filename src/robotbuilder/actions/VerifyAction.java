@@ -25,17 +25,8 @@ public class VerifyAction extends AbstractAction {
     
     @Override
     public void actionPerformed(ActionEvent ae) {
-        final String[] message_carrier = {""};
-        MainFrame.getInstance().getCurrentRobotTree().walk(new RobotWalker() {
-            @Override public void handleRobotComponent(RobotComponent self) {
-                if (!self.isValid()) {
-                    message_carrier[0] += self.getFullName()+":\n";
-                    message_carrier[0] += self.getErrorMessage()+"\n";
-                }
-            }
-        });
+        String message = MainFrame.getInstance().getCurrentRobotTree().getRoot().getErrorMessage();
         
-        String message = message_carrier[0];
         if (message.equals("")) {
             JOptionPane.showMessageDialog(MainFrame.getInstance(),
                     "Your robot is valid and ready to export.", 
