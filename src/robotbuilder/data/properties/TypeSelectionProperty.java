@@ -5,6 +5,8 @@
 package robotbuilder.data.properties;
 
 import java.util.Vector;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import robotbuilder.data.RobotComponent;
 
@@ -63,7 +65,11 @@ public class TypeSelectionProperty extends Property {
         if (valueComponent != null) { selection = valueComponent.getFullName(); }
         Vector<String> options = component.getRobotTree().getRoot().getChildrenOfTypeNames(type);
         options.add(0, defaultValue.toString());
-        combo = new JComboBox(options);
+        if (combo == null) {
+            combo = new JComboBox(options);
+        } else {
+            combo.setModel(new DefaultComboBoxModel(options));
+        }
         combo.setSelectedIndex(0);
         if (options.contains(selection)) {
             combo.setSelectedItem(selection);
