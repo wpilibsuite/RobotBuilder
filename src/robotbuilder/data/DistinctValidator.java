@@ -5,6 +5,7 @@
 package robotbuilder.data;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import robotbuilder.data.properties.Property;
@@ -46,8 +47,14 @@ public class DistinctValidator implements Validator {
     @Override
     public String getError(RobotComponent component, Property property) {
         if (isValid(component, property)) return null;
+        List<String> f = new LinkedList<String>();
+        for (String s : fields) {
+            if (!s.equals(property.getName())) {
+                f.add(s);
+            }
+        }
         return "The value in this field overlaps with one of the following fields: "
-                +fields.toString()+".";
+                +f.toString()+".";
     }
     
     @Override
