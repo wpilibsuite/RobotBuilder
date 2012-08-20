@@ -21,7 +21,7 @@ public class SaveAsAction extends AbstractAction {
     public SaveAsAction() {
         putValue(Action.NAME, "Save as...");
         putValue(Action.SHORT_DESCRIPTION, "Save robot map to a new file");
-	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yaml"));
+	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yml"));
     }
 
     @Override
@@ -37,8 +37,8 @@ public class SaveAsAction extends AbstractAction {
         }
         else if (result == JFileChooser.APPROVE_OPTION) {
             filePath = fileChooser.getSelectedFile().getName();
-            if (!filePath.endsWith(".yaml"))
-                filePath += ".yaml";
+            if (!filePath.endsWith(".yml"))
+                filePath += ".yml";
             
             MainFrame.getInstance().getCurrentRobotTree().save(filePath);
         }

@@ -43,7 +43,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private String filePath = null;
     
     private SimpleHistory<String> history = new SimpleHistory<String>();
-    private int snapshots = 0;
 
     private JFileChooser fileChooser = new JFileChooser();
 
@@ -256,8 +255,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    }
 	    else if (result == JFileChooser.APPROVE_OPTION) {
                 filePath = fileChooser.getSelectedFile().getAbsolutePath();
-                if (!filePath.endsWith(".yaml"))
-                        filePath += ".yaml";
+                if (!filePath.endsWith(".yml"))
+                        filePath += ".yml";
 	    }
 	}
         save(filePath);
