@@ -183,8 +183,24 @@ class PropertiesDisplay extends JPanel {
         public void setValueAt(Object val, int row, int column) {
             assert column == 1; // TODO: Deal with more cleanly
             if (row == 0) {
-                String subsystem = currentComponent.getSubsystem();
                 String name = (String) val;
+                // Prevent top level components from being renamed
+                // TODO: Do this in a cleaner way
+                if (currentComponent.getName().equals("Subsystems") ||
+                        currentComponent.getName().equals("Operator Interface") ||
+                        currentComponent.getName().equals("Commands")) {
+                    JOptionPane.showMessageDialog(MainFrame.getInstance(),
+                            "You cannot rename this component.", "Can't Rename", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if (name.equals("Subsystems") || name.equals("Operator Interface") ||
+                        name.equals("Commands")) {
+                    JOptionPane.showMessageDialog(MainFrame.getInstance(),
+                            "You cannot rename this component to "+name+".", "Can't Rename", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                // Make sure the name is unique
+                String subsystem = currentComponent.getSubsystem();
                 if (!robot.hasName(subsystem+name) || 
                         (subsystem+name).equals(currentComponent.getFullName())) {
                     currentComponent.setName(name);
