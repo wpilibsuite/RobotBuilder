@@ -12,7 +12,6 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -47,7 +46,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private JFileChooser fileChooser = new JFileChooser();
 
     RobotTree(PropertiesDisplay properties, Palette palette) {
-	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yaml"));
+	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yml"));
 	this.properties = properties;
 	this.properties.setRobotTree(this);
 	setLayout(new BorderLayout());

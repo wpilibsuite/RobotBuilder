@@ -41,8 +41,8 @@ public class SavingAndLoadingTest {
         RobotTree tree = TestUtils.getNewRobotTree();
         tree.isRobotValid();
         RobotComponent before = tree.getRoot();
-        tree.save("test/save.yaml");
-        tree.load(new File("test/save.yaml"));
+        tree.save("test/save.yml");
+        tree.load(new File("test/save.yml"));
         RobotComponent after = tree.getRoot();
         assertEquals("Loaded file should be identical to the saved file.",
                 before, after);
@@ -53,8 +53,8 @@ public class SavingAndLoadingTest {
         RobotTree tree = TestUtils.generateTestTree();
         tree.isRobotValid();
         RobotComponent before = tree.getRoot();
-        tree.save("test/save.yaml");
-        tree.load(new File("test/save.yaml"));
+        tree.save("test/save.yml");
+        tree.load(new File("test/save.yml"));
         RobotComponent after = tree.getRoot();
         assertEquals("Loaded file should be identical to the saved file.",
                 before, after);
@@ -66,7 +66,7 @@ public class SavingAndLoadingTest {
         tree.newFile(Palette.getInstance());
         tree.isRobotValid();
         RobotComponent before = tree.getRoot();
-        File tmpFile = File.createTempFile("robotbuilder-test-save", "-"+Long.toString(System.nanoTime())+".yaml");
+        File tmpFile = File.createTempFile("robotbuilder-test-save", "-"+Long.toString(System.nanoTime())+".yml");
         tree.save(tmpFile.getAbsolutePath());
         assertTrue("Didn't save in the correct location.", tmpFile.exists());
         tree.load(tmpFile);
