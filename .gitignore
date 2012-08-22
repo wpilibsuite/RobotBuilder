@@ -1,7 +1,7 @@
 /build/
 /nbproject/private/
 /dist/
-save*.yaml
+save*.yml
 *~
 *#
 /test-resources/RobotBuilderTestProject/*
