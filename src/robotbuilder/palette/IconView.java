@@ -4,7 +4,9 @@
  */
 package robotbuilder.palette;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 import javax.swing.plaf.BorderUIResource;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
@@ -45,8 +48,12 @@ public class IconView extends JPanel {
 
     private static class IconSection extends JPanel {
         private IconSection(DefaultMutableTreeNode node) {
+            //BorderFactory.createT
             setBorder(BorderFactory.createTitledBorder(node.getUserObject().toString()));
-            setLayout(new GridLayout(0, 2));
+            TitledBorder border = ((TitledBorder) getBorder());
+            border.setTitleFont(border.getTitleFont().deriveFont(Font.BOLD));
+
+            setLayout(new GridLayout(0, 2, 5, 5));
             
             Enumeration children = node.children();
             while (children.hasMoreElements()) {
