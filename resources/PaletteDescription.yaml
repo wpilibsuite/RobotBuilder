@@ -637,6 +637,7 @@ Palette:
       - !Component
         name: Joystick
         type: Joystick
+        supports: {Joystick Button: -1}
         help: A joystick that drivers can use as input.
         properties:
           - !ChoicesProperty
@@ -645,23 +646,9 @@ Palette:
             validators: [Joystick]
             default: 1
       - !Component
-        name: Joystick Button
-        type: Button
-        help: A joystick button that binds a driver action to a command.
-        properties:
-          - !TypeSelectionProperty
-            name: Joystick
-            type: Joystick
-            validators: [TypeDropdownSelected]
-            default: None
-          - !ChoicesProperty
-            name: Button
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-            default: "1"
-          #Button("")
-      - !Component
         name: Kinect Stick
         type: Joystick
+        supports: {Joystick Button: -1}
         help: A joystick controlled by arm movement in the Microsoft Kinect Station.  1 is the left arm, and 2 is the right arm
         properties:
           - !ChoicesProperty
@@ -669,6 +656,19 @@ Palette:
             choices: ["1", "2"]
             validators: [KinectJoystick]
             default: 1
+      - !Component
+        name: Joystick Button
+        type: Joystick Button
+        help: A joystick button that binds a driver action to a command.
+        properties:
+          - !ParentProperty
+            name: Joystick
+          - !ChoicesProperty
+            name: Button
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+            default: "1"
+          #Button("")
+      - !Component
         name: Analog Button
         type: Button
         help: A button connected to a Cypress module analog pin.

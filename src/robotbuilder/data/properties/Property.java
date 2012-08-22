@@ -52,6 +52,13 @@ public abstract class Property {
     public abstract void _setValue(Object value);
     
     /**
+     * @return Whether this property is editable.
+     */
+    public boolean isEditable() {
+        return true;
+    }
+    
+    /**
      * This is called to update changes and support undo.
      * 
      * @param prevValue The value.
