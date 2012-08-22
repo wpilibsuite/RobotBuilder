@@ -4,15 +4,15 @@
  */
 package robotbuilder.robottree;
 
+import java.awt.Component;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.JComponent;
+import javax.swing.Action;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
@@ -59,8 +59,15 @@ public class RightClickMouseAdapter extends MouseAdapter {
             }
         }
         
-        for (JMenu submenu : submenus) {
-            menu.add(submenu);
+        System.out.println(submenus.size());
+        if (submenus.size() > 1) {
+            for (JMenu submenu : submenus) {
+                menu.add(submenu);
+            }
+        } else if (submenus.size() == 1) {
+            for (Component element : submenus.get(0).getMenuComponents()) {
+                menu.add(element);
+            }
         }
 
         
@@ -79,7 +86,7 @@ public class RightClickMouseAdapter extends MouseAdapter {
         while (children.hasMoreElements()) {
             PaletteComponent child = (PaletteComponent) ((DefaultMutableTreeNode) children.nextElement()).getUserObject();
             if (parent.supports(child)) {
-                menu.add(new AddItemAction(child.getName(), parent, child));
+                menu.add(new AddItemAction("Add "+child.getName(), parent, child));
             }
         }
         
