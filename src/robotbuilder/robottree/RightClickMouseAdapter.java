@@ -43,8 +43,17 @@ public class RightClickMouseAdapter extends MouseAdapter {
     private JPopupMenu generatePopupMenu(RobotComponent component) {
         JPopupMenu menu = new JPopupMenu();
         
-        for (String type : component.getBase().getSupports().keySet()) {
-            menu.add(generateMenu(new JMenu("Add "+type), type, component));
+        if (component.getBase().getSupports().size() > 1) {
+            for (String type : component.getBase().getSupports().keySet()) {
+                menu.add(generateMenu(new JMenu("Add "+type), type, component));
+            }
+        } else {
+            String type = component.getBase().getSupports().keySet().iterator().next();
+            for (PaletteComponent paletteComponent : Palette.getInstance().getPaletteComponents()) {
+                if (type.equals(paletteComponent.getType())) {
+                    menu.add(new AddItemAction("Add "+paletteComponent.getName(), component, paletteComponent));
+                }
+            }
         }
         
         if (isDeletable()) {
