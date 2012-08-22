@@ -93,11 +93,9 @@ public class TestUtils {
         RobotComponent rightstick = new RobotComponent("Right Joystick", "Joystick", tree);
         oi.add(rightstick);
         RobotComponent armUpButton = new RobotComponent("Arm Up Button", "Joystick Button", tree);
-        oi.add(armUpButton);
-        armUpButton.getProperty("Joystick").setValue("Left Joystick");
+        leftstick.add(armUpButton);
         RobotComponent autoButton = new RobotComponent("Autonomous Button", "Joystick Button", tree);
-        oi.add(autoButton);
-        autoButton.getProperty("Joystick").setValue("Right Joystick");
+        rightstick.add(autoButton);
         autoButton.getProperty("When to Run").setValue("whenPressed");
         
         // Create some commands
