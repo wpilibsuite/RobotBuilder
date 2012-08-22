@@ -25,6 +25,7 @@ public class ActionsClass {
     AbstractAction undoAction = new UndoAction();
     AbstractAction redoAction = new RedoAction();
     AbstractAction verifyAction = new VerifyAction();
+    AbstractAction togglePalettViewAction = new TogglePaletteViewAction();
 
     private LinkedList<ExporterAction> exporters;
 
@@ -66,13 +67,17 @@ public class ActionsClass {
         editMenu.add(redoItem);
         menu.add(editMenu);
         
-        JMenu generateMenu = new JMenu("Generate");
-        generateMenu.add(verifyAction);
-        generateMenu.add(new JSeparator());
+        JMenu viewMenu = new JMenu("View");
+        viewMenu.add(togglePalettViewAction);
+        menu.add(viewMenu);
+        
+        JMenu exportMenu = new JMenu("Export");
+        exportMenu.add(verifyAction);
+        exportMenu.add(new JSeparator());
         for (ExporterAction action : exporters) {
-            generateMenu.add(action);
+            exportMenu.add(action);
         }
-        menu.add(generateMenu);
+        menu.add(exportMenu);
 
         JMenu helpMenu = new JMenu("Help");
         helpMenu.add(gettingStartedAction);

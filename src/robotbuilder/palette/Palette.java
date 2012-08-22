@@ -87,7 +87,7 @@ public class Palette extends JPanel  {
         
 	setLayout(new CardLayout());
         add(new JScrollPane(new TreeView(this)), Layouts.TREE.toString());
-//        add(new JScrollPane(paletteTree), Layouts.ICONS);
+        add(new JScrollPane(new IconView(this)), Layouts.ICONS.toString());
      }
     
     /**
@@ -161,5 +161,9 @@ public class Palette extends JPanel  {
     
     public TreeModel getPaletteModel() {
         return model;
+    }
+
+    public void setView(Layouts view) {
+        ((CardLayout) getLayout()).show(this, view.toString());
     }
 }
