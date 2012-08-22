@@ -18,6 +18,7 @@ public class ParentProperty extends Property {
     public ParentProperty(String name, Object defaultValue, String[] validators, RobotComponent component, RobotComponent value) {
         super(name, defaultValue, validators, component);
         this.value = value;
+        this.defaultValue = "parent";
     }
 
     @Override
@@ -27,12 +28,13 @@ public class ParentProperty extends Property {
 
     @Override
     public Object getValue() {
-        return (value != null) ? value : defaultValue;
+        if (component == null || component.getParent() == null) return null;
+        return (value != null) ? value.getFullName() : ((RobotComponent) component.getParent()).getFullName();
     }
     
     @Override
     public Object getDisplayValue() {
-        return value.getFullName();
+        return getValue();
     }
     
     @Override
@@ -47,6 +49,6 @@ public class ParentProperty extends Property {
 
     @Override
     public void _setValue(Object value) {
-        // Can't edit this.
+        // Doesn't do anything, shouldn't be set.
     }
 }
