@@ -209,7 +209,7 @@ public class PropertiesDisplay extends JPanel {
                 // Make sure the name is unique
                 String subsystem = currentComponent.getSubsystem();
                 if (!robot.hasName(subsystem+name) || 
-                        (subsystem+name).equals(currentComponent.getFullName())) {
+                        (subsystem+name).equalsIgnoreCase(currentComponent.getFullName())) {
                     currentComponent.setName(name);
                     robot.update();
                 } else {
