@@ -86,8 +86,8 @@ public class Palette extends JPanel  {
         model = new DefaultTreeModel(root);
         
 	setLayout(new CardLayout());
-        add(new JScrollPane(new TreeView(this)), Layouts.TREE.toString());
         add(new JScrollPane(new IconView(this)), Layouts.ICONS.toString());
+        add(new JScrollPane(new TreeView(this)), Layouts.TREE.toString());
      }
     
     /**
