@@ -88,7 +88,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	for (int i = 0; i < tree.getRowCount(); i++) {
 	    tree.expandRow(i);
 	}
-        tree.addMouseListener(new MouseAdapterImpl());
+        tree.addMouseListener(new RightClickMouseAdapter());
         tree.setFocusable(true);
         this.setFocusable(true);
         tree.addKeyListener(new KeyAdapter(){

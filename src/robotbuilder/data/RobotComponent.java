@@ -11,7 +11,7 @@ import robotbuilder.robottree.RobotTree;
 import robotbuilder.data.properties.Property;
 
 /**
- *
+ *nameToAdd
  * @author Alex Henning
  */
 public class RobotComponent extends DefaultMutableTreeNode {
@@ -55,14 +55,6 @@ public class RobotComponent extends DefaultMutableTreeNode {
      */
     public RobotComponent(String name, String type, RobotTree robot) {
         this(name, Palette.getInstance().getItem(type), robot);
-    }
-    
-    /**
-     * Gets the PaletteComponent of the specified type.
-     * @param type The type of the component.
-     */
-    public static PaletteComponent getPaletteComponent(String type) {
-        return Palette.getInstance().getItem(type);
     }
     
     public Property getProperty(String key) {
