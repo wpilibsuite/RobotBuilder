@@ -183,7 +183,7 @@ public class PropertiesDisplay extends JPanel {
         
         @Override
         public boolean isCellEditable(int row, int column) {
-            return column == 1 && currentComponent.getProperty(keys[row-1]).isEditable();
+            return column == 1 && (row == 0 || currentComponent.getProperty(keys[row-1]).isEditable());
         }
         
         @Override
