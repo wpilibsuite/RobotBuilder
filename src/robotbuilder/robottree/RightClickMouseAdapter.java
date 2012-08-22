@@ -7,12 +7,17 @@ package robotbuilder.robottree;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import robotbuilder.MainFrame;
 import robotbuilder.Palette;
@@ -43,18 +48,21 @@ public class RightClickMouseAdapter extends MouseAdapter {
     private JPopupMenu generatePopupMenu(RobotComponent component) {
         JPopupMenu menu = new JPopupMenu();
         
-        if (component.getBase().getSupports().size() > 1) {
-            for (String type : component.getBase().getSupports().keySet()) {
-                menu.add(generateMenu(new JMenu("Add "+type), type, component));
-            }
-        } else {
-            String type = component.getBase().getSupports().keySet().iterator().next();
-            for (PaletteComponent paletteComponent : Palette.getInstance().getPaletteComponents()) {
-                if (type.equals(paletteComponent.getType())) {
-                    menu.add(new AddItemAction("Add "+paletteComponent.getName(), component, paletteComponent));
-                }
+        List<JMenu> submenus = new LinkedList<JMenu>();
+        TreeModel model = Palette.getInstance().getPaletteModel();
+        Enumeration children = ((DefaultMutableTreeNode)model.getRoot()).children();
+        while (children.hasMoreElements()) {
+            DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
+            JMenu submenu = generateMenu(new JMenu("Add "+child.getUserObject()), child, component);
+            if (submenu.getSubElements().length > 0) {
+                submenus.add(submenu);
             }
         }
+        
+        for (JMenu submenu : submenus) {
+            menu.add(submenu);
+        }
+
         
         if (isDeletable()) {
             if (menu.getSubElements().length > 0) {
@@ -66,10 +74,12 @@ public class RightClickMouseAdapter extends MouseAdapter {
         return menu;
     }
 
-    private JMenu generateMenu(JMenu menu, String type, RobotComponent parent) {
-        for (PaletteComponent component : Palette.getInstance().getPaletteComponents()) {
-            if (type.equals(component.getType())) {
-                menu.add(new AddItemAction(component.getName(), parent, component));
+    private JMenu generateMenu(JMenu menu, DefaultMutableTreeNode node, RobotComponent parent) {
+        Enumeration children = node.children();
+        while (children.hasMoreElements()) {
+            PaletteComponent child = (PaletteComponent) ((DefaultMutableTreeNode) children.nextElement()).getUserObject();
+            if (parent.supports(child)) {
+                menu.add(new AddItemAction(child.getName(), parent, child));
             }
         }
         

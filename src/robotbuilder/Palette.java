@@ -169,6 +169,10 @@ public class Palette extends JPanel implements TreeSelectionListener {
     public Collection<PaletteComponent> getPaletteComponents() {
         return paletteItems.values();
     }
+    
+    public TreeModel getPaletteModel() {
+        return paletteTree.getModel();
+    }
 
     @Override
     public void valueChanged(TreeSelectionEvent tse) {
