@@ -16,7 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.*;
 import org.yaml.snakeyaml.Yaml;
 import robotbuilder.MainFrame;
-import robotbuilder.Palette;
+import robotbuilder.palette.Palette;
 import robotbuilder.PropertiesDisplay;
 import robotbuilder.RobotBuilder;
 import robotbuilder.SimpleHistory;

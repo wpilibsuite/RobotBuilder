@@ -7,7 +7,7 @@ package robotbuilder.data;
 import org.junit.*;
 import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
-import robotbuilder.Palette;
+import robotbuilder.palette.Palette;
 import robotbuilder.robottree.RobotTree;
 import robotbuilder.TestUtils;
 

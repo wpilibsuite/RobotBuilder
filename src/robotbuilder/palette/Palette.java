@@ -1,7 +1,8 @@
 
-package robotbuilder;
+package robotbuilder.palette;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
@@ -19,6 +20,7 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
@@ -26,6 +28,8 @@ import org.apache.velocity.app.VelocityEngine;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
+import robotbuilder.MainFrame;
+import robotbuilder.Utils;
 import robotbuilder.data.*;
 import robotbuilder.data.properties.*;
 
@@ -35,13 +39,17 @@ import robotbuilder.data.properties.*;
  * are dragged to the robot tree.
  * @author brad
  */
-public class Palette extends JPanel implements TreeSelectionListener {
+public class Palette extends JPanel  {
     public static final int UNLIMITED = -1;
     
-    private JTree paletteTree;
+    private TreeModel model;
     static private Palette instance = null;
     private Map<String, PaletteComponent> paletteItems = new HashMap<String, PaletteComponent>();
     private Map<String, Validator> validators = new HashMap<String, Validator>();
+    
+    public enum Layouts {
+        TREE, ICONS;
+    }
     
     private Palette() {
         InputStreamReader in;
@@ -75,30 +83,11 @@ public class Palette extends JPanel implements TreeSelectionListener {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Palette");
         createPalette(root, (ArrayList<Map<String, ArrayList<PaletteComponent>>>) description.get("Palette"));
         loadValidators((ArrayList<Validator>) description.get("Validators"));
-
-        paletteTree = new JTree(root) {
-            @Override
-            public String getToolTipText(MouseEvent e) {
-                try {
-                    TreePath path = getClosestPathForLocation(e.getX(), e.getY());
-                    return ((PaletteComponent) ((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject()).getHelp();
-                } catch (ClassCastException ex) { // Ignore folders
-                    return null;
-                }
-            }
-        };
-        paletteTree.setRootVisible(false);
-	paletteTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        paletteTree.setTransferHandler(new PaletteTransferHandler(paletteTree.getTransferHandler()));
-        paletteTree.setDragEnabled(true);
-        ToolTipManager.sharedInstance().registerComponent(paletteTree);
-        paletteTree.addTreeSelectionListener(this);
+        model = new DefaultTreeModel(root);
         
-        for (int i = 0; i < paletteTree.getRowCount(); i++) {
-            paletteTree.expandRow(i);
-        }
-	setLayout(new BorderLayout());
-        add(new JScrollPane(paletteTree), BorderLayout.CENTER);
+	setLayout(new CardLayout());
+        add(new JScrollPane(new TreeView(this)), Layouts.TREE.toString());
+//        add(new JScrollPane(paletteTree), Layouts.ICONS);
      }
     
     /**
@@ -171,97 +160,6 @@ public class Palette extends JPanel implements TreeSelectionListener {
     }
     
     public TreeModel getPaletteModel() {
-        return paletteTree.getModel();
-    }
-
-    @Override
-    public void valueChanged(TreeSelectionEvent tse) {
-	DefaultMutableTreeNode node = (DefaultMutableTreeNode) paletteTree.getLastSelectedPathComponent();
-
-	if (node == null) {
-	    return;
-	}
-	if (node instanceof DefaultMutableTreeNode) {
-            try {
-                MainFrame.getInstance().setHelp(((PaletteComponent) node.getUserObject()).getHelpFile());
-            } catch (ClassCastException ex) { /* Ignore folders */ }
-	}
-    }
-
-    /**
-     * A transfer handler for that wraps the default transfer handler of Pallette.
-     * 
-     * @author Alex Henning
-     */
-    private class PaletteTransferHandler extends TransferHandler {
-        private TransferHandler delegate;
-        
-        public PaletteTransferHandler(TransferHandler delegate) {
-            this.delegate = delegate;
-        }
-        
-        @Override
-        public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
-            return delegate.canImport(comp, transferFlavors);
-        }
-        
-        @Override
-        public boolean canImport(TransferHandler.TransferSupport support) {
-            return false;
-        }
-        
-        @Override
-        protected Transferable createTransferable(final JComponent c) {
-            JTree tree = (JTree) c;
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getSelectionPath().getLastPathComponent();
-            
-            if (node.isLeaf()) {
-                try {
-                    Method method = delegate.getClass().getDeclaredMethod("createTransferable", JComponent.class);
-                    method.setAccessible(true);
-                    return (Transferable) method.invoke(delegate, c);
-                } catch (Exception e) {
-                    return super.createTransferable(c);
-                }
-            } else {
-                return null;
-            }
-        }
-        
-        @Override
-        public void exportAsDrag(JComponent comp, InputEvent event, int action) {
-            delegate.exportAsDrag(comp, event, action);
-        }
-        
-        @Override
-        protected void exportDone(JComponent source, Transferable data, int action) {
-            try {
-                Method method = delegate.getClass().getDeclaredMethod("exportDone", JComponent.class, Transferable.class,
-                        int.class);
-                method.setAccessible(true);
-                method.invoke(delegate, source, data, action);
-            } catch (Exception e) {
-            }
-        }
-        
-        @Override
-        public int getSourceActions(JComponent c) {
-            return delegate.getSourceActions(c);
-        }
-        
-        @Override
-        public Icon getVisualRepresentation(Transferable t) {
-            return delegate.getVisualRepresentation(t);
-        }
-        
-        @Override
-        public boolean importData(JComponent comp, Transferable t) {
-            return delegate.importData(comp, t);
-        }
-        
-        @Override
-        public boolean importData(TransferHandler.TransferSupport support) {
-            return delegate.importData(support);
-        }
+        return model;
     }
 }

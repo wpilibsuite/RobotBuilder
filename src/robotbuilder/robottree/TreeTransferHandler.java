@@ -18,7 +18,7 @@ import javax.swing.TransferHandler;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import robotbuilder.MainFrame;
-import robotbuilder.Palette;
+import robotbuilder.palette.Palette;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.RobotComponent;
 

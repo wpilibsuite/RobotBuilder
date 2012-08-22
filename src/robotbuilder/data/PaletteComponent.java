@@ -5,7 +5,7 @@
 package robotbuilder.data;
 
 import java.util.*;
-import robotbuilder.Palette;
+import robotbuilder.palette.Palette;
 import robotbuilder.data.properties.Property;
 
 /**
