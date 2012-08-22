@@ -59,7 +59,6 @@ public class RightClickMouseAdapter extends MouseAdapter {
             }
         }
         
-        System.out.println(submenus.size());
         if (submenus.size() > 1) {
             for (JMenu submenu : submenus) {
                 menu.add(submenu);
@@ -71,7 +70,7 @@ public class RightClickMouseAdapter extends MouseAdapter {
         }
 
         
-        if (isDeletable()) {
+        if (isDeletable(component)) {
             if (menu.getSubElements().length > 0) {
                 menu.addSeparator();
             }
@@ -93,7 +92,7 @@ public class RightClickMouseAdapter extends MouseAdapter {
         return menu;
     }
     
-    private boolean isDeletable() {
-        return true; // FIXME: Base off of whether or not the component is deletable.
+    private boolean isDeletable(RobotComponent component) {
+        return component.getParent() != null && component.getParent().getParent() != null;
     }
 }
