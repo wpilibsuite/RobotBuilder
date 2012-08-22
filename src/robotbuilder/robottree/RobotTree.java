@@ -125,6 +125,12 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             }
         });
         saved = true;
+        tree.addFocusListener(new FocusListener() {
+            @Override public void focusLost(FocusEvent fe) {}
+            @Override public void focusGained(FocusEvent fe) {
+                update();
+            }
+        });
     }
 
     /**
