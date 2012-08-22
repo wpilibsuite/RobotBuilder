@@ -73,6 +73,7 @@ class AddItemAction extends AbstractAction {
         
         tree.tree.setSelectionPath(new TreePath(toAdd.getPath()));
         tree.properties.setCurrentComponent(toAdd);
+        tree.properties.setEditName();
         
         tree.takeSnapshot();
     }

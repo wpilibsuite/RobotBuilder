@@ -38,6 +38,12 @@ public class PropertiesDisplay extends JPanel {
         update();
     }
     
+    public void setEditName() {
+        propTable.editCellAt(0, 1);
+        propTable.requestFocusInWindow();
+        ((JTextField) ((DefaultCellEditor) propTable.getCellEditor()).getComponent()).selectAll();
+    }
+    
     public void update() {
         updateUI();
     }

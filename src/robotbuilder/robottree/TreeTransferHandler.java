@@ -199,6 +199,7 @@ class TreeTransferHandler extends TransferHandler {
         
         robottree.tree.setSelectionPath(path.pathByAddingChild(newNode));
         robottree.properties.setCurrentComponent(newNode);
+        robottree.properties.setEditName();
         
         robottree.tree.scrollRectToVisible(robottree.tree.getPathBounds(path.pathByAddingChild(newNode)));
         robottree.takeSnapshot();
