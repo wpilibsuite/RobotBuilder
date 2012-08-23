@@ -4,10 +4,7 @@
  */
 package robotbuilder.palette;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -51,7 +48,8 @@ public class IconView extends JPanel {
             //BorderFactory.createT
             setBorder(BorderFactory.createTitledBorder(node.getUserObject().toString()));
             TitledBorder border = ((TitledBorder) getBorder());
-            border.setTitleFont(border.getTitleFont().deriveFont(Font.BOLD));
+            border.setTitleFont(new Font("Arial", Font.BOLD, 12));
+            border.setTitleJustification(TitledBorder.CENTER);
 
             setLayout(new GridLayout(0, 2, 5, 5));
             
