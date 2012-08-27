@@ -1,34 +1,21 @@
 
 package robotbuilder.palette;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.swing.*;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
 import org.apache.velocity.app.VelocityEngine;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
-import robotbuilder.MainFrame;
 import robotbuilder.Utils;
 import robotbuilder.data.*;
 import robotbuilder.data.properties.*;
