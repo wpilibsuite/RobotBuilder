@@ -5,19 +5,13 @@
 package robotbuilder.palette;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
-import javax.swing.plaf.BorderUIResource;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
 import robotbuilder.Utils;
@@ -64,6 +58,7 @@ public class IconView extends JPanel {
     private static class PaletteIcon extends JLabel {
         private PaletteIcon(PaletteComponent component) {
             setIcon(new ImageIcon(Utils.getResource("/icons/"+component.getName()+".png")));
+            setToolTipText(component.getName());
         }
     }
 }
