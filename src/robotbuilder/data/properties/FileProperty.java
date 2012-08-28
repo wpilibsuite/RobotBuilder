@@ -4,11 +4,10 @@
  */
 package robotbuilder.data.properties;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.FileDialog;
 import java.io.File;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.FilenameFilter;
+import robotbuilder.MainFrame;
 import robotbuilder.data.RobotComponent;
 
 /**
@@ -19,7 +18,7 @@ import robotbuilder.data.RobotComponent;
 public class FileProperty extends Property {
     protected String value, extension;
     protected boolean folder;
-    protected JFileChooser chooser;
+    protected FileDialog chooser;
     
     public FileProperty() {}
     
@@ -44,14 +43,21 @@ public class FileProperty extends Property {
     @Override
     public Object getDisplayValue() {
         if (chooser == null) {
-            chooser = new JFileChooser(component.getRobotTree().getFilePath());
+            chooser = new FileDialog(MainFrame.getInstance());
+            chooser.setDirectory(component.getRobotTree().getFilePath());
             if (folder) {
-                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                chooser.setFilenameFilter(new FilenameFilter() {
+                    @Override public boolean accept(File file, String string) {
+                        return file.isDirectory();
+                    }
+                });
             } else {
-                chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                chooser.setFileFilter(new FileNameExtensionFilter(extension+" file", extension));
+                chooser.setFilenameFilter(new FilenameFilter() {
+                    @Override public boolean accept(File file, String string) {
+                        return file.getName().endsWith("."+extension);
+                    }
+                });
             }
-            chooser.addActionListener(new ActionListenerImpl(this));
         }
         update();
         return chooser;
@@ -84,23 +90,9 @@ public class FileProperty extends Property {
     public void update() {
         super.update();
         if (chooser != null && !getValue().equals("")) {
-            chooser.setSelectedFile(new File(getValue().toString()));
-            value = chooser.getSelectedFile().toString();
+//            chooser.setFile(getValue().toString());
+//            value = chooser.getFile().toString();
+            System.out.println(value);
         }
     }
-
-    static class ActionListenerImpl implements ActionListener {
-        FileProperty fp;
-        public ActionListenerImpl(FileProperty fp) {
-            this.fp = fp;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            if (ae.getActionCommand().equals("ApproveSelection")){
-                fp.setValue(fp.chooser.getSelectedFile().getPath());
-            }
-        }
-    }
-    
 }

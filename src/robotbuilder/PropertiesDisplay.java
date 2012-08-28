@@ -64,8 +64,8 @@ public class PropertiesDisplay extends JPanel {
             if(value != null) {
                 if (value instanceof JComboBox) {
                     return new DefaultCellEditor((JComboBox) value);
-                } else if (value instanceof JFileChooser) {
-                    return new FileCellEditor((JFileChooser) value);
+                } else if (value instanceof FileDialog) {
+                    return new FileCellEditor((FileDialog) value);
                 } else if (value instanceof Boolean) {
                     JCheckBox checkbox = new JCheckBox("", (Boolean) this.getValueAt(row, column));
                     checkbox.setOpaque(false);
@@ -112,12 +112,13 @@ public class PropertiesDisplay extends JPanel {
                             }
                         }
                     };
-                } else if (value instanceof JFileChooser) {
+                } else if (value instanceof FileDialog) {
                     return new TableCellRenderer() {
                         @Override
                         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                             try {
-                                String path = ((JFileChooser) value).getSelectedFile().getPath();
+                                FileDialog chooser = ((FileDialog) value);
+                                String path = chooser.getDirectory()+(chooser.getFile() != null ? chooser.getFile() : "");
                                 setValueAt(path, row, column);
                                 return new JLabel(path);
                             } catch (NullPointerException e) {
