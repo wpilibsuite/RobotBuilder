@@ -170,9 +170,9 @@ public class PropertiesDisplay extends JPanel {
 	public Object getValueAt(int row, int column) {
             if (column == 0) {
                 if (row == 0)
-                    return "Name";
+                    return " Name";
                 else
-                    return keys[row-1];
+                    return " "+keys[row-1]; // Space is for padding
             } else {
                 if (row == 0)
                     return currentComponent.getName();
