@@ -6,11 +6,25 @@
   <body>
       <h1>Ultrasonic</h1>
 
-      <center><img src="images/image.jpg" /></center>
+      <center><img src="../icons/Ultrasonic.png" /></center>
 
     <h2>What is it?</h2>
-    <p>A paragraph or so describing what it is</p>
-
+    <p>An ultrasonic rangefinder using high frequency sound to determine distance to
+    an object. The rangefinders generally operate at distances up to 7-9 feet. There
+    are two styles of sensors in common use, some that use two transducers (a microphone
+    and a speaker) and those that use a single transducer. The commonly used single
+    transducer sensor is supplied by Maxbotics and uses an analog connection to the robot.
+    </p>
+    <p>
+        The sensor implemented by this class is the double transducer style with two digital I/O
+        connections to the robot, one (output) to cause the sensor to send a ping and the other
+        (input) to determine the distance to the target.
+    </p>
+    <p>
+        <b>If your application uses the analog sensor, then don't use this class</b>. Instead
+        just use an analog channel and refer to the sensor documentation for the mapping
+        between voltage and distance.
+    </p>
 
     <h2>Properties</h2>
 

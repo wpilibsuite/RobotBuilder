@@ -18,6 +18,7 @@ import javax.swing.TransferHandler;
 import javax.swing.border.TitledBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
+import robotbuilder.MainFrame;
 import robotbuilder.Utils;
 import robotbuilder.data.PaletteComponent;
 
@@ -60,7 +61,9 @@ public class IconView extends JPanel {
     }
     
     private static class PaletteIcon extends JLabel {
-        private PaletteIcon(PaletteComponent component) {
+        PaletteComponent component;
+        private PaletteIcon(final PaletteComponent comp) {
+            this.component = comp;
             setIcon(new ImageIcon(Utils.getResource("/icons/"+component.getName()+".png")));
             setToolTipText(component.getName());
             setName(component.getName());
@@ -68,6 +71,7 @@ public class IconView extends JPanel {
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
+                    MainFrame.getInstance().setHelp((component).getHelpFile());
                     JComponent comp = (JComponent) e.getSource();
                     TransferHandler th = comp.getTransferHandler();
                     th.exportAsDrag(comp, e, TransferHandler.COPY);                }
