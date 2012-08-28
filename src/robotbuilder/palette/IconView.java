@@ -5,12 +5,16 @@
 package robotbuilder.palette;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.TransferHandler;
 import javax.swing.border.TitledBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
@@ -59,6 +63,15 @@ public class IconView extends JPanel {
         private PaletteIcon(PaletteComponent component) {
             setIcon(new ImageIcon(Utils.getResource("/icons/"+component.getName()+".png")));
             setToolTipText(component.getName());
+            setName(component.getName());
+            setTransferHandler(new IconPaletteTransferHandler());
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    JComponent comp = (JComponent) e.getSource();
+                    TransferHandler th = comp.getTransferHandler();
+                    th.exportAsDrag(comp, e, TransferHandler.COPY);                }
+            });
         }
     }
 }

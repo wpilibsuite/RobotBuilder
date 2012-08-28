@@ -82,8 +82,9 @@ public class Palette extends JPanel  {
      * @return Palette instance
      */
     public static Palette getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new Palette();
+        }
         return instance;
     }
     
