@@ -64,8 +64,8 @@ public class PropertiesDisplay extends JPanel {
             if(value != null) {
                 if (value instanceof JComboBox) {
                     return new DefaultCellEditor((JComboBox) value);
-                } else if (value instanceof FileDialog) {
-                    return new FileCellEditor((FileDialog) value);
+                } else if (value instanceof JFileChooser) {
+                    return new FileCellEditor((JFileChooser) value);
                 } else if (value instanceof Boolean) {
                     JCheckBox checkbox = new JCheckBox("", (Boolean) this.getValueAt(row, column));
                     checkbox.setOpaque(false);
@@ -112,13 +112,12 @@ public class PropertiesDisplay extends JPanel {
                             }
                         }
                     };
-                } else if (value instanceof FileDialog) {
+                } else if (value instanceof JFileChooser) {
                     return new TableCellRenderer() {
                         @Override
                         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                             try {
-                                FileDialog chooser = ((FileDialog) value);
-                                String path = chooser.getDirectory()+(chooser.getFile() != null ? chooser.getFile() : "");
+                                String path = ((JFileChooser) value).getSelectedFile().getPath();
                                 setValueAt(path, row, column);
                                 return new JLabel(path);
                             } catch (NullPointerException e) {
@@ -171,9 +170,9 @@ public class PropertiesDisplay extends JPanel {
 	public Object getValueAt(int row, int column) {
             if (column == 0) {
                 if (row == 0)
-                    return " Name";
+                    return "Name";
                 else
-                    return " "+keys[row-1]; // Space is for padding
+                    return keys[row-1];
             } else {
                 if (row == 0)
                     return currentComponent.getName();
