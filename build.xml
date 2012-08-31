@@ -16,7 +16,7 @@
     </taskdef>
 
     <target name="-post-jar">
-      <jar destfile="${dist.jar}/tools" update="true">
+      <jar destfile="${dist.jar}" update="true">
 		<zipgroupfileset dir="lib/" includes="*.jar" /> 
 		<fileset dir="resources" includes="**"/>
       </jar>
