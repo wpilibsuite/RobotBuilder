@@ -16,11 +16,11 @@
     </taskdef>
 
     <target name="-post-jar">
-      <jar destfile="${dist.jar}" update="true">
-	<zipgroupfileset dir="lib/" includes="*.jar" /> 
-	<fileset dir="resources" includes="**"/>
+      <jar destfile="${dist.jar}/tools" update="true">
+		<zipgroupfileset dir="lib/" includes="*.jar" /> 
+		<fileset dir="resources" includes="**"/>
       </jar>
-      <delete dir="${dist.dir}/lib" />
+      <delete dir="${dist.dir}/tools/lib" />
     </target>
     
     <target depends="init,compile-test,-pre-test-run" if="have.tests" name="-do-test-run">
