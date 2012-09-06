@@ -1,9 +1,20 @@
-## Filter components and make a table.
-#macro( filter $module_name $port_name $module_number )
+#macro( table_with_components $title $label $module_name $port_name $module_number )
     #set($ports = $helper.filterComponents($module_name, $port_name, $module_number, $robot))
+    #if( $ports.keySet().size() > 0 )
+        <h2>$title</h2>
+	<table><tr>
+	<th class="pound">#</th>
+	<th>$label</th></tr>
+	#to_rows($ports)
+	</table>
+    #end
+#end ## macro
+
+## Filter components and make a table.
+#macro( to_rows $my_ports )
     #foreach ($port in [1..20])
-    	#if( $ports.containsKey("$port") )
-	    #tr($port, $ports.get("$port"))
+        #if( $my_ports.containsKey("$port") )
+	    #tr($port, $my_ports.get("$port"))
 	#end
     #end ##forech
 #end ## macro
@@ -14,16 +25,16 @@
 #end
 
 ## Generate the DIO table for a module
-#macro( DIO $module )
-    #filter("Module (Digital)", "Channel (Digital)", $module)
+#macro( DIO $title $label $module )
+    #table_with_components($title, $label, "Module (Digital)", "Channel (Digital)", $module)
 #end ##macro
 
 ## Generate the PWM table for a module
-#macro( PWM $module )
-    #filter("Module (Digital)", "Channel (PWM)", $module)
+#macro( PWM $title $label $module )
+    #table_with_components($title, $label, "Module (Digital)", "Channel (PWM)", $module)
 #end ##macro
 
 ## Generate the Analog table for a module
-#macro( Analog $module )
-    #filter("Module (Analog)", "Channel (Analog)", $module)
+#macro( Analog $title $label $module )
+    #table_with_components($title, $label, "Module (Analog)", "Channel (Analog)", $module)
 #end ##macro
