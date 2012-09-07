@@ -100,6 +100,7 @@ public class GenericExporter {
         rootContext.put("version-indicator", "Generated with RobotBuilder version "+RobotBuilder.VERSION);
         rootContext.put("robot", robot);
         rootContext.put("helper", this);
+        rootContext.put("Collections", Collections.class);
         rootContext.put("exporter-path", path);
         rootContext.put("components", getComponents(robot));
         rootContext.put("export-subsystems", robot.getProperty("Export Subsystems").getValue());

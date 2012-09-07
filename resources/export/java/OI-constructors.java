@@ -1,4 +1,5 @@
-#foreach ($component in $components)
+${Collections.reverse($components)}
+#foreach( $component in $components )
 #if ($helper.exportsTo("OI", $component))
         #constructor($component)
 
