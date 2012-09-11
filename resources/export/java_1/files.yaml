@@ -1,0 +1,113 @@
+## Netbeans Project Files
+- !File
+  export: $project/BSD_License_for_WPILib_code.txt
+  source: ${exporter-path}BSD_License_for_WPILib_code.txt
+  update: None
+
+- !File
+  export: $project/build.properties
+  source: ${exporter-path}build.properties
+  update: None
+
+- !File
+  export: $project/build.xml
+  source: ${exporter-path}build.xml
+  update: None
+
+- !File
+  export: $project/resources/META-INF/MANIFEST.MF
+  source: ${exporter-path}MANIFEST.MF
+  update: None
+
+- !File
+  export: $project/nbproject/project.xml
+  source: ${exporter-path}project.xml
+  update: None
+  
+## Key Java Files
+- !File
+  export: $package-path/Robot.java
+  source: ${exporter-path}RobotTemplate.java
+  update: Modify
+  modifications:
+    autonomous: ${exporter-path}RobotTemplate-autonomous.java
+    constructors: ${exporter-path}RobotTemplate-declarations.java
+    constructors: ${exporter-path}RobotTemplate-constructors.java
+    
+- !File
+  export: $package-path/RobotMap.java
+  source: ${exporter-path}RobotMap.java
+  update: Overwrite
+  
+- !File
+  export: $package-path/OI.java
+  source: ${exporter-path}OI.java
+  update: Modify
+  modifications:
+    declarations: ${exporter-path}OI-declarations.java
+    constructors: ${exporter-path}OI-constructors.java
+
+## Export Commands as files
+#if ($export-commands)
+#foreach ($command in $commands)
+#if ($command.base.name == "Command Group")
+- !File
+  export: $package-path/commands/#class($command.name).java
+  source: ${exporter-path}CommandGroup.java
+  update: None
+  variables:
+    command-name: ${command.name}
+#elseif($command.base.name == "PID Command")
+- !File
+  export: $package-path/commands/#class($command.name).java
+  source: ${exporter-path}PIDCommand.java
+  update: Modify
+  modifications:
+    pid: ${exporter-path}PIDCommand-pid.java
+    requires: ${exporter-path}Command-requires.java
+    source: ${exporter-path}PIDCommand-source.java
+    output: ${exporter-path}PIDCommand-output.java
+  variables:
+    command-name: ${command.name}
+#else
+- !File
+  export: $package-path/commands/#class($command.name).java
+  source: ${exporter-path}Command.java
+  update: Modify
+  modifications:
+    requires: ${exporter-path}Command-requires.java
+  variables:
+    command-name: ${command.name}
+#end 
+#end 
+#end
+
+## Export Subsystems as files
+#if ($export-subsystems)
+#foreach ($subsystem in $subsystems)
+#if ($subsystem.base.name == "PID Subsystem")
+- !File
+  export: $package-path/subsystems/#class($subsystem.name).java
+  source: ${exporter-path}PIDSubsystem.java
+  update: Modify
+  modifications:
+    declarations: ${exporter-path}Subsystem-declarations.java
+    default_command: ${exporter-path}Subsystem-default_command.java
+    pid: ${exporter-path}PIDSubsystem-pid.java
+    source: ${exporter-path}PIDSubsystem-source.java
+    output: ${exporter-path}PIDSubsystem-output.java
+  variables: 
+    subsystem-name: ${subsystem.name}
+#else
+- !File
+  export: $package-path/subsystems/#class($subsystem.name).java
+  source: ${exporter-path}Subsystem.java
+  update: Modify
+  modifications:
+    declarations: ${exporter-path}Subsystem-declarations.java
+    default_command: ${exporter-path}Subsystem-default_command.java
+  variables: 
+    subsystem-name: ${subsystem.name}
+#end
+#end
+#end
