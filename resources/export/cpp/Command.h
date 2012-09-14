@@ -1,16 +1,16 @@
 #ifndef EXAMPLE_COMMAND_H
-#define EXAMPLE_COMMAND_H
+\#define EXAMPLE_COMMAND_H
 
-#include "../CommandBase.h"
+\#include "../CommandBase.h"
 
 /**
  *
  *
  * @author ExampleAuthor
  */
-class ExampleCommand: public CommandBase {
+class #class($command.name): public CommandBase {
 public:
-	ExampleCommand();
+	#class($command.name)();
 	virtual void Initialize();
 	virtual void Execute();
 	virtual bool IsFinished();

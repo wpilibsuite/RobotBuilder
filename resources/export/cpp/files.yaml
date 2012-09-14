@@ -35,7 +35,7 @@
     constructors: ${exporter-path}RobotTemplate-constructors.cpp
     
 # - !File
-#   export: $package-path/RobotMap.java
+#   export: $project/RobotMap.java
 #   source: ${exporter-path}RobotMap.java
 #   update: Overwrite
   
@@ -57,14 +57,14 @@
 #foreach ($command in $commands)
 #if ($command.base.name == "Command Group")
 # - !File
-#   export: $package-path/commands/#class($command.name).java
+#   export: $project/commands/#class($command.name).java
 #   source: ${exporter-path}CommandGroup.java
 #   update: None
 #   variables:
 #     command-name: ${command.name}
 # #elseif($command.base.name == "PID Command")
 # - !File
-#   export: $package-path/commands/#class($command.name).java
+#   export: $project/commands/#class($command.name).java
 #   source: ${exporter-path}PIDCommand.java
 #   update: Modify
 #   modifications:
@@ -75,14 +75,20 @@
 #   variables:
 #     command-name: ${command.name}
 # #else
-# - !File
-#   export: $package-path/commands/#class($command.name).java
-#   source: ${exporter-path}Command.java
-#   update: Modify
-#   modifications:
-#     requires: ${exporter-path}Command-requires.java
-#   variables:
-#     command-name: ${command.name}
+- !File
+  export: $project/Commands/#class($command.name).cpp
+  source: ${exporter-path}Command.cpp
+  update: Modify
+  modifications:
+    requires: ${exporter-path}Command-requires.cpp
+  variables:
+    command-name: ${command.name}
+- !File
+  export: $project/Commands/#class($command.name).h
+  source: ${exporter-path}Command.h
+  update: None
+  variables:
+    command-name: ${command.name}
 #end 
 #end 
 #end
@@ -92,7 +98,7 @@
 #foreach ($subsystem in $subsystems)
 #if ($subsystem.base.name == "PID Subsystem")
 # - !File
-#   export: $package-path/subsystems/#class($subsystem.name).java
+#   export: $project/subsystems/#class($subsystem.name).java
 #   source: ${exporter-path}PIDSubsystem.java
 #   update: Modify
 #   modifications:
@@ -105,7 +111,7 @@
 #     subsystem-name: ${subsystem.name}
 # #else
 # - !File
-#   export: $package-path/subsystems/#class($subsystem.name).java
+#   export: $project/subsystems/#class($subsystem.name).java
 #   source: ${exporter-path}Subsystem.java
 #   update: Modify
 #   modifications:
