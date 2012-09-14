@@ -102,18 +102,26 @@
 #if ($export-subsystems)
 #foreach ($subsystem in $subsystems)
 #if ($subsystem.base.name == "PID Subsystem")
-# - !File
-#   export: $project/subsystems/#class($subsystem.name).java
-#   source: ${exporter-path}PIDSubsystem.java
-#   update: Modify
-#   modifications:
-#     declarations: ${exporter-path}Subsystem-declarations.java
-#     default_command: ${exporter-path}Subsystem-default_command.java
-#     pid: ${exporter-path}PIDSubsystem-pid.java
-#     source: ${exporter-path}PIDSubsystem-source.java
-#     output: ${exporter-path}PIDSubsystem-output.java
-#   variables: 
-#     subsystem-name: ${subsystem.name}
+- !File
+  export: $project/Subsystems/#class($subsystem.name).cpp
+  source: ${exporter-path}PIDSubsystem.cpp
+  update: Modify
+  modifications:
+    declarations: ${exporter-path}Subsystem-declarations.cpp
+    default_command: ${exporter-path}Subsystem-default_command.cpp
+    pid: ${exporter-path}PIDSubsystem-pid.cpp
+    source: ${exporter-path}PIDSubsystem-source.cpp
+    output: ${exporter-path}PIDSubsystem-output.cpp
+  variables: 
+    subsystem-name: ${subsystem.name}
+- !File
+  export: $project/Subsystems/#class($subsystem.name).h
+  source: ${exporter-path}PIDSubsystem.h
+  update: Modify
+  modifications:
+    declarations: ${exporter-path}Subsystem-declarations.cpp
+  variables: 
+    subsystem-name: ${subsystem.name}
 # #else
 - !File
   export: $project/Subsystems/#class($subsystem.name).cpp
