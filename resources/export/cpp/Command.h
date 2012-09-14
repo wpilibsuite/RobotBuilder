@@ -1,5 +1,5 @@
-#ifndef EXAMPLE_COMMAND_H
-\#define EXAMPLE_COMMAND_H
+#ifndef #constant($command.name)_H
+\#define #constant($command.name)_H
 
 \#include "../CommandBase.h"
 
