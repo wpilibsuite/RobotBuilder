@@ -1,28 +1,23 @@
 ## Netbeans Project Files
-# - !File
-#   export: $project/BSD_License_for_WPILib_code.txt
-#   source: ${exporter-path}BSD_License_for_WPILib_code.txt
-#   update: None
+- !File
+  export: $project/.wrproject
+  source: ${exporter-path}.wrproject
+  update: None
 
-# - !File
-#   export: $project/build.properties
-#   source: ${exporter-path}build.properties
-#   update: None
+- !File
+  export: $project/.wrmakefile
+  source: ${exporter-path}.wrmakefile
+  update: None
 
-# - !File
-#   export: $project/build.xml
-#   source: ${exporter-path}build.xml
-#   update: None
+- !File
+  export: $project/.project
+  source: ${exporter-path}.project
+  update: None
 
-# - !File
-#   export: $project/resources/META-INF/MANIFEST.MF
-#   source: ${exporter-path}MANIFEST.MF
-#   update: None
-
-# - !File
-#   export: $project/nbproject/project.xml
-#   source: ${exporter-path}project.xml
-#   update: None
+- !File
+  export: $project/.cproject
+  source: ${exporter-path}.cproject
+  update: None
   
 ## Key Java Files
 - !File
