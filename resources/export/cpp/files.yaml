@@ -25,14 +25,14 @@
 #   update: None
   
 ## Key Java Files
-# - !File
-#   export: $package-path/Robot.java
-#   source: ${exporter-path}RobotTemplate.java
-#   update: Modify
-#   modifications:
-#     autonomous: ${exporter-path}RobotTemplate-autonomous.java
-#     constructors: ${exporter-path}RobotTemplate-declarations.java
-#     constructors: ${exporter-path}RobotTemplate-constructors.java
+- !File
+  export: $project/Robot.cpp
+  source: ${exporter-path}CommandBasedRobot.cpp
+  update: Modify
+  modifications:
+    autonomous: ${exporter-path}RobotTemplate-autonomous.cpp
+    constructors: ${exporter-path}RobotTemplate-declarations.cpp
+    constructors: ${exporter-path}RobotTemplate-constructors.cpp
     
 # - !File
 #   export: $package-path/RobotMap.java
