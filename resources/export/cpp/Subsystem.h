@@ -1,5 +1,5 @@
-#ifndef EXAMPLE_SUBSYSTEM_H
-\#define EXAMPLE_SUBSYSTEM_H
+#ifndef #constant($subsystem.name)_H
+\#define #constant($subsystem.name)_H
 \#include "Commands/Subsystem.h"
 \#include "WPILib.h"
 
@@ -8,7 +8,7 @@
  *
  * @author ExampleAuthor
  */
-class ExampleSubsystem: public Subsystem {
+class #class($subsystem.name)(): public Subsystem {
 private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
