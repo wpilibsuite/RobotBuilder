@@ -29,10 +29,14 @@
     constructors: ${exporter-path}CommandBasedRobot-declarations.cpp
     constructors: ${exporter-path}CommandBasedRobot-constructors.cpp
     
-# - !File
-#   export: $project/RobotMap.java
-#   source: ${exporter-path}RobotMap.java
-#   update: Overwrite
+- !File
+  export: $project/RobotMap.cpp
+  source: ${exporter-path}RobotMap.cpp
+  update: Overwrite
+- !File
+  export: $project/RobotMap.h
+  source: ${exporter-path}RobotMap.h
+  update: Overwrite
   
 - !File
   export: $project/OI.cpp
