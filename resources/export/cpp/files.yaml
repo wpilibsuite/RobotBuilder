@@ -30,9 +30,9 @@
   source: ${exporter-path}CommandBasedRobot.cpp
   update: Modify
   modifications:
-    autonomous: ${exporter-path}RobotTemplate-autonomous.cpp
-    constructors: ${exporter-path}RobotTemplate-declarations.cpp
-    constructors: ${exporter-path}RobotTemplate-constructors.cpp
+    autonomous: ${exporter-path}CommandBasedRobot-autonomous.cpp
+    constructors: ${exporter-path}CommandBasedRobot-declarations.cpp
+    constructors: ${exporter-path}CommandBasedRobot-constructors.cpp
     
 # - !File
 #   export: $project/RobotMap.java
@@ -110,15 +110,23 @@
 #   variables: 
 #     subsystem-name: ${subsystem.name}
 # #else
-# - !File
-#   export: $project/subsystems/#class($subsystem.name).java
-#   source: ${exporter-path}Subsystem.java
-#   update: Modify
-#   modifications:
-#     declarations: ${exporter-path}Subsystem-declarations.java
-#     default_command: ${exporter-path}Subsystem-default_command.java
-#   variables: 
-#     subsystem-name: ${subsystem.name}
+- !File
+  export: $project/Subsystems/#class($subsystem.name).cpp
+  source: ${exporter-path}Subsystem.cpp
+  update: Modify
+  modifications:
+    declarations: ${exporter-path}Subsystem-declarations.cpp
+    default_command: ${exporter-path}Subsystem-default_command.cpp
+  variables: 
+    subsystem-name: ${subsystem.name}
+- !File
+  export: $project/Subsystems/#class($subsystem.name).h
+  source: ${exporter-path}Subsystem.h
+  update: Modify
+  modifications:
+    declarations: ${exporter-path}Subsystem-declarations.h
+  variables: 
+    subsystem-name: ${subsystem.name}
 #end
 #end
 #end
