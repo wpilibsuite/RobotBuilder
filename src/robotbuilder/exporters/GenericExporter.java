@@ -114,6 +114,7 @@ public class GenericExporter {
         // Export to all files
         Collection<ExportFile> newFiles = getFiles();
         for (ExportFile file : newFiles) {
+            System.out.println(file.getSource()+" --> "+file.getExport());
             file.export(this);
         }
         

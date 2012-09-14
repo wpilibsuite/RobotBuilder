@@ -37,6 +37,7 @@ public class Utils {
      * @return The resource stream
      */
     public static InputStream getResourceAsStream(String resource) {
+        System.out.println(ClasspathResourceLoader.class.getResourceAsStream(resource));
         return ClasspathResourceLoader.class.getResourceAsStream(resource);
     }
 
