@@ -228,6 +228,11 @@ Palette:
           - !StringProperty
             name: Java Package
             default: "org.usfirst.frc0000"
+          - !FileProperty
+            name: C++ Project
+            extension: null
+            folder: true
+            default: ""
           - !BooleanProperty
             name: Export Subsystems
             default: true
