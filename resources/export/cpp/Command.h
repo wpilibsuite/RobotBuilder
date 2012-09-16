@@ -12,7 +12,7 @@
  *
  * @author ExampleAuthor
  */
-class #class($command.name): public CommandBase {
+class #class($command.name): public Command {
 public:
 	#class($command.name)();
 	virtual void Initialize();
