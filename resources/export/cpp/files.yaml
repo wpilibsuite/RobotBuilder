@@ -26,8 +26,13 @@
   update: Modify
   modifications:
     autonomous: ${exporter-path}CommandBasedRobot-autonomous.cpp
-    constructors: ${exporter-path}CommandBasedRobot-declarations.cpp
     constructors: ${exporter-path}CommandBasedRobot-constructors.cpp
+- !File
+  export: $project/Robot.h
+  source: ${exporter-path}CommandBasedRobot.h
+  update: Modify
+  modifications:
+    declarations: ${exporter-path}CommandBasedRobot-declarations.cpp
     
 - !File
   export: $project/RobotMap.cpp
