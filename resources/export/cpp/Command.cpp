@@ -12,26 +12,26 @@
 }
 
 // Called just before this Command runs the first time
-void ExampleCommand::Initialize() {
+void #class($command.name)::Initialize() {
 	
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ExampleCommand::Execute() {
+void #class($command.name)::Execute() {
 	
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool ExampleCommand::IsFinished() {
+bool #class($command.name)::IsFinished() {
 	return false;
 }
 
 // Called once after isFinished returns true
-void ExampleCommand::End() {
+void #class($command.name)::End() {
 	
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ExampleCommand::Interrupted() {
+void #class($command.name)::Interrupted() {
 }
