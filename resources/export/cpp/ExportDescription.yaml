@@ -68,7 +68,7 @@ Defaults:
   Component:
     Export: "RobotMap"
     Import: "import edu.wpi.first.wpilibj.*;"
-    Declaration: "${ClassName} #constant($Name);"
+    Declaration: "${ClassName}* #constant($Name);"
   None:
     Export: ""
     Import: ""
@@ -93,7 +93,7 @@ Defaults:
     Declaration: "public ${ClassName} #variable($Name);"
   Button:
     Import: "import edu.wpi.first.wpilibj.buttons.*;"
-    Extra:  "#if(\"$Command\" != \"None\")#variable($Name).${When_to_Run}(new #class($Command)());#end"
+    Extra:  "#if(\"$Command\" != \"None\")#variable($Name)->${When_to_Run}(new #class($Command)());#end"
   Command:
     Export: ""
     Import: "import ${package}.commands.*;"
@@ -126,16 +126,16 @@ Instructions:
     Import: "import edu.wpi.first.wpilibj.smartdashboard.*;"
     Construction: "#constant($Name) = new ${ClassName}($P, $I, $D, $F, #constant($Input), #constant($Output), $Period);"
     Extra: >
-      #constant($Name).setContinuous(${Continuous});
+      #constant($Name)->setContinuous(${Continuous});
       #if($Limit_Input)
       
-              #constant($Name).setInputRange(${Minimum_Input}, ${Maximum_Input});#end
+              #constant($Name)->setInputRange(${Minimum_Input}, ${Maximum_Input});#end
       #if(true)
 
-              #constant($Name).setOutputRange(${Minimum_Output}, ${Maximum_Output});#end
+              #constant($Name)->setOutputRange(${Minimum_Output}, ${Maximum_Output});#end
       #if($Send_to_SmartDashboard)
 
-              //SmartDashboard.putData("${Name}", #constant($Name));#end
+              //SmartDashboard->putData("${Name}", #constant($Name));#end
       
   Robot Drive 2:
     Defaults: "Component,None"
@@ -143,15 +143,15 @@ Instructions:
     Import: "import edu.wpi.first.wpilibj.RobotDrive.MotorType;"
     Construction: "#constant($Name) = new ${ClassName}(#constant($Left_Motor), #constant($Right_Motor));"
     Extra: >
-      #constant($Name).setSafetyEnabled($Safety_Enabled);
-              #constant($Name).setExpiration($Safety_Expiration_Time);
-              #constant($Name).setSensitivity($Sensitivity);
-              #constant($Name).setMaxOutput($Maximum_Output);
+      #constant($Name)->setSafetyEnabled($Safety_Enabled);
+              #constant($Name)->setExpiration($Safety_Expiration_Time);
+              #constant($Name)->setSensitivity($Sensitivity);
+              #constant($Name)->setMaxOutput($Maximum_Output);
       #if($Left_Motor_Inverted)
-              #constant($Name).setInvertedMotor(MotorType.kFrontLeft, true);#end
+              #constant($Name)->setInvertedMotor(MotorType.kFrontLeft, true);#end
       #if($Right_Motor_Inverted)
 
-              #constant($Name).setInvertedMotor(MotorType.kFrontRight, true);#end
+              #constant($Name)->setInvertedMotor(MotorType.kFrontRight, true);#end
               
   Robot Drive 4:
     Defaults: "Component,None"
@@ -161,32 +161,32 @@ Instructions:
       #constant($Name) = new ${ClassName}(#constant($Left_Front_Motor), #constant($Left_Rear_Motor),
                     #constant($Right_Front_Motor), #constant($Right_Rear_Motor));
     Extra: >
-      #constant($Name).setSafetyEnabled($Safety_Enabled);
-              #constant($Name).setExpiration($Safety_Expiration_Time);
-              #constant($Name).setSensitivity($Sensitivity);
-              #constant($Name).setMaxOutput($Maximum_Output);
+      #constant($Name)->setSafetyEnabled($Safety_Enabled);
+              #constant($Name)->setExpiration($Safety_Expiration_Time);
+              #constant($Name)->setSensitivity($Sensitivity);
+              #constant($Name)->setMaxOutput($Maximum_Output);
       #if($Left_Front_Motor_Inverted)
-              #constant($Name).setInvertedMotor(MotorType.kFrontLeft, true);#end
+              #constant($Name)->setInvertedMotor(MotorType.kFrontLeft, true);#end
       #if($Left_Rear_Motor_Inverted)
 
-              #constant($Name).setInvertedMotor(MotorType.kRearLeft, true);#end
+              #constant($Name)->setInvertedMotor(MotorType.kRearLeft, true);#end
       #if($Right_Front_Motor_Inverted)
 
-              #constant($Name).setInvertedMotor(MotorType.kFrontRight, true);#end
+              #constant($Name)->setInvertedMotor(MotorType.kFrontRight, true);#end
       #if($Right_Rear_Motor_Inverted)
 
-              #constant($Name).setInvertedMotor(MotorType.kRearRight, true);#end
+              #constant($Name)->setInvertedMotor(MotorType.kRearRight, true);#end
 
   Gyro:
     Defaults: "AnalogInput,Component,None"
     ClassName: "Gyro"
-    Extra: "#constant($Name).setSensitivity(${Sensitivity});"
+    Extra: "#constant($Name)->setSensitivity(${Sensitivity});"
   Accelerometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "Accelerometer"
     Extra: >-
-      #constant($Name).setSensitivity(${Volts_Per_G});
-              #constant($Name).setZero(${Zero_G_Volts});
+      #constant($Name)->setSensitivity(${Volts_Per_G});
+              #constant($Name)->setZero(${Zero_G_Volts});
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
@@ -195,8 +195,8 @@ Instructions:
       import edu.wpi.first.wpilibj.Encoder.PIDSourceParameter;
     Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, EncodingType.${Encoding_Type});"
     Extra: >-
-      #constant($Name).setDistancePerPulse(${Distance_Per_Pulse});
-              #constant($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
+      #constant($Name)->setDistancePerPulse(${Distance_Per_Pulse});
+              #constant($Name)->setPIDSourceParameter(PIDSourceParameter.${PID_Source});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
@@ -205,16 +205,16 @@ Instructions:
       import edu.wpi.first.wpilibj.Encoder.PIDSourceParameter;
     Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Index_Module_Digital}, ${Index_Channel_Digital}, ${Reverse_Direction});"
     Extra: >-
-      #constant($Name).setDistancePerPulse(${Distance_Per_Pulse});
-              #constant($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
+      #constant($Name)->setDistancePerPulse(${Distance_Per_Pulse});
+              #constant($Name)->setPIDSourceParameter(PIDSourceParameter.${PID_Source});
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
-    Extra: "#if($Direction_Sensitive)#constant($Name).enableDirectionSensing($Direction_Sensitive);#end"
+    Extra: "#if($Direction_Sensitive)#constant($Name)->enableDirectionSensing($Direction_Sensitive);#end"
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
-    LiveWindow: "LiveWindow.addSensor(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
+    LiveWindow: "LiveWindow::addSensor(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Analog Input:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
@@ -232,11 +232,11 @@ Instructions:
   Jaguar:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Jaguar"
-    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
+    LiveWindow: "LiveWindow::addActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Victor:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Victor"
-    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
+    LiveWindow: "LiveWindow::addActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
