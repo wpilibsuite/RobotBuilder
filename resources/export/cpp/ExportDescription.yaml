@@ -110,14 +110,14 @@ Instructions:
   Subsystem:
     Defaults: "None"
     Export: "Robot"
-    Import: "import ${package}.subsystems.*;"
-    Declaration: "#class($Short_Name) #variable($Short_Name);"
+    Import: "\\#include \"Subsystem/#class($Short_Name).h\";"
+    Declaration: "#class($Short_Name)* #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new #class($Short_Name)();"
   PID Subsystem:
     Defaults: "None"
     Export: "Robot"
-    Import: "import ${package}.subsystems.*;"
-    Declaration: "#class($Short_Name) #variable($Short_Name);;"
+    Import: "\\#include \"Subsystem/#class($Short_Name).h\";"
+    Declaration: "#class($Short_Name)* #variable($Short_Name);;"
     Construction: "#variable($Short_Name) = new #class($Short_Name)();"
 
   PID Controller:
