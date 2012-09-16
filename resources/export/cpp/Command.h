@@ -1,3 +1,5 @@
+#set($command = $helper.getByName($command-name, $robot))
+
 #ifndef #constant($command.name)_H
 \#define #constant($command.name)_H
 
