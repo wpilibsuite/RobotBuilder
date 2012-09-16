@@ -3,7 +3,9 @@
 #ifndef #constant($command.name)_H
 \#define #constant($command.name)_H
 
-\#include "../CommandBase.h"
+
+\#include "Commands/Subsystem.h"
+\#include ".../Robot.h"
 
 /**
  *
