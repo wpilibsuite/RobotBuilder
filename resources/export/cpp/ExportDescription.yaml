@@ -90,7 +90,7 @@ Defaults:
   OI:
     Export: "OI"
     Import: "import edu.wpi.first.wpilibj.*;"
-    Declaration: "public ${ClassName} #variable($Name);"
+    Declaration: "${ClassName}* #variable($Name);"
   Button:
     Import: "import edu.wpi.first.wpilibj.buttons.*;"
     Extra:  "#if(\"$Command\" != \"None\")#variable($Name)->${When_to_Run}(new #class($Command)());#end"
