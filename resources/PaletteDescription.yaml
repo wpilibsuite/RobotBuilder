@@ -229,7 +229,7 @@ Palette:
             name: Java Package
             default: "org.usfirst.frc0000"
           - !FileProperty
-            name: C++ Project
+            name: C++ Windriver Workspace
             extension: null
             folder: true
             default: ""

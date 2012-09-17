@@ -251,7 +251,7 @@
         </buildtarget>
         <buildtarget buildtool="Partial Image Linker" name="CommandBassedRobotTemplate_partialImage" passed="true" targetname="CommandBassedRobotTemplate_partialImage">
             <contents>
-                <folder name="/CommandBasedRobotTemplate" recursive="true"/>
+                <folder name="/$robot-name" recursive="true"/>
             </contents>
         </buildtarget>
     </buildtargets>
