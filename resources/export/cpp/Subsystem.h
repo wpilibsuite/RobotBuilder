@@ -1,3 +1,5 @@
+#set($subsystem = $helper.getByName($subsystem-name, $robot))
+
 #ifndef #constant($subsystem.name)_H
 \#define #constant($subsystem.name)_H
 \#include "Commands/Subsystem.h"
