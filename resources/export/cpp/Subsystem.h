@@ -10,7 +10,7 @@
  *
  * @author ExampleAuthor
  */
-class #class($subsystem.name)(): public Subsystem {
+class #class($subsystem.name): public Subsystem {
 private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
