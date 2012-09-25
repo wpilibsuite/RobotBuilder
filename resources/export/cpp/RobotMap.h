@@ -7,7 +7,7 @@
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
-class RobotMap: public Subsystem {
+class RobotMap: {
  public:
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotMap", $component))
