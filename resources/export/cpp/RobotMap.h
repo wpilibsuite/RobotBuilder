@@ -17,3 +17,4 @@ class RobotMap: public Subsystem {
 #end
   static void init();
 };
+#endif
