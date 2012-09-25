@@ -67,7 +67,6 @@ Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWind
 Defaults:
   Component:
     Export: "RobotMap"
-    Import: "import edu.wpi.first.wpilibj.*;"
     Declaration: "${ClassName}* #constant($Name);"
   None:
     Export: ""
@@ -89,14 +88,11 @@ Defaults:
     Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Solenoid}, ${Output_Channel_Solenoid});"
   OI:
     Export: "OI"
-    Import: "import edu.wpi.first.wpilibj.*;"
     Declaration: "${ClassName}* #variable($Name);"
   Button:
-    Import: "import edu.wpi.first.wpilibj.buttons.*;"
     Extra:  "#if(\"$Command\" != \"None\")#variable($Name)->${When_to_Run}(new #class($Command)());#end"
   Command:
     Export: ""
-    Import: "import ${package}.commands.*;"
 
 Instructions:
   Robot:
@@ -123,7 +119,6 @@ Instructions:
   PID Controller:
     Defaults: "Component,None"
     ClassName: "SendablePIDController"
-    Import: "import edu.wpi.first.wpilibj.smartdashboard.*;"
     Construction: "#constant($Name) = new ${ClassName}($P, $I, $D, $F, #constant($Input), #constant($Output), $Period);"
     Extra: >
       #constant($Name)->setContinuous(${Continuous});
@@ -140,7 +135,6 @@ Instructions:
   Robot Drive 2:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
-    Import: "import edu.wpi.first.wpilibj.RobotDrive.MotorType;"
     Construction: "#constant($Name) = new ${ClassName}(#constant($Left_Motor), #constant($Right_Motor));"
     Extra: >
       #constant($Name)->setSafetyEnabled($Safety_Enabled);
@@ -156,7 +150,6 @@ Instructions:
   Robot Drive 4:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
-    Import: "import edu.wpi.first.wpilibj.RobotDrive.MotorType;"
     Construction: >-
       #constant($Name) = new ${ClassName}(#constant($Left_Front_Motor), #constant($Left_Rear_Motor),
                     #constant($Right_Front_Motor), #constant($Right_Rear_Motor));
@@ -190,9 +183,6 @@ Instructions:
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Import: >-
-      import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-      import edu.wpi.first.wpilibj.Encoder.PIDSourceParameter;
     Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, EncodingType.${Encoding_Type});"
     Extra: >-
       #constant($Name)->setDistancePerPulse(${Distance_Per_Pulse});
@@ -200,9 +190,6 @@ Instructions:
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Import: >-
-      import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-      import edu.wpi.first.wpilibj.Encoder.PIDSourceParameter;
     Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Index_Module_Digital}, ${Index_Channel_Digital}, ${Reverse_Direction});"
     Extra: >-
       #constant($Name)->setDistancePerPulse(${Distance_Per_Pulse});
