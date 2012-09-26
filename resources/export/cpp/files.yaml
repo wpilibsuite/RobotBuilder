@@ -55,6 +55,7 @@
   source: ${exporter-path}OI.h
   update: Modify
   modifications:
+    includes: ${exporter-path}OI-includes.h
     declarations: ${exporter-path}OI-declarations.h
 
 ## Export Commands as files

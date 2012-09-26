@@ -92,7 +92,8 @@ Defaults:
   Button:
     Extra:  "#if(\"$Command\" != \"None\")#variable($Name)->${When_to_Run.substring(0,1).toUpperCase()}${When_to_Run.substring(1)}(new #class($Command)());#end"
   Command:
-    Export: ""
+    Export: "OI"
+    Import: "\\#include \"Commands/#class($Short_Name).h\""
 
 Instructions:
   Robot:
