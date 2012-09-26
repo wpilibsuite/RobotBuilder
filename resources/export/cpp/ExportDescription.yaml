@@ -122,31 +122,31 @@ Instructions:
     ClassName: "PIDController"
     Construction: "#constant($Name) = new ${ClassName}($P, $I, $D, $F, #constant($Input), #constant($Output), $Period);"
     Extra: >
-      #constant($Name)->setContinuous(${Continuous});
+      #constant($Name)->SetContinuous(${Continuous});
       #if($Limit_Input)
       
-              #constant($Name)->setInputRange(${Minimum_Input}, ${Maximum_Input});#end
+              #constant($Name)->SetInputRange(${Minimum_Input}, ${Maximum_Input});#end
       #if(true)
 
-              #constant($Name)->setOutputRange(${Minimum_Output}, ${Maximum_Output});#end
+              #constant($Name)->SetOutputRange(${Minimum_Output}, ${Maximum_Output});#end
       #if($Send_to_SmartDashboard)
 
-              //SmartDashboard->putData("${Name}", #constant($Name));#end
+              //SmartDashboard->PutData("${Name}", #constant($Name));#end
       
   Robot Drive 2:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
     Construction: "#constant($Name) = new ${ClassName}(#constant($Left_Motor), #constant($Right_Motor));"
     Extra: >
-      #constant($Name)->setSafetyEnabled($Safety_Enabled);
-              #constant($Name)->setExpiration($Safety_Expiration_Time);
-              #constant($Name)->setSensitivity($Sensitivity);
-              #constant($Name)->setMaxOutput($Maximum_Output);
+      #constant($Name)->SetSafetyEnabled($Safety_Enabled);
+              #constant($Name)->SetExpiration($Safety_Expiration_Time);
+              #constant($Name)->SetSensitivity($Sensitivity);
+              #constant($Name)->SetMaxOutput($Maximum_Output);
       #if($Left_Motor_Inverted)
-              #constant($Name)->setInvertedMotor(MotorType.kFrontLeft, true);#end
+              #constant($Name)->SetInvertedMotor(MotorType.kFrontLeft, true);#end
       #if($Right_Motor_Inverted)
 
-              #constant($Name)->setInvertedMotor(MotorType.kFrontRight, true);#end
+              #constant($Name)->SetInvertedMotor(MotorType.kFrontRight, true);#end
               
   Robot Drive 4:
     Defaults: "Component,None"
@@ -155,54 +155,54 @@ Instructions:
       #constant($Name) = new ${ClassName}(#constant($Left_Front_Motor), #constant($Left_Rear_Motor),
                     #constant($Right_Front_Motor), #constant($Right_Rear_Motor));
     Extra: >
-      #constant($Name)->setSafetyEnabled($Safety_Enabled);
-              #constant($Name)->setExpiration($Safety_Expiration_Time);
-              #constant($Name)->setSensitivity($Sensitivity);
-              #constant($Name)->setMaxOutput($Maximum_Output);
+      #constant($Name)->SetSafetyEnabled($Safety_Enabled);
+              #constant($Name)->SetExpiration($Safety_Expiration_Time);
+              #constant($Name)->SetSensitivity($Sensitivity);
+              #constant($Name)->SetMaxOutput($Maximum_Output);
       #if($Left_Front_Motor_Inverted)
-              #constant($Name)->setInvertedMotor(MotorType.kFrontLeft, true);#end
+              #constant($Name)->SetInvertedMotor(MotorType.kFrontLeft, true);#end
       #if($Left_Rear_Motor_Inverted)
 
-              #constant($Name)->setInvertedMotor(MotorType.kRearLeft, true);#end
+              #constant($Name)->SetInvertedMotor(MotorType.kRearLeft, true);#end
       #if($Right_Front_Motor_Inverted)
 
-              #constant($Name)->setInvertedMotor(MotorType.kFrontRight, true);#end
+              #constant($Name)->SetInvertedMotor(MotorType.kFrontRight, true);#end
       #if($Right_Rear_Motor_Inverted)
 
-              #constant($Name)->setInvertedMotor(MotorType.kRearRight, true);#end
+              #constant($Name)->SetInvertedMotor(MotorType.kRearRight, true);#end
 
   Gyro:
     Defaults: "AnalogInput,Component,None"
     ClassName: "Gyro"
-    Extra: "#constant($Name)->setSensitivity(${Sensitivity});"
+    Extra: "#constant($Name)->SetSensitivity(${Sensitivity});"
   Accelerometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "Accelerometer"
     Extra: >-
-      #constant($Name)->setSensitivity(${Volts_Per_G});
-              #constant($Name)->setZero(${Zero_G_Volts});
+      #constant($Name)->SetSensitivity(${Volts_Per_G});
+              #constant($Name)->SetZero(${Zero_G_Volts});
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
     Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, EncodingType.${Encoding_Type});"
     Extra: >-
-      #constant($Name)->setDistancePerPulse(${Distance_Per_Pulse});
-              #constant($Name)->setPIDSourceParameter(PIDSourceParameter.${PID_Source});
+      #constant($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
+              #constant($Name)->SetPIDSourceParameter(PIDSourceParameter.${PID_Source});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
     Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Index_Module_Digital}, ${Index_Channel_Digital}, ${Reverse_Direction});"
     Extra: >-
-      #constant($Name)->setDistancePerPulse(${Distance_Per_Pulse});
-              #constant($Name)->setPIDSourceParameter(PIDSourceParameter.${PID_Source});
+      #constant($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
+              #constant($Name)->SetPIDSourceParameter(PIDSourceParameter.${PID_Source});
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
-    Extra: "#if($Direction_Sensitive)#constant($Name)->enableDirectionSensing($Direction_Sensitive);#end"
+    Extra: "#if($Direction_Sensitive)#constant($Name)->EnableDirectionSensing($Direction_Sensitive);#end"
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
-    LiveWindow: "LiveWindow::addSensor(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
+    LiveWindow: "LiveWindow::AddSensor(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Analog Input:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
@@ -220,11 +220,11 @@ Instructions:
   Jaguar:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Jaguar"
-    LiveWindow: "LiveWindow::addActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
+    LiveWindow: "LiveWindow::AddActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Victor:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Victor"
-    LiveWindow: "LiveWindow::addActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
+    LiveWindow: "LiveWindow::AddActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
