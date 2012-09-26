@@ -191,7 +191,7 @@ Instructions:
     Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, Encoder::${Encoding_Type});"
     Extra: >-
       #constant($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
-              #constant($Name)->SetPIDSourceParameter(PIDSourceParameter.${PID_Source});
+              #constant($Name)->SetPIDSourceParameter(Encoder::${PID_Source});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
