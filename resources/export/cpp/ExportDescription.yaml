@@ -118,7 +118,7 @@ Instructions:
 
   PID Controller:
     Defaults: "Component,None"
-    ClassName: "SendablePIDController"
+    ClassName: "PIDController"
     Construction: "#constant($Name) = new ${ClassName}($P, $I, $D, $F, #constant($Input), #constant($Output), $Period);"
     Extra: >
       #constant($Name)->setContinuous(${Continuous});
