@@ -120,7 +120,7 @@ Instructions:
   PID Controller:
     Defaults: "Component,None"
     ClassName: "PIDController"
-    Construction: "#constant($Name) = new ${ClassName}($P, $I, $D, $F, #constant($Input), #constant($Output), $Period);"
+    Construction: "#constant($Name) = new ${ClassName}($P, $I, $D,/* F: $F, */ #constant($Input), #constant($Output), $Period);"
     Extra: >
       #constant($Name)->SetContinuous(${Continuous});
       #if($Limit_Input)
