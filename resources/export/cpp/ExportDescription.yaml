@@ -67,7 +67,7 @@ Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWind
 Defaults:
   Component:
     Export: "RobotMap"
-    Declaration: "${ClassName}* #constant($Name);"
+    Declaration: "static ${ClassName}* #constant($Name);"
   None:
     Export: ""
     Import: ""
