@@ -126,7 +126,7 @@
   source: ${exporter-path}PIDSubsystem.h
   update: Modify
   modifications:
-    declarations: ${exporter-path}Subsystem-declarations.cpp
+    declarations: ${exporter-path}Subsystem-declarations.h
   variables: 
     subsystem-name: ${subsystem.name}
 # #else
