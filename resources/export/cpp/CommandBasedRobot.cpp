@@ -36,7 +36,7 @@ void Robot::TeleopInit() {
 	
 void Robot::TeleopPeriodic() {
   Scheduler::GetInstance()->Run();
-  LiveWindow::run();
+  //LiveWindow::run();
 }
 
 START_ROBOT_CLASS(Robot);
