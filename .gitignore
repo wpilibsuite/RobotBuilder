@@ -7,3 +7,4 @@ save*.yml
 /test-resources/RobotBuilderTestProject/*
 /.svn/*
 wiring*.html
+*.exec
