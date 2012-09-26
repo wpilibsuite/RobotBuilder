@@ -78,14 +78,18 @@ Defaults:
     ClassName: ""
   AnalogInput:
     Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Analog}, ${Input_Channel_Analog});"
+    LiveWindow: "//LiveWindow::AddSensor(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   DigitalInput:
     Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Digital}, ${Input_Channel_Digital});"
+    LiveWindow: "//LiveWindow::AddSensor(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   PWMOutput:
     Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_PWM});"
   RelayOutput:
     Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_Relay});"
+    LiveWindow: "//LiveWindow::AddActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   SolenoidOutput:
     Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Solenoid}, ${Output_Channel_Solenoid});"
+    LiveWindow: "//LiveWindow::AddActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   OI:
     Export: "OI"
     Declaration: "${ClassName}* #variable($Name);"
@@ -202,7 +206,6 @@ Instructions:
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
-    LiveWindow: "LiveWindow::AddSensor(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Analog Input:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
@@ -220,11 +223,9 @@ Instructions:
   Jaguar:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Jaguar"
-    LiveWindow: "LiveWindow::AddActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Victor:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Victor"
-    LiveWindow: "LiveWindow::AddActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
