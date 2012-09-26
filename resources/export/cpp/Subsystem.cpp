@@ -1,7 +1,5 @@
 #set($subsystem = $helper.getByName($subsystem-name, $robot))
 
-\#include RobotMap
-\#include ${package}.commands.*
 ${helper.getImports($subsystem, "RobotMap")}
 
 \#include "#class($subsystem.name).h"
