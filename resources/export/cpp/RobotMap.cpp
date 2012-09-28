@@ -11,11 +11,11 @@ ${helper.getImports($robot, "RobotMap")}
 void RobotMap::init() {
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotMap", $component))
-    #constructor($component)
+	#constructor($component)
 
-    #livewindow($component)
+	#livewindow($component)
 
-    #extra($component)
+	#extra($component)
 
 #end
 #end

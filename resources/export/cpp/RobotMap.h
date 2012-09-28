@@ -9,13 +9,13 @@
  * floating around.
  */
 class RobotMap {
- public:
+public:
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotMap", $component))
-    #declaration($component)
+	#declaration($component)
 
 #end
 #end
-  static void init();
+	static void init();
 };
 #endif
