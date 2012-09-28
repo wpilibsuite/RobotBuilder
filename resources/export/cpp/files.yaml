@@ -129,7 +129,7 @@
     declarations: ${exporter-path}Subsystem-declarations.h
   variables: 
     subsystem-name: ${subsystem.name}
-# #else
+#else
 - !File
   export: $project/Subsystems/#class($subsystem.name).cpp
   source: ${exporter-path}Subsystem.cpp
