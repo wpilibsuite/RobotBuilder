@@ -4,7 +4,7 @@ ${helper.getImports($robot, "RobotMap")}
 
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotMap", $component))
-#type($component)* RobotMap::#variable($component.name) = 0;
+#type($component)* RobotMap::#constant($component.name) = 0;
 #end
 #end
 
