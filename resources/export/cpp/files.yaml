@@ -27,6 +27,7 @@
   modifications:
     autonomous: ${exporter-path}CommandBasedRobot-autonomous.cpp
     constructors: ${exporter-path}CommandBasedRobot-constructors.cpp
+    initializanion: ${exporter-path}CommandBasedRobot-initialization.cpp
 - !File
   export: $project/Robot.h
   source: ${exporter-path}CommandBasedRobot.h
