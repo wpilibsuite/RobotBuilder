@@ -3,3 +3,4 @@
 #class($component.name)* Robot::#variable($component.name) = 0;
 #end
 #end
+OI* Robot::oi = 0;
