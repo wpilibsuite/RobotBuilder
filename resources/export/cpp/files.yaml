@@ -86,7 +86,7 @@
 #     output: ${exporter-path}PIDCommand-output.java
 #   variables:
 #     command-name: ${command.name}
-# #else
+#else
 - !File
   export: $project/Commands/#class($command.name).cpp
   source: ${exporter-path}Command.cpp
