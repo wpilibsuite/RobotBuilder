@@ -1,6 +1,7 @@
 package robotbuilder.data.properties;
 
 import java.util.Arrays;
+import robotbuilder.MainFrame;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.UniqueValidator;
 import robotbuilder.data.Validator;
@@ -72,6 +73,7 @@ public abstract class Property {
                 component.getRobotTree().takeSnapshot();
             }
         }
+        MainFrame.getInstance().getCurrentRobotTree().update();
     }
     
     /**
