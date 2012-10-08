@@ -147,10 +147,10 @@ Instructions:
               #constant($Name)->SetSensitivity($Sensitivity);
               #constant($Name)->SetMaxOutput($Maximum_Output);
       #if($Left_Motor_Inverted)
-              #constant($Name)->SetInvertedMotor(MotorType.kFrontLeft, true);#end
+              #constant($Name)->SetInvertedMotor(RobotDrive::kFrontLeft, true);#end
       #if($Right_Motor_Inverted)
 
-              #constant($Name)->SetInvertedMotor(MotorType.kFrontRight, true);#end
+              #constant($Name)->SetInvertedMotor(RobotDrive::kFrontRight, true);#end
               
   Robot Drive 4:
     Defaults: "Component,None"
@@ -164,16 +164,16 @@ Instructions:
               #constant($Name)->SetSensitivity($Sensitivity);
               #constant($Name)->SetMaxOutput($Maximum_Output);
       #if($Left_Front_Motor_Inverted)
-              #constant($Name)->SetInvertedMotor(MotorType.kFrontLeft, true);#end
+              #constant($Name)->SetInvertedMotor(RobotDrive::kFrontLeft, true);#end
       #if($Left_Rear_Motor_Inverted)
 
-              #constant($Name)->SetInvertedMotor(MotorType.kRearLeft, true);#end
+              #constant($Name)->SetInvertedMotor(RobotDrive::kRearLeft, true);#end
       #if($Right_Front_Motor_Inverted)
 
-              #constant($Name)->SetInvertedMotor(MotorType.kFrontRight, true);#end
+              #constant($Name)->SetInvertedMotor(RobotDrive::kFrontRight, true);#end
       #if($Right_Rear_Motor_Inverted)
 
-              #constant($Name)->SetInvertedMotor(MotorType.kRearRight, true);#end
+              #constant($Name)->SetInvertedMotor(RobotDrive::kRearRight, true);#end
 
   Gyro:
     Defaults: "AnalogInput,Component,None"
