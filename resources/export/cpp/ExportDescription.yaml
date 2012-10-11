@@ -147,10 +147,10 @@ Instructions:
               #constant($Name)->SetSensitivity($Sensitivity);
               #constant($Name)->SetMaxOutput($Maximum_Output);
       #if($Left_Motor_Inverted)
-              #constant($Name)->SetInvertedMotor(RobotDrive::kFrontLeft, true);#end
+              #constant($Name)->SetInvertedMotor(RobotDrive::kRearLeft, true);#end
       #if($Right_Motor_Inverted)
 
-              #constant($Name)->SetInvertedMotor(RobotDrive::kFrontRight, true);#end
+              #constant($Name)->SetInvertedMotor(RobotDrive::kRearRight, true);#end
               
   Robot Drive 4:
     Defaults: "Component,None"

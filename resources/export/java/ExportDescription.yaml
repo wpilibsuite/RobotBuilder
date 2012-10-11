@@ -157,10 +157,10 @@ Instructions:
               #constant($Name).setSensitivity($Sensitivity);
               #constant($Name).setMaxOutput($Maximum_Output);
       #if($Left_Motor_Inverted)
-              #constant($Name).setInvertedMotor(MotorType.kFrontLeft, true);#end
+              #constant($Name).setInvertedMotor(MotorType.kRearLeft, true);#end
       #if($Right_Motor_Inverted)
 
-              #constant($Name).setInvertedMotor(MotorType.kFrontRight, true);#end
+              #constant($Name).setInvertedMotor(MotorType.kRearRight, true);#end
               
   Robot Drive 4:
     Defaults: "Component,None"
