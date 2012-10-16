@@ -190,6 +190,9 @@ Validators:
     name: PWMOutput
     fields: [Channel (PWM), Module (Digital)]
   - !UniqueValidator
+    name: CANID
+    fields: [CAN ID]
+  - !UniqueValidator
     name: Joystick
     fields: [Number]
   - !UniqueValidator
@@ -590,6 +593,16 @@ Palette:
         help: A PWM speed controller that allows you to set the speed of a motor.
         properties:
           #PWMOutput("Output")
+      - !Component
+        name: CAN Jaguar
+        type: PIDOutput
+        help: A speed controller that allows you to set the speed of a motor using CAN.
+        properties:
+          - !ChoicesProperty
+            name: CAN ID
+            validators: [CANID]
+            choices: ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+            default: "2"
       - !Component
         name: Servo
         type: Actuator

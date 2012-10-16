@@ -223,6 +223,10 @@ Instructions:
   Jaguar:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Jaguar"
+  CAN Jaguar:
+    Defaults: "Component,None"
+    ClassName: "CANJaguar"
+    Construction: "#constant($Name) = new ${ClassName}($CAN_ID);"
   Victor:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Victor"

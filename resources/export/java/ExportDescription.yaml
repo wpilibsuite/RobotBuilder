@@ -240,6 +240,16 @@ Instructions:
   Jaguar:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Jaguar"
+  CAN Jaguar:
+    Defaults: "Component,None"
+    ClassName: "CANJaguar"
+    Import: "import edu.wpi.first.wpilibj.can.*;"
+    Construction: >-
+        try { 
+                    #constant($Name) = new CANJaguar($CAN_ID);
+                } catch (CANTimeoutException ex) {
+                    ex.printStackTrace();
+                }
   Victor:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Victor"
