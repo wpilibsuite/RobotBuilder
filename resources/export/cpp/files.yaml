@@ -39,11 +39,16 @@
 - !File
   export: $project/RobotMap.cpp
   source: ${exporter-path}RobotMap.cpp
-  update: Overwrite
+  update: Modify
+  modifications:
+    allocation: ${exporter-path}RobotMap-allocation.cpp
+    constructors: ${exporter-path}RobotMap-constructors.cpp
 - !File
   export: $project/RobotMap.h
   source: ${exporter-path}RobotMap.h
-  update: Overwrite
+  update: Modify
+  modifications:
+    declarations: ${exporter-path}RobotMap-declarations.h
   
 - !File
   export: $project/OI.cpp

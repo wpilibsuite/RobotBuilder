@@ -37,7 +37,10 @@
 - !File
   export: $package-path/RobotMap.java
   source: ${exporter-path}RobotMap.java
-  update: Overwrite
+  update: Modify
+  modifications:
+    declarations: ${exporter-path}RobotMap-declarations.java
+    constructors: ${exporter-path}RobotMap-constructors.java
   
 - !File
   export: $package-path/OI.java
