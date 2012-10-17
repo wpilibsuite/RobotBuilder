@@ -48,7 +48,7 @@ public class ExportFile {
                 String beginning = exporter.eval(exporter.begin_modification, idContext);
                 String end = exporter.eval(exporter.end_modification, idContext);
                 file = file.replaceAll("(" + beginning + ")([\\s\\S]*?)(" + end + ")",
-                        "$1\n" + exporter.evalResource(modifications.get(id), idContext) + "\n    $3");
+                        "$1\r\n" + exporter.evalResource(modifications.get(id), idContext) + "\r\n    $3");
             }
             FileWriter out = new FileWriter(export);
             out.write(file);

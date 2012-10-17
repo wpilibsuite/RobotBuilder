@@ -22,6 +22,11 @@ public class RobotBuilder {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+
+                // All files should use the standard windows line endings to
+                // maximize compatibility.
+                System.setProperty("line.separator", "\r\n");
+                                
                 try {
                     if (!UIManager.getSystemLookAndFeelClassName().contains("MetalLookAndFeel"))
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

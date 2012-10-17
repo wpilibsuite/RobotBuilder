@@ -159,6 +159,7 @@ public class GenericExporter {
                     } else break;
                 }
                 assert instruction != null; // TODO: Deal with more elegantly
+                instruction = instruction.replaceAll("\n", "\r\n");
                 component.put(instructionKey, instruction);
             }
             componentInstructions.put(key, component);
@@ -297,7 +298,7 @@ public class GenericExporter {
         
         String out = "";
         for (String imp : imports) {
-            if (!"".equals(imp)) out += imp + "\n";
+            if (!"".equals(imp)) out += imp + "\r\n";
         }
         return out;
     }
@@ -320,7 +321,7 @@ public class GenericExporter {
         BufferedReader reader = new BufferedReader( new FileReader (path));
         String line  = null;
         StringBuilder stringBuilder = new StringBuilder();
-        String ls = System.getProperty("line.separator");
+        String ls = "\r\n";//System.getProperty("line.separator");
         while( ( line = reader.readLine() ) != null ) {
             stringBuilder.append( line );
             stringBuilder.append( ls );
