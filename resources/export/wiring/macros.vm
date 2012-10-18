@@ -43,3 +43,8 @@
 #macro( Analog $title $label $module )
     #table_with_components($title, $label, "Module (Analog)", "Channel (Analog)", $module)
 #end ##macro
+
+## Generate the Analog table for a module
+#macro( Solenoid $title $label $module )
+    #table_with_components($title, $label, "Module (Solenoid)", "Channel (Solenoid)", $module)
+#end ##macro
