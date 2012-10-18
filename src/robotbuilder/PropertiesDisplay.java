@@ -4,6 +4,8 @@ package robotbuilder;
 import robotbuilder.robottree.RobotTree;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -59,7 +61,7 @@ public class PropertiesDisplay extends JPanel {
         }
         
         @Override
-        public TableCellEditor getCellEditor(int row, int column) {
+        public TableCellEditor getCellEditor(final int row, final int column) {
             Object value = super.getValueAt(row, column);
             if(value != null) {
                 if (value instanceof JComboBox) {
@@ -77,7 +79,17 @@ public class PropertiesDisplay extends JPanel {
                 editor.setClickCountToStart(1);
                 return editor;
             }
-            return super.getCellEditor(row, column);
+            final TableCellEditor editor = super.getCellEditor(row, column);
+            editor.addCellEditorListener(new CellEditorListener() {
+                @Override
+                public void editingStopped(ChangeEvent ce) {}
+
+                @Override
+                public void editingCanceled(ChangeEvent ce) {
+                    setValueAt(editor.getCellEditorValue(), row, column);
+                }
+            });
+            return editor;
         }
 
         @Override
