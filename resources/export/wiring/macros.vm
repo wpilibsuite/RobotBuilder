@@ -34,6 +34,11 @@
     #table_with_components($title, $label, "Module (Digital)", "Channel (PWM)", $module)
 #end ##macro
 
+## Generate the PWM table for a module
+#macro( Relay $title $label $module )
+    #table_with_components($title, $label, "Module (Digital)", "Channel (Relay)", $module)
+#end ##macro
+
 ## Generate the Analog table for a module
 #macro( Analog $title $label $module )
     #table_with_components($title, $label, "Module (Analog)", "Channel (Analog)", $module)
