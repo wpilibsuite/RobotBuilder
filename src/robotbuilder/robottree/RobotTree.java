@@ -550,11 +550,12 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     public void delete(final RobotComponent component) {
         component.walk(new RobotWalker() {
             @Override public void handleRobotComponent(RobotComponent self) {
-                self.handleDelete();
                 if (self != component) { delete(self); }
             }
         });
+        component.handleDelete();
         removeName(component.getFullName());
+        properties.setCurrentComponent((RobotComponent) component.getParent());
         component.removeFromParent();
     }
 }
