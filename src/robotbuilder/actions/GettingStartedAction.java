@@ -37,11 +37,7 @@ public class GettingStartedAction extends AbstractAction {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent he) {
                 if (he.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
-                    try {
-                        help.setPage(he.getURL());
-                    } catch (IOException ex) {
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    Utils.browse(he.getURL().toString());
                 }
             }
         });
