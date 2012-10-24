@@ -321,6 +321,9 @@ Palette:
           - !DoubleProperty
             name: F
             default: 0
+          - !DoubleProperty
+            name: Tolerance
+            default: 0.2
 ##          - !IntegerProperty
 ##            name: Period
 ##            default: 50
