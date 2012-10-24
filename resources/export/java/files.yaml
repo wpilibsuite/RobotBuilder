@@ -31,7 +31,7 @@
   update: Modify
   modifications:
     autonomous: ${exporter-path}RobotTemplate-autonomous.java
-    constructors: ${exporter-path}RobotTemplate-declarations.java
+    declarations: ${exporter-path}RobotTemplate-declarations.java
     constructors: ${exporter-path}RobotTemplate-constructors.java
     
 - !File
