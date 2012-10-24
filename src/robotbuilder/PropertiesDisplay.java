@@ -100,11 +100,14 @@ public class PropertiesDisplay extends JPanel {
                     @Override
                     public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                         JLabel label = new JLabel(value.toString());
+                        label.setBorder(BorderFactory.createEmptyBorder(0, 4, 0, 0));
                         if (row == 0) { return label; }
                         Property property = currentComponent.getProperty(keys[row-1]);
                         if (!property.isValid()) {
-                            label.setForeground(Color.red);
+                            label.setBackground(new Color(255, 150, 150));
+                            label.setOpaque(true);
                             label.setToolTipText(property.getErrorMessage());
+                            
                         } else {
                             label.setForeground(Color.black);
                         }
