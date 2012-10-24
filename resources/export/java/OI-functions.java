@@ -1,5 +1,6 @@
 #foreach ($component in $components)
-#if ($helper.exportsTo("OI", $component))
+#if ($helper.exportsTo("OI", $component)
+     && "#function($component)" != "")
     #function($component)
 
 

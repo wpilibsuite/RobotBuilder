@@ -256,7 +256,7 @@ Palette:
       - !Component
         name: OI
         type: OI
-        supports: {Button: -1, Joystick: -1}
+        supports: {Button: -1, Joystick: -1, OI Input: -1, OI Output: -1}
         help: Your operator interface!
         properties: []
       - !Component
@@ -705,7 +705,34 @@ Palette:
             name: Digital Pin
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
             default: "1"
-          #Button("")            
+          #Button("")
+      - !Component
+        name: OI Digital Input
+        type: OI Input
+        help: A digital input to a Cypress module digital pin.
+        properties:
+          - !ChoicesProperty
+            name: Digital Pin
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+            default: "1"
+      - !Component
+        name: OI Digital Output
+        type: OI Output
+        help: A digital output connected to a Cypress module digital pin.
+        properties:
+          - !ChoicesProperty
+            name: Digital Pin
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+            default: "1"
+      - !Component
+        name: OI Analog Input
+        type: OI Input
+        help: An analog input connected to a Cypress module digital pin.
+        properties:
+          - !ChoicesProperty
+            name: Analog Pin
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+            default: "1"
 
   - Commands:
       - !Component
