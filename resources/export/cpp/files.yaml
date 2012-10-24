@@ -94,6 +94,23 @@
 #     output: ${exporter-path}PIDCommand-output.java
 #   variables:
 #     command-name: ${command.name}
+#elseif($command.base.name == "Setpoint Command")
+- !File
+  export: $project/Commands/#class($command.name).cpp
+  source: ${exporter-path}SetpointCommand.cpp
+  update: Modify
+  modifications:
+    requires: ${exporter-path}Command-requires.cpp
+    execute: ${exporter-path}SetpointCommand-execute.cpp
+    isFinished: ${exporter-path}SetpointCommand-isFinished.cpp
+  variables:
+    command-name: ${command.name}
+- !File
+  export: $project/Commands/#class($command.name).h
+  source: ${exporter-path}Command.h
+  update: None
+  variables:
+    command-name: ${command.name}
 #else
 - !File
   export: $project/Commands/#class($command.name).cpp
