@@ -301,6 +301,10 @@ Instructions:
     Defaults: "OI,None"
     ClassName: "KinectStick"
     Construction: "#variable($Name) = new ${ClassName}(${Number});"
+    Function: >-
+      public ${ClassName} get#class($Name)() {
+              return #variable($Name);
+          }
   Analog Button:
     Defaults: "Button,OI,None"
     ClassName: "AnalogIOButton"

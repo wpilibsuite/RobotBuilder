@@ -62,7 +62,7 @@ Macros: macros.vm
 
 ##Post Export Action: "netbeans --open $project"
 
-Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWindow", "Extra", "ClassName"]
+Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWindow", "Extra", "Prototype", "Function", "ClassName"]
 
 Defaults:
   Component:
@@ -75,6 +75,8 @@ Defaults:
     Construction: ""
     LiveWindow: ""
     Extra: ""
+    Prototype: ""
+    Function: ""
     ClassName: ""
   AnalogInput:
     Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Analog}, ${Input_Channel_Analog});"
@@ -265,6 +267,11 @@ Instructions:
     Defaults: "OI,None"
     ClassName: "Joystick"
     Construction: "#variable($Name) = new ${ClassName}(${Number});"
+    Prototype: "${ClassName} OI::get#class($Name)();"
+    Function: >-
+      ${ClassName} OI::get#class($Name)() {
+      	return #variable($Name);
+      }
   Joystick Button:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"
@@ -273,6 +280,11 @@ Instructions:
     Defaults: "OI,None"
     ClassName: "KinectStick"
     Construction: "#variable($Name) = new ${ClassName}(${Number});"
+    Prototype: "${ClassName} OI::get#class($Name)();"
+    Function: >-
+      ${ClassName} OI::get#class($Name)() {
+      	return #variable($Name);
+      }
   Analog Button:
     Defaults: "Button,OI,None"
     ClassName: "AnalogIOButton"
@@ -281,6 +293,27 @@ Instructions:
     Defaults: "Button,OI,None"
     ClassName: "DigitalIOButton"
     Construction: "#variable($Name) = new ${ClassName}(#variable($Digital_Pin));"
+  OI Digital Input:
+    Defaults: "OI,None"
+    Prototype: "boolean OI::get#class($Name)()"
+    Function: >-
+      boolean OI::get#class($Name)() {
+      	return DriverStation::GetInstance()->GetDigitalIn($Digital_Pin);
+      }
+  OI Digital Output:
+    Defaults: "OI,None"
+    Prototype: "void OI::set#class($Name)(boolean value);"
+    Function: >-
+      void OI::set#class($Name)(boolean value) {
+      	DriverStation::GetInstance()->SetDigitalOut($Digital_Pin, value);
+      }
+  OI Analog Input:
+    Defaults: "OI,None"
+    Prototype: "double OI::get#class($Name)();"
+    Function: >-
+      double OI::get#class($Name)() {
+      	return DriverStation::GetInstance()->GetAnalogIn($Analog_Pin);
+      }
 
   Command:
     Defaults: "Command,None"

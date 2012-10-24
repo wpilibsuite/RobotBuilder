@@ -1,10 +1,8 @@
 ${Collections.reverse($components)}
 #foreach( $component in $components )
 #if ($helper.exportsTo("OI", $component)
-     && ("#constructor($component)" != "" || "#extra($component)" != ""))
-	#constructor($component)
-
-	#extra($component)
+     && "#prototype($component)" != "")
+	#prototype($component)
 
 #end
 #end

@@ -57,12 +57,14 @@
   modifications:
     includes: ${exporter-path}OI-includes.h
     constructors: ${exporter-path}OI-constructors.cpp
+    functions: ${exporter-path}OI-functions.cpp
 - !File
   export: $project/OI.h
   source: ${exporter-path}OI.h
   update: Modify
   modifications:
     declarations: ${exporter-path}OI-declarations.h
+    prototypes: ${exporter-path}OI-prototypes.h
 
 ## Export Commands as files
 #if ($export-commands)
