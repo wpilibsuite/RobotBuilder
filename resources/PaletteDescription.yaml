@@ -204,6 +204,15 @@ Validators:
   - !UniqueValidator
     name: Solenoid
     fields: [Channel (Solenoid), Module (Solenoid)]
+  - !UniqueValidator
+    name: OI Digital Input
+    fields: [Digital Pin]
+  - !UniqueValidator
+    name: OI Digital Output
+    fields: [Digital Pin]
+  - !UniqueValidator
+    name: OI Analog Input
+    fields: [Analog Pin]
     
 Palette:
   - Hidden:
@@ -714,6 +723,7 @@ Palette:
           - !ChoicesProperty
             name: Digital Pin
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+            validators: [OI Digital Input]
             default: "1"
       - !Component
         name: OI Digital Output
@@ -723,6 +733,7 @@ Palette:
           - !ChoicesProperty
             name: Digital Pin
             choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+            validators: [OI Digital Output]
             default: "1"
       - !Component
         name: OI Analog Input
@@ -731,7 +742,8 @@ Palette:
         properties:
           - !ChoicesProperty
             name: Analog Pin
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+            choices: ["1", "2", "3", "4"]
+            validators: [OI Analog Input]
             default: "1"
 
   - Commands:
