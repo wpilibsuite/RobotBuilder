@@ -267,9 +267,9 @@ Instructions:
     Defaults: "OI,None"
     ClassName: "Joystick"
     Construction: "#variable($Name) = new ${ClassName}(${Number});"
-    Prototype: "${ClassName} OI::get#class($Name)();"
+    Prototype: "${ClassName}* get#class($Name)();"
     Function: >-
-      ${ClassName} OI::get#class($Name)() {
+      ${ClassName}* OI::get#class($Name)() {
       	return #variable($Name);
       }
   Joystick Button:
@@ -280,9 +280,9 @@ Instructions:
     Defaults: "OI,None"
     ClassName: "KinectStick"
     Construction: "#variable($Name) = new ${ClassName}(${Number});"
-    Prototype: "${ClassName} OI::get#class($Name)();"
+    Prototype: "${ClassName}* get#class($Name)();"
     Function: >-
-      ${ClassName} OI::get#class($Name)() {
+      ${ClassName}* OI::get#class($Name)() {
       	return #variable($Name);
       }
   Analog Button:
@@ -295,21 +295,21 @@ Instructions:
     Construction: "#variable($Name) = new ${ClassName}(#variable($Digital_Pin));"
   OI Digital Input:
     Defaults: "OI,None"
-    Prototype: "boolean OI::get#class($Name)()"
+    Prototype: "boolean get#class($Name)()"
     Function: >-
-      boolean OI::get#class($Name)() {
+      bool OI::get#class($Name)() {
       	return DriverStation::GetInstance()->GetDigitalIn($Digital_Pin);
       }
   OI Digital Output:
     Defaults: "OI,None"
-    Prototype: "void OI::set#class($Name)(boolean value);"
+    Prototype: "void set#class($Name)(bool value);"
     Function: >-
-      void OI::set#class($Name)(boolean value) {
+      void OI::set#class($Name)(bool value) {
       	DriverStation::GetInstance()->SetDigitalOut($Digital_Pin, value);
       }
   OI Analog Input:
     Defaults: "OI,None"
-    Prototype: "double OI::get#class($Name)();"
+    Prototype: "double get#class($Name)();"
     Function: >-
       double OI::get#class($Name)() {
       	return DriverStation::GetInstance()->GetAnalogIn($Analog_Pin);
