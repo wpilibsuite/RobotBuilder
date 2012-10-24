@@ -59,6 +59,7 @@ public class Palette extends JPanel  {
         constructor.addTypeDescription(new TypeDescription(ChoicesProperty.class, "!ChoicesProperty"));
         constructor.addTypeDescription(new TypeDescription(ChildSelectionProperty.class, "!ChildSelectionProperty"));
         constructor.addTypeDescription(new TypeDescription(TypeSelectionProperty.class, "!TypeSelectionProperty"));
+        constructor.addTypeDescription(new TypeDescription(ComponentSelectionProperty.class, "!ComponentSelectionProperty"));
         constructor.addTypeDescription(new TypeDescription(ParentProperty.class, "!ParentProperty"));
         
         constructor.addTypeDescription(new TypeDescription(DistinctValidator.class, "!DistinctValidator"));

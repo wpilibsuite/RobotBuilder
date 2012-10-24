@@ -233,6 +233,18 @@ public class RobotComponent extends DefaultMutableTreeNode {
         }
         return names;
     }
+    
+    public Vector<String> getChildrenOfComponentNames(String componentName) {
+        if (children == null) return new Vector<String>();
+        Vector<String> names = new Vector<String>();
+        for (Object child : children) {
+            if (componentName.equals(((RobotComponent) child).getBase().getName())) {
+                names.add(((RobotComponent) child).getFullName());
+            }
+            names.addAll(((RobotComponent) child).getChildrenOfComponentNames(componentName));
+        }
+        return names;
+    }
 
     public void setRobotTree(RobotTree robot) {
         this.robot = robot;

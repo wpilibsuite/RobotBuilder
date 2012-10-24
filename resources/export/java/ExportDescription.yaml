@@ -338,3 +338,5 @@ Instructions:
     Defaults: "Command,None"
   PID Command:
     Defaults: "Command,None"
+  Setpoint Command:
+    Defaults: "Command,None"

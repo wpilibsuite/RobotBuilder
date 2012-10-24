@@ -73,6 +73,17 @@
     output: ${exporter-path}PIDCommand-output.java
   variables:
     command-name: ${command.name}
+#elseif($command.base.name == "Setpoint Command")
+- !File
+  export: $package-path/commands/#class($command.name).java
+  source: ${exporter-path}SetpointCommand.java
+  update: Modify
+  modifications:
+    requires: ${exporter-path}Command-requires.java
+    execute: ${exporter-path}SetpointCommand-execute.java
+    isFinished: ${exporter-path}SetpointCommand-isFinished.java
+  variables:
+    command-name: ${command.name}
 #else
 - !File
   export: $package-path/commands/#class($command.name).java

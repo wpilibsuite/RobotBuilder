@@ -145,7 +145,7 @@
 - !TypeSelectionProperty
             name: $Name Command
             type: Command
-            validators: [DropdownSelected]
+            validators: [TypeDropdownSelected]
             default: None
           - !ChoicesProperty
             name: $Name When to Run
@@ -812,4 +812,17 @@ Palette:
             default: -1
           - !DoubleProperty
             name: Maximum Output
+            default: 1
+      - !Component
+        name: Setpoint Command
+        type: Command
+        help: A command, someone really needs to update the help.
+        properties:
+          - !ComponentSelectionProperty
+            name: Requires
+            validators: [TypeDropdownSelected]
+            componentName: PID Subsystem
+            default: None
+          - !DoubleProperty
+            name: Setpoint
             default: 1
