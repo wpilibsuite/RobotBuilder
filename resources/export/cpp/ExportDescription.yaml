@@ -295,13 +295,15 @@ Instructions:
     Construction: "#variable($Name) = new ${ClassName}(#variable($Digital_Pin));"
   OI Digital Input:
     Defaults: "OI,None"
-    Prototype: "boolean get#class($Name)()"
+    Declaration: ""
+    Prototype: "bool get#class($Name)();"
     Function: >-
       bool OI::get#class($Name)() {
       	return DriverStation::GetInstance()->GetDigitalIn($Digital_Pin);
       }
   OI Digital Output:
     Defaults: "OI,None"
+    Declaration: ""
     Prototype: "void set#class($Name)(bool value);"
     Function: >-
       void OI::set#class($Name)(bool value) {
@@ -309,6 +311,7 @@ Instructions:
       }
   OI Analog Input:
     Defaults: "OI,None"
+    Declaration: ""
     Prototype: "double get#class($Name)();"
     Function: >-
       double OI::get#class($Name)() {
