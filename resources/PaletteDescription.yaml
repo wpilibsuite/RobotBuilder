@@ -673,7 +673,7 @@ Palette:
             validators: [Joystick]
             default: 1
       - !Component
-        name: Kinect Stick
+        name: Kinect Joystick
         type: Joystick
         supports: {Joystick Button: -1}
         help: A joystick controlled by arm movement in the Microsoft Kinect Station.  1 is the left arm, and 2 is the right arm
