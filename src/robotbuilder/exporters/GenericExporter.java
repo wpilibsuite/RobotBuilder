@@ -271,6 +271,21 @@ public class GenericExporter {
         });
         return mapping;
     }
+    // TODO: make macro
+    public Map<String, String> filterComponents(final String propertyName, RobotComponent robot) {
+        final Map<String, String> mapping = new HashMap<String, String>();
+        robot.walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                for (String property : self.getPropertyKeys()) {
+                    if (property.equals(propertyName)) {
+                        mapping.put(self.getProperty(property).getValue().toString(), self.getFullName());
+                    }
+                }
+            }
+        });
+        return mapping;
+    }
     
     public String getInstruction(RobotComponent comp, String instruction) { // TODO: Make macro
         final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
