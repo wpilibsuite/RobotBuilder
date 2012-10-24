@@ -66,7 +66,7 @@ Macros: macros.vm
 
 ##Post Export Action: "netbeans --open $project"
 
-Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWindow", "Extra", "ClassName"]
+Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWindow", "Extra", "Function", "ClassName"]
 
 Defaults:
   Component:
@@ -80,6 +80,7 @@ Defaults:
     Construction: ""
     LiveWindow: ""
     Extra: ""
+    Function: ""
     ClassName: ""
   AnalogInput:
     Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Analog}, ${Input_Channel_Analog});"
@@ -288,6 +289,10 @@ Instructions:
     Defaults: "OI,None"
     ClassName: "Joystick"
     Construction: "#variable($Name) = new ${ClassName}(${Number});"
+    Function: >-
+      public ${ClassName} get#class($Name)() {
+              return #variable($Name);
+          }
   Joystick Button:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"

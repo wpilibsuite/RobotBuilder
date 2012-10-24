@@ -49,6 +49,7 @@
   modifications:
     declarations: ${exporter-path}OI-declarations.java
     constructors: ${exporter-path}OI-constructors.java
+    functions: ${exporter-path}OI-functions.java
 
 ## Export Commands as files
 #if ($export-commands)
