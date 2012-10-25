@@ -114,7 +114,7 @@
           - !ChoicesProperty
             name: $Name Channel (Digital)
             validators: [DigitalChannel]
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14"]
+            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"]
             default: "1"
 #end
 #macro( PWMOutput $Name )          
