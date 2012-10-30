@@ -16,7 +16,8 @@ import robotbuilder.data.properties.Property;
  */
 public class UniqueNameValidator implements Validator {
     String name;
-    private Map<String, RobotComponent> usedNames = new HashMap<String, RobotComponent>();
+    private Map<RobotComponent, String> nameMap = new HashMap<RobotComponent, String>();
+    private Set<String> usedNames = new HashSet<String>();
 
     public UniqueNameValidator() {}
     
@@ -26,14 +27,21 @@ public class UniqueNameValidator implements Validator {
 
     @Override
     public void update(RobotComponent component, String property, Object value) {
-        if (!usedNames.containsKey(component.getFullName())) {
-            usedNames.put(component.getFullName(), component);
+        System.out.println(usedNames);
+        if (component.getFullName().toLowerCase() != nameMap.get(component)) {
+            delete(component, property);
+        }
+        if (!usedNames.contains(component.getFullName().toLowerCase())) {
+            System.out.println("Claiming "+component.getFullName().toLowerCase()+" for "+component);
+            System.out.println(usedNames);
+            nameMap.put(component, component.getFullName().toLowerCase());
+            usedNames.add(component.getFullName().toLowerCase());
         }
     }
 
     @Override
     public boolean isValid(RobotComponent component, Property property) {
-        return usedNames.get(component.getFullName()) == component;
+        return component.getFullName().toLowerCase().equals(nameMap.get(component));
     }
 
     @Override
@@ -43,7 +51,10 @@ public class UniqueNameValidator implements Validator {
 
     @Override
     public void delete(RobotComponent component, String property) {
-        usedNames.remove(component.getFullName());
+        if (nameMap.get(component) != null) {
+            usedNames.remove(nameMap.get(component));
+            nameMap.remove(component);
+        }
     }
 
     @Override
@@ -56,6 +67,32 @@ public class UniqueNameValidator implements Validator {
 
     public Validator copy() {
         return new UniqueNameValidator(name);
+    }
+
+    public void setUnique(RobotComponent component) {
+        System.out.println("Setting unique name for component.");
+        System.out.println("\t"+usedNames);
+        delete(component, null);
+        
+        int i = 0;
+	String name, fullName;
+        do {
+            i++;
+	    name = component.getBaseType().toString() + (i == 1 ? "" : " " + i);
+            if (component.getBaseType().equals("Subsystem")) {
+                fullName = name.toLowerCase();
+            } else {
+                fullName = (component.getSubsystem()+(component.getSubsystem() == "" ? "" : " ")+name).toLowerCase();
+            }
+            System.out.println("\t"+i+": "+fullName);
+            System.out.println("\t"+usedNames);
+	} while (usedNames.contains(fullName));
+        
+        component.setName(name);
+        System.out.println("\t"+usedNames.contains(component.getFullName().toLowerCase()));
+        update(component, null, null);
+        System.out.println("\t"+usedNames);
+        System.out.println("\t"+component.getFullName().toLowerCase());
     }
     
 }

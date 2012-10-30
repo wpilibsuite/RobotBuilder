@@ -42,7 +42,7 @@ public class PaletteComponent {
     private void makeNameProperty() {
         propertiesKeys.add(0, "Name");
         String[] validators = {"UniqueName"};
-        properties.put("Name", new StringProperty("Name", name, validators, null, name, true));
+        properties.put("Name", new StringProperty("Name", "", validators, null, name, true));
     }
     
     public void setName(String name) {

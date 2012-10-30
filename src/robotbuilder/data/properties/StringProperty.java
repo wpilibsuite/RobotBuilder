@@ -43,20 +43,15 @@ public class StringProperty extends Property {
         this.value = ((String) value);
     }
     
-//    public boolean getEditable() {
-//        return editable;
-//    }
     
     /**
      * @return Whether this property is editable.
      */
     @Override
     public boolean isEditable() {
-        System.out.println("Is cell "+getName()+" editable? "+editable);
         return editable;
     }
     public void setEditable(boolean editable) {
-        System.out.println("Setting editable: "+editable);
         this.editable = editable;
     }
 }

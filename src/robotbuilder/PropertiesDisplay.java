@@ -106,7 +106,6 @@ public class PropertiesDisplay extends JPanel {
                             label.setBackground(new Color(255, 150, 150));
                             label.setOpaque(true);
                             label.setToolTipText(property.getErrorMessage());
-                            
                         } else {
                             label.setForeground(Color.black);
                         }

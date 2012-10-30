@@ -37,8 +37,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     PropertiesDisplay properties;
     /** Stores whether or not the RobotTree has been saved */
     public boolean saved;
-    /** Names used by components during name auto-generation */
-    private Set<String> usedNames = new HashSet<String>();
     private Map<String, Validator> validators;
     /** The currently selected node */
     private String filePath = null;
@@ -162,49 +160,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public Icon getOpenIcon() {
         return ((DefaultTreeCellRenderer) tree.getCellRenderer()).getOpenIcon(); 
-    }
-
-    /**
-     * Gets the default name of a given component in the specified subsystem.
-     * @param component The type of component to generate a default name for.
-     * @return The default name.
-     */
-    String getDefaultComponentName(PaletteComponent componentType, String subsystem) {
-	int i = 1;
-	String name;
-	while (true) {
-	    name = componentType.toString() + (i == 1 ? "" : " " + i);
-	    if (!usedNames.contains((subsystem+name).toLowerCase())) {
-		usedNames.add((subsystem+name).toLowerCase());
-		return name;
-	    }
-            i++;
-	}
-    }
-
-    /**
-     * Adds a name to the used names list.
-     * @param name The name being used
-     */
-    public void addName(String name) {
-	usedNames.add(name.toLowerCase());
-    }
-
-    /**
-     * Removes the given name from the used names list.
-     * @param name The name being freed
-     */
-    public void removeName(String name) {
-	usedNames.remove(name.toLowerCase());
-    }
-
-    /**
-     * Checks to see if the {@code RobotTree} already contains
-     * the given name.
-     * @param name The name being checked
-     */
-    public boolean hasName(String name) {
-	return usedNames.contains(name.toLowerCase());
     }
 
     @Override
@@ -360,14 +315,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         
         properties.setCurrentComponent(root);
         update();
-        
-        // Add names to used names list
-        walk(new RobotWalker() {
-            @Override
-            public void handleRobotComponent(RobotComponent self) {
-                addName(self.getFullName());
-            }
-        });
     }
     
     public void load() {
@@ -457,7 +404,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         DefaultMutableTreeNode root = makeTreeRoot();
         treeModel.setRoot(root);
         tree.setSelectionPath(new TreePath(root));
-        usedNames = new HashSet<String>();
         validators = palette.getValidators();
     }
 
@@ -555,7 +501,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             }
         });
         component.handleDelete();
-        removeName(component.getFullName());
         properties.setCurrentComponent((RobotComponent) component.getParent());
         component.removeFromParent();
     }

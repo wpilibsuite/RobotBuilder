@@ -179,7 +179,7 @@ class TreeTransferHandler extends TransferHandler {
             PaletteComponent base = Palette.getInstance().getItem(data);
             assert base != null; // TODO: Handle more gracefully
             // TODO: Handle more gracefully
-            newNode = new RobotComponent(robottree.getDefaultComponentName(base, ((RobotComponent) parentNode).getSubsystem()), base, robottree);
+            newNode = new RobotComponent(base, robottree);
         } else if (support.getTransferable().isDataFlavorSupported(RobotTree.ROBOT_COMPONENT_FLAVOR)) {
             try {
                 newNode = (RobotComponent) support.getTransferable().getTransferData(RobotTree.ROBOT_COMPONENT_FLAVOR);
@@ -192,6 +192,9 @@ class TreeTransferHandler extends TransferHandler {
             return false;
         }
         robottree.treeModel.insertNodeInto(newNode, parentNode, childIndex);
+        if (support.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)) {
+            ((RobotComponent) newNode).getProperty("Name").setUnique();
+        }
         robottree.treeModel.reload(parentNode); // reloads the tree without reverting to the root
         // reloads the tree without reverting to the root
         robottree.update();
