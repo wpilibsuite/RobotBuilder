@@ -93,13 +93,6 @@
 
 
 ## Macros:
-#macro( UneditableName $Name)
-- !StringProperty
-            name: Name
-            validators: [UniqueName]
-            default: $Name
-            editable: false
-#end
 #macro( AnalogInput $Name )
 - !ChoicesProperty
             name: $Name Module (Analog)
@@ -173,8 +166,6 @@
 #end            
 
 Validators:
-  - !UniqueNameValidator
-    name: UniqueName
   - !DistinctValidator
     name: RobotDrive2
     fields: ["Left Motor", "Right Motor"]
@@ -270,22 +261,19 @@ Palette:
         type: Subsystems
         supports: {Subsystem: -1}
         help: The subsystems that make up your robot.
-        properties:
-          #UneditableName("Subsystems")
+        properties: []
       - !Component
         name: OI
         type: OI
         supports: {Button: -1, Joystick: -1, OI Input: -1, OI Output: -1}
         help: Your operator interface!
-        properties:
-          #UneditableName("OI")
+        properties: []
       - !Component
         name: Commands
         type: Commands
         supports: {Command: -1}
         help: The commands that control what actions your robot performs.
-        properties:
-          #UneditableName("Commands")
+        properties: []
         
   - Subsystems:
       - !Component
