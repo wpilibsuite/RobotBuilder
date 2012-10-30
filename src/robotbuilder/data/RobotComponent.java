@@ -15,7 +15,6 @@ import robotbuilder.data.properties.Property;
  * @author Alex Henning
  */
 public class RobotComponent extends DefaultMutableTreeNode {
-    private String name;
     private PaletteComponent base;
     private RobotTree robot;
     private Map<String, Property> properties;
@@ -33,7 +32,6 @@ public class RobotComponent extends DefaultMutableTreeNode {
      */
     public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
         super();
-        this.name = name;
         this.base = base;
         this.robot = robot;
         properties = new HashMap<String, Property>();
@@ -44,6 +42,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
         for (String propName : base.getPropertiesKeys()) {
             properties.get(propName).setUnique();
         }
+        setName(name);
         robot.addName(name);
     }
     
@@ -108,20 +107,22 @@ public class RobotComponent extends DefaultMutableTreeNode {
     
     @Override
     public String toString() {
-        return name;
+        return getName();
     }
 
     public String getName() {
-        return name;
+//        return name;
+        return getProperty("Name").getValue().toString();
     }
     public final void setName(String name) {
-        if (this.name != null) {
-            robot.removeName(getFullName());
-            this.name = name;
-            robot.addName(getFullName());
-        } else {
-            this.name = name;
-        }
+        getProperty("Name").setValue(name);
+//        if (this.name != null) {
+//            robot.removeName(getFullName());
+//            this.name = name;
+//            robot.addName(getFullName());
+//        } else {
+//            this.name = name;
+//        }
     }
     
     public PaletteComponent getBase() {
@@ -217,9 +218,9 @@ public class RobotComponent extends DefaultMutableTreeNode {
      */
     public String getFullName() {
         if (getBase().getType().equals("Subsystem")) 
-            return name;
+            return getName();
         else
-            return getSubsystem()+name;
+            return getSubsystem()+getName();
     }
     
     public Vector<String> getChildrenOfTypeNames(String type) {

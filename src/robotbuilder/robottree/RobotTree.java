@@ -48,6 +48,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private JFileChooser fileChooser = new JFileChooser();
 
     public RobotTree(PropertiesDisplay properties, Palette palette) {
+        validators = palette.getValidators();
+        
 	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yml"));
 	this.properties = properties;
 	this.properties.setRobotTree(this);
@@ -80,8 +82,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	tree.setTransferHandler(new TreeTransferHandler(tree.getTransferHandler()));
 	tree.setDragEnabled(true);
         ToolTipManager.sharedInstance().registerComponent(tree);
-
-        validators = palette.getValidators();
         
         tree.setCellRenderer(new RobotTreeCellRenderer());
         
@@ -267,7 +267,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             @Override
             public Object visit(RobotComponent self, Object...extra) {
                 Map<String, Object> me = new HashMap<String, Object>();
-                me.put("Name", self.getName());
+//                me.put("Name", self.getName());
                 me.put("Base", self.getBaseType());
                 me.put("Properties", self.getProperties());
                 List<Object> children = new ArrayList<Object>();
@@ -326,7 +326,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             public Object visit(RobotComponent self, Object...extra) {
                 Map<String, Object> details = (Map<String, Object>) extra[0];
                 self.setRobotTree(robot);
-                self.setName((String) details.get("Name"));
+//                self.setName((String) details.get("Name"));
                 self.setBaseType((String) details.get("Base"));
                 self.setProperties((Map<String, Property>) details.get("Properties"));
                 for (String propertyName : self.getBase().getPropertiesKeys()) {
@@ -526,7 +526,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public void takeSnapshot(){
         saved = false;
-        history.addState(encode());
+//        if (getRoot() != null)
+//            history.addState(encode());
     }
     
     /**

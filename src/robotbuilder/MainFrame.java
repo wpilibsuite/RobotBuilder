@@ -36,7 +36,13 @@ public class MainFrame extends JFrame {
     public static MainFrame getInstance() {
         if (instance == null)
             instance = new MainFrame();
+        initialized = true;
         return instance;
+    }
+    
+    private static boolean initialized = false;
+    public static boolean  isInitialized() {
+        return initialized;
     }
     
     private MainFrame() {

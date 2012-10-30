@@ -7,6 +7,7 @@ package robotbuilder.data;
 import java.util.*;
 import robotbuilder.palette.Palette;
 import robotbuilder.data.properties.Property;
+import robotbuilder.data.properties.StringProperty;
 
 /**
  *
@@ -27,6 +28,22 @@ public class PaletteComponent {
     private List<String> propertiesKeys = new ArrayList<String>();
     
     public PaletteComponent() {}
+
+    /**
+     * Call this method if this class is created from a bean like YAML. It does
+     * a few final sanity checks.
+     */
+    public void finalizeBeanCreation() {
+        if (getProperty("Name") == null) {
+            makeNameProperty();
+        }
+    }
+    
+    private void makeNameProperty() {
+        propertiesKeys.add(0, "Name");
+        String[] validators = {"UniqueName"};
+        properties.put("Name", new StringProperty("Name", name, validators, null, name, true));
+    }
     
     public void setName(String name) {
         this.name = name;

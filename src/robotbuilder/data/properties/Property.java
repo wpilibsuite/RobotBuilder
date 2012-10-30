@@ -73,7 +73,8 @@ public abstract class Property {
                 component.getRobotTree().takeSnapshot();
             }
         }
-        MainFrame.getInstance().getCurrentRobotTree().update();
+        if (MainFrame.isInitialized())
+            MainFrame.getInstance().getCurrentRobotTree().update();
     }
     
     /**

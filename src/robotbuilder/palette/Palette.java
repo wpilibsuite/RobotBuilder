@@ -62,6 +62,7 @@ public class Palette extends JPanel  {
         constructor.addTypeDescription(new TypeDescription(ComponentSelectionProperty.class, "!ComponentSelectionProperty"));
         constructor.addTypeDescription(new TypeDescription(ParentProperty.class, "!ParentProperty"));
         
+        constructor.addTypeDescription(new TypeDescription(UniqueNameValidator.class, "!UniqueNameValidator"));
         constructor.addTypeDescription(new TypeDescription(DistinctValidator.class, "!DistinctValidator"));
         constructor.addTypeDescription(new TypeDescription(ExistsValidator.class, "!ExistsValidator"));
         constructor.addTypeDescription(new TypeDescription(UniqueValidator.class, "!UniqueValidator"));
@@ -124,6 +125,7 @@ public class Palette extends JPanel  {
         }
     }
     private void createPaletteComponent(DefaultMutableTreeNode root, PaletteComponent component) {
+        component.finalizeBeanCreation();
         paletteItems.put(component.getName(), component);
         
         if (root != null) {
