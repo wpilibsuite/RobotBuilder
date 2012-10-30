@@ -3,7 +3,6 @@ package robotbuilder.data.properties;
 import java.util.Arrays;
 import robotbuilder.MainFrame;
 import robotbuilder.data.RobotComponent;
-import robotbuilder.data.UniqueNameValidator;
 import robotbuilder.data.UniqueValidator;
 import robotbuilder.data.Validator;
 
@@ -74,8 +73,7 @@ public abstract class Property {
                 component.getRobotTree().takeSnapshot();
             }
         }
-        if (MainFrame.isInitialized())
-            MainFrame.getInstance().getCurrentRobotTree().update();
+        MainFrame.getInstance().getCurrentRobotTree().update();
     }
     
     /**
@@ -98,7 +96,7 @@ public abstract class Property {
     }
     
     /**
-     * A special method to deal with the UniqueValidator and UniqueNameValidator
+     * A special method to deal with the UniqueValidator.
      */
     public void setUnique() {
         if (validators == null) return;
@@ -106,8 +104,6 @@ public abstract class Property {
             Validator validator = component.getRobotTree().getValidator(validatorName);
             if (validator != null && validator instanceof UniqueValidator) {
                 ((UniqueValidator) validator).setUnique(component, name);
-            } else if (validator != null && validator instanceof UniqueNameValidator) {
-                ((UniqueNameValidator) validator).setUnique(component);
             }
         }
     }

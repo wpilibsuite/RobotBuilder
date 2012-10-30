@@ -15,6 +15,7 @@ import robotbuilder.data.properties.Property;
  * @author Alex Henning
  */
 public class RobotComponent extends DefaultMutableTreeNode {
+    private String name;
     private PaletteComponent base;
     private RobotTree robot;
     private Map<String, Property> properties;
@@ -30,8 +31,9 @@ public class RobotComponent extends DefaultMutableTreeNode {
      * @param base The PaletteComponent that will be exported.
      * @param robot The RobotTree that contains this.
      */
-    public RobotComponent(PaletteComponent base, RobotTree robot) {
+    public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
         super();
+        this.name = name;
         this.base = base;
         this.robot = robot;
         properties = new HashMap<String, Property>();
@@ -42,17 +44,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
         for (String propName : base.getPropertiesKeys()) {
             properties.get(propName).setUnique();
         }
-    }
-    
-    /**
-     * Creates a new RobotComponent.
-     * @param name The name of the new component.
-     * @param base The PaletteComponent that will be exported.
-     * @param robot The RobotTree that contains this.
-     */
-    public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
-        this(base, robot);
-        setName(name);
+        robot.addName(name);
     }
     
     /**
@@ -62,7 +54,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
      * @param robot The RobotTree that this will be created in.
      */
     public RobotComponent(String name, String type, RobotTree robot) {
-        this(Palette.getInstance().getItem(type), robot);
+        this(name, Palette.getInstance().getItem(type), robot);
     }
     
     public Property getProperty(String key) {
@@ -116,14 +108,20 @@ public class RobotComponent extends DefaultMutableTreeNode {
     
     @Override
     public String toString() {
-        return getName();
+        return name;
     }
 
     public String getName() {
-        return getProperty("Name").getValue().toString();
+        return name;
     }
     public final void setName(String name) {
-        getProperty("Name").setValue(name);
+        if (this.name != null) {
+            robot.removeName(getFullName());
+            this.name = name;
+            robot.addName(getFullName());
+        } else {
+            this.name = name;
+        }
     }
     
     public PaletteComponent getBase() {
@@ -207,7 +205,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
 
     public String getSubsystem() {
         if (getBase().getType().equals("Subsystem")) 
-            return getName();
+            return getName()+" ";
         else if (getParent() == null)
             return "";
         else
@@ -219,9 +217,9 @@ public class RobotComponent extends DefaultMutableTreeNode {
      */
     public String getFullName() {
         if (getBase().getType().equals("Subsystem")) 
-            return getName();
+            return name;
         else
-            return getSubsystem()+(getSubsystem() == "" ? "" : " ")+getName();
+            return getSubsystem()+name;
     }
     
     public Vector<String> getChildrenOfTypeNames(String type) {

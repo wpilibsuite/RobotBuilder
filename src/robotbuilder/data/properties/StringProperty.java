@@ -13,19 +13,17 @@ import robotbuilder.data.RobotComponent;
  */
 public class StringProperty extends Property {
     protected String value;
-    protected boolean editable = true;
     
     public StringProperty() {}
     
-    public StringProperty(String name, Object defaultValue, String[] validators, RobotComponent component, String value, boolean editable) {
+    public StringProperty(String name, Object defaultValue, String[] validators, RobotComponent component, String value) {
         super(name, defaultValue, validators, component);
         this.value = value;
-        this.editable = editable;
     }
 
     @Override
     public Property copy() {
-        return new StringProperty(name, defaultValue, validators, component, value, editable);
+        return new StringProperty(name, defaultValue, validators, component, value);
     }
 
     @Override
@@ -41,17 +39,5 @@ public class StringProperty extends Property {
     @Override
     public void _setValue(Object value) {
         this.value = ((String) value);
-    }
-    
-    
-    /**
-     * @return Whether this property is editable.
-     */
-    @Override
-    public boolean isEditable() {
-        return editable;
-    }
-    public void setEditable(boolean editable) {
-        this.editable = editable;
     }
 }

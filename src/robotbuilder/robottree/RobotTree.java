@@ -37,6 +37,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     PropertiesDisplay properties;
     /** Stores whether or not the RobotTree has been saved */
     public boolean saved;
+    /** Names used by components during name auto-generation */
+    private Set<String> usedNames = new HashSet<String>();
     private Map<String, Validator> validators;
     /** The currently selected node */
     private String filePath = null;
@@ -46,8 +48,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private JFileChooser fileChooser = new JFileChooser();
 
     public RobotTree(PropertiesDisplay properties, Palette palette) {
-        validators = palette.getValidators();
-        
 	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yml"));
 	this.properties = properties;
 	this.properties.setRobotTree(this);
@@ -80,6 +80,8 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	tree.setTransferHandler(new TreeTransferHandler(tree.getTransferHandler()));
 	tree.setDragEnabled(true);
         ToolTipManager.sharedInstance().registerComponent(tree);
+
+        validators = palette.getValidators();
         
         tree.setCellRenderer(new RobotTreeCellRenderer());
         
@@ -162,6 +164,49 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         return ((DefaultTreeCellRenderer) tree.getCellRenderer()).getOpenIcon(); 
     }
 
+    /**
+     * Gets the default name of a given component in the specified subsystem.
+     * @param component The type of component to generate a default name for.
+     * @return The default name.
+     */
+    String getDefaultComponentName(PaletteComponent componentType, String subsystem) {
+	int i = 1;
+	String name;
+	while (true) {
+	    name = componentType.toString() + (i == 1 ? "" : " " + i);
+	    if (!usedNames.contains((subsystem+name).toLowerCase())) {
+		usedNames.add((subsystem+name).toLowerCase());
+		return name;
+	    }
+            i++;
+	}
+    }
+
+    /**
+     * Adds a name to the used names list.
+     * @param name The name being used
+     */
+    public void addName(String name) {
+	usedNames.add(name.toLowerCase());
+    }
+
+    /**
+     * Removes the given name from the used names list.
+     * @param name The name being freed
+     */
+    public void removeName(String name) {
+	usedNames.remove(name.toLowerCase());
+    }
+
+    /**
+     * Checks to see if the {@code RobotTree} already contains
+     * the given name.
+     * @param name The name being checked
+     */
+    public boolean hasName(String name) {
+	return usedNames.contains(name.toLowerCase());
+    }
+
     @Override
     public void valueChanged(TreeSelectionEvent tse) {
 	RobotComponent node = (RobotComponent) tree.getLastSelectedPathComponent();
@@ -222,7 +267,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             @Override
             public Object visit(RobotComponent self, Object...extra) {
                 Map<String, Object> me = new HashMap<String, Object>();
-//                me.put("Name", self.getName());
+                me.put("Name", self.getName());
                 me.put("Base", self.getBaseType());
                 me.put("Properties", self.getProperties());
                 List<Object> children = new ArrayList<Object>();
@@ -281,7 +326,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             public Object visit(RobotComponent self, Object...extra) {
                 Map<String, Object> details = (Map<String, Object>) extra[0];
                 self.setRobotTree(robot);
-//                self.setName((String) details.get("Name"));
+                self.setName((String) details.get("Name"));
                 self.setBaseType((String) details.get("Base"));
                 self.setProperties((Map<String, Property>) details.get("Properties"));
                 for (String propertyName : self.getBase().getPropertiesKeys()) {
@@ -315,6 +360,14 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         
         properties.setCurrentComponent(root);
         update();
+        
+        // Add names to used names list
+        walk(new RobotWalker() {
+            @Override
+            public void handleRobotComponent(RobotComponent self) {
+                addName(self.getFullName());
+            }
+        });
     }
     
     public void load() {
@@ -404,6 +457,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         DefaultMutableTreeNode root = makeTreeRoot();
         treeModel.setRoot(root);
         tree.setSelectionPath(new TreePath(root));
+        usedNames = new HashSet<String>();
         validators = palette.getValidators();
     }
 
@@ -472,8 +526,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      */
     public void takeSnapshot(){
         saved = false;
-//        if (getRoot() != null)
-//            history.addState(encode());
+        history.addState(encode());
     }
     
     /**
@@ -501,6 +554,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             }
         });
         component.handleDelete();
+        removeName(component.getFullName());
         properties.setCurrentComponent((RobotComponent) component.getParent());
         component.removeFromParent();
     }

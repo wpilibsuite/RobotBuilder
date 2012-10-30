@@ -101,11 +101,13 @@ public class PropertiesDisplay extends JPanel {
                     public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                         JLabel label = new JLabel(value.toString());
                         label.setBorder(BorderFactory.createEmptyBorder(0, 4, 0, 0));
-                        Property property = currentComponent.getProperty(keys[row]);
+                        if (row == 0) { return label; }
+                        Property property = currentComponent.getProperty(keys[row-1]);
                         if (!property.isValid()) {
                             label.setBackground(new Color(255, 150, 150));
                             label.setOpaque(true);
                             label.setToolTipText(property.getErrorMessage());
+                            
                         } else {
                             label.setForeground(Color.black);
                         }
@@ -170,7 +172,7 @@ public class PropertiesDisplay extends JPanel {
             if (currentComponent == null) {
                 return 0;
             } else {
-                return currentComponent.getPropertyKeys().length;
+                return currentComponent.getPropertyKeys().length+1;
             }
 	}
 
@@ -181,23 +183,60 @@ public class PropertiesDisplay extends JPanel {
 
 	@Override
 	public Object getValueAt(int row, int column) {
-            if (column == 0)
-                return currentComponent.getProperty(keys[row]).getName();
-            else
-                return currentComponent.getProperty(keys[row]).getDisplayValue();
+            if (column == 0) {
+                if (row == 0)
+                    return "Name";
+                else
+                    return keys[row-1];
+            } else {
+                if (row == 0)
+                    return currentComponent.getName();
+                else
+                    return currentComponent.getProperty(keys[row-1]).getDisplayValue();
+            }
 	}
         
         @Override
         public boolean isCellEditable(int row, int column) {
-            return column == 1 && currentComponent.getProperty(keys[row]).isEditable();
+            return column == 1 && (row == 0 || currentComponent.getProperty(keys[row-1]).isEditable());
         }
         
         @Override
         public void setValueAt(Object val, int row, int column) {
             assert column == 1; // TODO: Deal with more cleanly
-            final String key = keys[row];
-            currentComponent.getProperty(key).setValue(val);
-            update();
+            if (row == 0) {
+                String name = (String) val;
+                // Prevent top level components from being renamed
+                // TODO: Do this in a cleaner way
+                if (currentComponent.getName().equals("Subsystems") ||
+                        currentComponent.getName().equals("Operator Interface") ||
+                        currentComponent.getName().equals("Commands")) {
+                    JOptionPane.showMessageDialog(MainFrame.getInstance(),
+                            "You cannot rename this component.", "Can't Rename", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if (name.equals("Subsystems") || name.equals("Operator Interface") ||
+                        name.equals("Commands")) {
+                    JOptionPane.showMessageDialog(MainFrame.getInstance(),
+                            "You cannot rename this component to "+name+".", "Can't Rename", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                // Make sure the name is unique
+                String subsystem = currentComponent.getSubsystem();
+                if (!robot.hasName(subsystem+name) || 
+                        (subsystem+name).equalsIgnoreCase(currentComponent.getFullName())) {
+                    currentComponent.setName(name);
+                    robot.update();
+                } else {
+                    JOptionPane.showMessageDialog(MainFrame.getInstance(),
+                            "You already have a component named: "+name, "Invalid Name", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                final String key = keys[row-1];
+                currentComponent.getProperty(key).setValue(val);
+                update();
+//                robot.update();
+            }
             //robot.update();
         }
     }
