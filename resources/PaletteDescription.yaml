@@ -324,9 +324,9 @@ Palette:
           - !DoubleProperty
             name: Tolerance
             default: 0.2
-##          - !IntegerProperty
+##          - !DoubleProperty
 ##            name: Period
-##            default: 50
+##            default: .05
           - !BooleanProperty
             name: Continuous
             default: false
@@ -381,9 +381,9 @@ Palette:
           - !DoubleProperty
             name: F
             default: 0
-          - !IntegerProperty
+          - !DoubleProperty
             name: Period
-            default: 50
+            default: .05
           - !BooleanProperty
             name: Continuous
             default: false
@@ -792,9 +792,9 @@ Palette:
           - !DoubleProperty
             name: D
             default: 0
-          - !IntegerProperty
+          - !DoubleProperty
             name: Period
-            default: 50
+            default: .05
           - !BooleanProperty
             name: Continuous
             default: false
