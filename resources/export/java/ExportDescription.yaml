@@ -220,7 +220,7 @@ Instructions:
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
-    Extra: "#if($Direction_Sensitive)#constant($Name).enableDirectionSensing($Direction_Sensitive);#end"
+    Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Digital}, ${Input_Channel_Digital}, ${Direction_Sensitive});"
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
