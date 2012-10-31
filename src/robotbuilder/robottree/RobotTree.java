@@ -156,6 +156,15 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     public String getFilePath() {
         return filePath;
     }
+
+    /**
+     * Gets the file path of the save file.
+     * @return 
+     */
+    protected void setFilePath(String filePath) {
+        this.filePath = filePath;
+        MainFrame.getInstance().setTitle("FRC RobotBuilder"+(filePath==null?"":" -- "+filePath));
+    }
     
     /**
      * @return The icon used to display an open tree element.
@@ -226,7 +235,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param path 
      */
     public void save(String path) {
-        filePath = path;
+        setFilePath(path);
 	try {
 	    FileWriter save = new FileWriter(path);
             save.write(this.encode());
@@ -235,11 +244,11 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	saved = true;
-        MainFrame.getInstance().prefs.put("FileName", filePath);
+        MainFrame.getInstance().prefs.put("FileName", getFilePath());
     }
     
     public void save() {
-	if (filePath == null) {
+	if (getFilePath() == null) {
 	    int result = fileChooser.showSaveDialog(MainFrame.getInstance().getFrame());
 	    if (result == JFileChooser.CANCEL_OPTION) {
 		return;
@@ -248,7 +257,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 		return;
 	    }
 	    else if (result == JFileChooser.APPROVE_OPTION) {
-                filePath = fileChooser.getSelectedFile().getAbsolutePath();
+                setFilePath(fileChooser.getSelectedFile().getAbsolutePath());
                 if (!filePath.endsWith(".yml"))
                         filePath += ".yml";
 	    }
@@ -294,7 +303,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	} catch (IOException ex) {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	}
-        filePath = path.getAbsolutePath();
+        setFilePath(path.getAbsolutePath());
     }
     
     /**
@@ -378,7 +387,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
             } else if (result == JFileChooser.ERROR_OPTION) {
                 return;
             } else if (result == JFileChooser.APPROVE_OPTION) {
-                filePath = fileChooser.getSelectedFile().getAbsolutePath();
+                setFilePath(fileChooser.getSelectedFile().getAbsolutePath());
             }
             load(new File(filePath));
         }
@@ -448,7 +457,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         if (OKToClose()) {
             resetTree(palette);
             saved = true;
-            filePath = null;
+            setFilePath(null);
             MainFrame.getInstance().prefs.put("FileName", "");
         }
     }
