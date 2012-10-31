@@ -182,7 +182,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	int i = 1;
 	String name;
 	while (true) {
-	    name = componentType.toString() + (i == 1 ? "" : " " + i);
+	    name = componentType.toString() + " " + i;
 	    if (!usedNames.contains((subsystem+name).toLowerCase())) {
 		usedNames.add((subsystem+name).toLowerCase());
 		return name;
