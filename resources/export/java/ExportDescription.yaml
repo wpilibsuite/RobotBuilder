@@ -207,6 +207,7 @@ Instructions:
     Extra: >-
       #constant($Name).setDistancePerPulse(${Distance_Per_Pulse});
               #constant($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
+              #constant($Name).start();
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
@@ -217,6 +218,7 @@ Instructions:
     Extra: >-
       #constant($Name).setDistancePerPulse(${Distance_Per_Pulse});
               #constant($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
+              #constant($Name).start();
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"

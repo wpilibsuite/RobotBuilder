@@ -195,6 +195,7 @@ Instructions:
     Extra: >-
       #constant($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
               #constant($Name)->SetPIDSourceParameter(Encoder::${PID_Source});
+              #constant($Name)->Start();
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
@@ -202,6 +203,7 @@ Instructions:
     Extra: >-
       #constant($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
               #constant($Name)->SetPIDSourceParameter(PIDSourceParameter.${PID_Source});
+              #constant($Name)->Start();
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
