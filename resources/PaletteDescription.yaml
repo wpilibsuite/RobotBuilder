@@ -382,6 +382,9 @@ Palette:
             name: F
             default: 0
           - !DoubleProperty
+            name: Tolerance
+            default: 0.2
+          - !DoubleProperty
             name: Period
             default: .05
           - !BooleanProperty
@@ -792,6 +795,9 @@ Palette:
           - !DoubleProperty
             name: D
             default: 0
+          - !DoubleProperty
+            name: Tolerance
+            default: 0.2
           - !DoubleProperty
             name: Period
             default: .05

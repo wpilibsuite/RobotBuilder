@@ -137,6 +137,7 @@ Instructions:
     Construction: "#constant($Name) = new ${ClassName}($P, $I, $D, $F, #constant($Input), #constant($Output), $Period);"
     Extra: >
       #constant($Name).setContinuous(${Continuous});
+      #constant($Name).setAbsoluteTolerance(${Tolerance});
       #if($Limit_Input)
       
               #constant($Name).setInputRange(${Minimum_Input}, ${Maximum_Input});#end
