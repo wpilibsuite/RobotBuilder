@@ -133,7 +133,6 @@ public class PropertiesDisplay extends JPanel {
                         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                             try {
                                 String path = ((JFileChooser) value).getSelectedFile().getPath();
-                                setValueAt(path, row, column);
                                 return new JLabel(path);
                             } catch (NullPointerException e) {
                                 return new JLabel("Click to Select");
