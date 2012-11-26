@@ -1,3 +1,4 @@
+#header()
 
 #set($command = $helper.getByName($command-name, $robot))
 

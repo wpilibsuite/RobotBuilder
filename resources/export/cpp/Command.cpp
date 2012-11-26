@@ -1,5 +1,5 @@
-
 #set($command = $helper.getByName($command-name, $robot))
+#header()
 
 \#include "#class($command.name).h"
 

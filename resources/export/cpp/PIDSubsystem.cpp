@@ -1,3 +1,5 @@
+#header()
+
 #set($subsystem = $helper.getByName($subsystem-name, $robot))
 
 \#include "#class($subsystem.name).h"

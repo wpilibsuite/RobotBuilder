@@ -1,4 +1,5 @@
 #set($subsystem = $helper.getByName($subsystem-name, $robot))
+#header()
 
 #ifndef #constant($subsystem.name)_H
 \#define #constant($subsystem.name)_H
