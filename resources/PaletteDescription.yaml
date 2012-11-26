@@ -762,11 +762,17 @@ Palette:
             name: Requires
             type: Subsystem
             default: None
+          - !BooleanProperty
+            name: Button on SmartDashboard
+            default: true
       - !Component
         name: Command Group
         type: Command
         help: A command group, someone really needs to update the help.
-        properties: []
+        properties: 
+          - !BooleanProperty
+            name: Button on SmartDashboard
+            default: true
       - !Component
         name: PID Command
         type: Command
@@ -776,6 +782,9 @@ Palette:
             name: Requires
             type: Subsystem
             default: "None"
+          - !BooleanProperty
+            name: Button on SmartDashboard
+            default: true
           - !TypeSelectionProperty
             name: Input
             type: PIDSource
@@ -832,6 +841,9 @@ Palette:
             validators: [TypeDropdownSelected]
             componentName: PID Subsystem
             default: None
+          - !BooleanProperty
+            name: Button on SmartDashboard
+            default: true
           - !DoubleProperty
             name: Setpoint
             default: 1
