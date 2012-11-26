@@ -67,7 +67,7 @@ Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWind
 Defaults:
   Component:
     Export: "RobotMap"
-    Declaration: "static ${ClassName}* #constant($Name);"
+    Declaration: "static ${ClassName}* #variable($Name);"
   None:
     Export: ""
     Import: ""
@@ -79,20 +79,20 @@ Defaults:
     Function: ""
     ClassName: ""
   AnalogInput:
-    Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Analog}, ${Input_Channel_Analog});"
-    LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
+    Construction: "#variable($Name) = new ${ClassName}(${Input_Module_Analog}, ${Input_Channel_Analog});"
+    LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   DigitalInput:
-    Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Digital}, ${Input_Channel_Digital});"
-    LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
+    Construction: "#variable($Name) = new ${ClassName}(${Input_Module_Digital}, ${Input_Channel_Digital});"
+    LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   PWMOutput:
-    Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_PWM});"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
+    Construction: "#variable($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_PWM});"
+    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   RelayOutput:
-    Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_Relay});"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
+    Construction: "#variable($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_Relay});"
+    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   SolenoidOutput:
-    Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Solenoid}, ${Output_Channel_Solenoid});"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #constant($Name));"
+    Construction: "#variable($Name) = new ${ClassName}(${Output_Module_Solenoid}, ${Output_Channel_Solenoid});"
+    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   OI:
     Export: "OI"
     Declaration: "${ClassName}* #variable($Name);"
@@ -127,88 +127,88 @@ Instructions:
   PID Controller:
     Defaults: "Component,None"
     ClassName: "PIDController"
-    Construction: "#constant($Name) = new ${ClassName}($P, $I, $D,/* F: $F, */ #constant($Input), #constant($Output), $Period);"
+    Construction: "#variable($Name) = new ${ClassName}($P, $I, $D,/* F: $F, */ #variable($Input), #variable($Output), $Period);"
     Extra: >
-      #constant($Name)->SetContinuous(${Continuous});
-      #constant($Name)->SetAbsoluteTolerance(${Tolerance});
+      #variable($Name)->SetContinuous(${Continuous});
+      #variable($Name)->SetAbsoluteTolerance(${Tolerance});
       #if($Limit_Input)
       
-              #constant($Name)->SetInputRange(${Minimum_Input}, ${Maximum_Input});#end
+              #variable($Name)->SetInputRange(${Minimum_Input}, ${Maximum_Input});#end
       #if(true)
 
-              #constant($Name)->SetOutputRange(${Minimum_Output}, ${Maximum_Output});#end
+              #variable($Name)->SetOutputRange(${Minimum_Output}, ${Maximum_Output});#end
       #if($Send_to_SmartDashboard)
 
-              //SmartDashboard->PutData("${Name}", #constant($Name));#end
+              //SmartDashboard->PutData("${Name}", #variable($Name));#end
       
   Robot Drive 2:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
-    Construction: "#constant($Name) = new ${ClassName}(#constant($Left_Motor), #constant($Right_Motor));"
+    Construction: "#variable($Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
     Extra: >
-      #constant($Name)->SetSafetyEnabled($Safety_Enabled);
-              #constant($Name)->SetExpiration($Safety_Expiration_Time);
-              #constant($Name)->SetSensitivity($Sensitivity);
-              #constant($Name)->SetMaxOutput($Maximum_Output);
+      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
+              #variable($Name)->SetExpiration($Safety_Expiration_Time);
+              #variable($Name)->SetSensitivity($Sensitivity);
+              #variable($Name)->SetMaxOutput($Maximum_Output);
       #if($Left_Motor_Inverted)
-              #constant($Name)->SetInvertedMotor(RobotDrive::kRearLeft, true);#end
+              #variable($Name)->SetInvertedMotor(RobotDrive::kRearLeft, true);#end
       #if($Right_Motor_Inverted)
 
-              #constant($Name)->SetInvertedMotor(RobotDrive::kRearRight, true);#end
+              #variable($Name)->SetInvertedMotor(RobotDrive::kRearRight, true);#end
               
   Robot Drive 4:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
     Construction: >-
-      #constant($Name) = new ${ClassName}(#constant($Left_Front_Motor), #constant($Left_Rear_Motor),
-                    #constant($Right_Front_Motor), #constant($Right_Rear_Motor));
+      #variable($Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
+                    #variable($Right_Front_Motor), #variable($Right_Rear_Motor));
     Extra: >
-      #constant($Name)->SetSafetyEnabled($Safety_Enabled);
-              #constant($Name)->SetExpiration($Safety_Expiration_Time);
-              #constant($Name)->SetSensitivity($Sensitivity);
-              #constant($Name)->SetMaxOutput($Maximum_Output);
+      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
+              #variable($Name)->SetExpiration($Safety_Expiration_Time);
+              #variable($Name)->SetSensitivity($Sensitivity);
+              #variable($Name)->SetMaxOutput($Maximum_Output);
       #if($Left_Front_Motor_Inverted)
-              #constant($Name)->SetInvertedMotor(RobotDrive::kFrontLeft, true);#end
+              #variable($Name)->SetInvertedMotor(RobotDrive::kFrontLeft, true);#end
       #if($Left_Rear_Motor_Inverted)
 
-              #constant($Name)->SetInvertedMotor(RobotDrive::kRearLeft, true);#end
+              #variable($Name)->SetInvertedMotor(RobotDrive::kRearLeft, true);#end
       #if($Right_Front_Motor_Inverted)
 
-              #constant($Name)->SetInvertedMotor(RobotDrive::kFrontRight, true);#end
+              #variable($Name)->SetInvertedMotor(RobotDrive::kFrontRight, true);#end
       #if($Right_Rear_Motor_Inverted)
 
-              #constant($Name)->SetInvertedMotor(RobotDrive::kRearRight, true);#end
+              #variable($Name)->SetInvertedMotor(RobotDrive::kRearRight, true);#end
 
   Gyro:
     Defaults: "AnalogInput,Component,None"
     ClassName: "Gyro"
-    Extra: "#constant($Name)->SetSensitivity(${Sensitivity});"
+    Extra: "#variable($Name)->SetSensitivity(${Sensitivity});"
   Accelerometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "Accelerometer"
     Extra: >-
-      #constant($Name)->SetSensitivity(${Volts_Per_G});
-              #constant($Name)->SetZero(${Zero_G_Volts});
+      #variable($Name)->SetSensitivity(${Volts_Per_G});
+              #variable($Name)->SetZero(${Zero_G_Volts});
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, Encoder::${Encoding_Type});"
+    Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, Encoder::${Encoding_Type});"
     Extra: >-
-      #constant($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
-              #constant($Name)->SetPIDSourceParameter(Encoder::${PID_Source});
-              #constant($Name)->Start();
+      #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
+              #variable($Name)->SetPIDSourceParameter(Encoder::${PID_Source});
+              #variable($Name)->Start();
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Construction: "#constant($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Index_Module_Digital}, ${Index_Channel_Digital}, ${Reverse_Direction});"
+    Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Index_Module_Digital}, ${Index_Channel_Digital}, ${Reverse_Direction});"
     Extra: >-
-      #constant($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
-              #constant($Name)->SetPIDSourceParameter(PIDSourceParameter.${PID_Source});
-              #constant($Name)->Start();
+      #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
+              #variable($Name)->SetPIDSourceParameter(PIDSourceParameter.${PID_Source});
+              #variable($Name)->Start();
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
-    Construction: "#constant($Name) = new ${ClassName}(${Input_Module_Digital}, ${Input_Channel_Digital}, ${Direction_Sensitive});"
+    Construction: "#variable($Name) = new ${ClassName}(${Input_Module_Digital}, ${Input_Channel_Digital}, ${Direction_Sensitive});"
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogChannel"
@@ -224,7 +224,7 @@ Instructions:
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
-    Construction: "#constant($Name) = new ${ClassName}(${Ping_Module_Digital}, ${Ping_Channel_Digital}, ${Echo_Module_Digital}, ${Echo_Channel_Digital});"
+    Construction: "#variable($Name) = new ${ClassName}(${Ping_Module_Digital}, ${Ping_Channel_Digital}, ${Echo_Module_Digital}, ${Echo_Channel_Digital});"
       
   Jaguar:
     Defaults: "PWMOutput,Component,None"
@@ -232,7 +232,7 @@ Instructions:
   CAN Jaguar:
     Defaults: "Component,None"
     ClassName: "CANJaguar"
-    Construction: "#constant($Name) = new ${ClassName}($CAN_ID);"
+    Construction: "#variable($Name) = new ${ClassName}($CAN_ID);"
   Victor:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Victor"
@@ -242,7 +242,7 @@ Instructions:
   Digital Output:
     Defaults: "Component,None"
     ClassName: "DigitalOutput"
-    Construction: "#constant($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_Digital});"
+    Construction: "#variable($Name) = new ${ClassName}(${Output_Module_Digital}, ${Output_Channel_Digital});"
   Spike:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
@@ -250,7 +250,7 @@ Instructions:
   Compressor:
     Defaults: "Component,None"
     ClassName: "Compressor"
-    Construction: "#constant($Name) = new ${ClassName}(${Pressure_Switch_Module_Digital}, ${Pressure_Switch_Channel_Digital}, ${Spike_Module_Digital}, ${Spike_Channel_Relay});"
+    Construction: "#variable($Name) = new ${ClassName}(${Pressure_Switch_Module_Digital}, ${Pressure_Switch_Channel_Digital}, ${Spike_Module_Digital}, ${Spike_Channel_Relay});"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "Solenoid"
@@ -265,7 +265,7 @@ Instructions:
       
       #end##
       
-      #constant($Name) = new ${ClassName}(${Forward_Module_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});      
+      #variable($Name) = new ${ClassName}(${Forward_Module_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});      
 
   Joystick:
     Defaults: "OI,None"
