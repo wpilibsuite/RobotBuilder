@@ -1,4 +1,4 @@
-// ${version-indicator}
+#header()
 
 package ${package}.subsystems;
 #set($subsystem = $helper.getByName($subsystem-name, $robot))

@@ -1,4 +1,4 @@
-// ${version-indicator}
+#header()
 
 package ${package}.commands;
 

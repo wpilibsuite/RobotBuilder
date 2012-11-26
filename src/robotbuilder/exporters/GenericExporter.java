@@ -97,7 +97,7 @@ public class GenericExporter {
         
         // Prepare the main context
         rootContext.put("version", RobotBuilder.VERSION);
-        rootContext.put("version-indicator", "Generated with RobotBuilder version "+RobotBuilder.VERSION);
+        rootContext.put("version-indicator", "RobotBuilder Version: "+RobotBuilder.VERSION);
         rootContext.put("robot", robot);
         rootContext.put("helper", this);
         rootContext.put("Collections", Collections.class);
