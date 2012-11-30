@@ -14,7 +14,7 @@ ${Collections.reverse($components)}
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
-	SmartDashboard::putData("$component.getName()", new #class($component.getName())());
+	SmartDashboard::PutData("$component.getName()", new #class($component.getName())());
 
 #end
 #end
