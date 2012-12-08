@@ -73,4 +73,11 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
+
+    /**
+     * This function called periodically during test mode
+     */
+    public void testPeriodic() {
+        LiveWindow.run();
+    }
 }
