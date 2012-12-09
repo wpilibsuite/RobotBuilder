@@ -39,11 +39,13 @@ void Robot::TeleopInit() {
 	// continue until interrupted by another command, remove
 	// this line or comment it out.
 	autonomousCommand->Cancel();
-	lw->SetEnabled(true);
 }
 	
 void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
+}
+
+void Robot::TestPeriodic() {
 	lw->Run();
 }
 
