@@ -232,7 +232,7 @@ Instructions:
     Defaults: "PWMOutput,Component,None"
     ClassName: "SpeedController"
     Construction: "#variable($Name) = new ${Type}(${Output_Module_Digital}, ${Output_Channel_PWM});"
-    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", (${Type}) #variable($Name));"
+    LiveWindow: "LiveWindow->AddActuator(\"$Subsystem\", \"$Short_Name\", (${Type}) #variable($Name));"
   CAN Jaguar:
     Defaults: "Component,None"
     ClassName: "CANJaguar"

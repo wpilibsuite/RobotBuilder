@@ -47,9 +47,9 @@ public class ExistsValidatorTest {
         subsystems.add(driveTrain);
         RobotComponent robotDrive = new RobotComponent("Robot Drive", "Robot Drive 2", tree);
         driveTrain.add(robotDrive);
-        RobotComponent leftVictor = new RobotComponent("Left Victor", "Victor", tree);
+        RobotComponent leftVictor = new RobotComponent("Left Victor", "Speed Controller", tree);
         robotDrive.add(leftVictor);
-        RobotComponent rightVictor = new RobotComponent("Right Victor", "Victor", tree);
+        RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
         robotDrive.add(rightVictor);
         
         robotDrive.getProperty("Left Motor").setValue(leftVictor.getFullName());
@@ -89,7 +89,7 @@ public class ExistsValidatorTest {
         
         RobotComponent encoder = new RobotComponent("Encoder", "Quadrature Encoder", tree);
         pid.add(encoder);
-        RobotComponent motor = new RobotComponent("Motor", "Jaguar", tree);
+        RobotComponent motor = new RobotComponent("Motor", "Speed Controller", tree);
         pid.add(motor);
         
         pid.getProperty("Input").setValue(encoder.getFullName());

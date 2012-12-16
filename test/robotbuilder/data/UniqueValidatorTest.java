@@ -48,9 +48,9 @@ public class UniqueValidatorTest {
         // Create a basic subsystem
         RobotComponent subsystem = new RobotComponent("Subsystem", "Subsystem", tree);
         subsystems.add(subsystem);
-        RobotComponent victor1 = new RobotComponent("Victor 1", "Victor", tree);
+        RobotComponent victor1 = new RobotComponent("Victor 1", "Speed Controller", tree);
         subsystem.add(victor1);
-        RobotComponent victor2 = new RobotComponent("Victor 2", "Victor", tree);
+        RobotComponent victor2 = new RobotComponent("Victor 2", "Speed Controller", tree);
         subsystem.add(victor2);
         
         // Test it
@@ -75,9 +75,9 @@ public class UniqueValidatorTest {
         // Create a basic subsystem
         RobotComponent subsystem = new RobotComponent("Subsystem", "Subsystem", tree);
         subsystems.add(subsystem);
-        RobotComponent victor1 = new RobotComponent("Victor 1", "Victor", tree);
+        RobotComponent victor1 = new RobotComponent("Victor 1", "Speed Controller", tree);
         subsystem.add(victor1);
-        RobotComponent victor2 = new RobotComponent("Victor 2", "Victor", tree);
+        RobotComponent victor2 = new RobotComponent("Victor 2", "Speed Controller", tree);
         subsystem.add(victor2);
         victor2.getProperty("Output Channel (PWM)").setValue("1");
         
@@ -104,9 +104,9 @@ public class UniqueValidatorTest {
         // Create a basic subsystem
         RobotComponent subsystem = new RobotComponent("Subsystem", "Subsystem", tree);
         subsystems.add(subsystem);
-        RobotComponent victor1 = new RobotComponent("Victor 1", "Victor", tree);
+        RobotComponent victor1 = new RobotComponent("Victor 1", "Speed Controller", tree);
         subsystem.add(victor1);
-        RobotComponent victor2 = new RobotComponent("Victor 2", "Victor", tree);
+        RobotComponent victor2 = new RobotComponent("Victor 2", "Speed Controller", tree);
         subsystem.add(victor2);
         
         // Test it

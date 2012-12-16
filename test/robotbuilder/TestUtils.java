@@ -46,9 +46,11 @@ public class TestUtils {
         robotDrive.getProperty("Safety Enabled").setValue(false);
         robotDrive.getProperty("Sensitivity").setValue(0.25);
         driveTrain.add(robotDrive);
-        RobotComponent leftVictor = new RobotComponent("Left Victor", "Victor", tree);
+        RobotComponent leftVictor = new RobotComponent("Left Victor", "Speed Controller", tree);
+        leftVictor.setProperty("Type", "Victor");
         robotDrive.add(leftVictor);
-        RobotComponent rightVictor = new RobotComponent("Right Victor", "Victor", tree);
+        RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
+        rightVictor.setProperty("Type", "Victor");
         robotDrive.add(rightVictor);
         RobotComponent gyro = new RobotComponent("Gyro", "Gyro", tree);
         driveTrain.add(gyro);
@@ -65,7 +67,8 @@ public class TestUtils {
 //        pid.getProperty("Send to SmartDashboard").setValue(true);
         pid.getProperty("Limit Input").setValue(true);
         pid.getProperty("Continuous").setValue(true);
-        RobotComponent motor = new RobotComponent("Motor", "Jaguar", tree);
+        RobotComponent motor = new RobotComponent("Motor", "Speed Controller", tree);
+        motor.setProperty("Type", "Jaguar");
         pid.add(motor);
         RobotComponent encoder = new RobotComponent("Encoder", "Quadrature Encoder", tree);
         pid.add(encoder);
@@ -82,7 +85,8 @@ public class TestUtils {
         wrist.getProperty("D").setValue(-1);
         wrist.getProperty("Limit Input").setValue(true);
         wrist.getProperty("Continuous").setValue(true);
-        RobotComponent wristMotor = new RobotComponent("Motor", "Jaguar", tree);
+        RobotComponent wristMotor = new RobotComponent("Motor", "Speed Controller", tree);
+        wristMotor.setProperty("Type", "Jaguar");
         wrist.add(wristMotor);
         RobotComponent pot = new RobotComponent("Pot", "Potentiometer", tree);
         wrist.add(pot);
