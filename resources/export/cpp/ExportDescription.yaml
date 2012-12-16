@@ -62,7 +62,7 @@ Macros: macros.vm
 
 ##Post Export Action: "netbeans --open $project"
 
-Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWindow", "Extra", "Prototype", "Function", "ClassName"]
+Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWindow", "Extra", "Prototype", "Function", "PID", "ClassName"]
 
 Defaults:
   Component:
@@ -77,10 +77,12 @@ Defaults:
     Extra: ""
     Prototype: ""
     Function: ""
+    PID: "#variable($Short_Name)->PidGet()"
     ClassName: ""
   AnalogInput:
     Construction: "#variable($Name) = new ${ClassName}(${Input_Module_Analog}, ${Input_Channel_Analog});"
     LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    PID: "#variable($Short_Name)->GetAverageVoltage()"
   DigitalInput:
     Construction: "#variable($Name) = new ${ClassName}(${Input_Module_Digital}, ${Input_Channel_Digital});"
     LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
