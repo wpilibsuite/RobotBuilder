@@ -597,17 +597,16 @@ Palette:
 
   - Actuators:
       - !Component
-        name: Victor
+        name: Speed Controller
         type: PIDOutput
         help: A PWM speed controller that allows you to set the speed of a motor.
         properties:
+          - !ChoicesProperty
+            name: Type
+            choices: ["Victor", "Jaguar", "Talon"]
+            default: "Victor"
           #PWMOutput("Output")
-      - !Component
-        name: Jaguar
-        type: PIDOutput
-        help: A PWM speed controller that allows you to set the speed of a motor.
-        properties:
-          #PWMOutput("Output")
+
       - !Component
         name: CAN Jaguar
         type: PIDOutput
