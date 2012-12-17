@@ -65,6 +65,7 @@ Vars:
 Macros: macros.vm
 
 ##Post Export Action: "netbeans --open $project"
+Post Export Action: "#Message:You have successfully exported. You can now open the project in Netbeans and extend the generated code."
 
 Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWindow", "Extra", "Function", "PID", "ClassName"]
 

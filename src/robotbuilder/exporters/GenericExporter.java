@@ -124,6 +124,10 @@ public class GenericExporter {
             if (action.startsWith("#")) {
                 if (action.startsWith("#Browse:")) {
                     Utils.browse(action.replace("#Browse:", ""));
+                } else if (action.startsWith("#Message")) {
+                    JOptionPane.showMessageDialog(MainFrame.getInstance(),
+                            action.replace("#Message:", ""),
+                            "Export Complete", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     Logger.getLogger(Utils.class.getName()).log(Level.WARNING, null,
                             "No special action for "+action);
