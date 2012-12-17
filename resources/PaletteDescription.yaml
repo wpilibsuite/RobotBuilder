@@ -244,7 +244,7 @@ Palette:
             name: C++ Windriver Workspace
             extension: null
             folder: true
-            default: ""
+            default: "C:\\Windriver\\workspace"
           - !BooleanProperty
             name: Export Subsystems
             default: true
@@ -255,7 +255,7 @@ Palette:
             name: Wiring File
             extension: html
             folder: false
-            default: "C:\\Windriver\\workspace"
+            default: ""
       - !Component
         name: Subsystems
         type: Subsystems
