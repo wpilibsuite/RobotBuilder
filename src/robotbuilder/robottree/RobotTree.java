@@ -224,7 +224,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	    return;
 	}
 	if (node instanceof RobotComponent) {
-            properties.propTable.removeEditor();
 	    properties.setCurrentComponent(node);
             MainFrame.getInstance().setHelp(node.getBase().getHelpFile());
 	}

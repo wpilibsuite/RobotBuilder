@@ -35,6 +35,8 @@ public class PropertiesDisplay extends JPanel {
     }
 
     public void setCurrentComponent(DefaultMutableTreeNode node) {
+        if (propTable.getCellEditor() != null)
+            propTable.getCellEditor().stopCellEditing();
         currentComponent = (RobotComponent) node;
         keys = currentComponent.getPropertyKeys();
         update();
@@ -82,7 +84,9 @@ public class PropertiesDisplay extends JPanel {
             final TableCellEditor editor = super.getCellEditor(row, column);
             editor.addCellEditorListener(new CellEditorListener() {
                 @Override
-                public void editingStopped(ChangeEvent ce) {}
+                public void editingStopped(ChangeEvent ce) {
+                    setValueAt(editor.getCellEditorValue(), row, column);
+                }
 
                 @Override
                 public void editingCanceled(ChangeEvent ce) {
