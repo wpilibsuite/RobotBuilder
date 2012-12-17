@@ -230,7 +230,7 @@ Palette:
             name: Team Number
             default: 0
           - !FileProperty
-            name: Java Project
+            name: Java Project Directory
             extension: null
             folder: true
             default: ""

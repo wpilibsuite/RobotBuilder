@@ -43,16 +43,17 @@ public class JavaExportTest {
     public void testJavaExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
         tree.getRoot().setName("RobotBuilderTestProject");
-        tree.getRoot().getProperty("Java Project").setValue("test-resources/RobotBuilderTestProject/");
+        tree.getRoot().getProperty("Java Project Directory").setValue("test-resources/");
         tree.getRoot().getProperty("Java Package").setValue("robotcode");
         GenericExporter exporter = new GenericExporter("/export/java/");
         exporter.export(tree);
-
+        
+        System.out.println("====================================================");
         Process p;
         try {
-            p = Runtime.getRuntime().exec("ant compile", null, new File("test-resources/RobotBuilderTestProject/"));
+            p = Runtime.getRuntime().exec("ant compile", null, new File("test-resources/RobotBuilderTestProject"));
         } catch (IOException ex) { // Catch for windows
-            p = Runtime.getRuntime().exec("ant.bat compile", null, new File("test-resources/RobotBuilderTestProject/"));
+            p = Runtime.getRuntime().exec("ant.bat compile", null, new File("test-resources/RobotBuilderTestProject"));
         }
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line = reader.readLine();
@@ -60,6 +61,7 @@ public class JavaExportTest {
             System.out.println(line);
             line = reader.readLine();
         }
+        System.out.println("====================================================");
         p.waitFor();
         System.out.println(p.exitValue());
         assertEquals("Exit value should be 0, compilation failed.", p.exitValue(), 0);
