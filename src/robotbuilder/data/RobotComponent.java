@@ -95,16 +95,6 @@ public class RobotComponent extends DefaultMutableTreeNode {
                     equal = equal && 
                             getChildren().elementAt(i).equals(other.getChildren().elementAt(i));
                 }
-            } else {
-                System.out.println(getFullName());
-                if (!getFullName().equals(other.getFullName()))
-                    System.out.println("\t"+getFullName()+" == "+other.getFullName());
-                if (!getBaseType().equals(other.getBaseType()))
-                    System.out.println("\t"+getBaseType()+" == "+other.getBaseType());
-                if (!getProperties().equals(other.getProperties()))
-                    System.out.println("\t"+getProperties()+" == "+other.getProperties());
-                if (!(getChildren().size() == other.getChildren().size()))
-                    System.out.println("\t"+getChildren().size()+" == "+other.getChildren().size());
             }
             return equal;
         }
