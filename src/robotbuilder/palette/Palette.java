@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -49,7 +50,7 @@ public class Palette extends JPanel  {
         StringWriter writer = new StringWriter();
         VelocityEngine ve = new VelocityEngine();
         Context context = new VelocityContext();
-        context.put("home", System.getProperty("user.home").replace("\\", "\\\\") +File.separator);
+        context.put("home", System.getProperty("user.home").replace("\\", "\\\\")+Matcher.quoteReplacement(File.separator));
         ve.evaluate(context, writer, "RobotBuilder:PaletteDescription.yaml", in);
         
         Constructor constructor = new Constructor();
