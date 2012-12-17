@@ -233,7 +233,7 @@ Palette:
             name: Java Project Directory
             extension: null
             folder: true
-            default: ""
+            default: "${home}NetBeansProjects"
           - !BooleanProperty
             name: Use Default Java Package
             default: true
@@ -255,7 +255,7 @@ Palette:
             name: Wiring File
             extension: html
             folder: false
-            default: ""
+            default: "C:\\Windriver\\workspace"
       - !Component
         name: Subsystems
         type: Subsystems

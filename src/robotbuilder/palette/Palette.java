@@ -2,6 +2,7 @@
 package robotbuilder.palette;
 
 import java.awt.CardLayout;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -12,7 +13,9 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
+import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.context.Context;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -45,7 +48,9 @@ public class Palette extends JPanel  {
         // Apply macros, if any
         StringWriter writer = new StringWriter();
         VelocityEngine ve = new VelocityEngine();
-        ve.evaluate(null, writer, "RobotBuilder:PaletteDescription.yaml", in);
+        Context context = new VelocityContext();
+        context.put("home", System.getProperty("user.home")+File.separator);
+        ve.evaluate(context, writer, "RobotBuilder:PaletteDescription.yaml", in);
         
         Constructor constructor = new Constructor();
         constructor.addTypeDescription(new TypeDescription(PaletteComponent.class, "!Component"));
