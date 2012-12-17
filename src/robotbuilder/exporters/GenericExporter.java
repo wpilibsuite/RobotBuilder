@@ -101,6 +101,7 @@ public class GenericExporter {
         rootContext.put("robot", robot);
         rootContext.put("helper", this);
         rootContext.put("Collections", Collections.class);
+        rootContext.put("file-separator", File.separator);
         rootContext.put("exporter-path", path);
         rootContext.put("components", getComponents(robot));
         rootContext.put("export-subsystems", robot.getProperty("Export Subsystems").getValue());
