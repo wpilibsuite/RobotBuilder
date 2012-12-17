@@ -81,7 +81,7 @@ public class GenericExporter {
             Object state = robot.getProperty(prop).getValue();
             if (state == null || state.equals("") || state.equals("None")) {
                 JOptionPane.showMessageDialog(MainFrame.getInstance(),
-                                "You need to fill in the '"+prop+"' property of your robot for this export to work.",
+                                "You need to fill in the '"+prop+"' property of your robot for this export to work.\nYou can edit this with the main settings for your robot by clicking on "+robot.getName()+".",
                                 "Missing Property", JOptionPane.ERROR_MESSAGE);
                 return;
             }
