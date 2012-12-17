@@ -49,7 +49,7 @@ public class Palette extends JPanel  {
         StringWriter writer = new StringWriter();
         VelocityEngine ve = new VelocityEngine();
         Context context = new VelocityContext();
-        context.put("home", System.getProperty("user.home")+File.separator);
+        context.put("home", System.getProperty("user.home").replace("\\", "\\\\") +File.separator);
         ve.evaluate(context, writer, "RobotBuilder:PaletteDescription.yaml", in);
         
         Constructor constructor = new Constructor();

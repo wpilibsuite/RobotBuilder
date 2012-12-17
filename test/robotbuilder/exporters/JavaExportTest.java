@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package robotbuilder;
+package robotbuilder.exporters;
 
 import robotbuilder.robottree.RobotTree;
 import java.io.*;
 import org.junit.*;
 import static org.junit.Assert.*;
-import robotbuilder.exporters.GenericExporter;
+import robotbuilder.TestUtils;
 
 /**
  *
@@ -46,6 +46,7 @@ public class JavaExportTest {
         tree.getRoot().getProperty("Java Project Directory").setValue("test-resources/");
         tree.getRoot().getProperty("Java Package").setValue("robotcode");
         GenericExporter exporter = new GenericExporter("/export/java/");
+        exporter.post_export_action = null;
         exporter.export(tree);
         
         System.out.println("====================================================");

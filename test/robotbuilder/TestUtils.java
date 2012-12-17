@@ -119,7 +119,7 @@ public class TestUtils {
         return tree;
     }
 
-    static void delete(File dir) {
+    public static void delete(File dir) {
         if (dir.listFiles() != null) {
             for (File f : dir.listFiles()) {
                 delete(f);
