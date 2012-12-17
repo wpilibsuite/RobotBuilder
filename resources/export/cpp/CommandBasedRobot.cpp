@@ -26,7 +26,8 @@ void Robot::RobotInit() {
   }
 	
 void Robot::AutonomousInit() {
-	autonomousCommand->Start();
+	if (autonomousCommand != NULL)
+		autonomousCommand->Start();
 }
 	
 void Robot::AutonomousPeriodic() {
@@ -42,7 +43,8 @@ void Robot::TeleopInit() {
 }
 	
 void Robot::TeleopPeriodic() {
-	Scheduler::GetInstance()->Run();
+	if (autonomousCommand != NULL)
+		Scheduler::GetInstance()->Run();
 }
 
 void Robot::TestPeriodic() {
