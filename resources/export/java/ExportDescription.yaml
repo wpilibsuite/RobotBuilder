@@ -154,7 +154,6 @@ Instructions:
   Robot Drive 2:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
-    Import: "import edu.wpi.first.wpilibj.RobotDrive.MotorType;"
     Construction: "#variable($Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
     Extra: >
       #variable($Name).setSafetyEnabled($Safety_Enabled);
@@ -162,15 +161,14 @@ Instructions:
               #variable($Name).setSensitivity($Sensitivity);
               #variable($Name).setMaxOutput($Maximum_Output);
       #if($Left_Motor_Inverted)
-              #variable($Name).setInvertedMotor(MotorType.kRearLeft, true);#end
+              #variable($Name).setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);#end
       #if($Right_Motor_Inverted)
 
-              #variable($Name).setInvertedMotor(MotorType.kRearRight, true);#end
+              #variable($Name).setInvertedMotor(RobotDrive.MotorType.kRearRight, true);#end
               
   Robot Drive 4:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
-    Import: "import edu.wpi.first.wpilibj.RobotDrive.MotorType;"
     Construction: >-
       #variable($Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
                     #variable($Right_Front_Motor), #variable($Right_Rear_Motor));
@@ -180,16 +178,16 @@ Instructions:
               #variable($Name).setSensitivity($Sensitivity);
               #variable($Name).setMaxOutput($Maximum_Output);
       #if($Left_Front_Motor_Inverted)
-              #variable($Name).setInvertedMotor(MotorType.kFrontLeft, true);#end
+              #variable($Name).setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);#end
       #if($Left_Rear_Motor_Inverted)
 
-              #variable($Name).setInvertedMotor(MotorType.kRearLeft, true);#end
+              #variable($Name).setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);#end
       #if($Right_Front_Motor_Inverted)
 
-              #variable($Name).setInvertedMotor(MotorType.kFrontRight, true);#end
+              #variable($Name).setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);#end
       #if($Right_Rear_Motor_Inverted)
 
-              #variable($Name).setInvertedMotor(MotorType.kRearRight, true);#end
+              #variable($Name).setInvertedMotor(RobotDrive.MotorType.kRearRight, true);#end
 
   Gyro:
     Defaults: "AnalogInput,Component,None"
