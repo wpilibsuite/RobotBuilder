@@ -25,29 +25,12 @@ import robotbuilder.Utils;
  * @author alex
  */
 public class GettingStartedAction extends AbstractAction {
-    JEditorPane help = new JEditorPane();
-    private final JScrollPane helpScrollPane;
+    String url = "http://wpilib.screenstepslive.com/s/3120/m/7882/l/88538-overview-of-robotbuilder";
     
     public GettingStartedAction() {
         putValue(Action.NAME, "Getting Started");
         putValue(Action.SHORT_DESCRIPTION, "Show the getting started information.");
         
-        help.setEditable(false);
-        help.addHyperlinkListener(new HyperlinkListener() {
-            @Override
-            public void hyperlinkUpdate(HyperlinkEvent he) {
-                if (he.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
-                    Utils.browse(he.getURL().toString());
-                }
-            }
-        });
-        try {
-            help.setPage(Utils.getResource("/help/Introduction.html"));
-        } catch (IOException ex) {
-            Logger.getLogger(GettingStartedAction.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        helpScrollPane = new JScrollPane(help);
-        helpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         EventQueue.invokeLater(new Runnable() {
             @Override public void run() {
                 if (MainFrame.getInstance().prefs.getBoolean("getting_started.visible", true)) {
@@ -59,45 +42,8 @@ public class GettingStartedAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        JFrame frame = new JFrame("Getting Started");
-        frame.add(helpScrollPane);
-        frame.addWindowListener(new WindowListener() {
-
-            @Override public void windowOpened(WindowEvent we) {
-                MainFrame.getInstance().prefs.putBoolean("getting_started.visible", true);
-                try {
-                    MainFrame.getInstance().prefs.sync();
-                } catch (BackingStoreException ex) {
-                    Logger.getLogger(GettingStartedAction.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-
-            @Override public void windowClosing(WindowEvent we) {
-                if (MainFrame.getInstance().prefs.getBoolean("getting_started.warning", true)) {
-                    JOptionPane.showMessageDialog(MainFrame.getInstance(),
-                            "You are leaving the getting started guide. You can get back at anytime by clicking getting started in the toolbar.", 
-                            "Getting Started", JOptionPane.INFORMATION_MESSAGE);
-                    MainFrame.getInstance().prefs.putBoolean("getting_started.warning", false);
-                }
-
-                MainFrame.getInstance().prefs.putBoolean("getting_started.visible", false);
-                try {
-                    MainFrame.getInstance().prefs.sync();
-                } catch (BackingStoreException ex) {
-                    Logger.getLogger(GettingStartedAction.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-            // Don't care about these.
-            @Override public void windowClosed(WindowEvent we) {}
-            @Override public void windowIconified(WindowEvent we) {}
-            @Override public void windowDeiconified(WindowEvent we) {}
-            @Override public void windowActivated(WindowEvent we) {}
-            @Override public void windowDeactivated(WindowEvent we) {}
-        });
-        frame.pack();
-        frame.setVisible(true);
+        Utils.browse(url);
+        MainFrame.getInstance().prefs.putBoolean("getting_started.visible", false);
     }
     
 }
