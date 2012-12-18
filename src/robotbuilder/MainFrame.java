@@ -33,6 +33,7 @@ public class MainFrame extends JFrame {
     JEditorPane help;
     JToolBar toolBar;
     StatusPanel statusPanel;
+    NewProjectDialog newProjectDialog;
     private JFrame frame;
     private static MainFrame instance = null;
     public Preferences prefs;
@@ -63,8 +64,6 @@ public class MainFrame extends JFrame {
         });
 
         palette = Palette.getInstance();
-        
-        BorderLayout layout = new BorderLayout();
         
         properties = new PropertiesDisplay();
         robotTree = new RobotTree(properties, palette);
@@ -111,6 +110,8 @@ public class MainFrame extends JFrame {
         statusPanel = new StatusPanel();
         add(statusPanel, BorderLayout.SOUTH);
         
+        newProjectDialog = new NewProjectDialog(null);
+        
         pack();
         
         setSize(prefs.getInt("Width", 600), prefs.getInt("Height", 480));
@@ -133,10 +134,11 @@ public class MainFrame extends JFrame {
     
     public void openDefaultFile() {
         String fileName = prefs.get("FileName", "");
-        if (fileName.length() > 0)
+        if (fileName.length() > 0) {
             robotTree.load(new File(fileName));
-        else
-            robotTree.takeSnapshot();
+        } else {
+            newProjectDialog.display();
+        }
     }
     
     public void closeWindow() {
@@ -169,5 +171,9 @@ public class MainFrame extends JFrame {
     
     public void setStatus(String status) {
         statusPanel.setStatus(status);
+    }
+
+    public void showNewProjectDialog() {
+        newProjectDialog.display();
     }
 }

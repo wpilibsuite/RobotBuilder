@@ -46,8 +46,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     private SimpleHistory<String> history = new SimpleHistory<String>();
 
     private JFileChooser fileChooser = new JFileChooser();
+    Palette palette;
 
     public RobotTree(PropertiesDisplay properties, Palette palette) {
+        this.palette = palette;
 	fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yml"));
 	this.properties = properties;
 	this.properties.setRobotTree(this);
@@ -320,7 +322,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
      * @param path 
      */
     public void load(Reader in) {
-        resetTree(Palette.getInstance());
+        resetTree();
         
         Iterator docs = new Yaml().loadAll(in).iterator();
         
@@ -470,16 +472,22 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         }
     }
     
-    public void newFile(Palette palette) {
+    public void newFile() {
+        newFile("MyRobot", "0");
+    }
+    
+    public void newFile(String name, String team) {
         if (OKToClose()) {
-            resetTree(palette);
+            resetTree();
+            getRoot().setName(name);
+            getRoot().setProperty("Team Number", team);
             saved = true;
             setFilePath(null);
             MainFrame.getInstance().prefs.put("FileName", "");
         }
     }
 
-    private void resetTree(Palette palette) {
+    private void resetTree() {
         DefaultMutableTreeNode root = makeTreeRoot();
         treeModel.setRoot(root);
         tree.setSelectionPath(new TreePath(root));

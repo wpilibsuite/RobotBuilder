@@ -22,7 +22,7 @@ public class NewAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-	MainFrame.getInstance().getCurrentRobotTree().newFile(Palette.getInstance());
+	MainFrame.getInstance().showNewProjectDialog();
     }
     
 }
