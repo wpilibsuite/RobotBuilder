@@ -34,7 +34,7 @@ public class ChildSelectionPropertyTest {
     @Before
     public void setUp() {
         RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        tree.newFile();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         

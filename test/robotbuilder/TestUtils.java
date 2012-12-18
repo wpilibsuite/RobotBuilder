@@ -23,7 +23,7 @@ public class TestUtils {
     public static RobotTree getNewRobotTree() {
         RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
         tree.saved = true; // Hack to keep from prompting for user input.
-        tree.newFile(Palette.getInstance());
+        tree.newFile();
         return tree;
     }
     

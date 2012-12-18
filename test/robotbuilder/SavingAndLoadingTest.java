@@ -65,7 +65,7 @@ public class SavingAndLoadingTest {
     @Test
     public void saveAndLoadFromAnOddLocation() throws IOException {
         RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.newFile(Palette.getInstance());
+        tree.newFile();
         tree.isRobotValid();
         RobotComponent before = tree.getRoot();
         File tmpFile = File.createTempFile("robotbuilder-test-save", "-"+Long.toString(System.nanoTime())+".yml");
