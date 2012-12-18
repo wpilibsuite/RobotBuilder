@@ -72,13 +72,6 @@ public class RobotComponent extends DefaultMutableTreeNode {
                 return false;
             }
         }
-        if (children != null) {
-            for (Object comp : children) {
-                if (!((RobotComponent) comp).isValid()) {
-                    return false;
-                }
-            }
-        }
         return true;
     }
     
