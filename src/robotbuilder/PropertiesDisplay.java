@@ -24,9 +24,14 @@ public class PropertiesDisplay extends JPanel {
     RobotComponent currentComponent;
     String[] keys;
     RobotTree robot;
+    Label errorLabel;
     
     public PropertiesDisplay() {
         setLayout(new BorderLayout());
+        errorLabel = new Label("Error: Hover over the red property names for details of how to fix.");
+        errorLabel.setForeground(Color.red);
+        errorLabel.setVisible(false);
+        add(errorLabel, BorderLayout.NORTH);
 	propTableModel = new PropertiesTableModel();
 	propTable = new PropertiesTable(propTableModel);
         add(new JScrollPane(propTable), BorderLayout.CENTER);
@@ -38,6 +43,7 @@ public class PropertiesDisplay extends JPanel {
         if (propTable.getCellEditor() != null)
             propTable.getCellEditor().stopCellEditing();
         currentComponent = (RobotComponent) node;
+        errorLabel.setVisible(!currentComponent.isValid());
         keys = currentComponent.getPropertyKeys();
         update();
     }
