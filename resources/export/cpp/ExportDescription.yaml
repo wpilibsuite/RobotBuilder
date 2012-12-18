@@ -143,7 +143,9 @@ Instructions:
       #if($Send_to_SmartDashboard)
 
               //SmartDashboard->PutData("${Name}", #variable($Name));#end
-      
+
+    LiveWindow: "LiveWindow->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    
   Robot Drive 2:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
