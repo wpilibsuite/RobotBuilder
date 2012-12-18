@@ -1,10 +1,13 @@
 
 package robotbuilder;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ErrorMessages;
 import robotbuilder.palette.Palette;
 import robotbuilder.robottree.RobotTree;
 import java.awt.BorderLayout;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -29,9 +32,14 @@ public class MainFrame extends JFrame {
     PropertiesDisplay properties;
     JEditorPane help;
     JToolBar toolBar;
+    StatusPanel statusPanel;
     private JFrame frame;
     private static MainFrame instance = null;
     public Preferences prefs;
+    Timer errorTimer;
+    
+    String errorMessage = "Error! Please fix the red components. Hovering over them will provide more details.";
+    String goodMessage = "Everything A OK.";
 
     public static MainFrame getInstance() {
         if (instance == null)
@@ -100,9 +108,27 @@ public class MainFrame extends JFrame {
         toolBar = actions.getToolBar();
         add(toolBar, BorderLayout.PAGE_START);
         
+        statusPanel = new StatusPanel();
+        add(statusPanel, BorderLayout.SOUTH);
+        
         pack();
         
         setSize(prefs.getInt("Width", 600), prefs.getInt("Height", 480));
+        
+        errorTimer = new Timer(200, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (getCurrentRobotTree().isRobotValid()) {
+                    if (statusPanel.getStatus() == goodMessage
+                            || statusPanel.getStatus() == errorMessage)
+                        setStatus(goodMessage);
+                } else {
+                    setStatus(errorMessage);
+                }
+            }
+        });
+        setStatus(goodMessage);
+        errorTimer.start(); 
     }
     
     public void openDefaultFile() {
@@ -139,5 +165,9 @@ public class MainFrame extends JFrame {
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.WARNING, "Nonexistent help file: "+file);
         }
+    }
+    
+    public void setStatus(String status) {
+        statusPanel.setStatus(status);
     }
 }

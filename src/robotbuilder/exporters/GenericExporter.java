@@ -119,15 +119,14 @@ public class GenericExporter {
             file.export(this);
         }
         
+        MainFrame.getInstance().setStatus("Export succesful.");
         if (post_export_action != null) {
             String action = eval(post_export_action);
             if (action.startsWith("#")) {
                 if (action.startsWith("#Browse:")) {
                     Utils.browse(action.replace("#Browse:", ""));
                 } else if (action.startsWith("#Message")) {
-                    JOptionPane.showMessageDialog(MainFrame.getInstance(),
-                            action.replace("#Message:", ""),
-                            "Export Complete", JOptionPane.INFORMATION_MESSAGE);
+                    MainFrame.getInstance().setStatus(action.replace("#Message:", ""));
                 } else {
                     Logger.getLogger(Utils.class.getName()).log(Level.WARNING, null,
                             "No special action for "+action);
