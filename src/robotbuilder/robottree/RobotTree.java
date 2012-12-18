@@ -323,59 +323,75 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
         Iterator docs = new Yaml().loadAll(in).iterator();
         
         String version = (String) docs.next();
-        // FIXME: Asserts don't normally work...
-        assert version.equals("Version "+RobotBuilder.VERSION); // TODO: handle more cleanly
+        if (!version.equals("Version "+RobotBuilder.VERSION)) {
+            JOptionPane.showMessageDialog(MainFrame.getInstance(),
+                    "File was made with RobotBuilder "+version.replace("V", "v")
+                    +" which is incompatable with version "+RobotBuilder.VERSION+".",
+                    "Wrong Version", JOptionPane.ERROR_MESSAGE);
+            return; // Give up
+        }
 
-        Map<String, Object> details = (Map<String, Object>) docs.next();
-        RobotComponent root = new RobotComponent();
+        try {
+            Map<String, Object> details = (Map<String, Object>) docs.next();
+            RobotComponent root = new RobotComponent();
         
-        root.visit(new RobotVisitor() {
-            @Override
-            public Object visit(RobotComponent self, Object...extra) {
-                Map<String, Object> details = (Map<String, Object>) extra[0];
-                self.setRobotTree(robot);
-                self.setName((String) details.get("Name"));
-                self.setBaseType((String) details.get("Base"));
-                self.setProperties((Map<String, Property>) details.get("Properties"));
-                for (String propertyName : self.getBase().getPropertiesKeys()) {
-                    Object value = self.getProperties().get(propertyName);
-                    if (value != null) value = ((Property) value).getValue();
-                    Property property = self.getBase().getProperty(propertyName).copy();
-                    property.setComponent(self);
-                    if (value != null) property._setValue(value);
-                    self.getProperties().put(propertyName, property);
+            root.visit(new RobotVisitor() {
+                @Override
+                public Object visit(RobotComponent self, Object...extra) {
+                    Map<String, Object> details = (Map<String, Object>) extra[0];
+                    self.setRobotTree(robot);
+                    self.setName((String) details.get("Name"));
+                    self.setBaseType((String) details.get("Base"));
+                    self.setProperties((Map<String, Property>) details.get("Properties"));
+                    for (String propertyName : self.getBase().getPropertiesKeys()) {
+                        Object value = self.getProperties().get(propertyName);
+                        if (value != null) value = ((Property) value).getValue();
+                        Property property = self.getBase().getProperty(propertyName).copy();
+                        property.setComponent(self);
+                        if (value != null) property._setValue(value);
+                        self.getProperties().put(propertyName, property);
+                    }
+                    for (Object childDescription : (List) details.get("Children")) {
+                        RobotComponent child = new RobotComponent();
+                        child.visit(this, (Map<String, Object>) childDescription);
+                        self.add(child);
+                    }
+                    return null;
                 }
-                for (Object childDescription : (List) details.get("Children")) {
-                    RobotComponent child = new RobotComponent();
-                    child.visit(this, (Map<String, Object>) childDescription);
-                    self.add(child);
+            }, details);
+            
+            treeModel.setRoot(root);
+            
+            // Validate loaded ports
+            ((RobotComponent) treeModel.getRoot()).walk(new RobotWalker() {
+                @Override
+                public void handleRobotComponent(RobotComponent self) {
+                    for (Property property : self.getProperties().values()) {
+                        property.update();
+                    }
                 }
-                return null;
-            }
-        }, details);
-        
-        treeModel.setRoot(root);
-        
-        // Validate loaded ports
-        ((RobotComponent) treeModel.getRoot()).walk(new RobotWalker() {
-            @Override
-            public void handleRobotComponent(RobotComponent self) {
-                for (Property property : self.getProperties().values()) {
-                   property.update();
+            });
+            
+            properties.setCurrentComponent(root);
+            update();
+            
+            // Add names to used names list
+            walk(new RobotWalker() {
+                @Override
+                public void handleRobotComponent(RobotComponent self) {
+                    addName(self.getFullName());
                 }
-            }
-        });
-        
-        properties.setCurrentComponent(root);
-        update();
-        
-        // Add names to used names list
-        walk(new RobotWalker() {
-            @Override
-            public void handleRobotComponent(RobotComponent self) {
-                addName(self.getFullName());
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            StringWriter writer = new StringWriter();
+            PrintWriter printer = new PrintWriter(writer);
+            e.printStackTrace(printer);
+            JOptionPane.showMessageDialog(MainFrame.getInstance(),
+                    "Failed to load the file.\nCause: "+e.getCause()
+                    +"\nMessage: "+e.getMessage()+"\nStacktrace:\n"+writer.toString().substring(0, 500),
+                    "Failed to Load File", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     public void load() {
