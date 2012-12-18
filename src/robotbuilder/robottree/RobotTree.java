@@ -299,7 +299,9 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 	try {
 	    FileReader source = new FileReader(path);
             load(source);
-	} catch (IOException ex) {
+	} catch (FileNotFoundException ex) {
+            Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
 	    Logger.getLogger(RobotTree.class.getName()).log(Level.SEVERE, null, ex);
 	}
         setFilePath(path.getAbsolutePath());
