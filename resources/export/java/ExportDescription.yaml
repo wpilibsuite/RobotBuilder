@@ -135,7 +135,7 @@ Instructions:
 
   PID Controller:
     Defaults: "Component,None"
-    ClassName: "SendablePIDController"
+    ClassName: "PIDController"
     Import: "import edu.wpi.first.wpilibj.smartdashboard.*;"
     Construction: "#variable($Name) = new ${ClassName}($P, $I, $D, $F, #variable($Input), #variable($Output), $Period);"
     Extra: >
@@ -150,7 +150,9 @@ Instructions:
       #if($Send_to_SmartDashboard)
 
               //SmartDashboard.putData("${Name}", #variable($Name));#end
-      
+              
+    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    
   Robot Drive 2:
     Defaults: "Component,None"
     ClassName: "RobotDrive"

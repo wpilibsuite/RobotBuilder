@@ -7,6 +7,7 @@ import ${package}.RobotMap;
 import ${package}.commands.*;
 ${helper.getImports($subsystem, "RobotMap")}
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
