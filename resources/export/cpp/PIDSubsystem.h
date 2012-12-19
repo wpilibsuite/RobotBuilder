@@ -5,7 +5,6 @@
 \#define #constant($subsystem.name)_H
 
 \#include "Commands/PIDSubsystem.h"
-\#include "LiveWindow/LiveWindow.h"
 \#include "WPILib.h"
 
 /**
