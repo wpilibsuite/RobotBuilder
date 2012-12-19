@@ -244,9 +244,8 @@ public class PropertiesDisplay extends JPanel {
                 final String key = keys[row-1];
                 currentComponent.getProperty(key).setValue(val);
                 update();
-//                robot.update();
             }
-            //robot.update();
+            MainFrame.getInstance().updateStatus();
         }
     }
 }

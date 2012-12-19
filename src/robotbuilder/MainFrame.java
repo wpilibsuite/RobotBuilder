@@ -37,7 +37,6 @@ public class MainFrame extends JFrame {
     private JFrame frame;
     private static MainFrame instance = null;
     public Preferences prefs;
-    Timer errorTimer;
     
     String errorMessage = "Error! Please fix the red components. Hovering over them will provide more details.";
     String goodMessage = "Everything A OK.";
@@ -116,20 +115,7 @@ public class MainFrame extends JFrame {
         
         setSize(prefs.getInt("Width", 600), prefs.getInt("Height", 480));
         
-        errorTimer = new Timer(200, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                if (getCurrentRobotTree().isRobotValid()) {
-                    if (statusPanel.getStatus() == goodMessage
-                            || statusPanel.getStatus() == errorMessage)
-                        setStatus(goodMessage);
-                } else {
-                    setStatus(errorMessage);
-                }
-            }
-        });
         setStatus(goodMessage);
-        errorTimer.start(); 
     }
     
     public void openDefaultFile() {
@@ -171,6 +157,16 @@ public class MainFrame extends JFrame {
     
     public void setStatus(String status) {
         statusPanel.setStatus(status);
+    }
+    
+    public void updateStatus() {
+        if (getCurrentRobotTree().isRobotValid()) {
+            if (statusPanel.getStatus() == goodMessage
+                    || statusPanel.getStatus() == errorMessage)
+                setStatus(goodMessage);
+        } else {
+            setStatus(errorMessage);
+        }
     }
 
     public void showNewProjectDialog() {

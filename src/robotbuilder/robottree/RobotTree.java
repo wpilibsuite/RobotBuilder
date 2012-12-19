@@ -221,6 +221,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     @Override
     public void valueChanged(TreeSelectionEvent tse) {
 	RobotComponent node = (RobotComponent) tree.getLastSelectedPathComponent();
+        MainFrame.getInstance().updateStatus();
 
 	if (node == null) {
 	    return;
