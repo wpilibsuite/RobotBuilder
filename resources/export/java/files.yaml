@@ -80,7 +80,7 @@
   update: Modify
   modifications:
     requires: ${exporter-path}Command-requires.java
-    execute: ${exporter-path}SetpointCommand-execute.java
+    initialize: ${exporter-path}SetpointCommand-initialize.java
     isFinished: ${exporter-path}SetpointCommand-isFinished.java
   variables:
     command-name: ${command.name}
