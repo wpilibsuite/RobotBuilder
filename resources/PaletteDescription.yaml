@@ -326,7 +326,7 @@ Palette:
             default: 0.2
 ##          - !DoubleProperty
 ##            name: Period
-##            default: .05
+##            default: .02
           - !BooleanProperty
             name: Continuous
             default: false
@@ -386,7 +386,7 @@ Palette:
             default: 0.2
           - !DoubleProperty
             name: Period
-            default: .05
+            default: .02
           - !BooleanProperty
             name: Continuous
             default: false
@@ -808,7 +808,7 @@ Palette:
             default: 0.2
           - !DoubleProperty
             name: Period
-            default: .05
+            default: .02
           - !BooleanProperty
             name: Continuous
             default: false
