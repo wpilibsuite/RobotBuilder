@@ -266,7 +266,7 @@ Palette:
         name: OI
         type: OI
         supports: {Button: -1, Joystick: -1, OI Input: -1, OI Output: -1}
-        help: Your operator interface!
+        help: Your operator interface! Maps the joysticks and other controls to commands.
         properties: []
       - !Component
         name: Commands
@@ -290,7 +290,7 @@ Palette:
         name: PID Subsystem
         type: Subsystem
         supports: {Sensor: -1, Actuator: -1, Controller: -1, Pneumatic: -1, PIDSource: -1, PIDOutput: -1}
-        help: A PID Subsystem is one that uses a PID loop almost constantly.
+        help: A PID Subsystem is a subsystem that uses a PID control loop.
         properties:
           - !TypeSelectionProperty
             name: Default Command
@@ -354,7 +354,7 @@ Palette:
         name: PID Controller
         type: Controller
         supports: {PIDSource: 1, PIDOutput: 1}
-        help: PIDControllers allow control of an actuator based off of feedback from a sensor.
+        help: PID controllers allow control of an actuator based off of feedback from a sensor.
         properties:
 ##          - !BooleanProperty
 ##            name: Send to SmartDashboard
@@ -412,7 +412,7 @@ Palette:
         name: Robot Drive 2
         type: Controller
         supports: {PIDOutput: 2}
-        help: RobotDrive handles tank drive, arcade drive and mecanum drive.
+        help: RobotDrive handles tank, arcade, holonomic and mecanum drive.
         properties:
           - !ChildSelectionProperty
             name: Left Motor
@@ -446,7 +446,7 @@ Palette:
         name: Robot Drive 4
         type: Controller
         supports: {PIDOutput: 4}
-        help: RobotDrive handles tank drive, arcade drive and mecanum drive.
+        help: RobotDrive handles tank, arcade, holonomic and mecanum drive.
         properties:
           - !ChildSelectionProperty
             name: Left Front Motor
@@ -590,7 +590,7 @@ Palette:
       - !Component
         name: Ultrasonic
         type: PIDSource
-        help: A range finding sensor based off of sound reflections.
+        help: A range finding sensor based off of sound reflections using a digital input and output.
         properties:
           #DigitalChannel("Ping")
           #DigitalChannel("Echo")
@@ -632,7 +632,7 @@ Palette:
       - !Component
         name: Spike
         type: Actuator
-        help: A motor controller that can run forwards/backwards/stopped; typically used for compressors
+        help: A motor controller that can run forwards/backwards/stopped; typically used for compressors.
         properties:
           #RelayOutput("Output")
 
@@ -755,7 +755,7 @@ Palette:
       - !Component
         name: Command
         type: Command
-        help: A command, someone really needs to update the help.
+        help: A command specifies an action that the robot can perform.
         properties:
           - !TypeSelectionProperty
             name: Requires
@@ -767,7 +767,7 @@ Palette:
       - !Component
         name: Command Group
         type: Command
-        help: A command group, someone really needs to update the help.
+        help: A group of commands set to run together in a prescribed way.
         properties: 
           - !BooleanProperty
             name: Button on SmartDashboard
@@ -775,7 +775,7 @@ Palette:
       - !Component
         name: PID Command
         type: Command
-        help: A PID command, someone really needs to update the help.
+        help: A command that uses a PID controller to perform its desired action.
         properties:
           - !TypeSelectionProperty
             name: Requires
@@ -833,7 +833,7 @@ Palette:
       - !Component
         name: Setpoint Command
         type: Command
-        help: A command, someone really needs to update the help.
+        help: A command that moves a PID subsystem to a predetermined setpoint.
         properties:
           - !ComponentSelectionProperty
             name: Requires
