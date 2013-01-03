@@ -9,26 +9,41 @@
       <center><img src="../icons/Indexed Encoder.png" /></center>
 
     <h2>What is it?</h2>
-    <p>A paragraph or so describing what it is</p>
-
+    <p>Indexed encoders are devices that count shaft rotation and can
+       sense direction. The output of the encoder class is an integer
+       that can count either up or down, and can go negative for
+       reverse direction counting. Quadrature encoders have three
+       digital outputs, an A Channel, a B Channel and in index that
+       are out of phase with each other to allow the FPGA to do
+       direction sensing.</p>
 
     <h2>Properties</h2>
 
     <dl>
-      <dt>Name</dt>
-      <dd>The name of this compenent.</dd>
-      <dt>Property Name)</dt>
-      <dd>A brief description of the property.</dd>
+      <dt>Channel A Module (Digital)</dt>
+      <dd>The digital sidecar on the CRIO that channel A of the encoder is plugged into.</dd>
+      <dt>Channel A Port (Digital)</dt>
+      <dd>The DIO port on the digital sidecar that channel A of the encoderis plugged into.</dd>
+      <dt>Channel B Module (Digital)</dt>
+      <dd>The digital sidecar on the CRIO that channel B of the encoder is plugged into.</dd>
+      <dt>Channel B Port (Digital)</dt>
+      <dd>The DIO Port on the digital sidecar that channel B of the encoder is plugged into.</dd>
+      <dt>Index Module (Digital)</dt>
+      <dd>The digital sidecar on the CRIO that the index of the encoder is plugged into.</dd>
+      <dt>Index Port (Digital)</dt>
+      <dd>The DIO Port on the digital sidecar that the index of the encoder is plugged into.</dd>
+      <dt>Reverse Direction</dt>
+      <dd>Whether or not to reverse the direction considered positive by the encoder.</dd>
+      <dt>Distance Per Pulse</dt>
+      <dd>Conversion factor to convert pulses to meaninful distance.</dd>
+      <dt>PID Source</dt>
+      <dd>Whether this encoder is being used for position or velocity PID.</dd>
     </dl>
-
 
     <h2>See Also</h2>
     <ul>
       <li>
-	<a href="" >Wikipedia</a>
-      </li>
-      <li>
-	<a href="" >FIRST KOP Datasheet</a>
+	<a href="https://en.wikipedia.org/wiki/Rotary_encoder">Wikipedia</a>
       </li>
     </ul>
   </body>
