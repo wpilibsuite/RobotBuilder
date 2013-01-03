@@ -11,8 +11,10 @@
     <h2>What is it?</h2>
       <p>A subsystem on a robot is a distinct part of the robot that
   	 performs a certain function. Within the command based robot
-	framework, subsystems are encapsulated (represented) by
-	classes.</p>
+  	 framework, subsystems are encapsulated (represented) by
+  	 classes. PID commands include a built-in PID controller. For
+  	 an explanation of PID, see <a href="PID Controller.html">PID
+  	 Controller.</a></p>
       <p class="lead">Subsystems can contain the following attributes:</p>
       <ol>
 	<li>Sensors: Things that sense including buttons, potentiometers,
@@ -57,19 +59,50 @@
       <dd>The command that runs when no other command is running on
           this subsystem. This command controls the default
           behaviour of this subsystem.</dd>
+      <dt>Send to SmartDashboard</dt>
+      <dd>Whether or not to send this PID Controller to the
+          SmartDashboard for easy tuning and viewing.</dd>
+      <dt>Input</dt>
+      <dd>The sensor that tells the PID loop where it is.</dd>
+      <dt>Output</dt>
+      <dd>The actuator that controls movement of the mechanism.</dd>
+      <dt>P</dt>
+      <dd>The proportional constant for this PID Controller.</dd>
+      <dt>I</dt>
+      <dd>The integral constant for this PID Controller.</dd>
+      <dt>D</dt>
+      <dd>The derivative constant for this PID Controller.</dd>
+      <dt>F</dt>
+      <dd>The forcing constant for this PID Controller.</dd>
+      <dt>Tolerance</dt>
+      <dd>How close is close enough for the PID Controller to be
+          considered on target, or at the right location.</dd>
+      <dt>Continuous</dt>
+      <dd>When true, the PID controller to consider the input to be
+          continuous. Rather then using the max and min in as
+          constraints, it considers them to be the same point and
+          automatically calculates the shortest route to the
+          setpoint.</dd>
+      <dt>Limit Input</dt>
+      <dd>Whether or not to limit the range of acceptable input
+          values.</dd>
+      <dt>Minimum Input</dt>
+      <dd>The minimum input value, any value lower than this will be
+          considered to have this value.</dd>
+      <dt>Maximum Input</dt>
+      <dd>The maximum input value, any value higher than this will be
+          considered to have this value.</dd>
+      <dt>Limit Output</dt>
+      <dd>Whether or not to limit the range of acceptable output
+          values.</dd>
+      <dt>Minimum Output</dt>
+      <dd>The minimum output value, any output that would have value
+          lower will be output as this value.</dd>
+      <dt>Maximum Output</dt>
+      <dd>The maximum output value, any output that would have value
+          higher will be output as this value.</dd>
     </dl>
 
-    <h2>Applications</h2>
-    
-    <h3>An Application</h3>
-    <p>A paragraph describing the application</p>
-    
-    <h3>An Application</h3>
-    <p>A paragraph describing the application</p>
-    
-    <h2>Usage</h2>
-    
-    
     <h3>Organization</h3>
     
     <p>Subsystem are primarily used as an organizational concept. In
@@ -81,10 +114,13 @@
     <h2>See Also</h2>
     <ul>
       <li>
-	<a href="" >Wikipedia</a>
+	<a href="http://www.youtube.com/watch?v=1WLk1_Ye_U8" >WPILIB PID Tuning Video</a>
       </li>
       <li>
-	<a href="" >FIRST KOP Datasheet</a>
+	<a href="http://wpilib.screenstepslive.com/s/3120/m/7882/l/79335-writing-the-code-for-a-pidsubystem-in-java" >Writing the code for a PIDSubystem in Java</a>
+      </li>
+      <li>
+	<a href="http://wpilib.screenstepslive.com/s/3120/m/7882/l/79331-using-pidsubsystems-to-control-a-actuators-with-feedback-from-sensors" >Using PIDSubsystems to control a actuators with feedback from sensors</a>
       </li>
     </ul>
   </body>

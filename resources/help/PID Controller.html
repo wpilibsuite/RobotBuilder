@@ -76,10 +76,13 @@
       <dd>The derivative constant for this PID Controller.</dd>
       <dt>F</dt>
       <dd>The forcing constant for this PID Controller.</dd>
+      <dt>Tolerance</dt>
+      <dd>How close is close enough for the PID Controller to be
+          considered on target, or at the right location.</dd>
       <dt>Period</dt>
       <dd>The loop time for doing calculations. This particularly
           effects calculations of the integral and differential
-          terms. The default is 50ms.</dd>
+          terms. The default is 20ms.</dd>
       <dt>Continuous</dt>
       <dd>When true, the PID controller to consider the input to be
           continuous. Rather then using the max and min in as
@@ -131,18 +134,20 @@
     <h3>C++</h3>
     
     <p>Setting the setpoint in C++ is easy, just call <code>my_pid_controller.Setsetpoint(2);</code></p>
-    
-    <h3>Labview</h3>
-    
-    <p>Setting the setpoint in Labview is easy, just ....</p>
 
     <h2>See Also</h2>
     <ul>
       <li>
+	<a href="http://wpilib.screenstepslive.com/s/3120/m/7882/l/79335-writing-the-code-for-a-pidsubystem-in-java" >Writing the code for a PIDSubystem in Java</a>
+      </li>
+      <li>
+	<a href="http://wpilib.screenstepslive.com/s/3120/m/7882/l/79331-using-pidsubsystems-to-control-a-actuators-with-feedback-from-sensors" >Using PIDSubsystems to control a actuators with feedback from sensors</a>
+      </li>
+      <li>
 	<a href="https://en.wikipedia.org/wiki/PID_controller" >Wikipedia</a>
       </li>
       <li>
-	<a href="" >WPILIB PID Tuning Video</a>
+	<a href="http://www.youtube.com/watch?v=1WLk1_Ye_U8" >WPILIB PID Tuning Video</a>
       </li>
     </ul>
   </body>
