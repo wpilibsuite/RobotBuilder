@@ -4,18 +4,15 @@
   </head>
 
   <body>
-      <h1>Command</h1>
+      <h1>Setpoint Command</h1>
 
       <center><img src="../icons/Command.png" /></center>
 
     <h2>What is it?</h2>
-      <p>A command is a single action performed by the robot. Commands
-         usually require at least one subsystem which they act
-         with. After being started, a command runs for a period of
-         time until either it is finished performing its task or it is
-         interrupted. Interruptions can occur either when a command is
-         canceled or when another command that requires the same
-         command is run.</p>
+      <p>A setpoint command moves a PID subsystem to the given
+      setpoint. It finishes when the PID subsystem is within the given
+      tolerance of the setpoint.</p>
+      
       <h3>What does it mean for a command to require a subsystem?</h3>
       <p>Commands can require a subsystem using
          the requires() method of commands. When a command requires a
@@ -31,6 +28,8 @@
       <dd>The subsystem that this command requires.</dd>
       <dt>Button on SmartDashboard</dt>
       <dd>Whether or not to automatically place a button on the SmartDashboard.</dd>
+      <dt>Setpoint</dt>
+      <dd>The setpoint to move the required subsystem to.</dd>
     </dl>
 
   </body>

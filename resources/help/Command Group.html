@@ -9,22 +9,16 @@
       <center><img src="../icons/Command Group.png" /></center>
 
     <h2>What is it?</h2>
-    <p>A paragraph or so describing what it is</p>
+      <p>A command group is a group of other commands set to run in
+      series and in parallel with eachother. Command groups are a good
+      way to build up more complicated commands using already tested components.</p>
+      
+    <h2>Properties</h2>
 
-      <p>A command is a single action performed by the robot. Commands
-         usually require at least one subsystem which they act
-         with. After being started, a command runs for a period of
-         time until either it is finished performing its task or it is
-         interrupted. Interruptions can occur either when a command is
-         canceled or when another command that requires the same
-         command is run.</p>
-      <h3>What does it mean for a command to require a subsystem?</h3>
-      <p>Commands can require a subsystem using
-         the requires() method of commands. When a command requires a
-         subsystem, it claims exclusive control over that subsystem
-         and will interrupt any other command that requires the same
-         subsystem. This only works if all your commands properly
-         require the subsystems that they use.</p>
+    <dl>
+      <dt>Button on SmartDashboard</dt>
+      <dd>Whether or not to automatically place a button on the SmartDashboard.</dd>
+    </dl>
     
     <h2>See Also</h2>
     <ul>
