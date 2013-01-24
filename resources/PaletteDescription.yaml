@@ -502,7 +502,7 @@ Palette:
           #AnalogInput("Input")
           - !DoubleProperty
             name: Sensitivity
-            default: 1.25
+            default: 0.007
       - !Component
         name: Accelerometer
         type: PIDSource
