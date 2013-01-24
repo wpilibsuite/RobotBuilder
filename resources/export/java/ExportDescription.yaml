@@ -195,6 +195,7 @@ Instructions:
     Defaults: "AnalogInput,Component,None"
     ClassName: "Gyro"
     Extra: "#variable($Name).setSensitivity(${Sensitivity});"
+    PID: "#variable($Short_Name).pidGet()"
   Accelerometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "Accelerometer"
