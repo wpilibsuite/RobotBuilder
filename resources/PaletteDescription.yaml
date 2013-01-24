@@ -499,7 +499,16 @@ Palette:
         type: PIDSource
         help: An analog angular rate sensor.
         properties:
-          #AnalogInput("Input")
+          - !ChoicesProperty
+            name: Input Module (Analog)
+            choices: ["1"]
+            validators: [AnalogInput]
+            default: "1"
+          - !ChoicesProperty
+            name: Input Channel (Analog)
+            choices: ["1", "2"]
+            validators: [AnalogInput]
+            default: "1"
           - !DoubleProperty
             name: Sensitivity
             default: 0.007
