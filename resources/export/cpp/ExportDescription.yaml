@@ -78,7 +78,7 @@ Defaults:
     Extra: ""
     Prototype: ""
     Function: ""
-    PID: "#variable($Short_Name)->PidGet()"
+    PID: "#variable($Short_Name)->PIDGet()"
     ClassName: ""
   AnalogInput:
     Construction: "#variable($Name) = new ${ClassName}(${Input_Module_Analog}, ${Input_Channel_Analog});"
@@ -188,7 +188,7 @@ Instructions:
     Defaults: "AnalogInput,Component,None"
     ClassName: "Gyro"
     Extra: "#variable($Name)->SetSensitivity(${Sensitivity});"
-    PID: "#variable($Short_Name)->PidGet()"
+    PID: "#variable($Short_Name)->PIDGet()"
   Accelerometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "Accelerometer"
