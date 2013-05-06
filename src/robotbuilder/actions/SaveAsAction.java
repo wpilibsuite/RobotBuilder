@@ -36,7 +36,7 @@ public class SaveAsAction extends AbstractAction {
             return;
         }
         else if (result == JFileChooser.APPROVE_OPTION) {
-            filePath = fileChooser.getSelectedFile().getName();
+            filePath = fileChooser.getSelectedFile().getPath();
             if (!filePath.endsWith(".yml"))
                 filePath += ".yml";
             
