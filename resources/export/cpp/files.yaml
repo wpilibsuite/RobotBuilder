@@ -101,7 +101,7 @@
   update: Modify
   modifications:
     requires: ${exporter-path}Command-requires.cpp
-    execute: ${exporter-path}SetpointCommand-execute.cpp
+    initialize: ${exporter-path}SetpointCommand-initialize.cpp
     isFinished: ${exporter-path}SetpointCommand-isFinished.cpp
   variables:
     command-name: ${command.name}
