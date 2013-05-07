@@ -26,7 +26,7 @@ public class FileCellEditor extends AbstractCellEditor implements TableCellEdito
     JTable table;
     
     public FileCellEditor(JFileChooser fileChooser) {
-        this.fileChooser = new JFileChooser();
+        this.fileChooser = fileChooser;
         button = new JLabel();
         button.addMouseListener(this);
     }

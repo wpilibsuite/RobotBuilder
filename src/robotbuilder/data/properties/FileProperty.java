@@ -10,6 +10,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import robotbuilder.data.RobotComponent;
+import robotbuilder.utils.RelativePathAccessory;
 
 /**
  * A file property represents a file or folder.
@@ -53,6 +54,8 @@ public class FileProperty extends Property {
                 chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 chooser.setFileFilter(new FileNameExtensionFilter(extension+" file", extension));
             }
+            RelativePathAccessory acc = new RelativePathAccessory(new File(".")); // TODO: update with yaml file location
+            acc.attachTo(chooser);
             chooser.addActionListener(new ActionListenerImpl(this));
         }
         update();
