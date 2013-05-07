@@ -160,10 +160,10 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     }
 
     /**
-     * Gets the file path of the save file.
+     * Sets the file path of the save file.
      * @return 
      */
-    protected void setFilePath(String filePath) {
+    public void setFilePath(String filePath) {
         this.filePath = filePath;
         MainFrame.getInstance().setTitle("FRC RobotBuilder"+(filePath==null?"":" -- "+filePath));
     }

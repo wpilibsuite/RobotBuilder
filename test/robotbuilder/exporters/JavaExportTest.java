@@ -43,7 +43,7 @@ public class JavaExportTest {
     public void testJavaExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
         tree.getRoot().setName("RobotBuilderTestProject");
-        tree.getRoot().getProperty("Java Project Directory").setValue("test-resources/");
+        tree.getRoot().getProperty("Java Project Directory").setValue(new File("test-resources/").getAbsolutePath());
         tree.getRoot().getProperty("Java Package").setValue("robotcode");
         GenericExporter exporter = new GenericExporter("/export/java/");
         exporter.post_export_action = null;

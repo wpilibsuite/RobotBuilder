@@ -21,7 +21,7 @@ import robotbuilder.utils.RelativePathAccessory;
 public class FileProperty extends Property {
     protected String value, extension;
     protected boolean folder;
-    private boolean relative;
+    boolean relative;
     protected JFileChooser chooser;
     
     public FileProperty() {}
@@ -99,6 +99,7 @@ public class FileProperty extends Property {
                     || getValue().toString().matches("^.:\\\\.*")) { // and the more general form of C:\
                 file = new File(getValue().toString());
             } else {
+                System.out.println("Parent File: "+MainFrame.getInstance().getCurrentRobotTree().getFilePath());
                 file = new File(new File(MainFrame.getInstance().getCurrentRobotTree().getFilePath()).getParentFile(),
                         getValue().toString());
             }

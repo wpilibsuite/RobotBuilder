@@ -11,7 +11,6 @@ import javax.swing.JFileChooser;
 import org.junit.*;
 import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
-import robotbuilder.data.properties.FileProperty.ActionListenerImpl;
 
 /**
  *
@@ -78,21 +77,23 @@ public class FilePropertyTest {
     @Test public void testGetDisplayValue() {
         FileProperty fp = new FileProperty("Test", "", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", false);
+        fp.relative = false;
         fp.value = null;
         assertNull(((JFileChooser) fp.getDisplayValue()).getSelectedFile());
         fp.value = "file.test";
-        assertEquals(new File("file.test"), ((JFileChooser) fp.getDisplayValue()).getSelectedFile());
+        MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File(".").getAbsolutePath());
+        assertEquals(new File(new File("").getAbsolutePath(), "file.test"), ((JFileChooser) fp.getDisplayValue()).getSelectedFile());
         fp.value = "file";
-        assertEquals(new File("file"), ((JFileChooser) fp.getDisplayValue()).getSelectedFile());
+        assertEquals(new File(new File("").getAbsolutePath(), "file"), ((JFileChooser) fp.getDisplayValue()).getSelectedFile());
         
         FileProperty fp2 = new FileProperty("Test", "", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", true);
         fp2.value = null;
         assertNull(((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
         fp2.value = "file.test";
-        assertEquals(new File("file.test"), ((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
+        assertEquals(new File(new File("").getAbsolutePath(), "file.test"), ((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
         fp2.value = "file";
-        assertEquals(new File("file"), ((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
+        assertEquals(new File(new File("").getAbsolutePath(), "file"), ((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
     }
     
     @Test public void testSetValue() {
@@ -106,16 +107,5 @@ public class FilePropertyTest {
         assertEquals("file.test", fp.value);
         fp.setValue("path/to/file");
         assertEquals("path/to/file.test", fp.value);
-    }
-    
-    @Test public void testActionListener() {
-        FileProperty fp = new FileProperty("Test", "", new String[0],
-                MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", false);
-        ActionListenerImpl l = new FileProperty.ActionListenerImpl(fp);
-        l.actionPerformed(new ActionEvent(this, 0, "Nothing"));
-        fp.getDisplayValue();
-        fp.chooser.setSelectedFile(new File("file"));
-        l.actionPerformed(new ActionEvent(this, 0, "ApproveSelection"));
-        assertEquals("file.test", fp.value);
     }
 }
