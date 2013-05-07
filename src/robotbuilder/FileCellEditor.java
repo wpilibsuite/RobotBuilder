@@ -15,6 +15,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
+import robotbuilder.utils.RelativePathAccessory;
 
 /**
  *
@@ -35,20 +36,20 @@ public class FileCellEditor extends AbstractCellEditor implements TableCellEdito
     public Component getTableCellEditorComponent(JTable table,
             Object value, boolean isSelected, int row, int column) {
         this.table = table;
-        button.setText(value.toString());
         JFileChooser valueChooser = ((JFileChooser)value);
-        fileChooser.setSelectedFile(valueChooser.getSelectedFile());
-        fileChooser.setFileSelectionMode(valueChooser.getFileSelectionMode());
-        fileChooser.setApproveButtonText(valueChooser.getApproveButtonText());
-        fileChooser.setDialogTitle(valueChooser.getDialogTitle());
-        fileChooser.setFileFilter(valueChooser.getFileFilter());
+        button.setText(valueChooser.getSelectedFile().getAbsolutePath());
+//        fileChooser.setSelectedFile(valueChooser.getSelectedFile());
+//        fileChooser.setFileSelectionMode(valueChooser.getFileSelectionMode());
+//        fileChooser.setApproveButtonText(valueChooser.getApproveButtonText());
+//        fileChooser.setDialogTitle(valueChooser.getDialogTitle());
+//        fileChooser.setFileFilter(valueChooser.getFileFilter());
         return button;
     }
 
     @Override
     public Object getCellEditorValue() {
         try {
-            return fileChooser.getSelectedFile().getPath();
+            return ((RelativePathAccessory) fileChooser.getAccessory()).getFileName();
         } catch (NullPointerException e) {
             return "";
         }

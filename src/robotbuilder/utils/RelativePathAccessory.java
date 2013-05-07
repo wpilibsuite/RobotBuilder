@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -26,6 +28,7 @@ import robotbuilder.robottree.RobotTree;
  */
 public class RelativePathAccessory extends JPanel implements PropertyChangeListener {
     RobotTree tree;
+    File file;
     ButtonGroup options;
     JRadioButton relative, absolute;
     JTextField relativePreview, absolutePreview;
@@ -69,7 +72,7 @@ public class RelativePathAccessory extends JPanel implements PropertyChangeListe
     public void propertyChange(PropertyChangeEvent e) {
         System.out.println("Testing... "+e.getNewValue()+" -- "+e.getNewValue());
         if (e.getNewValue() instanceof File) {
-            File file = (File) e.getNewValue();
+            file = (File) e.getNewValue();
             System.out.println("\tFile!");
             if (tree.getFilePath() == null) {
                 relativePreview.setText("File not saved yet.");
@@ -78,7 +81,25 @@ public class RelativePathAccessory extends JPanel implements PropertyChangeListe
                 System.out.println("\tResult: "+RelativePath.getRelativePath(new File(tree.getFilePath()).getParentFile(), file));
                 relativePreview.setText(RelativePath.getRelativePath(new File(tree.getFilePath()).getParentFile(), file));
             }
-            absolutePreview.setText(file.getAbsolutePath());
+            try {
+                absolutePreview.setText(file.getCanonicalPath());
+            } catch (IOException ex) {
+                Logger.getLogger(RelativePathAccessory.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public String getFileName() {
+        if (file == null) return null;
+        if (relative.isSelected()) {
+            return RelativePath.getRelativePath(new File(tree.getFilePath()).getParentFile(), file);
+        } else {
+            try {
+                return file.getCanonicalPath();
+            } catch (IOException ex) {
+                Logger.getLogger(RelativePathAccessory.class.getName()).log(Level.SEVERE, null, ex);
+                return file.getAbsolutePath();
+            }
         }
     }
 }
