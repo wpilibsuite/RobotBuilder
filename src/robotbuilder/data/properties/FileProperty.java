@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import robotbuilder.MainFrame;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.utils.RelativePathAccessory;
 
@@ -54,7 +55,7 @@ public class FileProperty extends Property {
                 chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 chooser.setFileFilter(new FileNameExtensionFilter(extension+" file", extension));
             }
-            RelativePathAccessory acc = new RelativePathAccessory(new File(".")); // TODO: update with yaml file location
+            RelativePathAccessory acc = new RelativePathAccessory(MainFrame.getInstance().getCurrentRobotTree());
             acc.attachTo(chooser);
             chooser.addActionListener(new ActionListenerImpl(this));
         }
