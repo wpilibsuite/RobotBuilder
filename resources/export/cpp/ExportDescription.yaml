@@ -56,7 +56,7 @@ Required Properties:
 Vars:
   team-number: ${robot.getProperty('Team Number').getValue()}
   robot-name: ${robot.getName()}
-  project: ${robot.getProperty('C++ Windriver Workspace').getValue()}/$robot-name
+  project: ${robot.getPropertyAbsolutePath('C++ Windriver Workspace')}$file-separator$robot-name
     
 Macros: macros.vm
 
