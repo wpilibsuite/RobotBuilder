@@ -120,6 +120,11 @@ public class RelativePathAccessory extends JPanel implements PropertyChangeListe
             }
         }
     }
+
+    public void setRelative(boolean relative) {
+        if (relative) this.relative.setSelected(true);
+        else this.absolute.setSelected(true);
+    }
 }
 /**
  * this class provides functions used to generate a relative path

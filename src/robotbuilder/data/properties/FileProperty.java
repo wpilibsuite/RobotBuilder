@@ -21,6 +21,7 @@ import robotbuilder.utils.RelativePathAccessory;
 public class FileProperty extends Property {
     protected String value, extension;
     protected boolean folder;
+    private boolean relative;
     protected JFileChooser chooser;
     
     public FileProperty() {}
@@ -56,6 +57,7 @@ public class FileProperty extends Property {
                 chooser.setFileFilter(new FileNameExtensionFilter(extension+" file", extension));
             }
             RelativePathAccessory acc = new RelativePathAccessory(MainFrame.getInstance().getCurrentRobotTree());
+            acc.setRelative(relative);
             acc.attachTo(chooser);
             // chooser.addActionListener(new ActionListenerImpl(this));
         }
@@ -70,6 +72,8 @@ public class FileProperty extends Property {
             value = ((String) value)+"."+extension;
         }
         this.value = (String) value;
+        relative = !(getValue().toString().startsWith("/") // Absolute paths start with "/"
+                    || getValue().toString().matches("^.:\\\\.*")); // and the more general form of C:\
     }
 
     public String getExtension() {
@@ -91,13 +95,13 @@ public class FileProperty extends Property {
         super.update();
         if (chooser != null && !getValue().equals("")) {
             File file;
-            if (getValue().toString().startsWith("/") || getValue().toString().startsWith("\\")) {
+            if (getValue().toString().startsWith("/") // Absolute paths start with "/"
+                    || getValue().toString().matches("^.:\\\\.*")) { // and the more general form of C:\
                 file = new File(getValue().toString());
             } else {
                 file = new File(new File(MainFrame.getInstance().getCurrentRobotTree().getFilePath()).getParentFile(),
                         getValue().toString());
             }
-            System.out.println("Updating "+getValue()+" to "+file);
             chooser.setSelectedFile(file);
             //value = chooser.getSelectedFile().toString();
         }
