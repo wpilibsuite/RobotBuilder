@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.context.Context;
+import robotbuilder.MainFrame;
 
 /**
  *
@@ -70,7 +71,7 @@ public class ExportFile {
         return export.getAbsolutePath();
     }
     public void setExport(String path) {
-        export = new File(path);
+        export = new File(new File(MainFrame.getInstance().getCurrentRobotTree().getFilePath()).getParent(), path);
     }
     public String getSource() {
         return source;

@@ -37,19 +37,18 @@ public class FileCellEditor extends AbstractCellEditor implements TableCellEdito
             Object value, boolean isSelected, int row, int column) {
         this.table = table;
         JFileChooser valueChooser = ((JFileChooser)value);
-        button.setText(valueChooser.getSelectedFile().getAbsolutePath());
-//        fileChooser.setSelectedFile(valueChooser.getSelectedFile());
-//        fileChooser.setFileSelectionMode(valueChooser.getFileSelectionMode());
-//        fileChooser.setApproveButtonText(valueChooser.getApproveButtonText());
-//        fileChooser.setDialogTitle(valueChooser.getDialogTitle());
-//        fileChooser.setFileFilter(valueChooser.getFileFilter());
+        if (valueChooser.getSelectedFile() != null)
+            button.setText(valueChooser.getSelectedFile().getAbsolutePath());
+        else
+            button.setText("No File Selected");
         return button;
     }
 
     @Override
     public Object getCellEditorValue() {
         try {
-            return ((RelativePathAccessory) fileChooser.getAccessory()).getFileName();
+            System.out.println("Setting value: "+((RelativePathAccessory) fileChooser.getAccessory()).getPathName(fileChooser.getSelectedFile()));
+            return ((RelativePathAccessory) fileChooser.getAccessory()).getPathName(fileChooser.getSelectedFile());
         } catch (NullPointerException e) {
             return "";
         }

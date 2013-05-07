@@ -57,7 +57,7 @@ public class FileProperty extends Property {
             }
             RelativePathAccessory acc = new RelativePathAccessory(MainFrame.getInstance().getCurrentRobotTree());
             acc.attachTo(chooser);
-            chooser.addActionListener(new ActionListenerImpl(this));
+            // chooser.addActionListener(new ActionListenerImpl(this));
         }
         update();
         return chooser;
@@ -90,22 +90,16 @@ public class FileProperty extends Property {
     public void update() {
         super.update();
         if (chooser != null && !getValue().equals("")) {
-            chooser.setSelectedFile(new File(getValue().toString()));
-            value = chooser.getSelectedFile().toString();
-        }
-    }
-
-    static class ActionListenerImpl implements ActionListener {
-        FileProperty fp;
-        public ActionListenerImpl(FileProperty fp) {
-            this.fp = fp;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            if (ae.getActionCommand().equals("ApproveSelection")){
-                fp.setValue(fp.chooser.getSelectedFile().getPath());
+            File file;
+            if (getValue().toString().startsWith("/") || getValue().toString().startsWith("\\")) {
+                file = new File(getValue().toString());
+            } else {
+                file = new File(new File(MainFrame.getInstance().getCurrentRobotTree().getFilePath()).getParentFile(),
+                        getValue().toString());
             }
+            System.out.println("Updating "+getValue()+" to "+file);
+            chooser.setSelectedFile(file);
+            //value = chooser.getSelectedFile().toString();
         }
     }
     

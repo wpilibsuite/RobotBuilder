@@ -4,6 +4,7 @@
  */
 package robotbuilder.utils;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
@@ -22,6 +23,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import robotbuilder.robottree.RobotTree;
 
+    
 /**
  *
  * @author alex
@@ -46,11 +48,13 @@ public class RelativePathAccessory extends JPanel implements PropertyChangeListe
         relativePreview = new JTextField(".");
         relativePreview.setEditable(false);
         relativePreview.setEnabled(false);
+        relativePreview.setForeground(Color.BLACK);
         
         absolute = new JRadioButton("Use absolute path.");
         absolutePreview = new JTextField("");
         absolutePreview.setEditable(false);
         absolutePreview.setEnabled(false);
+        absolutePreview.setForeground(Color.BLACK);
         
         options = new ButtonGroup();
         options.add(relative);
@@ -70,15 +74,11 @@ public class RelativePathAccessory extends JPanel implements PropertyChangeListe
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        System.out.println("Testing... "+e.getNewValue()+" -- "+e.getNewValue());
         if (e.getNewValue() instanceof File) {
             file = (File) e.getNewValue();
-            System.out.println("\tFile!");
             if (tree.getFilePath() == null) {
                 relativePreview.setText("File not saved yet.");
             } else {
-                System.out.println("\tComparing "+new File(tree.getFilePath()).getParentFile()+" to "+file);
-                System.out.println("\tResult: "+RelativePath.getRelativePath(new File(tree.getFilePath()).getParentFile(), file));
                 relativePreview.setText(RelativePath.getRelativePath(new File(tree.getFilePath()).getParentFile(), file));
             }
             try {
@@ -102,8 +102,25 @@ public class RelativePathAccessory extends JPanel implements PropertyChangeListe
             }
         }
     }
+
+    public String getPathName(File currFile) {
+        try {
+            System.out.println(relative.isSelected()+"? "+currFile+" --- "+currFile.getAbsolutePath()+" --- "+currFile.getCanonicalPath());
+        } catch (IOException ex) {
+            Logger.getLogger(RelativePathAccessory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (relative.isSelected()) {
+            return RelativePath.getRelativePath(new File(tree.getFilePath()).getParentFile(), currFile);
+        } else {
+            try {
+                return currFile.getCanonicalPath();
+            } catch (IOException ex) {
+                Logger.getLogger(RelativePathAccessory.class.getName()).log(Level.SEVERE, null, ex);
+                return currFile.getAbsolutePath();
+            }
+        }
+    }
 }
-    
 /**
  * this class provides functions used to generate a relative path
  * from two absolute paths
@@ -188,8 +205,8 @@ class RelativePath {
         
         homelist = getPathList(home);
         filelist = getPathList(f);
-        System.out.println(homelist+" -> "+filelist);
         s = matchPathLists(homelist,filelist);
+        System.out.println("\t"+homelist+" ~ "+filelist+" --> "+s);
         
         return s;
     }

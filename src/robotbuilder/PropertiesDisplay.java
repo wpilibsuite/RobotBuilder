@@ -13,6 +13,7 @@ import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.properties.Property;
+import robotbuilder.utils.RelativePathAccessory;
 
 /**
  *
@@ -142,7 +143,9 @@ public class PropertiesDisplay extends JPanel {
                         @Override
                         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                             try {
-                                String path = ((JFileChooser) value).getSelectedFile().getPath();
+                                JFileChooser chooser = (JFileChooser) value;
+                                RelativePathAccessory acc = (RelativePathAccessory) chooser.getAccessory();
+                                String path = acc.getPathName(chooser.getSelectedFile());
                                 return new JLabel(path);
                             } catch (NullPointerException e) {
                                 return new JLabel("Click to Select");
