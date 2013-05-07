@@ -5,7 +5,9 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.tree.DefaultMutableTreeNode;
+import robotbuilder.data.properties.FileProperty;
 import robotbuilder.palette.Palette;
 import robotbuilder.robottree.RobotTree;
 import robotbuilder.data.properties.Property;
@@ -59,6 +61,18 @@ public class RobotComponent extends DefaultMutableTreeNode {
     
     public Property getProperty(String key) {
         return properties.get(key);
+    }
+    
+    /**
+     * Return the absolute file path as a string to the file property.
+     */
+    public String getPropertyAbsolutePath(String key) {
+        Property prop = getProperty(key);
+        if (prop instanceof FileProperty) {
+            return ((JFileChooser) prop.getDisplayValue()).getSelectedFile().getAbsolutePath();
+        } else {
+            return ""; // TODO: No path. Should throw error
+        }
     }
     
     public String[] getPropertyKeys() {

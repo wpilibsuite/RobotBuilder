@@ -53,7 +53,7 @@ public class Utils {
 
     public static void browse(final String url) {
         try {
-                Desktop.getDesktop().browse(new URI(url));
+            Desktop.getDesktop().browse(new URI(url));
         } catch (URISyntaxException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -64,8 +64,8 @@ public class Utils {
                 public void run() {
                     Process p;
                     try {
-                        System.out.println("chromium "+url);
-                        p = Runtime.getRuntime().exec("chromium "+url);
+                        System.out.println("firefox "+url);
+                        p = Runtime.getRuntime().exec("firefox "+url);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

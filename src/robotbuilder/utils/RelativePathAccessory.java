@@ -104,11 +104,6 @@ public class RelativePathAccessory extends JPanel implements PropertyChangeListe
     }
 
     public String getPathName(File currFile) {
-        try {
-            System.out.println(relative.isSelected()+"? "+currFile+" --- "+currFile.getAbsolutePath()+" --- "+currFile.getCanonicalPath());
-        } catch (IOException ex) {
-            Logger.getLogger(RelativePathAccessory.class.getName()).log(Level.SEVERE, null, ex);
-        }
         if (relative.isSelected()) {
             return RelativePath.getRelativePath(new File(tree.getFilePath()).getParentFile(), currFile);
         } else {

@@ -33,8 +33,7 @@ public class ExportFile {
         }
         
         if (export.exists()) backup(exporter); // Create a backup for the user!
-        
-        mkdir(export.getParentFile());
+        else mkdir(export.getParentFile());
         
         // Export
         if (!export.exists() || update.equals("Overwrite")) {
@@ -65,13 +64,12 @@ public class ExportFile {
         out.close();
     }
     
-    
     // Getters and Setters for YAML
     public String getExport() {
         return export.getAbsolutePath();
     }
     public void setExport(String path) {
-        export = new File(new File(MainFrame.getInstance().getCurrentRobotTree().getFilePath()).getParent(), path);
+        export = new File(path);
     }
     public String getSource() {
         return source;
