@@ -82,19 +82,23 @@ public class FilePropertyTest {
         assertNull(((JFileChooser) fp.getDisplayValue()).getSelectedFile());
         MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File(".").getAbsolutePath());
         fp.value = "file.test";
-        assertEquals(new File(new File(".").getAbsolutePath(), "file.test"), ((JFileChooser) fp.getDisplayValue()).getSelectedFile());
+        assertEquals(new File(new File(".").getAbsolutePath(), "file.test").getAbsolutePath(),
+                ((JFileChooser) fp.getDisplayValue()).getSelectedFile().getAbsolutePath());
         MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File(".").getAbsolutePath());
         fp.value = "file";
-        assertEquals(new File(new File(".").getAbsolutePath(), "file"), ((JFileChooser) fp.getDisplayValue()).getSelectedFile());
+        assertEquals(new File(new File(".").getAbsolutePath(), "file").getAbsolutePath(),
+                ((JFileChooser) fp.getDisplayValue()).getSelectedFile().getAbsolutePath());
         
         FileProperty fp2 = new FileProperty("Test", "", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", true);
         fp2.value = null;
         assertNull(((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
         fp2.value = "file.test";
-        assertEquals(new File(new File(".").getAbsolutePath(), "file.test"), ((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
+        assertEquals(new File(new File(".").getAbsolutePath(), "file.test").getAbsolutePath(),
+                ((JFileChooser) fp2.getDisplayValue()).getSelectedFile().getAbsolutePath());
         fp2.value = "file";
-        assertEquals(new File(new File(".").getAbsolutePath(), "file"), ((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
+        assertEquals(new File(new File(".").getAbsolutePath(), "file").getAbsolutePath(),
+                ((JFileChooser) fp2.getDisplayValue()).getSelectedFile().getAbsolutePath());
     }
     
     @Test public void testSetValue() {
