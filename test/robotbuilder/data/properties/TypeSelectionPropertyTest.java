@@ -39,6 +39,7 @@ public class TypeSelectionPropertyTest {
     @Before
     public void setUp() {
         RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
+        tree.saved = true;
         tree.newFile();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
