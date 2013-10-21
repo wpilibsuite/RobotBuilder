@@ -6,6 +6,7 @@ package robotbuilder.data.properties;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import org.junit.*;
@@ -74,31 +75,32 @@ public class FilePropertyTest {
         assertEquals("file.test", fp.getValue());
     }
     
-    @Test public void testGetDisplayValue() {
+    @Test public void testGetDisplayValue() throws IOException {
         FileProperty fp = new FileProperty("Test", "", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", false);
         fp.relative = false;
         fp.value = null;
         assertNull(((JFileChooser) fp.getDisplayValue()).getSelectedFile());
-        MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File(".").getAbsolutePath());
+        MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File("test.yml").getAbsolutePath());
         fp.value = "file.test";
-        assertEquals(new File(new File(".").getAbsolutePath(), "file.test").getAbsolutePath(),
-                ((JFileChooser) fp.getDisplayValue()).getSelectedFile().getAbsolutePath());
-        MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File(".").getAbsolutePath());
+        assertEquals(new File(new File(".").getCanonicalPath(), "file.test").getCanonicalPath(),
+                ((JFileChooser) fp.getDisplayValue()).getSelectedFile().getCanonicalPath());
+        
+        MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File("test.yml").getAbsolutePath());
         fp.value = "file";
-        assertEquals(new File(new File(".").getAbsolutePath(), "file").getAbsolutePath(),
-                ((JFileChooser) fp.getDisplayValue()).getSelectedFile().getAbsolutePath());
+        assertEquals(new File(new File(".").getCanonicalPath(), "file").getCanonicalPath(),
+                ((JFileChooser) fp.getDisplayValue()).getSelectedFile().getCanonicalPath());
         
         FileProperty fp2 = new FileProperty("Test", "", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", true);
         fp2.value = null;
         assertNull(((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
         fp2.value = "file.test";
-        assertEquals(new File(new File(".").getAbsolutePath(), "file.test").getAbsolutePath(),
-                ((JFileChooser) fp2.getDisplayValue()).getSelectedFile().getAbsolutePath());
+        assertEquals(new File(new File(".").getCanonicalPath(), "file.test").getCanonicalPath(),
+                ((JFileChooser) fp2.getDisplayValue()).getSelectedFile().getCanonicalPath());
         fp2.value = "file";
-        assertEquals(new File(new File(".").getAbsolutePath(), "file").getAbsolutePath(),
-                ((JFileChooser) fp2.getDisplayValue()).getSelectedFile().getAbsolutePath());
+        assertEquals(new File(new File(".").getCanonicalPath(), "file").getCanonicalPath(),
+                ((JFileChooser) fp2.getDisplayValue()).getSelectedFile().getCanonicalPath());
     }
     
     @Test public void testSetValue() {
