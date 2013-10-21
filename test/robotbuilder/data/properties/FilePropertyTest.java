@@ -80,20 +80,21 @@ public class FilePropertyTest {
         fp.relative = false;
         fp.value = null;
         assertNull(((JFileChooser) fp.getDisplayValue()).getSelectedFile());
-        fp.value = "file.test";
         MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File(".").getAbsolutePath());
-        assertEquals(new File(new File("").getAbsolutePath(), "file.test"), ((JFileChooser) fp.getDisplayValue()).getSelectedFile());
+        fp.value = "file.test";
+        assertEquals(new File(new File(".").getAbsolutePath(), "file.test"), ((JFileChooser) fp.getDisplayValue()).getSelectedFile());
+        MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File(".").getAbsolutePath());
         fp.value = "file";
-        assertEquals(new File(new File("").getAbsolutePath(), "file"), ((JFileChooser) fp.getDisplayValue()).getSelectedFile());
+        assertEquals(new File(new File(".").getAbsolutePath(), "file"), ((JFileChooser) fp.getDisplayValue()).getSelectedFile());
         
         FileProperty fp2 = new FileProperty("Test", "", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", true);
         fp2.value = null;
         assertNull(((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
         fp2.value = "file.test";
-        assertEquals(new File(new File("").getAbsolutePath(), "file.test"), ((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
+        assertEquals(new File(new File(".").getAbsolutePath(), "file.test"), ((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
         fp2.value = "file";
-        assertEquals(new File(new File("").getAbsolutePath(), "file"), ((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
+        assertEquals(new File(new File(".").getAbsolutePath(), "file"), ((JFileChooser) fp2.getDisplayValue()).getSelectedFile());
     }
     
     @Test public void testSetValue() {
