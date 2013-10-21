@@ -6,6 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import robotbuilder.AboutDialog;
 import robotbuilder.MainFrame;
+import robotbuilder.RobotBuilder;
 
 /**
  *
@@ -29,7 +30,7 @@ public class AboutAction extends AbstractAction {
                 AboutDialog aboutDialog = new AboutDialog(MainFrame.getInstance().getFrame(),
                                         "About RobotBuilder",
                                         "This application builds robot maps",
-                                        1.5);
+                                        RobotBuilder.VERSION);
                 aboutDialog.show();
     }
    
