@@ -96,7 +96,6 @@ public class ChildSelectionPropertyTest {
         assertEquals("Drive Train", ((JComboBox) cp.getDisplayValue()).getSelectedItem());
         cp.value = "Wrist"; cp.valueComponent = wrist;
         assertEquals("Wrist", ((JComboBox) cp.getDisplayValue()).getSelectedItem());
-        System.out.println("Getting 3....");
         cp.value = "Arm"; cp.valueComponent = arm;
         assertEquals("Arm", ((JComboBox) cp.getDisplayValue()).getSelectedItem());
         cp.value = "";
@@ -108,8 +107,10 @@ public class ChildSelectionPropertyTest {
     @Test public void testSetValue() {
         ChildSelectionProperty cp = new ChildSelectionProperty("Test", "0", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "Subsystem", "");
-        cp.setValue("Wrist");
-        assertEquals("Wrist", cp.value);
+        System.out.println(driveTrain.getFullName());
+        System.out.println(arm.getFullName());
+        System.out.println(wrist.getFullName());
+        
         cp.setValue("Arm");
         assertEquals("Arm", cp.value);
         cp.setValue("");
@@ -118,6 +119,8 @@ public class ChildSelectionPropertyTest {
         assertEquals("Drive Train", cp.value);
         cp.setValue("Drive Train");
         assertEquals("Drive Train", cp.value);
+        cp.setValue("Wrist");
+        assertEquals("Wrist", cp.value);
     }
 
 }
