@@ -229,11 +229,6 @@ Palette:
           - !IntegerProperty
             name: Team Number
             default: 0
-          - !FileProperty
-            name: Java Project Directory
-            extension: null
-            folder: true
-            default: "${home}NetBeansProjects"
           - !BooleanProperty
             name: Use Default Java Package
             default: true
@@ -241,10 +236,10 @@ Palette:
             name: Java Package
             default: "org.usfirst.frc0000"
           - !FileProperty
-            name: C++ Windriver Workspace
+            name: Eclipse Workspace
             extension: null
             folder: true
-            default: "C:\\Windriver\\workspace"
+            default: "${home}workspace"
           - !BooleanProperty
             name: Export Subsystems
             default: true

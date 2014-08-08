@@ -142,7 +142,6 @@ public class UniqueValidator implements Validator {
      * Sets a component to be unique with respect to the prefix of this property.
      * @param component
      * @param property
-     * @throws robotbuilder.data.UniqueValidator.InvalidException 
      */
     public void setUnique(RobotComponent component, String property) {
         String prefix = getPrefix(property);

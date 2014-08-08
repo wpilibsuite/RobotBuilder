@@ -161,7 +161,6 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
 
     /**
      * Sets the file path of the save file.
-     * @return 
      */
     public void setFilePath(String filePath) {
         this.filePath = filePath;
@@ -312,7 +311,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     
     /**
      * Load the RobotTree from a yaml string.
-     * @param path 
+     * @param text 
      */
     public void load(String text) {
         load(new StringReader(text));
@@ -320,7 +319,7 @@ public class RobotTree extends JPanel implements TreeSelectionListener {
     
     /**
      * Load the RobotTree from a yaml string.
-     * @param path 
+     * @param in 
      */
     public void load(Reader in) {
         resetTree();

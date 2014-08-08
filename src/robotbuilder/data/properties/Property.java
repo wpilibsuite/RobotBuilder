@@ -62,7 +62,7 @@ public abstract class Property {
     /**
      * This is called to update changes and support undo.
      * 
-     * @param prevValue The value.
+     * @param value The value.
      */
     public void setValue(Object value) {
         Object prevValue = getValue();

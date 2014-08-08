@@ -5,7 +5,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
- * A helper class used to keep track of changes to the {@link RobotTree}
+ * A helper class used to keep track of changes to the {@link robotbuilder.robottree.RobotTree}
  * and undo or redo them as necessary.
  * @author Sam
  */

@@ -41,7 +41,7 @@ public class MainFrame extends JFrame {
     String errorMessage = "Error! Please fix the red components. Hovering over them will provide more details.";
     String goodMessage = "Everything A OK.";
 
-    public static MainFrame getInstance() {
+    public static synchronized MainFrame getInstance() {
         if (instance == null)
             instance = new MainFrame();
         return instance;

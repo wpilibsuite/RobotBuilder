@@ -52,6 +52,7 @@ public class TestUtils {
         RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
         rightVictor.setProperty("Type", "Victor");
         robotDrive.add(rightVictor);
+        robotDrive.getProperty("Right Motor").setValue(rightVictor);
         RobotComponent gyro = new RobotComponent("Gyro", "Gyro", tree);
         driveTrain.add(gyro);
         gyro.getProperty("Sensitivity").setValue(2.33);

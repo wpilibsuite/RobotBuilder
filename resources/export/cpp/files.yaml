@@ -1,14 +1,4 @@
-## Netbeans Project Files
-- !File
-  export: $project/.wrproject
-  source: ${exporter-path}.wrproject
-  update: None
-
-- !File
-  export: $project/.wrmakefile
-  source: ${exporter-path}.wrmakefile
-  update: None
-
+## Eclipse Project Files
 - !File
   export: $project/.project
   source: ${exporter-path}.project
@@ -18,10 +8,30 @@
   export: $project/.cproject
   source: ${exporter-path}.cproject
   update: None
-  
-## Key Java Files
+
 - !File
-  export: $project/Robot.cpp
+  export: $project/build.properties
+  source: ${exporter-path}build.properties
+  update: None
+
+- !File
+  export: $project/build.xml
+  source: ${exporter-path}build.xml
+  update: None
+
+- !File
+  export: $project/.settings/language.settings.xml
+  source: ${exporter-path}language.settings.xml
+  update: None
+
+- !File
+  export: $project/.settings/org.eclipse.cdt.managedbuilder.core.prefs
+  source: ${exporter-path}org.eclipse.cdt.managedbuilder.core.prefs
+  update: None
+  
+## Key C++ Files
+- !File
+  export: $project/src/Robot.cpp
   source: ${exporter-path}CommandBasedRobot.cpp
   update: Modify
   modifications:
@@ -29,7 +39,7 @@
     constructors: ${exporter-path}CommandBasedRobot-constructors.cpp
     initialization: ${exporter-path}CommandBasedRobot-initialization.cpp
 - !File
-  export: $project/Robot.h
+  export: $project/src/Robot.h
   source: ${exporter-path}CommandBasedRobot.h
   update: Modify
   modifications:
@@ -37,21 +47,21 @@
     declarations: ${exporter-path}CommandBasedRobot-declarations.cpp
     
 - !File
-  export: $project/RobotMap.cpp
+  export: $project/src/RobotMap.cpp
   source: ${exporter-path}RobotMap.cpp
   update: Modify
   modifications:
     allocation: ${exporter-path}RobotMap-allocation.cpp
     constructors: ${exporter-path}RobotMap-constructors.cpp
 - !File
-  export: $project/RobotMap.h
+  export: $project/src/RobotMap.h
   source: ${exporter-path}RobotMap.h
   update: Modify
   modifications:
     declarations: ${exporter-path}RobotMap-declarations.h
   
 - !File
-  export: $project/OI.cpp
+  export: $project/src/OI.cpp
   source: ${exporter-path}OI.cpp
   update: Modify
   modifications:
@@ -59,7 +69,7 @@
     constructors: ${exporter-path}OI-constructors.cpp
     functions: ${exporter-path}OI-functions.cpp
 - !File
-  export: $project/OI.h
+  export: $project/src/OI.h
   source: ${exporter-path}OI.h
   update: Modify
   modifications:
@@ -71,20 +81,20 @@
 #foreach ($command in $commands)
 #if ($command.base.name == "Command Group")
 - !File
-  export: $project/Commands/#class($command.name).cpp
+  export: $project/src/Commands/#class($command.name).cpp
   source: ${exporter-path}CommandGroup.cpp
   update: None
   variables:
     command-name: ${command.name}
 - !File
-  export: $project/Commands/#class($command.name).h
+  export: $project/src/Commands/#class($command.name).h
   source: ${exporter-path}CommandGroup.h
   update: None
   variables:
     command-name: ${command.name}
 ## #elseif($command.base.name == "PID Command")
 # - !File
-#   export: $project/commands/#class($command.name).java
+#   export: $project/src/commands/#class($command.name).java
 #   source: ${exporter-path}PIDCommand.java
 #   update: Modify
 #   modifications:
@@ -96,7 +106,7 @@
 #     command-name: ${command.name}
 #elseif($command.base.name == "Setpoint Command")
 - !File
-  export: $project/Commands/#class($command.name).cpp
+  export: $project/src/Commands/#class($command.name).cpp
   source: ${exporter-path}SetpointCommand.cpp
   update: Modify
   modifications:
@@ -106,14 +116,14 @@
   variables:
     command-name: ${command.name}
 - !File
-  export: $project/Commands/#class($command.name).h
+  export: $project/src/Commands/#class($command.name).h
   source: ${exporter-path}Command.h
   update: None
   variables:
     command-name: ${command.name}
 #else
 - !File
-  export: $project/Commands/#class($command.name).cpp
+  export: $project/src/Commands/#class($command.name).cpp
   source: ${exporter-path}Command.cpp
   update: Modify
   modifications:
@@ -121,7 +131,7 @@
   variables:
     command-name: ${command.name}
 - !File
-  export: $project/Commands/#class($command.name).h
+  export: $project/src/Commands/#class($command.name).h
   source: ${exporter-path}Command.h
   update: None
   variables:
@@ -135,7 +145,7 @@
 #foreach ($subsystem in $subsystems)
 #if ($subsystem.base.name == "PID Subsystem")
 - !File
-  export: $project/Subsystems/#class($subsystem.name).cpp
+  export: $project/src/Subsystems/#class($subsystem.name).cpp
   source: ${exporter-path}PIDSubsystem.cpp
   update: Modify
   modifications:
@@ -147,7 +157,7 @@
   variables: 
     subsystem-name: ${subsystem.name}
 - !File
-  export: $project/Subsystems/#class($subsystem.name).h
+  export: $project/src/Subsystems/#class($subsystem.name).h
   source: ${exporter-path}PIDSubsystem.h
   update: Modify
   modifications:
@@ -156,7 +166,7 @@
     subsystem-name: ${subsystem.name}
 #else
 - !File
-  export: $project/Subsystems/#class($subsystem.name).cpp
+  export: $project/src/Subsystems/#class($subsystem.name).cpp
   source: ${exporter-path}Subsystem.cpp
   update: Modify
   modifications:
@@ -165,7 +175,7 @@
   variables: 
     subsystem-name: ${subsystem.name}
 - !File
-  export: $project/Subsystems/#class($subsystem.name).h
+  export: $project/src/Subsystems/#class($subsystem.name).h
   source: ${exporter-path}Subsystem.h
   update: Modify
   modifications:

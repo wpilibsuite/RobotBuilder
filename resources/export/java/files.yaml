@@ -1,4 +1,4 @@
-## Netbeans Project Files
+## Eclipse Project Files
 - !File
   export: $project/BSD_License_for_WPILib_code.txt
   source: ${exporter-path}BSD_License_for_WPILib_code.txt
@@ -15,13 +15,13 @@
   update: None
 
 - !File
-  export: $project/resources/META-INF/MANIFEST.MF
-  source: ${exporter-path}MANIFEST.MF
+  export: $project/.project
+  source: ${exporter-path}.project
   update: None
 
 - !File
-  export: $project/nbproject/project.xml
-  source: ${exporter-path}project.xml
+  export: $project/.classpath
+  source: ${exporter-path}.classpath
   update: None
   
 ## Key Java Files

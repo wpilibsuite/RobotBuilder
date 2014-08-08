@@ -3,7 +3,7 @@
 #set($subsystem = $helper.getByName($subsystem-name, $robot))
 
 \#include "#class($subsystem.name).h"
-\#include "../Robotmap.h"
+\#include "../RobotMap.h"
 \#include "SmartDashboard/SmartDashboard.h"
 \#include "LiveWindow/LiveWindow.h"
 #set($subsystem = $helper.getByName($subsystem-name, $robot))

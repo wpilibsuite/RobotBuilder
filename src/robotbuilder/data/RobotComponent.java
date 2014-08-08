@@ -187,7 +187,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
     }
 
     /**
-     * @param component The component type to check.
+     * @param data The component type to check.
      * @return Whether it can support adding another component of that type.
      */
     public boolean supports(RobotComponent data) {
