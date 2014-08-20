@@ -57,6 +57,7 @@ Required Properties:
 Vars:
   team-number: ${robot.getProperty('Team Number').getValue()}
   robot-name: ${robot.getName().replace(' ', '')}
+  world-file: ${robot.getProperty('Simulation World File').getValue()}
   project: ${robot.getPropertyAbsolutePath('Eclipse Workspace')}$file-separator$robot-name
   use-default-package-p: ${robot.getProperty('Use Default Java Package').getValue()}
   package: "#if($use-default-package-p==true)org.usfirst.frc${team-number}.${robot-name}#else${robot.getProperty('Java Package').getValue()}#end"
@@ -217,14 +218,14 @@ Instructions:
     Import: >-
       import edu.wpi.first.wpilibj.CounterBase.EncodingType;
       import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
-    Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Module_Digital}, ${Channel_A_Channel_Digital}, ${Channel_B_Module_Digital}, ${Channel_B_Channel_Digital}, ${Index_Module_Digital}, ${Index_Channel_Digital}, ${Reverse_Direction});"
+    Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Index_Channel_Digital}, ${Reverse_Direction});"
     Extra: >-
       #variable($Name).setDistancePerPulse(${Distance_Per_Pulse});
               #variable($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
-    Construction: "#variable($Name) = new ${ClassName}(${Input_Module_Digital}, ${Input_Channel_Digital}, ${Direction_Sensitive});"
+    Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive});"
   Potentiometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogInput"
@@ -240,7 +241,7 @@ Instructions:
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
-    Construction: "#variable($Name) = new ${ClassName}(${Ping_Module_Digital}, ${Ping_Channel_Digital}, ${Echo_Module_Digital}, ${Echo_Channel_Digital});"
+    Construction: "#variable($Name) = new ${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital});"
       
   Speed Controller:
     Defaults: "PWMOutput,Component,None"
@@ -271,7 +272,7 @@ Instructions:
   Compressor:
     Defaults: "Component,None"
     ClassName: "Compressor"
-    Construction: "#variable($Name) = new ${ClassName}(${Pressure_Switch_Module_Digital}, ${Pressure_Switch_Channel_Digital}, ${Spike_Module_Digital}, ${Spike_Channel_Relay});"
+    Construction: "#variable($Name) = new ${ClassName}(${Pressure_Switch_Channel_Digital}, ${Spike_Channel_Relay});"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "Solenoid"

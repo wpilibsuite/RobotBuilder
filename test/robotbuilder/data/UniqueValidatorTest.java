@@ -54,12 +54,8 @@ public class UniqueValidatorTest {
         subsystem.add(victor2);
         
         // Test it
-        assertTrue("Victor 1 Output Module (Digital) is not valid.",
-                victor1.getProperty("Output Module (Digital)").isValid());
         assertTrue("Victor 1 Output Channel (PWM) is not valid.",
                 victor1.getProperty("Output Channel (PWM)").isValid());
-        assertTrue("Victor 2 Output Module (Digital) is not valid.",
-                victor2.getProperty("Output Module (Digital)").isValid());
         assertTrue("Victor 2 Output Channel (PWM) is not valid.",
                 victor2.getProperty("Output Channel (PWM)").isValid());
     }
@@ -79,15 +75,11 @@ public class UniqueValidatorTest {
         subsystem.add(victor1);
         RobotComponent victor2 = new RobotComponent("Victor 2", "Speed Controller", tree);
         subsystem.add(victor2);
-        victor2.getProperty("Output Channel (PWM)").setValue("1");
+        victor2.getProperty("Output Channel (PWM)").setValue("0");
         
         // Test it
-        assertTrue("Victor 1 Output Module (Digital) is not valid.",
-                victor1.getProperty("Output Module (Digital)").isValid());
         assertTrue("Victor 1 Output Channel (PWM) is not valid.",
                 victor1.getProperty("Output Channel (PWM)").isValid());
-        assertFalse("Victor 2 Output Module (Digital) should not be valid.",
-                victor2.getProperty("Output Module (Digital)").isValid());
         assertFalse("Victor 2 Output Channel (PWM) should not be valid.",
                 victor2.getProperty("Output Channel (PWM)").isValid());
     }
@@ -110,38 +102,26 @@ public class UniqueValidatorTest {
         subsystem.add(victor2);
         
         // Test it
-        assertTrue("Victor 1 Output Module (Digital) is not valid.",
-                victor1.getProperty("Output Module (Digital)").isValid());
         assertTrue("Victor 1 Output Channel (PWM) is not valid.",
                 victor1.getProperty("Output Channel (PWM)").isValid());
-        assertTrue("Victor 2 Output Module (Digital) is not valid.",
-                victor2.getProperty("Output Module (Digital)").isValid());
         assertTrue("Victor 2 Output Channel (PWM) is not valid.",
                 victor2.getProperty("Output Channel (PWM)").isValid());
         
         // Make it invalid
-        victor2.getProperty("Output Channel (PWM)").setValue("1");
+        victor2.getProperty("Output Channel (PWM)").setValue("0");
         
         // Test it
-        assertTrue("Victor 1 Output Module (Digital) is not valid.",
-                victor1.getProperty("Output Module (Digital)").isValid());
         assertTrue("Victor 1 Output Channel (PWM) is not valid.",
                 victor1.getProperty("Output Channel (PWM)").isValid());
-        assertFalse("Victor 2 Output Module (Digital) should not be valid.",
-                victor2.getProperty("Output Module (Digital)").isValid());
         assertFalse("Victor 2 Output Channel (PWM) should not be valid.",
                 victor2.getProperty("Output Channel (PWM)").isValid());
         
         // Make it valid agoin
-        victor2.getProperty("Output Channel (PWM)").setValue("2");
+        victor2.getProperty("Output Channel (PWM)").setValue("1");
         
         // Test it
-        assertTrue("Victor 1 Output Module (Digital) is not valid.",
-                victor1.getProperty("Output Module (Digital)").isValid());
         assertTrue("Victor 1 Output Channel (PWM) is not valid.",
                 victor1.getProperty("Output Channel (PWM)").isValid());
-        assertTrue("Victor 2 Output Module (Digital) is not valid.",
-                victor2.getProperty("Output Module (Digital)").isValid());
         assertTrue("Victor 2 Output Channel (PWM) is not valid.",
                 victor2.getProperty("Output Channel (PWM)").isValid());
     }

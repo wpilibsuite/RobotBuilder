@@ -95,51 +95,31 @@
 ## Macros:
 #macro( AnalogInput $Name )
 - !ChoicesProperty
-            name: $Name Module (Analog)
-            choices: ["1", "2"]
-            validators: [AnalogInput]
-            default: "1"
-          - !ChoicesProperty
             name: $Name Channel (Analog)
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
+            choices: ["0", "1", "2", "3", "4", "5", "6", "7"]
             validators: [AnalogInput]
-            default: "1"
+            default: "0"
 #end
 #macro( DigitalChannel $Name )
 - !ChoicesProperty
-            name: $Name Module (Digital)
-            choices: ["1", "2"]
-            validators: [DigitalChannel]
-            default: "1"
-          - !ChoicesProperty
             name: $Name Channel (Digital)
             validators: [DigitalChannel]
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"]
-            default: "1"
+            choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"]
+            default: "0"
 #end
 #macro( PWMOutput $Name )          
 - !ChoicesProperty
-            name: $Name Module (Digital)
-            choices: ["1", "2"]
-            validators: [PWMOutput]
-            default: "1"
-          - !ChoicesProperty
             name: $Name Channel (PWM)
             validators: [PWMOutput]
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-            default: "1"
+            choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+            default: "0"
 #end
 #macro( RelayOutput $Name )          
 - !ChoicesProperty
-            name: $Name Module (Digital)
-            choices: ["1", "2"]
-            validators: [RelayOutput]
-            default: "1"
-          - !ChoicesProperty
             name: $Name Channel (Relay)
             validators: [RelayOutput]
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
-            default: "1"
+            choices: ["0", "1", "2", "3", "4", "5", "6", "7"]
+            default: "0"
 #end
 #macro( Button $Name )
 - !TypeSelectionProperty
@@ -156,13 +136,13 @@
 - !ChoicesProperty
             name: $Name Module (Solenoid)
             validators: [Solenoid]
-            choices: ["1", "2"]
-            default: "1"
+            choices: ["0", "1"]
+            default: "0"
           - !ChoicesProperty
             name: $Name Channel (Solenoid)
             validators: [Solenoid]
-            choices: ["1", "2", "3", "4", "5", "6", "7", "8"]
-            default: "1"
+            choices: ["0", "1", "2", "3", "4", "5", "6", "7"]
+            default: "0"
 #end            
 
 Validators:
@@ -182,13 +162,13 @@ Validators:
     error: "You must select a component of the valid type. If no options exist, create a new component of the right type."
   - !UniqueValidator
     name: AnalogInput
-    fields: [Channel (Analog), Module (Analog)]
+    fields: [Channel (Analog)]
   - !UniqueValidator
     name: DigitalChannel
-    fields: [Channel (Digital), Module (Digital)]
+    fields: [Channel (Digital)]
   - !UniqueValidator
     name: PWMOutput
-    fields: [Channel (PWM), Module (Digital)]
+    fields: [Channel (PWM)]
   - !UniqueValidator
     name: CANID
     fields: [CAN ID]
@@ -200,7 +180,7 @@ Validators:
     fields: [Number]
   - !UniqueValidator
     name: RelayOutput
-    fields: [Channel (Relay), Module (Digital)]
+    fields: [Channel (Relay)]
   - !UniqueValidator
     name: Solenoid
     fields: [Channel (Solenoid), Module (Solenoid)]
@@ -246,6 +226,9 @@ Palette:
           - !BooleanProperty
             name: Export Commands
             default: true
+          - !StringProperty
+            name: Simulation World File
+            default: "/usr/share/frcsim/worlds/GearsBotDemo.world"
           - !FileProperty
             name: Wiring File
             extension: html
@@ -495,15 +478,10 @@ Palette:
         help: An analog angular rate sensor.
         properties:
           - !ChoicesProperty
-            name: Input Module (Analog)
-            choices: ["1"]
-            validators: [AnalogInput]
-            default: "1"
-          - !ChoicesProperty
             name: Input Channel (Analog)
-            choices: ["1", "2"]
+            choices: ["0", "1"]
             validators: [AnalogInput]
-            default: "1"
+            default: "0"
           - !DoubleProperty
             name: Sensitivity
             default: 0.007
@@ -515,7 +493,7 @@ Palette:
           #AnalogInput("Input")
           - !DoubleProperty
             name: Volts Per G
-            default: "1"
+            default: "0"
           - !DoubleProperty
             name: Zero G Volts
             default: 2.5

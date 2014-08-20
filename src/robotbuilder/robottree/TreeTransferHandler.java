@@ -100,7 +100,7 @@ class TreeTransferHandler extends TransferHandler {
     protected Transferable createTransferable(final JComponent c) {
         return new Transferable() {
             DataFlavor[] flavors = {RobotTree.ROBOT_COMPONENT_FLAVOR};
-            Object data = ((JTree) c).getSelectionPath().getLastPathComponent();
+            Object data = ((JTree) c).getSelectionPath().getLastPathComponent(); // TODO: Figure out the NullPointerException on this line.
 
             @Override
             public DataFlavor[] getTransferDataFlavors() {
