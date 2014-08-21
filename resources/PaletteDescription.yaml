@@ -546,7 +546,7 @@ Palette:
             name: Direction Sensitive
             default: false
       - !Component
-        name: Potentiometer
+        name: Analog Potentiometer
         type: PIDSource
         help: An rotational analog sensor that can be used to determine the position of an axle.
         properties:

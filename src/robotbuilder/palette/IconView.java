@@ -7,6 +7,7 @@ package robotbuilder.palette;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.util.Enumeration;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -64,7 +65,11 @@ public class IconView extends JPanel {
         PaletteComponent component;
         private PaletteIcon(final PaletteComponent comp) {
             this.component = comp;
-            setIcon(new ImageIcon(Utils.getResource("/icons/"+component.getName()+".png")));
+            try {
+                setIcon(new ImageIcon(Utils.getResource("/icons/"+component.getName()+".png")));
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
             setToolTipText(component.getName());
             setName(component.getName());
             setTransferHandler(new IconPaletteTransferHandler());

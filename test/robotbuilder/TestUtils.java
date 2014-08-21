@@ -89,7 +89,7 @@ public class TestUtils {
         RobotComponent wristMotor = new RobotComponent("Motor", "Speed Controller", tree);
         wristMotor.setProperty("Type", "Jaguar");
         wrist.add(wristMotor);
-        RobotComponent pot = new RobotComponent("Pot", "Potentiometer", tree);
+        RobotComponent pot = new RobotComponent("Pot", "Analog Potentiometer", tree);
         wrist.add(pot);
         
         // Create a simple OI

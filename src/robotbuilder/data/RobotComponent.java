@@ -35,6 +35,9 @@ public class RobotComponent extends DefaultMutableTreeNode {
      */
     public RobotComponent(String name, PaletteComponent base, RobotTree robot) {
         super();
+        if (base == null) {
+            throw new NullPointerException("The base component cannot be null!");
+        }
         this.name = name;
         this.base = base;
         this.robot = robot;

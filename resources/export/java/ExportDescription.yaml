@@ -88,6 +88,10 @@ Defaults:
     Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Analog});"
     LiveWindow: "LiveWindow.addSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
     PID: "#variable($Short_Name).getAverageVoltage()"
+  AnalogPotentiometer:
+    Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Analog});"
+    LiveWindow: "LiveWindow.addSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    PID: "#variable($Short_Name).get()"
   DigitalInput:
     Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Digital});"
     LiveWindow: "LiveWindow.addSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
@@ -226,9 +230,9 @@ Instructions:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
     Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive});"
-  Potentiometer:
-    Defaults: "AnalogInput,Component,None"
-    ClassName: "AnalogInput"
+  Analog Potentiometer:
+    Defaults: "AnalogPotentiometer,Component,None"
+    ClassName: "AnalogPotentiometer"
   Analog Input:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogInput"

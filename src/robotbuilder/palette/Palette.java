@@ -106,6 +106,9 @@ public class Palette extends JPanel  {
      */
     public PaletteComponent getItem(String name) {
         PaletteComponent item = paletteItems.get(name);
+        if (item == null) {
+            throw new RuntimeException("No such palette item: " + name);
+        }
         return item;
     }
     

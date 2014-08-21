@@ -5,6 +5,7 @@
 package robotbuilder;
 
 import java.awt.Desktop;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -27,8 +28,12 @@ public class Utils {
      * @param resource
      * @return The resource URL
      */
-    public static URL getResource(String resource) {
-        return ClasspathResourceLoader.class.getResource(resource);
+    public static URL getResource(String resource) throws FileNotFoundException {
+        URL url = ClasspathResourceLoader.class.getResource(resource);
+        if (url == null) {
+            throw new FileNotFoundException("Cannot load resource: " + resource);
+        }
+        return url;
     }
     
     /**
