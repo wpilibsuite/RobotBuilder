@@ -29,7 +29,7 @@ public class AboutAction extends AbstractAction {
                 AboutDialog aboutDialog = new AboutDialog(MainFrame.getInstance().getFrame(),
                                         "About RobotBuilder",
                                         "This application builds robot maps",
-                                        1.0);
+                                        1.5);
                 aboutDialog.show();
     }
    
