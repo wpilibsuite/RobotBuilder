@@ -282,7 +282,7 @@ public class GenericExporter {
             @Override
             public void handleRobotComponent(RobotComponent self) {
                 for (String property : self.getPropertyKeys()) {
-                    if (property.equals(propertyName)) {
+                    if (property.endsWith(propertyName)) {
                         mapping.put(self.getProperty(property).getValue().toString(), self.getFullName());
                     }
                 }
