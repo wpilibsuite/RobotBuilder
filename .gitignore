@@ -1,6 +1,7 @@
 /build/
 /nbproject/private/
 /dist/
+/target/
 save*.yml
 *~
 *#
@@ -8,3 +9,4 @@ save*.yml
 /.svn/*
 wiring*.html
 *.exec
+dependency-reduced-pom.xml
