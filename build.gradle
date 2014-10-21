@@ -1,0 +1,32 @@
+// seems to be not including the dependencies in the jar. I had thought that the compile
+// dependencies would become runtime dependcies and be built in.
+// and one of the unit tests fails
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.apache.velocity:velocity:1.7'
+	compile 'org.yaml:snakeyaml:1.10'
+	testCompile 'junit:junit:4.11'
+}
+
+jar {
+	manifest {
+		attributes('Implementation-Title': 'RobotBuilder',
+					'Implementation-Version': '2.0.0',
+					'Main-class': 'robotbuilder.RobotBuilder')
+	}
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+
+		}
+	}
+}
