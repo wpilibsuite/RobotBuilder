@@ -2,7 +2,7 @@
 #if ($helper.exportsTo("RobotMap", $component))
         #constructor($component)
 
-	#livewindow($component)
+        #livewindow($component)
 
         #extra($component)
 
