@@ -38,13 +38,13 @@ void Robot::TeleopInit() {
 	// This makes sure that the autonomous stops running when
 	// teleop starts running. If you want the autonomous to 
 	// continue until interrupted by another command, remove
-	// this line or comment it out.
-	autonomousCommand->Cancel();
+	// these lines or comment it out.
+	if (autonomousCommand != NULL)
+		autonomousCommand->Cancel();
 }
 	
 void Robot::TeleopPeriodic() {
-	if (autonomousCommand != NULL)
-		Scheduler::GetInstance()->Run();
+	Scheduler::GetInstance()->Run();
 }
 
 void Robot::TestPeriodic() {

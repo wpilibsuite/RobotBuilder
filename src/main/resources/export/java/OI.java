@@ -18,11 +18,6 @@ public class OI {
     // Joystick stick = new Joystick(port);
     // Button button = new JoystickButton(stick, buttonNumber);
     
-    // Another type of button you can create is a DigitalIOButton, which is
-    // a button or switch hooked up to the cypress module. These are useful if
-    // you want to build a customized operator interface.
-    // Button button = new DigitalIOButton(1);
-    
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
