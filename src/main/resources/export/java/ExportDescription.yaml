@@ -305,40 +305,6 @@ Instructions:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"
     Construction: "#variable($Name) = new ${ClassName}(#variable($Joystick), ${Button});"
-  Kinect Joystick:
-    Defaults: "OI,None"
-    ClassName: "KinectStick"
-    Construction: "#variable($Name) = new ${ClassName}(${Number});"
-    Function: >-
-      public ${ClassName} get#class($Name)() {
-              return #variable($Name);
-          }
-  Analog Button:
-    Defaults: "Button,OI,None"
-    ClassName: "AnalogIOButton"
-    Construction: "#variable($Name) = new ${ClassName}(#variable($Analog_Pin));"
-  Digital Button:
-    Defaults: "Button,OI,None"
-    ClassName: "DigitalIOButton"
-    Construction: "#variable($Name) = new ${ClassName}(#variable($Digital_Pin));"
-  OI Digital Input:
-    Defaults: "OI,None"
-    Function: >-
-      public boolean get#class($Name)() {
-              return DriverStation.getInstance().getDigitalIn($Digital_Pin);
-          }
-  OI Digital Output:
-    Defaults: "OI,None"
-    Function: >-
-      public void set#class($Name)(boolean value) {
-              DriverStation.getInstance().setDigitalOut($Digital_Pin, value);
-          }
-  OI Analog Input:
-    Defaults: "OI,None"
-    Function: >-
-      public double get#class($Name)() {
-              return DriverStation.getInstance().getAnalogIn($Analog_Pin);
-          }
 
   Command:
     Defaults: "Command,None"
