@@ -206,15 +206,13 @@ Instructions:
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
               #variable($Name)->SetPIDSourceParameter(Encoder::${PID_Source});
-              #variable($Name)->Start();
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
     Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Index_Channel_Digital}, ${Reverse_Direction});"
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
-              #variable($Name)->SetPIDSourceParameter(PIDSourceParameter.${PID_Source});
-              #variable($Name)->Start();
+              #variable($Name)->SetPIDSourceParameter(Encoder::${PID_Source});
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
