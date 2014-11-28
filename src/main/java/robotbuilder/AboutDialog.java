@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class AboutDialog extends CenteredDialog {
 
-    public AboutDialog(JFrame parent, String applicationName, String description, double version) {
+    public AboutDialog(JFrame parent, String applicationName, String description, String version) {
         super(parent, applicationName);
         Box aboutWindow = new Box(BoxLayout.Y_AXIS);
         JLabel productName = new JLabel(applicationName);

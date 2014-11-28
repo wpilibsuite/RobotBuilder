@@ -206,7 +206,8 @@ class RelativePath {
         homelist = getPathList(home);
         filelist = getPathList(f);
         s = matchPathLists(homelist,filelist);
-        System.out.println("\t"+homelist+" ~ "+filelist+" --> "+s);
+        System.out.println("\t"+homelist+" ~ "+filelist+" --> '"+s+"'");
+        if (s.length() == 0) s = "." + File.separator;
         
         return s;
     }
