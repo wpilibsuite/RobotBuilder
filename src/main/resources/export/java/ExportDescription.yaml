@@ -102,7 +102,7 @@ Defaults:
     Construction: "#variable($Name) = new ${ClassName}(${Output_Channel_Relay});"
     LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   SolenoidOutput:
-    Construction: "#variable($Name) = new ${ClassName}(${Output_Module_Solenoid}, ${Output_Channel_Solenoid});"
+    Construction: "#variable($Name) = new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid});"
     LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   OI:
     Export: "OI"
@@ -271,7 +271,7 @@ Instructions:
   Compressor:
     Defaults: "Component,None"
     ClassName: "Compressor"
-    Construction: "#variable($Name) = new ${ClassName}(${Pressure_Switch_Channel_Digital}, ${Spike_Channel_Relay});"
+    Construction: "#variable($Name) = new ${ClassName}(${PCM_ID});"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "Solenoid"
@@ -282,11 +282,12 @@ Instructions:
     Defaults: "Solenoid,Component,None"
     ClassName: "DoubleSolenoid"
     Construction: >-
-      #if(${Forward_Module_Solenoid} != ${Reverse_Module_Solenoid})Warning, the two modules in robot builder are different!
+      #if(${Forward_PCM_Solenoid} != ${Reverse_PCM_Solenoid})Warning, the two modules in robot builder are different!
       
       #end##
       
-      #variable($Name) = new ${ClassName}(${Forward_Module_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});      
+      #variable($Name) = new ${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});      
+    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
 
   Joystick:
     Defaults: "OI,None"

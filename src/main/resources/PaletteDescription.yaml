@@ -134,16 +134,16 @@
 #end
 #macro( Solenoid $Name )
 - !ChoicesProperty
-            name: $Name Module (Solenoid)
+            name: $Name PCM (Solenoid)
             validators: [Solenoid]
-            choices: ["0", "1"]
+            choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
             default: "0"
           - !ChoicesProperty
             name: $Name Channel (Solenoid)
             validators: [Solenoid]
             choices: ["0", "1", "2", "3", "4", "5", "6", "7"]
             default: "0"
-#end            
+#end
 
 Validators:
   - !DistinctValidator
@@ -180,7 +180,7 @@ Validators:
     fields: [Channel (Relay)]
   - !UniqueValidator
     name: Solenoid
-    fields: [Channel (Solenoid), Module (Solenoid)]
+    fields: [Channel (Solenoid), PCM (Solenoid)]
     
 Palette:
   - Hidden:
@@ -602,7 +602,7 @@ Palette:
       - !Component
         name: Spike
         type: Actuator
-        help: A motor controller that can run forwards/backwards/stopped; typically used for compressors.
+        help: A motor controller that can run forwards/backwards/stopped.
         properties:
           #RelayOutput("Output")
 
@@ -611,14 +611,17 @@ Palette:
       - !Component
         name: Compressor
         type: Actuator
-        help: A pneumatic compressor on your robot.
+        help: A pneumatic compressor on your robot, connected to a PCM.
         properties:
-          #DigitalChannel("Pressure Switch")
-          #RelayOutput("Spike")
+          - !ChoicesProperty
+            name: PCM ID
+            validators: [PCMCompID]
+            choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
+            default: "0"
       - !Component
         name: Solenoid
         type: Actuator
-        help: A linear actuator used to open and close valves that runs off of the solenoid module.
+        help: A linear actuator used to open and close valves that runs off of the PCM.
         properties:
           #Solenoid("Output")
       - !Component
@@ -630,7 +633,7 @@ Palette:
       - !Component
         name: Double Solenoid
         type: Actuator
-        help: A double-action linear actuator used to open and close valves that runs off of the Solenoid Module.
+        help: A double-action linear actuator used to open and close valves that runs off of the PCM.
         properties:
           #Solenoid("Forward")
           #Solenoid("Reverse")

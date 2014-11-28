@@ -12,26 +12,23 @@
     <p>The compressor keeps the pneumatics of the system pressurized
        up until the digital switch detects that there is too much
        pressure.</p>
+    <p>The PCM will run the compressor automatically as long as there is a solenoid 
+       constructed. The compressor class is only required to turn off the compressor when
+       it would normally be running</p>
 
 
     <h2>Properties</h2>
 
     <dl>
-      <dt>Pressure Switch Module (Digital)</dt>
-      <dd>The Digital Sidecar on the CRIO that the pressure switch is plugged into.</dd>
-      <dt>Pressure Switch Port (Digital)</dt>
-      <dd>The DIO Port on the digital sidecar that pressure switch is plugged into.</dd>
-      <dt>Spike Module (Digital)</dt>
-      <dd>The Digital Sidecar on the CRIO that the spike that controls the compressor is plugged into.</dd>
-      <dt>Spike Port (Relay)</dt>
-      <dd>The relay port on the digital sidecar that the that controls the compressor is plugged into.</dd>
+      <dt>PCM ID</dt>
+      <dd>The Pneumatics Control Module (PCM) CAN ID that the compressor is plugged into.</dd>
     </dl>
 
 
     <h2>See Also</h2>
     <ul>
       <li>
-	<a href="https://en.wikipedia.org/wiki/Air_compressor" >Wikipedia</a>
+        <a href="https://en.wikipedia.org/wiki/Air_compressor" >Wikipedia</a>
       </li>
     </ul>
   </body>
