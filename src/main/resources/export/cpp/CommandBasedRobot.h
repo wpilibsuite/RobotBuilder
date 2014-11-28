@@ -22,6 +22,7 @@ public:
 #parse("${exporter-path}CommandBasedRobot-declarations.cpp")
 #end
 	virtual void RobotInit();
+	virtual void DisabledPeriodic();
 	virtual void AutonomousInit();
 	virtual void AutonomousPeriodic();
 	virtual void TeleopInit();

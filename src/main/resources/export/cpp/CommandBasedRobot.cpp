@@ -24,7 +24,11 @@ void Robot::RobotInit() {
 #parse("${exporter-path}CommandBasedRobot-autonomous.cpp")
 #end
   }
-	
+
+void Robot::DisabledPeriodic() {
+	Scheduler::GetInstance()->Run();
+}
+
 void Robot::AutonomousInit() {
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
