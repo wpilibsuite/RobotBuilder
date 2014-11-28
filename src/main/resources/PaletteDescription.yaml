@@ -474,7 +474,7 @@ Palette:
             name: Sensitivity
             default: 0.007
       - !Component
-        name: Accelerometer
+        name: AnalogAccelerometer
         type: PIDSource
         help: An analog acceleration sensor.
         properties:

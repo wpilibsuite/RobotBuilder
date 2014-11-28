@@ -193,9 +193,9 @@ Instructions:
     ClassName: "Gyro"
     Extra: "#variable($Name)->SetSensitivity(${Sensitivity});"
     PID: "#variable($Short_Name)->PIDGet()"
-  Accelerometer:
+  AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
-    ClassName: "Accelerometer"
+    ClassName: "AnalogAccelerometer"
     Extra: >-
       #variable($Name)->SetSensitivity(${Volts_Per_G});
               #variable($Name)->SetZero(${Zero_G_Volts});

@@ -200,9 +200,9 @@ Instructions:
     ClassName: "Gyro"
     Extra: "#variable($Name).setSensitivity(${Sensitivity});"
     PID: "#variable($Short_Name).pidGet()"
-  Accelerometer:
+  AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
-    ClassName: "Accelerometer"
+    ClassName: "AnalogAccelerometer"
     Extra: >-
       #variable($Name).setSensitivity(${Volts_Per_G});
               #variable($Name).setZero(${Zero_G_Volts});
