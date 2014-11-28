@@ -132,8 +132,9 @@ public class MainFrame extends JFrame {
             prefs.putInt("Width", getWidth());
             prefs.putInt("Height", getHeight());
             Point location = this.getLocationOnScreen();
-            prefs.putInt("X", location.x);
-            prefs.putInt("Y", location.y);
+            boolean minimized = location.x == -32000;
+            prefs.putInt("X", minimized ? 0 : location.x);
+            prefs.putInt("Y", minimized ? 0 : location.y);
             setVisible(false);
             System.exit(0);
         }
