@@ -256,12 +256,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "CANJaguar"
     Import: "import edu.wpi.first.wpilibj.can.*;"
-    Construction: >-
-        try { 
-                    #variable($Name) = new CANJaguar($CAN_ID);
-                } catch (CANTimeoutException ex) {
-                    ex.printStackTrace();
-                }
+    Construction: "#variable($Name) = new CANJaguar($CAN_ID);"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
