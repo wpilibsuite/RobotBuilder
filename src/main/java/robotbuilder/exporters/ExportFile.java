@@ -51,7 +51,7 @@ public class ExportFile {
                         "$1\r\n" + exporter.evalResource(modifications.get(id), idContext) + "\r\n    $3");
             }
             FileWriter out = new FileWriter(export);
-            file = file.replaceAll("[\r\n]+", "\r\n");
+            file = file.replaceAll("\r\n?|\n", "\r\n");
             out.write(file);
             out.close();
         }
