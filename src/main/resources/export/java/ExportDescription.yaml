@@ -264,6 +264,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "DigitalOutput"
     Construction: "#variable($Name) = new ${ClassName}(${Output_Channel_Digital});"
+    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   Spike:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
