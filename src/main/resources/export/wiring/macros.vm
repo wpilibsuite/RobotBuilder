@@ -28,7 +28,7 @@
         #if( $my_ports.containsKey("$port") )
 	    #tr($port, $my_ports.get("$port"))
 	#end
-    #end ##forech
+    #end ##foreach
 #end ## macro
 
 ## Generate a table row
@@ -69,7 +69,7 @@
     #table_with_components($title, $label, "Channel (Analog)")
 #end ##macro
 
-## Generate the Analog table for a module
+## Generate the Solenoid table for a PCM
 #macro( Solenoid $title $label $module )
-    #module_table_with_components($title, $label, "Module (Solenoid)", "Channel (Solenoid)", $module)
+    #module_table_with_components($title, $label, "PCM (Solenoid)", "Channel (Solenoid)", $module)
 #end ##macro
