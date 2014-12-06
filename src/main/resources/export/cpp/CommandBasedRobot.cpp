@@ -25,6 +25,14 @@ void Robot::RobotInit() {
 #end
   }
 
+/**
+ * This function is called when the disabled button is hit.
+ * You can use it to reset subsystems before shutting down.
+ */
+void Robot::DisabledInit(){
+
+}
+
 void Robot::DisabledPeriodic() {
 	Scheduler::GetInstance()->Run();
 }
@@ -33,11 +41,11 @@ void Robot::AutonomousInit() {
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
 }
-	
+
 void Robot::AutonomousPeriodic() {
 	Scheduler::GetInstance()->Run();
 }
-	
+
 void Robot::TeleopInit() {
 	// This makes sure that the autonomous stops running when
 	// teleop starts running. If you want the autonomous to 
@@ -46,7 +54,7 @@ void Robot::TeleopInit() {
 	if (autonomousCommand != NULL)
 		autonomousCommand->Cancel();
 }
-	
+
 void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
 }
