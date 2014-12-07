@@ -73,3 +73,16 @@
 #macro( Solenoid $title $label $module )
     #module_table_with_components($title, $label, "PCM (Solenoid)", "Channel (Solenoid)", $module)
 #end ##macro
+
+## Generate the Compressor
+#macro( Compressor $title )
+    #set($ports = $helper.filterComponents("PCM ID", $robot))
+    #if( $ports.keySet().size() > 0 )
+        <h2>$title</h2>
+	<table><tr>
+	<th class="pound">PCM</th>
+	<th>Device</th></tr>
+	#to_rows($ports)
+	</table>
+    #end
+#end ##macro
