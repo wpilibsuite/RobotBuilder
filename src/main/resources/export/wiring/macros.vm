@@ -24,7 +24,7 @@
 
 ## Filter components and make a table.
 #macro( to_rows $my_ports )
-    #foreach ($port in [0..20])
+    #foreach ($port in [0..25])
         #if( $my_ports.containsKey("$port") )
 	    #tr($port, $my_ports.get("$port"))
 	#end
