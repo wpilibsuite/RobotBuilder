@@ -181,6 +181,9 @@ Validators:
   - !UniqueValidator
     name: Solenoid
     fields: [Channel (Solenoid), PCM (Solenoid)]
+  - !UniqueValidator
+    name: PCMCompID
+    fields: [PCM ID]
     
 Palette:
   - Hidden:
