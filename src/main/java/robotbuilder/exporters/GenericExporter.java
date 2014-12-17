@@ -345,6 +345,7 @@ public class GenericExporter {
             stringBuilder.append( line );
             stringBuilder.append( ls );
         }
+        reader.close();
         return stringBuilder.toString();
     }
 }
