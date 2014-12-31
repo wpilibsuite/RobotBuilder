@@ -222,10 +222,12 @@ Instructions:
     Import: >-
       import edu.wpi.first.wpilibj.CounterBase.EncodingType;
       import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
-    Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Index_Channel_Digital}, ${Reverse_Direction});"
+      import edu.wpi.first.wpilibj.Encoder.IndexingType;
+    Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction});"
     Extra: >-
       #variable($Name).setDistancePerPulse(${Distance_Per_Pulse});
               #variable($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
+              #variable($Name).setIndexSource(${Index_Channel_Digital}, IndexingType.${Indexing_Type});
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
