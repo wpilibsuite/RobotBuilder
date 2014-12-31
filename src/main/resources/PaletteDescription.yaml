@@ -542,6 +542,12 @@ Palette:
         help: An rotational analog sensor that can be used to determine the position of an axle.
         properties:
           #AnalogInput("Input")
+          - !DoubleProperty
+            name: Full Range
+            default: 1
+          - !DoubleProperty
+            name: Offset
+            default: 0
       - !Component
         name: Analog Input
         type: PIDSource

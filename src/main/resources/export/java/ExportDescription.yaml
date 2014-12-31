@@ -89,7 +89,7 @@ Defaults:
     LiveWindow: "LiveWindow.addSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
     PID: "#variable($Short_Name).getAverageVoltage()"
   AnalogPotentiometer:
-    Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Analog});"
+    Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset});"
     LiveWindow: "LiveWindow.addSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
     PID: "#variable($Short_Name).get()"
   DigitalInput:

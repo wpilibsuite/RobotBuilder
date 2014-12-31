@@ -85,7 +85,7 @@ Defaults:
     LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
     PID: "#variable($Short_Name)->GetAverageVoltage()"
   AnalogPotentiometer:
-    Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Analog});"
+    Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset});"
     LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
     PID: "#variable($Short_Name)->Get()"
   DigitalInput:
