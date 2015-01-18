@@ -96,9 +96,10 @@ public class MainFrame extends JFrame {
         propertiesAndHelp.setDividerLocation(getWidth()/4);
         JSplitPane robotStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, robotTree, propertiesAndHelp);
         robotStuff.setDividerLocation(getWidth()/5);
+        JSplitPane allStuff = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,palette,robotStuff);
+        allStuff.setDividerLocation(170);
 
-        add(palette, BorderLayout.WEST);
-        add(robotStuff, BorderLayout.CENTER);
+        add(allStuff);
         
         ActionsClass actions = new ActionsClass();
         setJMenuBar(actions.getMenuBar());
