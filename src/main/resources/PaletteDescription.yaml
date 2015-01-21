@@ -509,25 +509,28 @@ Palette:
             name: PID Source
             choices: [kDistance, kRate]
             default: "kRate"
-##TODO renable Indexed Encoder when artf3835 is fixed
-##      - !Component
-##        name: Indexed Encoder
-##       type: PIDSource
-##        help: A digital sensor that can be used to calculate the speed and distance rotated.
-##        properties:
-##          #DigitalChannel("Channel A")
-##          #DigitalChannel("Channel B")
-##          #DigitalChannel("Index")
-##          - !BooleanProperty
-##            name: Reverse Direction
-##            default: false
-##          - !DoubleProperty
-##            name: Distance Per Pulse
-##            default: 1
-##          - !ChoicesProperty
-##            name: PID Source
-##            choices: [kDistance, kRate]
-##            default: "kRate"
+      - !Component
+        name: Indexed Encoder
+        type: PIDSource
+        help: A digital sensor that can be used to calculate the speed and distance rotated.
+        properties:
+          #DigitalChannel("Channel A")
+          #DigitalChannel("Channel B")
+          #DigitalChannel("Index")
+          - !BooleanProperty
+            name: Reverse Direction
+            default: false
+          - !DoubleProperty
+            name: Distance Per Pulse
+            default: 1
+          - !ChoicesProperty
+            name: PID Source
+            choices: [kDistance, kRate]
+            default: "kRate"
+          - !ChoicesProperty
+            name: Indexing Type
+            choices: [ResetWhileHigh, kResetWhileLow, kResetOnFallingEdge, kResetOnRisingEdge]
+            default: "kResetOnRisingEdge"
       - !Component
         name: Gear Tooth Sensor
         type: Sensor
