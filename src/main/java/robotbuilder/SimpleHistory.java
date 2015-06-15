@@ -5,44 +5,48 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
- * A helper class used to keep track of changes to the {@link robotbuilder.robottree.RobotTree}
- * and undo or redo them as necessary.
- * @author Sam
+ * A helper class used to keep track of changes to the
+ * {@link robotbuilder.robottree.RobotTree} and undo or redo them as necessary.
+ *
+ * @author Sam Carlberg
  */
 public class SimpleHistory<E> {
-    
-    private Deque<E> past = new LinkedList<E>();
+
+    private boolean frozen = false;
+
+    private Deque<E> past = new LinkedList<>();
     private E present = null;
-    private Deque<E> future = new LinkedList<E>();
-    private int timesSaved = 0;
-    
+    private Deque<E> future = new LinkedList<>();
+
     /**
      * Adds the given state to the history.
+     *
      * @param state The state to add to the history.
      */
-    public void addState(E state){
-        if(state != null && state.getClass() != null){
-            if(present != null) 
+    public void addState(E state) {
+        if (!frozen && state != null && state.getClass() != null) {
+            if (present != null) {
                 past.addLast(present);
+            }
             present = state;
-            future.clear();
-            timesSaved++;
+            forgetFuture();
         }
     }
 
     /**
      * Gets the current state of the history.
-     * @return 
+     *
+     * @return
      */
-    public E getCurrentState(){
+    public E getCurrentState() {
         return present;
     }
-    
+
     /**
      * Undoes an action, if possible.
      */
-    public E undo(){
-        if(canUndo()){
+    public E undo() {
+        if (canUndo()) {
             future.addLast(present);
             present = past.pollLast();
         }
@@ -52,44 +56,62 @@ public class SimpleHistory<E> {
     /**
      * Redoes an undo, if possible.
      */
-    public E redo(){
-        if(canRedo()){
+    public E redo() {
+        if (canRedo()) {
             past.addLast(present);
             present = future.pollLast();
         }
         return getCurrentState();
     }
-    
-    public int getUndoSize(){
+
+    public int getUndoSize() {
         return past.size();
     }
-    
-    public int getRedoSize(){
+
+    public int getRedoSize() {
         return future.size();
-    }
-    
-    /**
-     * Marks if it is possible to undo an action. Essentially,
-     * if the undo list is empty, this will return false.
-     * @return True if it is possible to undo, else false.
-     */
-    private boolean canUndo(){
-        return !past.isEmpty();
     }
 
     /**
-     * Marks if it is possible to redo an action. Essentially,
-     * if the redo list is empty, this will return false.
+     * Marks if it is possible to undo an action. Essentially, if the undo list
+     * is empty, this will return false.
+     *
+     * @return True if it is possible to undo, else false.
+     */
+    private boolean canUndo() {
+        return !frozen && !past.isEmpty();
+    }
+
+    /**
+     * Marks if it is possible to redo an action. Essentially, if the redo list
+     * is empty, this will return false.
+     *
      * @return True if it is possible to redo, else false.
      */
-    private boolean canRedo(){
-        return !future.isEmpty();
+    private boolean canRedo() {
+        return !frozen && !future.isEmpty();
     }
-    
+
     /**
      * Clears the redo list.
      */
-    public void forgetFuture(){
-        future.clear();
+    public void forgetFuture() {
+        if (!frozen) {
+            future.clear();
+        }
+    }
+
+    /**
+     * Freezes undo and redo.
+     */
+    public void freeze() {
+        frozen = true;
+    }
+
+    /**
+     * Unfreezes undo and redo.
+     */
+    public void unfreeze() {
+        frozen = false;
     }
 }

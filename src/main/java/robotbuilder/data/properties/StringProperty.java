@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.data.properties;
 
 import robotbuilder.data.RobotComponent;
@@ -11,12 +8,14 @@ import robotbuilder.data.RobotComponent;
  *
  * @author Alex Henning
  */
-public class StringProperty extends Property {
+public class StringProperty extends Property<String> {
+
     protected String value;
-    
-    public StringProperty() {}
-    
-    public StringProperty(String name, Object defaultValue, String[] validators, RobotComponent component, String value) {
+
+    public StringProperty() {
+    }
+
+    public StringProperty(String name, String defaultValue, String[] validators, RobotComponent component, String value) {
         super(name, defaultValue, validators, component);
         this.value = value;
     }
@@ -27,17 +26,17 @@ public class StringProperty extends Property {
     }
 
     @Override
-    public Object getValue() {
+    public String getValue() {
         return (value != null) ? value : defaultValue;
     }
-    
+
     @Override
     public Object getDisplayValue() {
         return getValue();
     }
 
     @Override
-    public void _setValue(Object value) {
-        this.value = ((String) value);
+    public void setValue(String value) {
+        this.value = value;
     }
 }

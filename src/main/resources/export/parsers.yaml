@@ -1,0 +1,114 @@
+
+# This file contains parsers used to get information from code files.
+# Currently, this is only used to get the superclasses of Java and C++ classes,
+# although it is certainly possible to be used for more than that in the future.
+
+
+# Filters:
+#
+# Filters are used to remove text that could trip up a parser. The current
+# filters remove C-style comments and whitespace.
+#
+# Filters should be in the following format:
+#    - &[id] !Filter
+#      regex: [regex]
+# Where:
+#   + id is a unique string identifying the filter so it can be used by
+#       multiple parsers. This should be in the form idxxx, where xxx is a
+#       number not used by any other id
+#   + regex is a regular expression matching the text to
+# be removed.
+
+
+# Parsers:
+#
+# Parsers are responsible for actually grabbing information from the text of a
+# file. The two current parsers parse the superclasses of Java and C++ classes.
+# If nothing matches the regex, the parser will return an empty string.
+#
+# Parsers should be in the following format:
+#    - !Filter
+#      fileType: [extension]
+#      regex: [regex]
+#      groupNumber: [groupNumber]
+#      textFilters:
+#        - *id0
+#        - *id1
+#        - *idN
+# Where:
+#   + fileType is the extension of the file to be parsed ("java", "h", "py", ect.)
+#   + regex is the regular expression matching the desired information
+#   + groupNumber is the number of the group in the regex that matches the information
+#   + textFilters is a list of pre-processing text filters described above
+#
+# For example, the filter:
+#    - !Filter
+#      fileType: java
+#      regex: package(\w+)(\S*);
+#      groupNumber: 1
+#      textFilters:
+#        - *id001
+#        - *id002
+#        - *id003
+# will parse the base package of a Java file. This assumes that the file has no
+# syntax errors in the package declaration (if there are any, the parser will
+# return an empty string).
+
+
+filters:
+
+  # Matches C-style block comments: /* ... */
+  - &id001 !Filter
+    regex: /\*[\s\S]*?\*/
+
+  # Matches C-style line comments: // ...
+  - &id002 !Filter
+    regex: //.*
+
+  # Matches whitespace. This is just used to simplify the parser regexes
+  - &id003 !Filter
+    regex: \s+
+
+parsers:
+
+  # Java superclass parser that matches:
+  #   class Foo extends X {
+  # Assumes that the syntax of the file is valid and nobody's trying to
+  # screw this up
+  - !Parser
+    fileType: java
+    regex: class\w+extends(\w+)\{
+    groupNumber: 1
+    textFilters:
+      # Remove block comments > line comments > whitespace
+      - *id001
+      - *id002
+      - *id003
+
+  # C++ superclass parser (for header files) that matches:
+  #   class Foo : public X {
+  # Assumes that the syntax of the file is valid and nobody's trying to
+  # screw this up
+  - !Parser
+    fileType: h
+    regex: class\w+:public(\w+)\{
+    groupNumber: 1
+    textFilters:
+      # Remove block comments > line comments > whitespace
+      - *id001
+      - *id002
+      - *id003
+
+  # C++ superclass parser (for implementation files) that matches:
+  #   Foo::Foo() : Bar() {
+  # Assumes that the syntax of the file is valid, and that the constructor calls
+  # the constructor of its superclass
+  - !Parser
+    fileType: cpp
+    regex: (\w+)::\1\(\w*\):(\w+)\(\w*\)\{
+    groupNumber: 2
+    textFilters:
+      # Remove block comments > line comments > whitespace
+      - *id001
+      - *id002
+      - *id003

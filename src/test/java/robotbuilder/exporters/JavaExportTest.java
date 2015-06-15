@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.exporters;
 
 import robotbuilder.robottree.RobotTree;
@@ -17,7 +14,7 @@ import robotbuilder.TestUtils;
  * @author alex
  */
 public class JavaExportTest {
-    
+
     public JavaExportTest() {
     }
 
@@ -28,7 +25,7 @@ public class JavaExportTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
         File project = new File("test-resources/RobotBuilderTestProject/");
@@ -36,17 +33,17 @@ public class JavaExportTest {
         assertFalse(project.exists());
         project.mkdir();
     }
-    
+
     @After
     public void tearDown() {
     }
-    
+
     @Test
     public void testJavaExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
         tree.getRoot().setName("RobotBuilderTestProject");
-        tree.getRoot().getProperty("Eclipse Workspace").setValue(new File("test-resources/").getAbsolutePath());
-        tree.getRoot().getProperty("Java Package").setValue("robotcode");
+        tree.getRoot().getProperty("Eclipse Workspace").setValueAndUpdate(new File("test-resources/").getAbsolutePath());
+        tree.getRoot().getProperty("Java Package").setValueAndUpdate("robotcode");
         tree.walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) { // Gives us better diagnostics when the robot tree isn't valid.
@@ -57,12 +54,12 @@ public class JavaExportTest {
         GenericExporter exporter = new GenericExporter("/export/java/");
         exporter.post_export_action = null;
         exporter.export(tree);
-        
+
         System.out.println("====================================================");
         Process p;
         try {
             System.out.println("Trying *NIX compile...");
-            p = Runtime.getRuntime().exec(new String[] {"sh", "-c", "ant compile", "2>&1"}, null, new File("test-resources/RobotBuilderTestProject"));
+            p = Runtime.getRuntime().exec(new String[]{"sh", "-c", "ant compile", "2>&1"}, null, new File("test-resources/RobotBuilderTestProject"));
         } catch (IOException ex) { // Catch for windows
             System.out.println("Trying Windows compile...");
             p = Runtime.getRuntime().exec("ant.bat compile", null, new File("test-resources/RobotBuilderTestProject"));

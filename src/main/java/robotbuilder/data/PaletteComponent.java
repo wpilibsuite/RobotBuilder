@@ -1,10 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.data;
 
-import java.util.*;
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import robotbuilder.palette.Palette;
 import robotbuilder.data.properties.Property;
 
@@ -13,101 +17,125 @@ import robotbuilder.data.properties.Property;
  * @author brad
  * @author Alex Henning
  */
-public class PaletteComponent {
+public class PaletteComponent implements Serializable {
+
     private String name; //  The name of the palette component
     // The metadata for the component (type, etc.)
     private String type; // The type of the data
     private String help; // The help text for this component.
-    /** Type and quantity of children that this type of component can support. */
-    private Map<String, Integer> supports = new HashMap<String, Integer>();
-    /** String representations of PaletteComponent types */
-    private static Map<String, PaletteComponent> types = new HashMap<String, PaletteComponent>();
+    /**
+     * Type and quantity of children that this type of component can support.
+     */
+    private Map<String, Integer> supports = new HashMap<>();
+    /**
+     * String representations of PaletteComponent types
+     */
+    private static Map<String, PaletteComponent> types = new HashMap<>();
     // set of properties for the component
-    private Map<String, Property> properties = new HashMap<String, Property>();
-    private List<String> propertiesKeys = new ArrayList<String>();
-    
-    public PaletteComponent() {}
-    
+    private Map<String, Property> properties = new HashMap<>();
+    private List<String> propertiesKeys = new ArrayList<>();
+
+    public PaletteComponent() {
+    }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }
-    
+
     public static PaletteComponent getComponentByName(String type) {
-        return (PaletteComponent)types.get(type);
+        return (PaletteComponent) types.get(type);
     }
 
     public void setType(String type) {
         this.type = type;
         types.put(type, this);
     }
+
     public String getType() {
         return type;
     }
-    
+
     public void setSupports(Map<String, Integer> supports) {
         this.supports = supports;
     }
+
     public Map<String, Integer> getSupports() {
         return supports;
     }
-        
+
     public void setHelp(String help) {
         this.help = help;
     }
+
     public String getHelp() {
         return help;
     }
-    
+
     public void setProperties(List<Property> properties) {
-        this.properties = new HashMap<String, Property>();
-        this.propertiesKeys = new ArrayList<String>();
-        for (Property property : properties) {
+        this.properties = new HashMap<>();
+        this.propertiesKeys = new ArrayList<>();
+        properties.forEach((property) -> {
             this.properties.put(property.getName(), property);
             this.propertiesKeys.add(property.getName());
-        }
+        });
     }
+
     public List<Property> getProperties() {
-        List<Property> out = new ArrayList<Property>();
-        for (String key : propertiesKeys) {
-            out.add(properties.get(key));
-        }
+        List<Property> out = new ArrayList<>();
+        propertiesKeys.stream()
+                .map(properties::get)
+                .forEach(out::add);
         return out;
     }
-    
+
     public Property getProperty(String propName) {
         return properties.get(propName);
     }
-    
-    
-    
+
     public List<String> getPropertiesKeys() {
         return propertiesKeys;
     }
-    
+
     @Override
     public String toString() {
-        //return "<PaletteComponent: "+name+">";
         return name;
     }
-    
+
     public void print() {
-        for (String key: properties.keySet()) {
+        for (String key : properties.keySet()) {
             String k = (String) key;
         }
     }
-    
+
     @Override
     public int hashCode() {
-        return 3 * name.hashCode() +
-                5 * type.hashCode();
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.name);
+        hash = 67 * hash + Objects.hashCode(this.type);
+        return hash;
     }
 
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PaletteComponent other = (PaletteComponent) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return Objects.equals(this.type, other.type);
+    }
+
     public String getHelpFile() {
-        return "/help/"+name+".html";
+        return "/help/" + name + ".html";
     }
 
     public boolean supportsChildren() {

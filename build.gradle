@@ -4,15 +4,32 @@
 
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'application' // lets us run the project from IDE
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'maven-publish'
+
+mainClassName = "robotbuilder.RobotBuilder"
 
 repositories {
-	mavenCentral()
+    mavenCentral()
+    maven {
+        url "https://jitpack.io" // used to grab JGraph from its Github releases because it's not in maven central
+    }
+}
+
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.1'
+    }
 }
 
 dependencies {
-	compile 'org.apache.velocity:velocity:1.7'
-	compile 'org.yaml:snakeyaml:1.10'
-	testCompile 'junit:junit:4.11'
+    compile 'org.apache.velocity:velocity:1.7'
+    compile 'org.yaml:snakeyaml:1.10'
+    compile 'com.github.jgraph:jgraphx:v3.3.1.1'
+    compile 'org.projectlombok:lombok:1.16.4'
+    testCompile 'junit:junit:4.11'
 }
 
 
@@ -24,20 +41,33 @@ jar {
         exclude "META-INF/*.RSA"
     }
 
-	manifest {
-		attributes('Implementation-Title': 'RobotBuilder',
-					'Implementation-Version': '2.0.0',
-                	'Built-By': System.getProperty('user.name'),
-              	  	'Built-Date': new Date(),
-                	'Built-JDK': System.getProperty('java.version'),
-					'Main-class': 'robotbuilder.RobotBuilder')
-	}
+    manifest {
+        attributes('Implementation-Title': 'RobotBuilder',
+                    'Implementation-Version': '2.0.0',
+                    'Built-By': System.getProperty('user.name'),
+                    'Built-Date': new Date(),
+                    'Built-JDK': System.getProperty('java.version'),
+                    'Main-class': 'robotbuilder.RobotBuilder')
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact(shadowJar) {
+                classifier null
+            }
+            groupId 'edu.wpi.first.wpilib'
+            artifactId 'RobotBuilder'
+            version '2.0.0-SNAPSHOT'
+        }
+    }
 }
 
 uploadArchives {
-	repositories {
-		mavenDeployer {
+    repositories {
+        mavenDeployer {
 
-		}
-	}
+        }
+    }
 }

@@ -1,11 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.data;
 
-import robotbuilder.data.properties.Property;
 import java.util.List;
+
+import robotbuilder.data.properties.Property;
 
 /**
  * Validates that the property has a value set that is not in the list of
@@ -14,11 +12,15 @@ import java.util.List;
  * @author Alex Henning
  */
 public class ExistsValidator implements Validator {
+
     private String name;
-    /** Values to ignore, they do not count as valid values */
+    /**
+     * Values to ignore, they do not count as valid values
+     */
     List<Object> ignore;
-    
-    public ExistsValidator() {}
+
+    public ExistsValidator() {
+    }
 
     ExistsValidator(String name, List<Object> ignore, String error) {
         this.name = name;
@@ -27,7 +29,8 @@ public class ExistsValidator implements Validator {
     }
 
     @Override
-    public void update(RobotComponent component, String property, Object value) {}
+    public void update(RobotComponent component, String property, Object value) {
+    }
 
     @Override
     public boolean isValid(RobotComponent component, Property property) {
@@ -38,18 +41,19 @@ public class ExistsValidator implements Validator {
     public String getError(RobotComponent component, Property property) {
         return error;
     }
-    
+
     @Override
     public void delete(RobotComponent component, String property) {
         // Do nothing
     }
-    
+
     String error = "You need to set this value.";
-    
+
     // Yaml setters and getters
     public String getError() {
         return error;
     }
+
     public void setError(String error) {
         this.error = error;
     }
@@ -57,6 +61,7 @@ public class ExistsValidator implements Validator {
     public List<Object> getIgnore() {
         return ignore;
     }
+
     public void setIgnore(List<Object> ignore) {
         this.ignore = ignore;
     }
@@ -65,6 +70,7 @@ public class ExistsValidator implements Validator {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }

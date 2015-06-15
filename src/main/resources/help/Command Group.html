@@ -10,20 +10,32 @@
 
     <h2>What is it?</h2>
       <p>A command group is a group of other commands set to run in
-      series and in parallel with eachother. Command groups are a good
-      way to build up more complicated commands using already tested components.</p>
-      
+      series and/or parallel with each other. Command groups are a good
+      way to build up more complicated commands by using already tested components.</p>
+
+  <h2>How are commands organized in a command group?</h2>
+    <p>Commands can be dragged and dropped from the command palette and connected
+    in order to form a command group. Commands in a command group can be either sequential
+    or parallel commands. A sequential command will run in sequential order (one after
+    another) while parallel commands will run concurrently (at the same time).</p>
+
+  <h2>Are there any restrictions to how commands can be arranged in a command group?</h2>
+    <p>Only one sequential command can be connected and run at one time, however, multiple
+    sequential commands can be connected in series to run in order. Additionally, any number of parallel
+    commands can be connected to run simultaneously. Sequential commands cannot be connected
+    from parallel commands.</p>
+
     <h2>Properties</h2>
 
     <dl>
       <dt>Button on SmartDashboard</dt>
       <dd>Whether or not to automatically place a button on the SmartDashboard.</dd>
     </dl>
-    
+
     <h2>See Also</h2>
     <ul>
       <li>
-	<a href="Command.html">Command</a>
+  <a href="Command.html">Command</a>
       </li>
     </ul>
   </body>

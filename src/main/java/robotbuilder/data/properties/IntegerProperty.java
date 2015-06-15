@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.data.properties;
 
 import robotbuilder.data.RobotComponent;
@@ -12,10 +9,12 @@ import robotbuilder.data.RobotComponent;
  * @author Alex Henning
  */
 public class IntegerProperty extends Property {
+
     protected String value;
-    
-    public IntegerProperty() {}
-    
+
+    public IntegerProperty() {
+    }
+
     public IntegerProperty(String name, Object defaultValue, String[] validators, RobotComponent component, String value) {
         super(name, defaultValue, validators, component);
         this.value = value;
@@ -34,17 +33,17 @@ public class IntegerProperty extends Property {
             return value;
         }
     }
-    
+
     @Override
     public Object getDisplayValue() {
-        return ""+getValue();
+        return "" + getValue();
     }
 
     @Override
-    public void _setValue(Object value) {
+    public void setValue(Object value) {
         this.value = value.toString();
     }
-    
+
     @Override
     public boolean isValid() {
         try {
@@ -55,7 +54,7 @@ public class IntegerProperty extends Property {
             return false;
         }
     }
-    
+
     @Override
     public String getErrorMessage() {
         try {
@@ -64,7 +63,7 @@ public class IntegerProperty extends Property {
             return super.getErrorMessage();
         } catch (NumberFormatException ex) {
             String error = super.getErrorMessage();
-            return name+" expects a real number. "+ (error!=null ? error : "");
+            return name + " expects a real number. " + (error != null ? error : "");
         }
     }
 }

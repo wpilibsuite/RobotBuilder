@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder;
 
-import robotbuilder.palette.Palette;
 import robotbuilder.robottree.RobotTree;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +13,7 @@ import robotbuilder.data.RobotComponent;
  * @author alex
  */
 public class SavingAndLoadingTest {
-    
+
     public SavingAndLoadingTest() {
     }
 
@@ -29,15 +25,15 @@ public class SavingAndLoadingTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
-    
+
     @Test
     public void saveAndLoadANewFile() {
         RobotTree tree = TestUtils.getNewRobotTree();
@@ -49,7 +45,7 @@ public class SavingAndLoadingTest {
         assertEquals("Loaded file should be identical to the saved file.",
                 before, after);
     }
-    
+
     @Test
     public void saveAndLoadFullRobot() {
         RobotTree tree = TestUtils.generateTestTree();
@@ -61,14 +57,14 @@ public class SavingAndLoadingTest {
         assertEquals("Loaded file should be identical to the saved file.",
                 before, after);
     }
-    
+
     @Test
     public void saveAndLoadFromAnOddLocation() throws IOException {
         RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
         tree.newFile();
         tree.isRobotValid();
         RobotComponent before = tree.getRoot();
-        File tmpFile = File.createTempFile("robotbuilder-test-save", "-"+Long.toString(System.nanoTime())+".yml");
+        File tmpFile = File.createTempFile("robotbuilder-test-save", "-" + Long.toString(System.nanoTime()) + ".yml");
         tree.save(tmpFile.getAbsolutePath());
         assertTrue("Didn't save in the correct location.", tmpFile.exists());
         tree.load(tmpFile);

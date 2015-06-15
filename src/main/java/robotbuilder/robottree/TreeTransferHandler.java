@@ -1,37 +1,42 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.robottree;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.InputEvent;
+
 import java.io.IOException;
+
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.swing.Icon;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.TransferHandler;
-import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.tree.TreePath;
-import robotbuilder.MainFrame;
-import robotbuilder.palette.Palette;
+
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.RobotComponent;
+import robotbuilder.palette.Palette;
 
 /**
  * A transfer handler for that wraps the default transfer handler of RobotTree.
  *
  * @author Alex Henning
+ * @author Sam Carlberg
  */
 class TreeTransferHandler extends TransferHandler {
-    private TransferHandler delegate;
 
-    public TreeTransferHandler(TransferHandler delegate) {
+    private TransferHandler delegate;
+    private RobotTree robotTree;
+
+    public TreeTransferHandler(TransferHandler delegate, RobotTree robotTree) {
         this.delegate = delegate;
+        this.robotTree = robotTree;
     }
 
     @Override
@@ -55,16 +60,11 @@ class TreeTransferHandler extends TransferHandler {
             String data;
             try {
                 data = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
-            } catch (UnsupportedFlavorException e) {
-                System.out.println("UFE");
-                return false;
-            } catch (IOException e) {
-                System.out.println("IOE");
+            } catch (UnsupportedFlavorException | IOException e) {
                 return false;
             }
             PaletteComponent base = Palette.getInstance().getItem(data);
             assert base != null; // TODO: Handle more gracefully
-            // TODO: Handle more gracefully
             return target.supports(base);
         } else if (support.getTransferable().isDataFlavorSupported(RobotTree.ROBOT_COMPONENT_FLAVOR)) {
             RobotComponent data;
@@ -91,7 +91,7 @@ class TreeTransferHandler extends TransferHandler {
             }
             return target.supports(data);
         } else {
-            System.out.println("Unsupported flavor. The flavor you have chosen is no sufficiently delicious.");
+            System.out.println("Unsupported flavor. The flavor you have chosen is not sufficiently delicious.");
             return false;
         }
     }
@@ -100,7 +100,6 @@ class TreeTransferHandler extends TransferHandler {
     protected Transferable createTransferable(final JComponent c) {
         return new Transferable() {
             DataFlavor[] flavors = {RobotTree.ROBOT_COMPONENT_FLAVOR};
-            Object data = ((JTree) c).getSelectionPath().getLastPathComponent(); // TODO: Figure out the NullPointerException on this line.
 
             @Override
             public DataFlavor[] getTransferDataFlavors() {
@@ -118,9 +117,8 @@ class TreeTransferHandler extends TransferHandler {
             }
 
             @Override
-            public Object getTransferData(DataFlavor df) throws UnsupportedFlavorException, IOException {
-                //                    System.out.print("Transfer data: "+data);
-                return data;
+            public Object getTransferData(DataFlavor df) {
+                return robotTree.getDndData();
             }
         };
     }
@@ -132,7 +130,8 @@ class TreeTransferHandler extends TransferHandler {
 
     @Override
     protected void exportDone(JComponent source, Transferable data, int action) {
-        MainFrame.getInstance().getCurrentRobotTree().update();
+        robotTree.update();
+        robotTree.selectEditingComponent();
     }
 
     @Override
@@ -151,20 +150,24 @@ class TreeTransferHandler extends TransferHandler {
         return delegate.importData(comp, t);
     }
 
+    /**
+     * Handles DnD from the palette to the tree or reordering of components in
+     * the tree.
+     */
     @Override
     public boolean importData(TransferHandler.TransferSupport support) {
         if (!canImport(support)) {
             return false;
         }
-        RobotTree robottree = MainFrame.getInstance().getCurrentRobotTree();
         JTree.DropLocation dl = (JTree.DropLocation) support.getDropLocation();
         TreePath path = dl.getPath();
         int childIndex = dl.getChildIndex();
         if (childIndex == -1) {
-            childIndex = robottree.tree.getModel().getChildCount(path.getLastPathComponent());
+            childIndex = robotTree.tree.getModel().getChildCount(path.getLastPathComponent());
         }
-        DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-        DefaultMutableTreeNode newNode;
+        RobotComponent parentNode = (RobotComponent) path.getLastPathComponent();
+        RobotComponent newNode;
+
         if (support.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)) {
             String data;
             try {
@@ -177,33 +180,35 @@ class TreeTransferHandler extends TransferHandler {
                 return false;
             }
             PaletteComponent base = Palette.getInstance().getItem(data);
-            assert base != null; // TODO: Handle more gracefully
-            // TODO: Handle more gracefully
-            newNode = new RobotComponent(robottree.getDefaultComponentName(base, ((RobotComponent) parentNode).getSubsystem()), base, robottree);
+            if (base == null) {
+                // very unlikely, but notify the user anyway
+                JOptionPane.showMessageDialog(robotTree, "A robot component could not be found for the pallet item " + base, "", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            newNode = new RobotComponent(robotTree.getDefaultComponentName(base, ((RobotComponent) parentNode).getSubsystem()), base, robotTree);
         } else if (support.getTransferable().isDataFlavorSupported(RobotTree.ROBOT_COMPONENT_FLAVOR)) {
             try {
                 newNode = (RobotComponent) support.getTransferable().getTransferData(RobotTree.ROBOT_COMPONENT_FLAVOR);
-            } catch (UnsupportedFlavorException e) {
-                return false;
-            } catch (IOException e) {
+            } catch (UnsupportedFlavorException | IOException e) {
                 return false;
             }
         } else {
             return false;
         }
-        robottree.treeModel.insertNodeInto(newNode, parentNode, childIndex);
-        robottree.treeModel.reload(parentNode); // reloads the tree without reverting to the root
-        // reloads the tree without reverting to the root
-        robottree.update();
-        robottree.tree.makeVisible(path.pathByAddingChild(newNode));
-        
-        robottree.tree.setSelectionPath(path.pathByAddingChild(newNode));
-        robottree.properties.setCurrentComponent(newNode);
-        robottree.properties.setEditName();
-        
-        robottree.tree.scrollRectToVisible(robottree.tree.getPathBounds(path.pathByAddingChild(newNode)));
-        robottree.takeSnapshot();
+
+        robotTree.treeModel.insertNodeInto(newNode, parentNode, childIndex);
+        robotTree.treeModel.reload(parentNode); // reloads the tree without reverting to the root
+        robotTree.update();
+
+        robotTree.tree.makeVisible(path.pathByAddingChild(newNode));
+
+        robotTree.selectRobotComponent(newNode);
+        robotTree.tree.setSelectionPath(path.pathByAddingChild(newNode));
+        robotTree.properties.setCurrentComponent(newNode);
+        robotTree.properties.setEditName();
+
+        robotTree.tree.scrollRectToVisible(robotTree.tree.getPathBounds(path.pathByAddingChild(newNode)));
+        robotTree.takeSnapshot();
         return true;
     }
-    
 }

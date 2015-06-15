@@ -3,13 +3,15 @@ package robotbuilder.actions;
 
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
+
 import java.io.IOException;
-import java.util.Currency;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.UIManager;
+
 import robotbuilder.MainFrame;
 import robotbuilder.exporters.GenericExporter;
 
@@ -18,8 +20,9 @@ import robotbuilder.exporters.GenericExporter;
  * @author brad
  */
 public class ExporterAction extends AbstractAction {
+
     GenericExporter exporter;
-    
+
     public ExporterAction(String description) {
         exporter = new GenericExporter(description);
         putValue(Action.NAME, exporter.getName());
@@ -36,7 +39,7 @@ public class ExporterAction extends AbstractAction {
         }
         MainFrame.getInstance().setCursor(Cursor.DEFAULT_CURSOR);
     }
-    
+
     public boolean isOnToolbar() {
         return exporter.isOnToolbar();
     }

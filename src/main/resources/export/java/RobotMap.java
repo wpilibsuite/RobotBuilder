@@ -1,7 +1,7 @@
 #header()
 
 package ${package};
-    
+
 ${helper.getImports($robot, "RobotMap")}
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import java.util.Vector;

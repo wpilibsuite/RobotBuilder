@@ -1,11 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.data.properties;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -19,13 +14,15 @@ import robotbuilder.utils.RelativePathAccessory;
  * @author Alex Henning
  */
 public class FileProperty extends Property {
+
     protected String value, extension;
     protected boolean folder;
     boolean relative;
-    protected JFileChooser chooser;
-    
-    public FileProperty() {}
-    
+    protected transient JFileChooser chooser; //TODO remove gui elements
+
+    public FileProperty() {
+    }
+
     public FileProperty(String name, Object defaultValue, String[] validators, RobotComponent component,
             String value, String extension, boolean folder) {
         super(name, defaultValue, validators, component);
@@ -43,7 +40,7 @@ public class FileProperty extends Property {
     public Object getValue() {
         return (value != null) ? value : defaultValue;
     }
-    
+
     @Override
     public Object getDisplayValue() {
         if (chooser == null) {
@@ -54,7 +51,7 @@ public class FileProperty extends Property {
                 chooser.setDialogTitle("Choose folder to save project");
             } else {
                 chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                chooser.setFileFilter(new FileNameExtensionFilter(extension+" file", extension));
+                chooser.setFileFilter(new FileNameExtensionFilter(extension + " file", extension));
             }
             RelativePathAccessory acc = new RelativePathAccessory(MainFrame.getInstance().getCurrentRobotTree());
             acc.setRelative(relative);
@@ -66,19 +63,20 @@ public class FileProperty extends Property {
     }
 
     @Override
-    public void _setValue(Object value) {
+    public void setValue(Object value) {
         if (extension != null && value != null && !value.equals("")
-                && !((String) value).endsWith("."+extension)) {
-            value = ((String) value)+"."+extension;
+                && !((String) value).endsWith("." + extension)) {
+            value = ((String) value) + "." + extension;
         }
         this.value = (String) value;
         relative = !(getValue().toString().startsWith("/") // Absolute paths start with "/"
-                    || getValue().toString().matches("^.:\\\\.*")); // and the more general form of C:\
+                || getValue().toString().matches("^.:\\\\.*")); // and the more general form of C:\
     }
 
     public String getExtension() {
         return extension;
     }
+
     public void setExtension(String extension) {
         this.extension = extension;
     }
@@ -86,10 +84,11 @@ public class FileProperty extends Property {
     public boolean getFolder() {
         return folder;
     }
+
     public void setFolder(boolean folder) {
         this.folder = folder;
     }
-    
+
     @Override
     public void update() {
         super.update();
@@ -99,7 +98,7 @@ public class FileProperty extends Property {
                     || getValue().toString().matches("^.:\\\\.*")) { // and the more general form of C:\
                 file = new File(getValue().toString());
             } else {
-                System.out.println("Parent File: "+MainFrame.getInstance().getCurrentRobotTree().getFilePath());
+                //System.out.println("Parent File: "+MainFrame.getInstance().getCurrentRobotTree().getFilePath());
                 file = new File(new File(MainFrame.getInstance().getCurrentRobotTree().getFilePath()).getParentFile(),
                         getValue().toString());
             }
@@ -107,5 +106,5 @@ public class FileProperty extends Property {
             //value = chooser.getSelectedFile().toString();
         }
     }
-    
+
 }

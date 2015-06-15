@@ -1,13 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.palette;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
+
 import java.lang.reflect.Method;
+
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JTree;
@@ -20,6 +19,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @author Alex Henning
  */
 class PaletteTreeTransferHandler extends TransferHandler {
+
     private TransferHandler delegate;
 
     public PaletteTreeTransferHandler(TransferHandler delegate) {
@@ -45,7 +45,7 @@ class PaletteTreeTransferHandler extends TransferHandler {
                 Method method = delegate.getClass().getDeclaredMethod("createTransferable", JComponent.class);
                 method.setAccessible(true);
                 return (Transferable) method.invoke(delegate, c);
-            } catch (Exception e) {
+            } catch (ReflectiveOperationException e) {
                 return super.createTransferable(c);
             }
         } else {
@@ -87,5 +87,5 @@ class PaletteTreeTransferHandler extends TransferHandler {
     public boolean importData(TransferHandler.TransferSupport support) {
         return delegate.importData(support);
     }
-    
+
 }

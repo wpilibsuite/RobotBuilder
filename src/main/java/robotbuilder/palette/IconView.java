@@ -1,14 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.palette;
 
-import java.awt.*;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.io.FileNotFoundException;
+
 import java.util.Enumeration;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -19,6 +20,7 @@ import javax.swing.TransferHandler;
 import javax.swing.border.TitledBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
+
 import robotbuilder.MainFrame;
 import robotbuilder.Utils;
 import robotbuilder.data.PaletteComponent;
@@ -28,13 +30,14 @@ import robotbuilder.data.PaletteComponent;
  * @author alex
  */
 public class IconView extends JPanel {
+
     Palette palette;
-    
+
     public IconView(Palette palette) {
         this.palette = palette;
-        
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
+
         TreeModel model = palette.getPaletteModel();
         Enumeration children = ((DefaultMutableTreeNode) model.getRoot()).children();
         while (children.hasMoreElements()) {
@@ -44,6 +47,7 @@ public class IconView extends JPanel {
     }
 
     private static class IconSection extends JPanel {
+
         private IconSection(DefaultMutableTreeNode node) {
             //BorderFactory.createT
             setBorder(BorderFactory.createTitledBorder(node.getUserObject().toString()));
@@ -52,7 +56,7 @@ public class IconView extends JPanel {
             border.setTitleJustification(TitledBorder.CENTER);
 
             setLayout(new GridLayout(0, 2, 5, 5));
-            
+
             Enumeration children = node.children();
             while (children.hasMoreElements()) {
                 PaletteComponent component = (PaletteComponent) ((DefaultMutableTreeNode) children.nextElement()).getUserObject();
@@ -60,13 +64,15 @@ public class IconView extends JPanel {
             }
         }
     }
-    
+
     private static class PaletteIcon extends JLabel {
+
         PaletteComponent component;
+
         private PaletteIcon(final PaletteComponent comp) {
             this.component = comp;
             try {
-                setIcon(new ImageIcon(Utils.getResource("/icons/"+component.getName()+".png")));
+                setIcon(new ImageIcon(Utils.getResource("/icons/" + component.getName() + ".png")));
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             }
@@ -79,7 +85,8 @@ public class IconView extends JPanel {
                     MainFrame.getInstance().setHelp((component).getHelpFile());
                     JComponent comp = (JComponent) e.getSource();
                     TransferHandler th = comp.getTransferHandler();
-                    th.exportAsDrag(comp, e, TransferHandler.COPY);                }
+                    th.exportAsDrag(comp, e, TransferHandler.COPY);
+                }
             });
         }
     }

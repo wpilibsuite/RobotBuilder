@@ -2,10 +2,11 @@
 /nbproject/private/
 /dist/
 /target/
-save*.yml
+save*.yaml
 *~
 *#
 /test-resources/RobotBuilderTestProject/*
 /.svn/*
 *.exec
 dependency-reduced-pom.xml
+nbactions.xml

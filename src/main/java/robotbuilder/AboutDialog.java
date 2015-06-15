@@ -2,9 +2,12 @@
 package robotbuilder;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.*;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class AboutDialog extends CenteredDialog {
 
@@ -25,12 +28,7 @@ public class AboutDialog extends CenteredDialog {
         ButtonBox buttonBox = new ButtonBox(BoxLayout.X_AXIS);
         JButton okButton = new JButton("OK");
         this.getRootPane().setDefaultButton(okButton);
-        okButton.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                AboutDialog.this.setVisible(false);
-            }
-        });
+        okButton.addActionListener(e -> setVisible(false));
         buttonBox.add(okButton);
         aboutWindow.add(buttonBox);
         this.getContentPane().add(aboutWindow, "Center");

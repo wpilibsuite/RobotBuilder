@@ -1,13 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.data.properties;
 
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -18,7 +13,7 @@ import robotbuilder.MainFrame;
  * @author alex
  */
 public class FilePropertyTest {
-    
+
     public FilePropertyTest() {
     }
 
@@ -29,16 +24,17 @@ public class FilePropertyTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
-    
-    @Test public void testCopy() {
+
+    @Test
+    public void testCopy() {
         FileProperty fp = new FileProperty("Test", "", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", false);
         FileProperty copy = (FileProperty) fp.copy();
@@ -50,7 +46,7 @@ public class FilePropertyTest {
         assertEquals("Copy should have the same folder.", fp.folder, copy.folder);
         assertEquals("Copy should have the same validators.", fp.validators, copy.validators);
         assertEquals("Copy should have the same component.", fp.component, copy.component);
-        
+
         assertEquals("Copy should have the same name.", fp.name, copy2.name);
         assertEquals("Copy should have the same default.", fp.defaultValue, copy2.defaultValue);
         assertEquals("Copy should have the same value.", fp.value, copy2.value);
@@ -59,8 +55,9 @@ public class FilePropertyTest {
         assertEquals("Copy should have the same validators.", fp.validators, copy2.validators);
         assertEquals("Copy should have the same component.", fp.component, copy2.component);
     }
-    
-    @Test public void testGetValue() {
+
+    @Test
+    public void testGetValue() {
         FileProperty fp = new FileProperty("Test", "", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", false);
         fp.value = null;
@@ -74,8 +71,9 @@ public class FilePropertyTest {
         fp.value = "file.test";
         assertEquals("file.test", fp.getValue());
     }
-    
-    @Test public void testGetDisplayValue() throws IOException {
+
+    @Test
+    public void testGetDisplayValue() throws IOException {
         FileProperty fp = new FileProperty("Test", "", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", false);
         fp.relative = false;
@@ -85,12 +83,12 @@ public class FilePropertyTest {
         fp.value = "file.test";
         assertEquals(new File(new File(".").getCanonicalPath(), "file.test").getCanonicalPath(),
                 ((JFileChooser) fp.getDisplayValue()).getSelectedFile().getCanonicalPath());
-        
+
         MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File("test.yml").getAbsolutePath());
         fp.value = "file";
         assertEquals(new File(new File(".").getCanonicalPath(), "file").getCanonicalPath(),
                 ((JFileChooser) fp.getDisplayValue()).getSelectedFile().getCanonicalPath());
-        
+
         FileProperty fp2 = new FileProperty("Test", "", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", true);
         fp2.value = null;
@@ -102,17 +100,18 @@ public class FilePropertyTest {
         assertEquals(new File(new File(".").getCanonicalPath(), "file").getCanonicalPath(),
                 ((JFileChooser) fp2.getDisplayValue()).getSelectedFile().getCanonicalPath());
     }
-    
-    @Test public void testSetValue() {
+
+    @Test
+    public void testSetValue() {
         FileProperty fp = new FileProperty("Test", "", new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "", "test", false);
-        fp.setValue(null);
+        fp.setValueAndUpdate(null);
         assertNull(fp.value);
-        fp.setValue("file");
+        fp.setValueAndUpdate("file");
         assertEquals("file.test", fp.value);
-        fp.setValue("file.test");
+        fp.setValueAndUpdate("file.test");
         assertEquals("file.test", fp.value);
-        fp.setValue("path/to/file");
+        fp.setValueAndUpdate("path/to/file");
         assertEquals("path/to/file.test", fp.value);
     }
 }

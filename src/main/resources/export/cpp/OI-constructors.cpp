@@ -1,20 +1,20 @@
-${Collections.reverse($components)}
+##${Collections.reverse($components)}
 #foreach( $component in $components )
 #if ($helper.exportsTo("OI", $component)
      && ("#constructor($component)" != "" || "#extra($component)" != ""))
-	#constructor($component)
+    #constructor($component)
 
-	#extra($component)
+    #extra($component)
 
 #end
 #end
-     
-${Collections.reverse($components)}
+
+##${Collections.reverse($components)}
         // SmartDashboard Buttons
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
-	SmartDashboard::PutData("$component.getName()", new #class($component.getName())());
+    SmartDashboard::PutData("$component.getName()", new #class($component.getName())());
 
 #end
 #end

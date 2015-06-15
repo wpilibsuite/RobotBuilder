@@ -28,7 +28,7 @@
   export: $project/.settings/org.eclipse.cdt.managedbuilder.core.prefs
   source: ${exporter-path}org.eclipse.cdt.managedbuilder.core.prefs
   update: None
-  
+
 ## Key C++ Files
 - !File
   export: $project/src/Robot.cpp
@@ -45,7 +45,7 @@
   modifications:
     includes: ${exporter-path}CommandBasedRobot-includes.h
     declarations: ${exporter-path}CommandBasedRobot-declarations.cpp
-    
+
 - !File
   export: $project/src/RobotMap.cpp
   source: ${exporter-path}RobotMap.cpp
@@ -59,7 +59,7 @@
   update: Modify
   modifications:
     declarations: ${exporter-path}RobotMap-declarations.h
-  
+
 - !File
   export: $project/src/OI.cpp
   source: ${exporter-path}OI.cpp
@@ -84,12 +84,17 @@
   export: $project/src/Commands/#class($command.name).cpp
   source: ${exporter-path}CommandGroup.cpp
   update: None
+  modifications:
+    update: Modify
+    constructor: ${exporter-path}CommandGroup-constructor.cpp
   variables:
     command-name: ${command.name}
 - !File
   export: $project/src/Commands/#class($command.name).h
   source: ${exporter-path}CommandGroup.h
-  update: None
+  update: Modify
+  modifications:
+    constructor: ${exporter-path}Command-constructor-header.h
   variables:
     command-name: ${command.name}
 ## #elseif($command.base.name == "PID Command")
@@ -111,14 +116,17 @@
   update: Modify
   modifications:
     requires: ${exporter-path}Command-requires.cpp
+    constructor: ${exporter-path}Command-constructor.cpp
     initialize: ${exporter-path}SetpointCommand-initialize.cpp
     isFinished: ${exporter-path}SetpointCommand-isFinished.cpp
   variables:
     command-name: ${command.name}
 - !File
   export: $project/src/Commands/#class($command.name).h
-  source: ${exporter-path}Command.h
-  update: None
+  source: ${exporter-path}SetpointCommand.h
+  modifications:
+    constructor: ${exporter-path}Command-constructor-header.h
+  update: Modify
   variables:
     command-name: ${command.name}
 #else
@@ -128,16 +136,20 @@
   update: Modify
   modifications:
     requires: ${exporter-path}Command-requires.cpp
+    constructor: ${exporter-path}Command-constructor.cpp
   variables:
     command-name: ${command.name}
 - !File
   export: $project/src/Commands/#class($command.name).h
+  modifications:
+    constructor: ${exporter-path}Command-constructor-header.h
+    variables: ${exporter-path}Command-constructor-variables.h
   source: ${exporter-path}Command.h
-  update: None
+  update: Modify
   variables:
     command-name: ${command.name}
-#end 
-#end 
+#end
+#end
 #end
 
 ## Export Subsystems as files
@@ -154,7 +166,7 @@
     pid: ${exporter-path}PIDSubsystem-pid.cpp
     source: ${exporter-path}PIDSubsystem-source.cpp
     output: ${exporter-path}PIDSubsystem-output.cpp
-  variables: 
+  variables:
     subsystem-name: ${subsystem.name}
 - !File
   export: $project/src/Subsystems/#class($subsystem.name).h
@@ -162,7 +174,7 @@
   update: Modify
   modifications:
     declarations: ${exporter-path}Subsystem-declarations.h
-  variables: 
+  variables:
     subsystem-name: ${subsystem.name}
 #else
 - !File
@@ -172,7 +184,7 @@
   modifications:
     declarations: ${exporter-path}Subsystem-declarations.cpp
     default_command: ${exporter-path}Subsystem-default_command.cpp
-  variables: 
+  variables:
     subsystem-name: ${subsystem.name}
 - !File
   export: $project/src/Subsystems/#class($subsystem.name).h
@@ -180,7 +192,7 @@
   update: Modify
   modifications:
     declarations: ${exporter-path}Subsystem-declarations.h
-  variables: 
+  variables:
     subsystem-name: ${subsystem.name}
 #end
 #end

@@ -1,73 +1,72 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.utils;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
 import robotbuilder.robottree.RobotTree;
 
-    
 /**
  *
  * @author alex
  */
 public class RelativePathAccessory extends JPanel implements PropertyChangeListener {
+
     RobotTree tree;
     File file;
     ButtonGroup options;
     JRadioButton relative, absolute;
     JTextField relativePreview, absolutePreview;
-    
+
     public RelativePathAccessory(RobotTree tree) {
         this.tree = tree;
         addComponents();
     }
-    
+
     private void addComponents() {
         setLayout(new GridLayout(4, 1));
-        
+
         relative = new JRadioButton("Use path relative to the RobotBuilder save file.");
         relative.setSelected(true);
         relativePreview = new JTextField(".");
         relativePreview.setEditable(false);
         relativePreview.setEnabled(false);
         relativePreview.setForeground(Color.BLACK);
-        
+
         absolute = new JRadioButton("Use absolute path.");
         absolutePreview = new JTextField("");
         absolutePreview.setEditable(false);
         absolutePreview.setEnabled(false);
         absolutePreview.setForeground(Color.BLACK);
-        
+
         options = new ButtonGroup();
         options.add(relative);
         options.add(absolute);
-        
+
         add(relative);
         add(relativePreview);
         add(absolute);
         add(absolutePreview);
     }
-    
+
     public void attachTo(JFileChooser chooser) {
-        System.out.println("Accessory set.");
         chooser.setAccessory(this);
         chooser.addPropertyChangeListener(this);
     }
@@ -88,9 +87,11 @@ public class RelativePathAccessory extends JPanel implements PropertyChangeListe
             }
         }
     }
-    
+
     public String getFileName() {
-        if (file == null) return null;
+        if (file == null) {
+            return null;
+        }
         if (relative.isSelected()) {
             return RelativePath.getRelativePath(new File(tree.getFilePath()).getParentFile(), file);
         } else {
@@ -117,19 +118,26 @@ public class RelativePathAccessory extends JPanel implements PropertyChangeListe
     }
 
     public void setRelative(boolean relative) {
-        if (relative) this.relative.setSelected(true);
-        else this.absolute.setSelected(true);
+        if (relative) {
+            this.relative.setSelected(true);
+        } else {
+            this.absolute.setSelected(true);
+        }
     }
 }
+
 /**
- * this class provides functions used to generate a relative path
- * from two absolute paths
+ * this class provides functions used to generate a relative path from two
+ * absolute paths
+ *
  * @author David M. Howard
  */
 class RelativePath {
+
     /**
-     * break a path down into individual elements and add to a list.
-     * example : if a path is /a/b/c/d.txt, the breakdown will be [d.txt,c,b,a]
+     * break a path down into individual elements and add to a list. example :
+     * if a path is /a/b/c/d.txt, the breakdown will be [d.txt,c,b,a]
+     *
      * @param f input file
      * @return a List collection with the individual elements of the path in
      * reverse order
@@ -139,7 +147,7 @@ class RelativePath {
         File r;
         try {
             r = f.getCanonicalFile();
-            while(r != null) {
+            while (r != null) {
                 l.add(r.getName());
                 r = r.getParentFile();
             }
@@ -149,49 +157,52 @@ class RelativePath {
         }
         return l;
     }
-    
+
     /**
-     * figure out a string representing the relative path of
-     * 'f' with respect to 'r'
+     * figure out a string representing the relative path of 'f' with respect to
+     * 'r'
+     *
      * @param r home path
      * @param f path of file
      */
-    private static String matchPathLists(List r,List f) {
+    private static String matchPathLists(List r, List f) {
         int i;
         int j;
         String s;
         // start at the beginning of the lists
         // iterate while both lists are equal
         s = "";
-        i = r.size()-1;
-        j = f.size()-1;
-        
+        i = r.size() - 1;
+        j = f.size() - 1;
+
         // first eliminate common root
-        while((i >= 0)&&(j >= 0)&&(r.get(i).equals(f.get(j)))) {
+        while ((i >= 0) && (j >= 0) && (r.get(i).equals(f.get(j)))) {
             i--;
             j--;
         }
-        
+
         // for each remaining level in the home path, add a ..
-        for(;i>=0;i--) {
+        for (; i >= 0; i--) {
             s += ".." + File.separator;
         }
-        
+
         // for each level in the file path, add the path
-        for(;j>=1;j--) {
+        for (; j >= 1; j--) {
             s += f.get(j) + File.separator;
         }
-        
+
         // file name
-        if (j != -1) s += f.get(j);
+        if (j != -1) {
+            s += f.get(j);
+        }
         return s;
     }
-    
+
     /**
-     * get relative path of File 'f' with respect to 'home' directory
-     * example : home = /a/b/c
-     *           f    = /a/d/e/x.txt
-     *           s = getRelativePath(home,f) = ../../d/e/x.txt
+     * get relative path of File 'f' with respect to 'home' directory example :
+     * home = /a/b/c f = /a/d/e/x.txt s = getRelativePath(home,f) =
+     * ../../d/e/x.txt
+     *
      * @param home base path, should be a directory, not a file, or it doesn't
      * make sense
      * @param f file to generate path for
@@ -202,13 +213,14 @@ class RelativePath {
         List homelist;
         List filelist;
         String s;
-        
+
         homelist = getPathList(home);
         filelist = getPathList(f);
-        s = matchPathLists(homelist,filelist);
-        System.out.println("\t"+homelist+" ~ "+filelist+" --> '"+s+"'");
-        if (s.length() == 0) s = "." + File.separator;
-        
+        s = matchPathLists(homelist, filelist);
+        if (s.length() == 0) {
+            s = "." + File.separator;
+        }
+
         return s;
     }
 }

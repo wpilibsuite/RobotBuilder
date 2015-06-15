@@ -23,6 +23,12 @@
          and will interrupt any other command that requires the same
          subsystem. This only works if all your commands properly
          require the subsystems that they use.</p>
+	  <h3>What are parameters and how are they used in a command?</h3>
+	  <p>Parameters are variables that are passed into a command
+	     to be used later. By adding parameters to your command, the
+		 parameters are defined in your command class as a variable of
+		 the same type. The arguments passed in by the parameters can then
+		 be used by methods inside of the command. </p>
 
     <h2>Properties</h2>
 
@@ -31,6 +37,9 @@
       <dd>The subsystem that this command requires.</dd>
       <dt>Button on SmartDashboard</dt>
       <dd>Whether or not to automatically place a button on the SmartDashboard.</dd>
+	  <dt>Parameters</dt>
+	  <dd>Variables to be passed into the command. Data can be of types boolean,
+	  byte, int, long, double, or string.</dd>
     </dl>
 
   </body>

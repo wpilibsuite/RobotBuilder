@@ -1,35 +1,29 @@
+
 package robotbuilder;
 
-
-import robotbuilder.palette.Palette;
 import robotbuilder.robottree.RobotTree;
 import java.io.File;
 import robotbuilder.data.RobotComponent;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
  * @author Alex Henning
  */
 public class TestUtils {
-    
+
     /**
      * @return A new robot tree.
      */
     public static RobotTree getNewRobotTree() {
         RobotTree tree = MainFrame.getInstance().getCurrentRobotTree();
-        tree.saved = true; // Hack to keep from prompting for user input.
+        tree.setSaved(); // Hack to keep from prompting for user input.
         tree.newFile();
         return tree;
     }
-    
+
     /**
      * @return A known test tree that includes a large number of items from the
-     *         palette.
+     * palette.
      */
     public static RobotTree generateTestTree() {
         RobotTree tree = getNewRobotTree();
@@ -37,14 +31,14 @@ public class TestUtils {
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         RobotComponent oi = (RobotComponent) robot.getChildren().elementAt(0);
         RobotComponent commands = (RobotComponent) robot.getChildren().elementAt(0);
-        
+
         // Create a drive train subsystem
         RobotComponent driveTrain = new RobotComponent("Drive Train", "Subsystem", tree);
         subsystems.add(driveTrain);
         RobotComponent robotDrive = new RobotComponent("Robot Drive", "Robot Drive 2", tree);
-        robotDrive.getProperty("Left Motor Inverted").setValue(true);
-        robotDrive.getProperty("Safety Enabled").setValue(false);
-        robotDrive.getProperty("Sensitivity").setValue(0.25);
+        robotDrive.getProperty("Left Motor Inverted").setValueAndUpdate(true);
+        robotDrive.getProperty("Safety Enabled").setValueAndUpdate(false);
+        robotDrive.getProperty("Sensitivity").setValueAndUpdate(0.25);
         driveTrain.add(robotDrive);
         RobotComponent leftVictor = new RobotComponent("Left Victor", "Speed Controller", tree);
         leftVictor.setProperty("Type", "Victor");
@@ -52,46 +46,46 @@ public class TestUtils {
         RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
         rightVictor.setProperty("Type", "Victor");
         robotDrive.add(rightVictor);
-        robotDrive.getProperty("Right Motor").setValue(rightVictor);
+        robotDrive.getProperty("Right Motor").setValueAndUpdate(rightVictor);
         RobotComponent gyro = new RobotComponent("Gyro", "Gyro", tree);
         driveTrain.add(gyro);
-        gyro.getProperty("Sensitivity").setValue(2.33);
-        
+        gyro.getProperty("Sensitivity").setValueAndUpdate(2.33);
+
         // Create an arm subsystem
         RobotComponent arm = new RobotComponent("Arm", "Subsystem", tree);
         subsystems.add(arm);
         RobotComponent pid = new RobotComponent("PID Controller", "PID Controller", tree);
         arm.add(pid);
-        pid.getProperty("P").setValue(2);
-        pid.getProperty("I").setValue(1);
-        pid.getProperty("D").setValue(-1);
-//        pid.getProperty("Send to SmartDashboard").setValue(true);
-        pid.getProperty("Limit Input").setValue(true);
-        pid.getProperty("Continuous").setValue(true);
+        pid.getProperty("P").setValueAndUpdate(2);
+        pid.getProperty("I").setValueAndUpdate(1);
+        pid.getProperty("D").setValueAndUpdate(-1);
+//        pid.getProperty("Send to SmartDashboard").setValueAndUpdate(true);
+        pid.getProperty("Limit Input").setValueAndUpdate(true);
+        pid.getProperty("Continuous").setValueAndUpdate(true);
         RobotComponent motor = new RobotComponent("Motor", "Speed Controller", tree);
         motor.setProperty("Type", "Jaguar");
         pid.add(motor);
         RobotComponent encoder = new RobotComponent("Encoder", "Quadrature Encoder", tree);
         pid.add(encoder);
-        encoder.getProperty("Distance Per Pulse").setValue(24);
-        encoder.getProperty("PID Source").setValue("kDistance");
+        encoder.getProperty("Distance Per Pulse").setValueAndUpdate(24);
+        encoder.getProperty("PID Source").setValueAndUpdate("kDistance");
         RobotComponent limit = new RobotComponent("Limit", "Limit Switch", tree);
         arm.add(limit);
-        
+
         // Create an wrist subsystem
         RobotComponent wrist = new RobotComponent("Wrist", "PID Subsystem", tree);
         subsystems.add(wrist);
-        wrist.getProperty("P").setValue(2);
-        wrist.getProperty("I").setValue(1);
-        wrist.getProperty("D").setValue(-1);
-        wrist.getProperty("Limit Input").setValue(true);
-        wrist.getProperty("Continuous").setValue(true);
+        wrist.getProperty("P").setValueAndUpdate(2);
+        wrist.getProperty("I").setValueAndUpdate(1);
+        wrist.getProperty("D").setValueAndUpdate(-1);
+        wrist.getProperty("Limit Input").setValueAndUpdate(true);
+        wrist.getProperty("Continuous").setValueAndUpdate(true);
         RobotComponent wristMotor = new RobotComponent("Motor", "Speed Controller", tree);
         wristMotor.setProperty("Type", "Jaguar");
         wrist.add(wristMotor);
         RobotComponent pot = new RobotComponent("Pot", "Analog Potentiometer", tree);
         wrist.add(pot);
-        
+
         // Create a simple OI
         RobotComponent leftstick = new RobotComponent("Left Joystick", "Joystick", tree);
         oi.add(leftstick);
@@ -101,22 +95,22 @@ public class TestUtils {
         leftstick.add(armUpButton);
         RobotComponent autoButton = new RobotComponent("Autonomous Button", "Joystick Button", tree);
         rightstick.add(autoButton);
-        autoButton.getProperty("When to Run").setValue("whenPressed");
-        
+        autoButton.getProperty("When to Run").setValueAndUpdate("whenPressed");
+
         // Create some commands
         RobotComponent tankDrive = new RobotComponent("Tank Drive", "Command", tree);
         commands.add(tankDrive);
-        tankDrive.getProperty("Requires").setValue("Drive Train");
+        tankDrive.getProperty("Requires").setValueAndUpdate("Drive Train");
         RobotComponent armUp = new RobotComponent("Arm Up", "Command", tree);
         commands.add(armUp);
         RobotComponent auto = new RobotComponent("Autonomous", "Command Group", tree);
         commands.add(auto);
 
         // Deal with odd references
-        driveTrain.getProperty("Default Command").setValue("Tank Drive");
-        armUpButton.getProperty("Command").setValue("Arm Up");
-        autoButton.getProperty("Command").setValue("Autonomous");
-        
+        driveTrain.getProperty("Default Command").setValueAndUpdate("Tank Drive");
+        armUpButton.getProperty("Command").setValueAndUpdate("Arm Up");
+        autoButton.getProperty("Command").setValueAndUpdate("Autonomous");
+
         return tree;
     }
 

@@ -1,18 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.palette;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
+
 import java.io.IOException;
+
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JTree;
 import javax.swing.TransferHandler;
-import robotbuilder.robottree.RobotTree;
 
 /**
  *
@@ -21,10 +18,10 @@ import robotbuilder.robottree.RobotTree;
 public class IconPaletteTransferHandler extends TransferHandler {
 
     @Override
-    public int  getSourceActions(JComponent c) {
+    public int getSourceActions(JComponent c) {
         return TransferHandler.COPY;
     }
-    
+
     @Override
     protected Transferable createTransferable(final JComponent c) {
         return new Transferable() {
@@ -48,7 +45,6 @@ public class IconPaletteTransferHandler extends TransferHandler {
 
             @Override
             public Object getTransferData(DataFlavor df) throws UnsupportedFlavorException, IOException {
-                //                    System.out.print("Transfer data: "+data);
                 return data;
             }
         };

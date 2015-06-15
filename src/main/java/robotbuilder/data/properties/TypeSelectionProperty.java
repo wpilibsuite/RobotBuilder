@@ -1,11 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.data.properties;
 
 import java.util.Vector;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import robotbuilder.data.RobotComponent;
@@ -15,13 +11,15 @@ import robotbuilder.data.RobotComponent;
  * @author Alex Henning
  */
 public class TypeSelectionProperty extends Property {
+
     String type;
     Object value;
-    RobotComponent valueComponent;
-    JComboBox combo;
-    
-    public TypeSelectionProperty() {}
-    
+    transient RobotComponent valueComponent;
+    transient JComboBox combo; //TODO remove gui elements
+
+    public TypeSelectionProperty() {
+    }
+
     public TypeSelectionProperty(String name, Object defaultValue, String[] validators, RobotComponent component,
             String type, Object value) {
         super(name, defaultValue, validators, component);
@@ -39,10 +37,12 @@ public class TypeSelectionProperty extends Property {
 
     @Override
     public Object getValue() {
-        if (valueComponent != null) { return valueComponent.getFullName(); }
+        if (valueComponent != null) {
+            return valueComponent.getFullName();
+        }
         return (value != null) ? value : defaultValue;
     }
-    
+
     @Override
     public Object getDisplayValue() {
         update();
@@ -50,19 +50,20 @@ public class TypeSelectionProperty extends Property {
     }
 
     @Override
-    public void _setValue(Object value) {
+    public void setValue(Object value) {
         this.value = value;
         if (value != null && component != null && component.getRobotTree().getRoot() != null) {
             valueComponent = component.getRobotTree().getComponentByName(value.toString());
         }
     }
-    
-    
+
     @Override
     public void update() {
         super.update();
         Object selection = getValue();
-        if (valueComponent != null) { selection = valueComponent.getFullName(); }
+        if (valueComponent != null) {
+            selection = valueComponent.getFullName();
+        }
         Vector<String> options = component.getRobotTree().getRoot().getChildrenOfTypeNames(type);
         options.add(0, defaultValue.toString());
         if (combo == null) {
@@ -76,10 +77,11 @@ public class TypeSelectionProperty extends Property {
         }
         value = combo.getSelectedItem() != null ? combo.getSelectedItem() : value;
     }
-    
+
     public String getType() {
         return type;
     }
+
     public void setType(String type) {
         this.type = type;
     }

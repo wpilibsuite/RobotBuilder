@@ -1,12 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package robotbuilder.robottree;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+
 import robotbuilder.MainFrame;
 import robotbuilder.data.RobotComponent;
 
@@ -15,6 +14,7 @@ import robotbuilder.data.RobotComponent;
  * @author alex
  */
 class DeleteItemAction extends AbstractAction {
+
     private RobotComponent target;
 
     public DeleteItemAction(String name, RobotComponent target) {
@@ -30,5 +30,5 @@ class DeleteItemAction extends AbstractAction {
         tree.update();
         tree.takeSnapshot();
     }
-    
+
 }

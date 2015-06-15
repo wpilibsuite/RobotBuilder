@@ -107,14 +107,14 @@
             choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"]
             default: "0"
 #end
-#macro( PWMOutput $Name )          
+#macro( PWMOutput $Name )
 - !ChoicesProperty
             name: $Name Channel (PWM)
             validators: [PWMOutput]
             choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]
             default: "0"
 #end
-#macro( RelayOutput $Name )          
+#macro( RelayOutput $Name )
 - !ChoicesProperty
             name: $Name Channel (Relay)
             validators: [RelayOutput]
@@ -127,6 +127,8 @@
             type: Command
             validators: [TypeDropdownSelected]
             default: None
+          - !Parameters
+            name: $Name Parameters
           - !ChoicesProperty
             name: $Name When to Run
             choices: [whileHeld, whenPressed, whenReleased]
@@ -184,7 +186,9 @@ Validators:
   - !UniqueValidator
     name: PCMCompID
     fields: [PCM ID]
-    
+  - !ListValidator
+    name: List
+
 Palette:
   - Hidden:
       - !Component
@@ -197,6 +201,8 @@ Palette:
             name: Autonomous Command
             type: Command
             default: None
+          - !Parameters
+            name: Parameters
           - !IntegerProperty
             name: Team Number
             default: 0
@@ -243,7 +249,7 @@ Palette:
         supports: {Command: -1}
         help: The commands that control what actions your robot performs.
         properties: []
-        
+
   - Subsystems:
       - !Component
         name: Subsystem
@@ -255,6 +261,8 @@ Palette:
             name: Default Command
             type: Command
             default: None
+          - !Parameters
+            name: Parameters
       - !Component
         name: PID Subsystem
         type: Subsystem
@@ -265,6 +273,8 @@ Palette:
             name: Default Command
             type: Command
             default: None
+          - !Parameters
+            name: Parameters
 ##          - !BooleanProperty
 ##            name: Send to SmartDashboard
 ##            default: false
@@ -317,7 +327,7 @@ Palette:
           - !DoubleProperty
             name: Maximum Output
             default: 1
-            
+
   - Controllers:
       - !Component
         name: PID Controller
@@ -598,7 +608,17 @@ Palette:
           - !ChoicesProperty
             name: CAN ID
             validators: [CANID]
-            choices: ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
+            choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
+            default: "2"
+      - !Component
+        name: CAN Talon
+        type: PIDOutput
+        help: A speed controller that allows you to set the speed of a motor using CAN.
+        properties:
+          - !ChoicesProperty
+            name: CAN ID
+            validators: [CANID]
+            choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
             default: "2"
       - !Component
         name: Servo
@@ -689,14 +709,24 @@ Palette:
           - !BooleanProperty
             name: Button on SmartDashboard
             default: true
+          - !Parameters
+            name: Parameters
+            default: []
       - !Component
         name: Command Group
         type: Command
         help: A group of commands set to run together in a prescribed way.
-        properties: 
+        properties:
           - !BooleanProperty
             name: Button on SmartDashboard
             default: true
+          - !ListProperty
+            name: Commands
+            default: []
+            validators: [List]
+          - !Parameters
+            name: Parameters
+            default: []
       - !Component
         name: PID Command
         type: Command
@@ -709,6 +739,9 @@ Palette:
           - !BooleanProperty
             name: Button on SmartDashboard
             default: true
+          - !Parameters
+            name: Parameters
+            default: {}
           - !TypeSelectionProperty
             name: Input
             type: PIDSource
@@ -768,6 +801,7 @@ Palette:
           - !BooleanProperty
             name: Button on SmartDashboard
             default: true
-          - !DoubleProperty
-            name: Setpoint
-            default: 1
+          - !Parameters
+            name: Parameters
+            value:
+            - !!robotbuilder.data.properties.ParameterDescriptor {name: setpoint, type: double}

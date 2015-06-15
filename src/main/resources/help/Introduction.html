@@ -11,7 +11,7 @@
        to <a href="https://wpilib.screenstepslive.com/s/4485">screenstepslive.com</a>. Once
        that documentation settles down, we hope to include it
        here.</p>
-    
+
     <h2>What is it?</h2>
     <p>RobotBuilder is an application designed to aid the robot
        development process. Robot builder can help you:</p>
@@ -55,7 +55,7 @@
       <li>Drag it over Subsystems in the robot tree and release.</li>
       <p>A new subystem has been created.</p>
     </ol>
-    
+
     <h4>Naming the Drive Train</h4>
     <p>After you have a subsytem created, it is very helpful to give
        it a name.</p>
@@ -67,7 +67,7 @@
       <li>Edit it to read "Drive Train".</li>
       <p>It's new name appears in the tree.</p>
     </ol>
-    
+
     <h4>Adding a Robot Drive to the Drive Train</h4>
     <p>The easiest way to make your robot drive is to us the
        RobotDrive object in WPILib. It provides methods for tank
@@ -79,7 +79,7 @@
       <p>Your Drive Train now has a robot drive object.</p>
       <li>Rename it to "Robot Drive", the same way you renamed the "Drive Train".</li>
     </ol>
-    
+
     <h4>Adding Motors to the Robot Drive</h4>
     <p>The RobotDrive object needs motors for both it's left and and
        it's right side.</p>
@@ -92,22 +92,22 @@
       <li>Drag it over "Robot Drive" in the robot tree and release.</li>
       <li>Rename it to "Right Jaguar", the same way you renamed the "Drive Train".</li>
     </ol>
-    
+
     <h4>Checking That the Motors are Correctly Assigned</h4>
     <p>The RobotDrive object tries to guess which motors are which,
        but it's helpful to check that they are correctly assigned to
        the proper side.</p>
     <p class="lead">To add motors to your robot drive:</p>
-    <ol>  
+    <ol>
       <li>Click on "Robot Drive".</li>
       <li>Make sure that the "Left Motor" property is set to "Left Jaguar", if not click on it and select "Left Jaguar".</li>
       <li>Make sure that the "Right Motor" property is set to "Right Jaguar", if not click on it and select "Right Jaguar".</li>
     </ol>
 
     <p>You now have a subsystem representing your robots Drive Train!</p>
-    
+
     <h3>Commands</h3>
-    
+
     <p>Commands are a way of representing actions that your robot can
        take. Commands can be bound to buttons and other triggers to
        run under certain conditions. They can also be chained
@@ -125,7 +125,7 @@
       <li>Drag it over Commands in the robot tree and release.</li>
       <p>A new command has been created.</p>
     </ol>
-    
+
     <h4>Naming the Tank Drive Command</h4>
     <p>After you have a command created, it is very helpful to give
        it a meaningful name.</p>
@@ -137,7 +137,7 @@
       <li>Edit it to read "Tank Drive".</li>
       <p>It's new name appears in the tree.</p>
     </ol>
-    
+
     <h4>Requiring the Drive Train</h4>
     <p>After you have a command created and named, you must indicate
        which subsystem it requires.</p>
@@ -151,7 +151,7 @@
 
     <h4>Creating the Slow Tank Drive Command</h4>
     <p>Follow the steps above to create a command named "Slow Tank Drive"</p>
-    
+
     <h4>Setting the Default Command for Drive Train</h4>
     <p>Subsystems can have default commands that run when no other
        command is running that performs the default behaviour.</p>
@@ -164,12 +164,12 @@
     </ol>
 
     <h3>Operator Interface</h3>
-    
+
     <p>The operator interface is the glue that connects the buttons on
        the operator interface to the commands that make the robot act
        in interesting ways. For more, see: <a href="OI.html">Operator
        Interface</a></p>
-    
+
     <h4>Adding Joysticks to the Operator Interface</h4>
     <p>The operator interface needs some joysticks to control driving
        and other commands.</p>
@@ -184,7 +184,7 @@
       <li>Rename it to "Right Joystick".</li>
       <li>Check that it is Number 1.</li>
     </ol>
-    
+
     <h4>Adding a Joystick Button to the Operator Interface</h4>
     <p>Joystick buttons allow you to bind actions to buttons on a joystick.</p>
     <p class="lead">To add a joystick button to the operator interface:</p>
@@ -193,7 +193,7 @@
       <li>Drag it over "Operator Interface" in the robot tree and release.</li>
       <li>Rename it to "Slow Tank Drive Button".</li>
     </ol>
-    
+
     <h4>Configuring the Joystick Button</h4>
     <p>For the joystick button to do anything interesting, you have to
        configure it to run a command.</p>
@@ -210,13 +210,13 @@
       <li>Click the cell to the right of when to run.</li>
       <li>Select "whileHeld".</li>
     </ol>
-    
+
     <h3>Generating Code</h3>
-    
+
     <p>Once you've filled in RobotBuilder with the information you
        want, it can generate all of the important files and the bulk
        of code for an existing java project</p>
-    
+
     <h4>Telling RobotBuilder Where to put the Project</h4>
     <p>In order to export to java, RobotBuilder needs to know where
        your java project should be.</p>
@@ -225,7 +225,7 @@
       <li>Select the root of your robot tree.</li>
       <li>Select the folder for the Java Project property.</li>
     </ol>
-    
+
     <h4>Exporting to Java</h4>
     <p>RobotBuilder can generate the skeleton robot code from your
        robot model for you.</p>
@@ -234,12 +234,12 @@
       <li>Open up RobotBuilder.</li>
       <li>Click Generate > Java.</li>
     </ol>
-    
+
     <h3>Generating Wiring Tables</h3>
-    
+
     <p>RobotBuilder can generate wiring tables to simplify wiring of
        the robot.</p>
-    
+
     <h4>Telling RobotBuilder Where to put the Table</h4>
     <p>In order to export th table, RobotBuilder needs to know where
        to put it.</p>
@@ -250,7 +250,7 @@
       <li>Click where it says "Click to Select" next to wiring file.</li>
       <li>Select or create a file to export to.</li>
     </ol>
-    
+
     <h4>Exporting to a Wiring Table</h4>
     <p>RobotBuilder can generate a wiring table for you.</p>
     <p class="lead">To generate the wiring with RobotBuilder :</p>
@@ -258,11 +258,11 @@
       <li>Open up RobotBuilder.</li>
       <li>Click Generate > Wiring Table.</li>
     </ol>
-    
+
     <h3>Filling in the Code</h3>
-    
+
     <p>RobotBuilder is an application designed to aid the robot
        development process. Robot builder can help you:</p>
-    
+
   </body>
 </html>

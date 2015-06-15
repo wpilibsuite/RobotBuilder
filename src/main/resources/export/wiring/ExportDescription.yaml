@@ -4,7 +4,7 @@ Toolbar: true
 Files: files.yaml
 Required Properties:
   - Wiring File
-Vars: 
+Vars:
   export-path: ${robot.getPropertyAbsolutePath('Wiring File')}
 Macros: macros.vm
 ## Else deals with the hell that is windows.

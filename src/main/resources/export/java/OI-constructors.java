@@ -9,7 +9,7 @@ ${Collections.reverse($components)}
 #end
 #end
 
-${Collections.reverse($components)}	    
+${Collections.reverse($components)}
         // SmartDashboard Buttons
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "Command"

@@ -3,7 +3,9 @@ package robotbuilder.actions;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+
 import javax.swing.Action;
+
 import robotbuilder.ActionsClass;
 import robotbuilder.MainFrame;
 
@@ -12,6 +14,7 @@ import robotbuilder.MainFrame;
  * @author brad
  */
 public class ExitAction extends AbstractAction {
+
     ActionsClass exitAction;
 
     public ExitAction() {
@@ -23,5 +26,5 @@ public class ExitAction extends AbstractAction {
     public void actionPerformed(ActionEvent ae) {
         MainFrame.getInstance().closeWindow();
     }
-    
+
 }

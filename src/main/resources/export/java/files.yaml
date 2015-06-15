@@ -23,7 +23,7 @@
   export: $project/.classpath
   source: ${exporter-path}.classpath
   update: None
-  
+
 ## Key Java Files
 - !File
   export: $package-path/Robot.java
@@ -33,7 +33,7 @@
     autonomous: ${exporter-path}RobotTemplate-autonomous.java
     declarations: ${exporter-path}RobotTemplate-declarations.java
     constructors: ${exporter-path}RobotTemplate-constructors.java
-    
+
 - !File
   export: $package-path/RobotMap.java
   source: ${exporter-path}RobotMap.java
@@ -41,7 +41,7 @@
   modifications:
     declarations: ${exporter-path}RobotMap-declarations.java
     constructors: ${exporter-path}RobotMap-constructors.java
-  
+
 - !File
   export: $package-path/OI.java
   source: ${exporter-path}OI.java
@@ -58,7 +58,10 @@
 - !File
   export: $package-path/commands/#class($command.name).java
   source: ${exporter-path}CommandGroup.java
-  update: None
+  update: Modify
+  modifications:
+    command_declarations: ${exporter-path}CommandGroup-declarations.java
+    parameters: ${exporter-path}CommandGroup-constructor.java
   variables:
     command-name: ${command.name}
 #elseif($command.base.name == "PID Command")
@@ -68,6 +71,7 @@
   update: Modify
   modifications:
     pid: ${exporter-path}PIDCommand-pid.java
+    parameters: ${exporter-path}Command-constructor.java
     requires: ${exporter-path}Command-requires.java
     source: ${exporter-path}PIDCommand-source.java
     output: ${exporter-path}PIDCommand-output.java
@@ -79,6 +83,7 @@
   source: ${exporter-path}SetpointCommand.java
   update: Modify
   modifications:
+    parameters: ${exporter-path}Command-constructor.java
     requires: ${exporter-path}Command-requires.java
     initialize: ${exporter-path}SetpointCommand-initialize.java
     isFinished: ${exporter-path}SetpointCommand-isFinished.java
@@ -90,11 +95,12 @@
   source: ${exporter-path}Command.java
   update: Modify
   modifications:
+    parameters: ${exporter-path}Command-constructor.java
     requires: ${exporter-path}Command-requires.java
   variables:
     command-name: ${command.name}
-#end 
-#end 
+#end
+#end
 #end
 
 ## Export Subsystems as files
@@ -111,7 +117,7 @@
     pid: ${exporter-path}PIDSubsystem-pid.java
     source: ${exporter-path}PIDSubsystem-source.java
     output: ${exporter-path}PIDSubsystem-output.java
-  variables: 
+  variables:
     subsystem-name: ${subsystem.name}
 #else
 - !File
@@ -121,7 +127,7 @@
   modifications:
     declarations: ${exporter-path}Subsystem-declarations.java
     default_command: ${exporter-path}Subsystem-default_command.java
-  variables: 
+  variables:
     subsystem-name: ${subsystem.name}
 #end
 #end

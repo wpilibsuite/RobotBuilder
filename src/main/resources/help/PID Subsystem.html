@@ -10,28 +10,28 @@
 
     <h2>What is it?</h2>
       <p>A subsystem on a robot is a distinct part of the robot that
-  	 performs a certain function. Within the command based robot
-  	 framework, subsystems are encapsulated (represented) by
-  	 classes. PID commands include a built-in PID controller. For
-  	 an explanation of PID, see <a href="PID Controller.html">PID
-  	 Controller.</a></p>
+         performs a certain function. Within the command based robot
+         framework, subsystems are encapsulated (represented) by
+         classes. PID commands include a built-in PID controller. For
+         an explanation of PID, see <a href="PID Controller.html">PID
+         Controller.</a></p>
       <p class="lead">Subsystems can contain the following attributes:</p>
       <ol>
-	<li>Sensors: Things that sense including buttons, potentiometers,
+        <li>Sensors: Things that sense including buttons, potentiometers,
             encoders and more.</li>
-	<li>Actuators: Things that move or act in the physical world,
-	    usually motors or pneumatics.</li>
-	<li>State: The current status of the subsystem. This can
-	    include data recorded from sensors such as the position of
-	    the arm or the number of balls stored, information on
-	    progress towards a goal, a desired PID setpoint and much
-	    more.</li>
-	<li>Capabilities: Higher level actions that the subsystem can
+        <li>Actuators: Things that move or act in the physical world,
+             usually motors or pneumatics.</li>
+        <li>State: The current status of the subsystem. This can
+            include data recorded from sensors such as the position of
+            an arm, the number of balls stored in a collector, information on
+            progress towards a goal, a desired PID setpoint, and much
+            more.</li>
+        <li>Capabilities: Higher level actions that the subsystem can
             be told to perform by various commands. These are usually
             implemented by functions that update the subsystems state
             in some way.</li>
-	<p><b>Note:</b> Simple subsystems may be missing one or more of
-           these attributes.</p>
+	      <p><b>Note:</b> Simple subsystems may be missing one or more of
+            these attributes.</p>
       </ol>
 
     <h3>What is a default command?</h3>
@@ -40,16 +40,16 @@
          are the default behavior for the subsystem. This is often as
          simple as a do nothing command so that when a command driving
          the robot stops, the drive train of the robot stops as
-         opposed to continuing the last motion it was given. It’s also
+         opposed to continuing the last motion it was given. It is also
          possible to have more complicated default commands such as a
          turret that continuously tracks a target when not doing
          anything else.</p>
       <p>Default commands are created just like any other command. The
-	 only minor difference when creating default commands is that
-	 you should generally have the isFinished() method return
-	 false so that the command is running continuously as opposed
-	 to stopping and restarting continuously when no other command
-	 is running.</p>
+	       only minor difference when creating default commands is that
+	       you should generally have the isFinished() method return
+	       false so that the command is running continuously as opposed
+	       to stopping and restarting continuously when no other command
+	       is running.</p>
 
 
     <h2>Properties</h2>
@@ -78,8 +78,8 @@
       <dd>How close is close enough for the PID Controller to be
           considered on target, or at the right location.</dd>
       <dt>Continuous</dt>
-      <dd>When true, the PID controller to consider the input to be
-          continuous. Rather then using the max and min in as
+      <dd>When true, the PID controller is to consider the input to be
+          continuous. Rather than using the max and min as
           constraints, it considers them to be the same point and
           automatically calculates the shortest route to the
           setpoint.</dd>
@@ -104,12 +104,12 @@
     </dl>
 
     <h3>Organization</h3>
-    
+
     <p>Subsystem are primarily used as an organizational concept. In
        object oriented programming, they also are a very good basis
-       for dividing up your robot into seperate classes that
+       for dividing up your robot into separate classes that
        encapsulate the relevant behaviour.</p>
-    
+
 
     <h2>See Also</h2>
     <ul>

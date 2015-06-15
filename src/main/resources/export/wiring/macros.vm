@@ -26,14 +26,20 @@
 #macro( to_rows $my_ports )
     #foreach ($port in [0..25])
         #if( $my_ports.containsKey("$port") )
-	    #tr($port, $my_ports.get("$port"))
+            #set($val = $my_ports.get("$port"))
+            #set($delimiter = "\u0008") ## unicode backspace
+            #if( $val.contains("\u0008") )
+                #tr($port, $val.split($delimiter)[0], $val.split($delimiter)[1])
+            #else
+                #tr($port, $val, "")
+            #end
 	#end
     #end ##foreach
 #end ## macro
 
 ## Generate a table row
-#macro( tr $port $name )
-<tr><td>$port</td><td>$name</td></tr>
+#macro( tr $port $name $type)
+<tr><td>$port</td><td>$name</td><td>$type</td></tr>
 #end
 
 ## Generate the DIO table for a module
@@ -43,7 +49,16 @@
 
 ## Generate the PWM table for a module
 #macro( PWM $title $label )
-    #table_with_components($title, $label, "Channel (PWM)")
+    #set($ports = $helper.filterComponents($"Channel (PWM)", $robot))
+    #if( $ports.keySet().size() > 0 )
+        <h2>$title</h2>
+	    <table><tr>
+	        <th class="pound">#</th>
+	        <th>$label</th>
+                <th>Type</th></tr>
+	      #to_rows($ports)
+	    </table>
+    #end ##if
 #end ##macro
 
 ## Generate the CAN ID table for a module
