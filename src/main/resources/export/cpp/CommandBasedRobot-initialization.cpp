@@ -1,6 +1,6 @@
 #foreach ($component in $components)
 #if ($helper.exportsTo("Robot", $component))
-#class($component.name)* Robot::#variable($component.name) = 0;
+std::shared_ptr<#class($component.name)> Robot::#variable($component.name);
 #end
 #end
-OI* Robot::oi = 0;
+std::unique_ptr<OI> Robot::oi;
