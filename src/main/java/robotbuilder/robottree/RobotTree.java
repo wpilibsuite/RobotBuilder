@@ -96,7 +96,7 @@ public class RobotTree extends JPanel {
      */
     private String filePath = null;
 
-    @lombok.Getter
+    @Getter
     private SimpleHistory<String> history = new SimpleHistory<>();
 
     private JFileChooser fileChooser = new JFileChooser();
@@ -108,7 +108,7 @@ public class RobotTree extends JPanel {
 
     public RobotTree(PropertiesDisplay properties, Palette palette) {
         this.palette = palette;
-        fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", RobotBuilder.SAVE_FILE_TYPE));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("YAML save file", "yaml", "yml"));
         this.properties = properties;
         this.properties.setRobotTree(this);
         setLayout(new BorderLayout());

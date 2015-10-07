@@ -19,13 +19,16 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.lang.SerializationException;
 
+import org.apache.commons.lang.SerializationException;
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import org.yaml.snakeyaml.Yaml;
+
+import robotbuilder.data.RobotComponent;
+import robotbuilder.data.properties.ParametersProperty;
 
 /**
  *
@@ -181,6 +184,39 @@ public class Utils {
             return "";
         }
         return fileName.substring(dot + 1);
+    }
+
+    /**
+     * Gets the parameter property associated with command used by the given
+     * component. If it doesn't use a command, returns {@code null}.
+     *
+     * <p>
+     *
+     * This is useful for matching the command parameters of a component that
+     * has some command (such as the command for a joystick button, or the
+     * default command for a subsystem) to that command to make sure that it
+     * always reflects the command.
+     *
+     * @param component the component to get command parameters for
+     * @return
+     */
+    public static ParametersProperty getParameters(RobotComponent component) {
+        // One of: "Command", "Default Command", "Autonomous Command", <null>
+        String commandType = component.getPropertyKeys().stream().filter(k -> k.endsWith("Command")).findFirst().orElse(null);
+        if (component.getProperty(commandType) != null) {
+            RobotComponent commandRoot = null; // will never actually be null
+            for (RobotComponent c : component.getRobotTree().getRoot().getChildren()) {
+                if (c.getName().equals("Commands")) {
+                    commandRoot = c;
+                }
+            }
+            for (RobotComponent command : commandRoot.getChildren()) {
+                if (command.getName().equals(component.getProperty(commandType).getValue())) {
+                    return (ParametersProperty) command.getProperty("Parameters");
+                }
+            }
+        }
+        return new ParametersProperty();
     }
 
 }

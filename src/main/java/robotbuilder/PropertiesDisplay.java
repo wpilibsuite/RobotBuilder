@@ -59,7 +59,7 @@ public class PropertiesDisplay extends JPanel {
     List<String> keys;
     RobotTree robot;
     Label errorLabel;
-    private boolean didRemoveParameters = false;
+    private int numRowsRemoved = 0;
     private JComponent currentDisplay;
     private Display display = Display.DEFAULT;
 
@@ -118,29 +118,19 @@ public class PropertiesDisplay extends JPanel {
             return;
         }
         keys = currentComponent.getPropertyKeys();
-        didRemoveParameters = false;
+        numRowsRemoved = 0;
         ParametersProperty existingParams = (ParametersProperty) currentComponent.getProperty("Parameters");
-        ParametersProperty commandParams;
-        // One of: "Command", "Default Command", "Autonomous Command", <null>
-        String command = currentComponent.getPropertyKeys().stream().filter(k -> k.endsWith("Command")).findFirst().orElse(null);
-        if (existingParams != null && currentComponent.getProperty(command) != null) {
-            commandParams = ParametersProperty.getCommandParameterMap().get((String) currentComponent.getProperty(command).getValue());
-            // If the component uses a command that takes no parameters, do not show the parameters property
-            if (commandParams == null || commandParams.getValue().isEmpty()) {
-                keys = keys.stream().filter(k -> !k.equals("Parameters")).collect(Collectors.toList());
-                propTableModel.fireTableDataChanged();
-                didRemoveParameters = true;
-            }
-            // Match the existing parameters to the ones in the command
-            if (commandParams != null) {
-                existingParams.matchUpWith(commandParams);
-            }
+        if(existingParams == null) {
+            return;
         }
-        // Remove commands property from the display
+        ParametersProperty commandParams = Utils.getParameters(currentComponent);
+        // Match the existing parameters to the ones in the command
+        existingParams.matchUpWith(commandParams);
+        // Remove commands property from the display (for command groups)
         if (currentComponent.getProperty("Commands") != null) {
             keys = keys.stream().filter(k -> !k.equals("Commands")).collect(Collectors.toList());
             propTableModel.fireTableDataChanged();
-            didRemoveParameters = true;
+            numRowsRemoved = 1;
         }
     }
 
@@ -307,7 +297,7 @@ public class PropertiesDisplay extends JPanel {
             if (currentComponent == null) {
                 return 0;
             } else {
-                return currentComponent.getPropertyKeys().size() + (didRemoveParameters ? 0 : 1);
+                return currentComponent.getPropertyKeys().size() + 1 - numRowsRemoved;
             }
         }
 

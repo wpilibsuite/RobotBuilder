@@ -10,6 +10,10 @@ apply plugin: 'maven-publish'
 
 mainClassName = "robotbuilder.RobotBuilder"
 
+if (!hasProperty('mainClass')) {
+    ext.mainClass = mainClassName
+}
+
 repositories {
     mavenCentral()
     maven {

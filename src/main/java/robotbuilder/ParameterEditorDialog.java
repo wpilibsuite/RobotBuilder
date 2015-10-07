@@ -26,17 +26,7 @@ public class ParameterEditorDialog extends CenteredDialog {
     public ParameterEditorDialog(RobotComponent component, JFrame owner, boolean modal) {
         super(owner, "Edit parameters");
         paramProp = (ParametersProperty) component.getProperty("Parameters");
-        Property commandProp = component.getProperty("Command"); // for use by buttons etc.
-        if (commandProp == null) {
-            commandProp = component.getProperty("Default Command"); // for use by subsystems
-        }
-        if (commandProp == null) {
-            commandProp = component.getProperty("Autonomous Command"); // for use by the main Robot class
-        }
-        if (commandProp == null) { // give up
-            throw new NullPointerException("No command property exists for component " + component);
-        }
-        ParametersProperty commandParams = ParametersProperty.getCommandParameterMap().get((String) commandProp.getValue());
+        ParametersProperty commandParams = Utils.getParameters(component);
         paramProp.matchUpWith(commandParams);
         parameterList = (List<ValuedParameterDescriptor>) paramProp.getValue();
         initComponents();

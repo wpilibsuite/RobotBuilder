@@ -155,7 +155,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
         model.setProperties(properties);
     }
 
-    public Vector<DefaultMutableTreeNode> getChildren() {
+    public Vector<RobotComponent> getChildren() {
         if (children != null) {
             return children;
         } else {

@@ -2,12 +2,9 @@
 package robotbuilder.data.properties;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import lombok.Getter;
 import robotbuilder.data.RobotComponent;
 
 /**
@@ -16,9 +13,6 @@ import robotbuilder.data.RobotComponent;
  */
 public class ParametersProperty extends Property<List<? extends ParameterDescriptor>> {
 
-    @Getter
-    private static final Map<String, ParametersProperty> commandParameterMap = new HashMap<>();
-
     private List<? extends ParameterDescriptor> value = new ArrayList<>();
 
     public ParametersProperty() {
@@ -26,6 +20,7 @@ public class ParametersProperty extends Property<List<? extends ParameterDescrip
 
     public ParametersProperty(String name, List<? extends ParameterDescriptor> defaultValue, String[] validators, RobotComponent component) {
         super(name, defaultValue, validators, component);
+        setValue(defaultValue);
     }
 
     /**
@@ -49,6 +44,11 @@ public class ParametersProperty extends Property<List<? extends ParameterDescrip
             return;
         }
         List<? extends ParameterDescriptor> otherParams = other.getValue();
+        
+        if(otherParams.isEmpty()) {
+            value.clear();
+        }
+        
         List<ValuedParameterDescriptor> accum = new ArrayList<>();
 
         otherParams.forEach(p -> {
@@ -84,8 +84,7 @@ public class ParametersProperty extends Property<List<? extends ParameterDescrip
 
     @Override
     public ParametersProperty copy() {
-        ParametersProperty copy = new ParametersProperty(name, new ArrayList<>(), validators, component);
-        copy.value = new ArrayList<>(value);
+        ParametersProperty copy = new ParametersProperty(name, new ArrayList<>(defaultValue == null ? value : defaultValue), validators, component);
         return copy;
     }
 
@@ -99,9 +98,6 @@ public class ParametersProperty extends Property<List<? extends ParameterDescrip
     @Override
     public void setValue(List<? extends ParameterDescriptor> value) {
         this.value = value == null ? defaultValue : new ArrayList<>(value);
-        if (component != null) {
-            commandParameterMap.put(component.toString(), this);
-        }
     }
 
     @Override
