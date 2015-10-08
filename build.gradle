@@ -50,8 +50,7 @@ jar {
                     'Implementation-Version': '2.0.0',
                     'Built-By': System.getProperty('user.name'),
                     'Built-Date': new Date(),
-                    'Built-JDK': System.getProperty('java.version'),
-                    'Main-class': 'robotbuilder.RobotBuilder')
+                    'Built-JDK': System.getProperty('java.version'))
     }
 }
 
@@ -66,12 +65,9 @@ publishing {
             version '2.0.0-SNAPSHOT'
         }
     }
-}
-
-uploadArchives {
     repositories {
-        mavenDeployer {
-
+        maven {
+            url "${System.getenv('HOME')}/releases/maven"
         }
     }
 }
