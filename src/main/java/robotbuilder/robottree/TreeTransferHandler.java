@@ -18,6 +18,7 @@ import javax.swing.JTree;
 import javax.swing.TransferHandler;
 import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.tree.TreePath;
+import lombok.SneakyThrows;
 
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.RobotComponent;
@@ -155,6 +156,7 @@ class TreeTransferHandler extends TransferHandler {
      * the tree.
      */
     @Override
+    @SneakyThrows
     public boolean importData(TransferHandler.TransferSupport support) {
         if (!canImport(support)) {
             return false;
@@ -195,6 +197,9 @@ class TreeTransferHandler extends TransferHandler {
         } else {
             return false;
         }
+
+        robotTree.delete((RobotComponent) support.getTransferable().getTransferData(support.getTransferable().getTransferDataFlavors()[0]));
+        robotTree.update();
 
         robotTree.treeModel.insertNodeInto(newNode, parentNode, childIndex);
         robotTree.treeModel.reload(parentNode); // reloads the tree without reverting to the root

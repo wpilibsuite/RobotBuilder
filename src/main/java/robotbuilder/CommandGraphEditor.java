@@ -26,6 +26,7 @@ import lombok.NonNull;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.CommandGroupEntry;
 import robotbuilder.graph.AbstractCell;
+import robotbuilder.graph.StartCell;
 import robotbuilder.graph.CommandCell;
 import robotbuilder.graph.CommandGraph;
 import robotbuilder.graph.CommandGraphComponent;
@@ -84,6 +85,8 @@ public class CommandGraphEditor extends BasicGraphEditor {
                     if (cell instanceof CommandCell) {
                         JPopupMenu menu = addCellMenu((CommandCell) cell, pt);
                         menu.show(graphComponent, pt.x, pt.y);
+                    } else if (cell instanceof StartCell) {
+                        baseAddCellMenu((AbstractCell) cell, pt).show(graphComponent, pt.x, pt.y);
                     } else if (cell == null) {
                         defaultPopupMenu(e.getPoint()).show(graphComponent, pt.x, pt.y);
                     }
@@ -100,7 +103,7 @@ public class CommandGraphEditor extends BasicGraphEditor {
      * @param cell the cell to add commands after (can be null)
      * @param pt the point to add cells at
      */
-    private JPopupMenu baseAddCellMenu(CommandCell cell, Point pt) {
+    private JPopupMenu baseAddCellMenu(AbstractCell<?> cell, Point pt) {
         JPopupMenu menu = new JPopupMenu("Add commands");
         JMenu seq = new JMenu("Add sequential...");
         JMenu par = new JMenu("Add parallel...");

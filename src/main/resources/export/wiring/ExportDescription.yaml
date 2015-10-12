@@ -3,9 +3,9 @@ Type: Wiring
 Toolbar: true
 Files: files.yaml
 Required Properties:
-  - Wiring File
+  - Wiring file location
 Vars:
-  export-path: ${robot.getPropertyAbsolutePath('Wiring File')}
+  export-path: ${robot.getPropertyAbsolutePath('Wiring file location')}/wiring.html
 Macros: macros.vm
 ## Else deals with the hell that is windows.
 Post Export Action: "#if(${export-path.startsWith(\"/\")})#Browse:file://${export-path}#else#Browse:file:///${export-path.replace(\"\\\", \"/\").replace(\" \", \"%20\")}#end"

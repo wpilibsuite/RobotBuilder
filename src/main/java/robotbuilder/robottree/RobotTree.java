@@ -537,9 +537,11 @@ public class RobotTree extends JPanel {
             resetTree();
             getRoot().setName(name);
             getRoot().setProperty("Team Number", team);
+            getRoot().setProperty("Java Package", "org.usfirst.frc" + team);
             saved = true;
             setFilePath(null);
             MainFrame.getInstance().prefs.put("FileName", "");
+            properties.setCurrentComponent(getRoot());
         }
     }
 

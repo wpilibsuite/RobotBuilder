@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
@@ -86,26 +87,24 @@ public class PropertiesDisplay extends JPanel {
         keys = currentComponent.getPropertyKeys();
         if (currentComponent.getBaseType().equals("Command Group")) {
             currentComponent.getRobotTree().getHistory().freeze(); // don't let the undo manager on the graph mess up the other one
-            display = Display.COMMAND_GROUP;
-            remove(currentDisplay);
-            handleParameters();
-            currentDisplay = new CommandGroupEditor();
-            add(currentDisplay, BorderLayout.CENTER);
-            ((JSplitPane) getParent()).setDividerLocation(0.65);
-            revalidate();
-            repaint();
+            if (display != Display.COMMAND_GROUP) {
+                remove(currentDisplay);
+                currentDisplay = new CommandGroupEditor();
+                add(currentDisplay, BorderLayout.CENTER);
+                ((JSplitPane) getParent()).setDividerLocation(0.65);
+                display = Display.COMMAND_GROUP;
+            }
         } else {
             currentComponent.getRobotTree().getHistory().unfreeze();
-            ((JSplitPane) getParent()).setDividerLocation(0.5);
             if (display != Display.DEFAULT) {
                 remove(currentDisplay);
                 currentDisplay = new JScrollPane(propTable);
                 add(currentDisplay, BorderLayout.CENTER);
+                ((JSplitPane) getParent()).setDividerLocation(0.5);
                 display = Display.DEFAULT;
             }
-            handleParameters();
-            update();
         }
+        update();
     }
 
     /**
@@ -120,7 +119,7 @@ public class PropertiesDisplay extends JPanel {
         keys = currentComponent.getPropertyKeys();
         numRowsRemoved = 0;
         ParametersProperty existingParams = (ParametersProperty) currentComponent.getProperty("Parameters");
-        if(existingParams == null) {
+        if (existingParams == null) {
             return;
         }
         ParametersProperty commandParams = Utils.getParameters(currentComponent);
@@ -135,9 +134,11 @@ public class PropertiesDisplay extends JPanel {
     }
 
     public void setEditName() {
-        propTable.editCellAt(0, 1);
-        propTable.requestFocusInWindow();
-        ((JTextField) ((DefaultCellEditor) propTable.getCellEditor()).getComponent()).selectAll();
+        SwingUtilities.invokeLater(() -> {
+            propTable.editCellAt(0, 1);
+            propTable.requestFocusInWindow();
+            ((JTextField) ((DefaultCellEditor) propTable.getCellEditor()).getComponent()).selectAll();
+        });
     }
 
     public void update() {

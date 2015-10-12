@@ -227,10 +227,9 @@ Palette:
             name: Simulation World File
             default: "/usr/share/frcsim/worlds/GearsBotDemo.world"
           - !FileProperty
-            name: Wiring File
-            extension: html
-            folder: false
-            default: ""
+            name: Wiring file location
+            folder: true
+            default: "${home}"
       - !Component
         name: Subsystems
         type: Subsystems

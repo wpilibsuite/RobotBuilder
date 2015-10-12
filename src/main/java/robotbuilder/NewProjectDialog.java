@@ -5,14 +5,13 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-import java.text.NumberFormat;
-
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.text.NumberFormatter;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 /**
  *
@@ -20,10 +19,15 @@ import javax.swing.text.NumberFormatter;
  */
 public class NewProjectDialog extends CenteredDialog {
 
-    JLabel messageLabel, nameLabel, teamLabel;
-    JTextField nameField;
-    JFormattedTextField teamField;
-    JButton createButton, openButton;
+    private final JLabel messageLabel, nameLabel, teamLabel;
+    private final JTextField nameField;
+    private final JTextField teamField;
+    private final JButton createButton, openButton;
+
+    /**
+     * Maximum number of digits allowed in the team number.
+     */
+    private static final int maxTeamNumberLength = 5;
 
     public NewProjectDialog(JFrame frame) {
         super(frame, "New Project Settings");
@@ -51,14 +55,40 @@ public class NewProjectDialog extends CenteredDialog {
         add(teamLabel, c);
 
         nameField = new JTextField();
+        nameField.setDocument(new PlainDocument() {
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (!str.matches("[0-9a-zA-Z ]")) {
+                    // only numbers, letters, or spaces
+                    return;
+                }
+                if (offs == 0 && str.matches("[0-9 ]")) {
+                    // cannot start with a number or space
+                    return;
+                }
+                super.insertString(offs, str, a);
+            }
+        });
         nameField.setPreferredSize(new Dimension(256, 26));
         c.gridx = 1;
         c.gridy = 1;
         add(nameField, c);
 
-        NumberFormat intFormat = NumberFormat.getIntegerInstance();
-        intFormat.setGroupingUsed(false);
-        teamField = new JFormattedTextField(new NumberFormatter(intFormat));
+        teamField = new JTextField();
+        teamField.setDocument(new PlainDocument() {
+            @Override
+            public void insertString(int offset, String str, AttributeSet attributes) throws BadLocationException {
+                if (offset >= maxTeamNumberLength) {
+                    // can't have more than 5 digits
+                    return;
+                }
+                if (!str.matches("[0-9]")) {
+                    // only numbers allowed
+                    return;
+                }
+                super.insertString(offset, str, attributes);
+            }
+        });
         teamField.setPreferredSize(new Dimension(256, 26));
         c.gridx = 1;
         c.gridy = 2;
