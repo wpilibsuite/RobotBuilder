@@ -68,7 +68,7 @@ public class TestUtils {
         RobotComponent encoder = new RobotComponent("Encoder", "Quadrature Encoder", tree);
         pid.add(encoder);
         encoder.getProperty("Distance Per Pulse").setValueAndUpdate(24);
-        encoder.getProperty("PID Source").setValueAndUpdate("kDistance");
+        encoder.getProperty("PID Source").setValueAndUpdate("kDisplacement");
         RobotComponent limit = new RobotComponent("Limit", "Limit Switch", tree);
         arm.add(limit);
 

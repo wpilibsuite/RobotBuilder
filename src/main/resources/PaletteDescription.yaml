@@ -522,7 +522,7 @@ Palette:
             default: 1
           - !ChoicesProperty
             name: PID Source
-            choices: [kDistance, kRate]
+            choices: [kDisplacement, kRate]
             default: "kRate"
       - !Component
         name: Indexed Encoder
@@ -540,7 +540,7 @@ Palette:
             default: 1
           - !ChoicesProperty
             name: PID Source
-            choices: [kDistance, kRate]
+            choices: [kDisplacement, kRate]
             default: "kRate"
           - !ChoicesProperty
             name: Indexing Type

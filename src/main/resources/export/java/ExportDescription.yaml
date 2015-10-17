@@ -140,11 +140,11 @@ Instructions:
   PID Controller:
     Defaults: "Component,None"
     ClassName: "PIDController"
-    Import: "import edu.wpi.first.wpilibj.smartdashboard.*;"
+    Import: "import edu.wpi.first.wpilibj.smartdashboard.*;\nimport edu.wpi.first.wpilibj.PIDController;"
     Construction: "#variable($Name) = new ${ClassName}($P, $I, $D, $F, #variable($Input), #variable($Output), $Period);"
     Extra: >
       #variable($Name).setContinuous(${Continuous});
-      #variable($Name).setAbsoluteTolerance(${Tolerance});
+              #variable($Name).setAbsoluteTolerance(${Tolerance});
       #if($Limit_Input)
 
               #variable($Name).setInputRange(${Minimum_Input}, ${Maximum_Input});#end
@@ -209,19 +209,19 @@ Instructions:
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Import: "import edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;"
+    Import: "import edu.wpi.first.wpilibj.Encoder;\nimport edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.PIDSourceType;"
     Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, EncodingType.${Encoding_Type});"
     Extra: >-
       #variable($Name).setDistancePerPulse(${Distance_Per_Pulse});
-              #variable($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
+              #variable($Name).setPIDSourceType(PIDSourceType.${PID_Source});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Import: "import edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;\nimport edu.wpi.first.wpilibj.Encoder.IndexingType;"
+    Import: "import edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.PIDSourceType;\nimport edu.wpi.first.wpilibj.Encoder.IndexingType;"
     Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction});"
     Extra: >-
       #variable($Name).setDistancePerPulse(${Distance_Per_Pulse});
-              #variable($Name).setPIDSourceParameter(PIDSourceParameter.${PID_Source});
+              #variable($Name).setPIDSourceType(PIDSourceType.${PID_Source});
               #variable($Name).setIndexSource(${Index_Channel_Digital}, IndexingType.${Indexing_Type});
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"

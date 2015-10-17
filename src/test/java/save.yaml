@@ -130,11 +130,11 @@ Children:
             validators: [DigitalChannel]
             value: '1'
           PID Source: !!robotbuilder.data.properties.ChoicesProperty
-            choices: [kDistance, kRate]
+            choices: [kDisplacement, kRate]
             default: kRate
             name: PID Source
             validators: null
-            value: kDistance
+            value: kDisplacement
           Distance Per Pulse: !!robotbuilder.data.properties.DoubleProperty {default: 1,
             name: Distance Per Pulse, validators: null, value: 24.0}
           Encoding Type: !!robotbuilder.data.properties.ChoicesProperty
