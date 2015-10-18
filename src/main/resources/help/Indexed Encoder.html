@@ -13,9 +13,9 @@
        sense direction. The output of the encoder class is an integer
        that can count either up or down, and can go negative for
        reverse direction counting. Indexed encoders have three
-       digital outputs, an A Channel, a B Channel and in index that
+       digital outputs, an A Channel, a B Channel that 
        are out of phase with each other to allow the FPGA to do
-       direction sensing.</p>
+       direction sensing and and Index Channel that resets the count.</p>
 
     <h2>Properties</h2>
 
@@ -32,12 +32,17 @@
       <dd>Conversion factor to convert pulses to meaningful distance.</dd>
       <dt>PID Source</dt>
       <dd>Whether this encoder is being used for position or velocity PID.</dd>
+      <dt>Indexing Type</dt>
+      <dd>When to reset the based on the index. kResetWhileHigh, kResetWhileLow, kResetOnFallingEdge, or kResetOnRisingEdge.</dd>
     </dl>
 
     <h2>See Also</h2>
     <ul>
       <li>
         <a href="https://en.wikipedia.org/wiki/Rotary_encoder">Wikipedia</a>
+      </li>
+      <li>
+        <a href="https://wpilib.screenstepslive.com/s/4485/m/13809/l/241874-counters-measuring-rotation-counting-pulses-and-more">Encoder on Screensteps</a>
       </li>
     </ul>
   </body>
