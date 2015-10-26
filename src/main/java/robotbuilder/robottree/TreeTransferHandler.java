@@ -18,6 +18,7 @@ import javax.swing.JTree;
 import javax.swing.TransferHandler;
 import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.tree.TreePath;
+
 import lombok.SneakyThrows;
 
 import robotbuilder.data.PaletteComponent;
@@ -198,7 +199,11 @@ class TreeTransferHandler extends TransferHandler {
             return false;
         }
 
-        robotTree.delete((RobotComponent) support.getTransferable().getTransferData(support.getTransferable().getTransferDataFlavors()[0]));
+        if (robotTree.getComponentByName(newNode.getFullName()) != null) {
+            // If a component is dragged from one folder to another (e.g. between subsystems),
+            // DnD will not remove it from the tree, so we have to do it manually
+            robotTree.delete(newNode);
+        }
         robotTree.update();
 
         robotTree.treeModel.insertNodeInto(newNode, parentNode, childIndex);
