@@ -385,10 +385,10 @@ public class RobotTree extends JPanel {
         Iterator docs = new Yaml().loadAll(in).iterator();
 
         String version = (String) docs.next();
-        if (!version.equals("Version " + RobotBuilder.VERSION)) {
+        if (!isVersionCompatible(version)) {
             JOptionPane.showMessageDialog(MainFrame.getInstance(),
                     "File was made with RobotBuilder " + version.replace("V", "v")
-                    + " which is incompatable with version " + RobotBuilder.VERSION + ".",
+                    + ", which is incompatable with version " + RobotBuilder.VERSION + ".",
                     "Wrong Version", JOptionPane.ERROR_MESSAGE);
             return; // Give up
         }
@@ -446,6 +446,34 @@ public class RobotTree extends JPanel {
                     + "\nMessage: " + e.getMessage() + "\nStacktrace:\n" + writer.toString().substring(0, 500),
                     "Failed to Load File", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private boolean isVersionCompatible(String fileVersion) {
+        fileVersion = fileVersion.replaceAll("[^0-9.]", ""); // strip down to "1.5", "0.4", etc.
+        if (fileVersion.isEmpty()) {
+            return false;
+        }
+        if (fileVersion.equals(RobotBuilder.VERSION)) { // shortcut
+            return true;
+        }
+        Integer[] majorMinor
+                = Arrays.stream(fileVersion.split("\\."))
+                .map(Integer::parseInt)
+                .toArray(Integer[]::new);
+        if (majorMinor.length < 2) {
+            // Need at least a major and a minor version
+            return false;
+        }
+        if (majorMinor[0] > RobotBuilder.VERSION_MAJOR) {
+            // Major version is too high
+            return false;
+        }
+        if (majorMinor[0] == RobotBuilder.VERSION_MAJOR
+                && majorMinor[1] > RobotBuilder.VERSION_MINOR) {
+            // Major version is good, but minor version is too high
+            return false;
+        }
+        return true;
     }
 
     public void load() {
