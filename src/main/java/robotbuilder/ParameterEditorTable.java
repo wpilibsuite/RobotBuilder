@@ -109,32 +109,7 @@ public class ParameterEditorTable extends JTable {
 
     @Override
     public TableCellRenderer getCellRenderer(int row, int column) {
-        return new TableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JComponent component;
-                if (value instanceof Boolean) {
-                    JCheckBox checkBox = new JCheckBox("", (Boolean) value);
-                    component = checkBox;
-                } else {
-                    JLabel label = new JLabel(String.valueOf(value));
-                    label.setBorder(BorderFactory.createEmptyBorder(0, 4, 0, 0));
-                    component = label;
-                }
-                ParameterDescriptor param = parameterForRow(row);
-                if (!param.isValid()) {
-                    if (isSelected) {
-                        component.setBackground(SELECTED_INVALID_COLOR);
-                    } else {
-                        component.setBackground(INVALID_COLOR);
-                    }
-                } else if (isSelected) {
-                    component.setBackground(SELECTED_COLOR);
-                }
-                component.setOpaque(true);
-                return component;
-            }
-        };
+        return new ParameterTableRenderer(r -> parameterForRow(r).isValid());
     }
 
     /**

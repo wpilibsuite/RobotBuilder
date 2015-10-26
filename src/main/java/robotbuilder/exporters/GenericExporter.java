@@ -183,7 +183,10 @@ public class GenericExporter {
                         break;
                     }
                 }
-                assert instruction != null; // TODO: Deal with more elegantly
+                if (instruction == null) {
+                    Logger.getLogger(getClass().getName()).log(Level.WARNING, "Null export instruction");
+                    return;
+                }
                 instruction = instruction.replaceAll("\n", "\r\n");
                 component.put(instructionKey, instruction);
             }

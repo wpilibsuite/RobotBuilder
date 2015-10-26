@@ -10,11 +10,17 @@
 #end
 
 ##${Collections.reverse($components)}
-        // SmartDashboard Buttons
+    // SmartDashboard Buttons
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
+#if( $component.getProperty("Parameter presets").getValue().isEmpty() &&
+     $component.getProperty("Parameters").getValue().isEmpty() )
     SmartDashboard::PutData("$component.getName()", new #class($component.getName())());
-
+#else
+#foreach( $set in $component.getProperty("Parameter presets").getValue() )
+    SmartDashboard::PutData("$component.getName(): $set.getName()", #command_instantiation( $component.getName(), $set.getParameters() ));
+#end
+#end
 #end
 #end

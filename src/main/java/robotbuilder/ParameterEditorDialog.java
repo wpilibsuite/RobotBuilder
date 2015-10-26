@@ -4,11 +4,19 @@ package robotbuilder;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Vector;
+import java.util.stream.Collectors;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
+import lombok.NonNull;
+
 import robotbuilder.data.RobotComponent;
+import robotbuilder.data.properties.ParameterSet;
+import robotbuilder.data.properties.ParameterSetProperty;
 import robotbuilder.data.properties.ParametersProperty;
 import robotbuilder.data.properties.Property;
 import robotbuilder.data.properties.ValuedParameterDescriptor;
@@ -20,12 +28,13 @@ import robotbuilder.data.properties.ValuedParameterDescriptor;
  */
 public class ParameterEditorDialog extends CenteredDialog {
 
+    private final ParameterSetProperty presetsProp;
     private final ParametersProperty paramProp;
     private final List<ValuedParameterDescriptor> parameterList;
     private final List<ValuedParameterDescriptor> constantsList;
     private final String requiredSubsystemName;
 
-    public ParameterEditorDialog(RobotComponent component, JFrame owner, boolean modal) {
+    public ParameterEditorDialog(@NonNull RobotComponent component, JFrame owner, boolean modal) {
         super(owner, "Edit parameters");
         paramProp = (ParametersProperty) component.getProperty("Parameters");
         ParametersProperty commandParams = Utils.getParameters(component);
@@ -39,16 +48,20 @@ public class ParameterEditorDialog extends CenteredDialog {
                 break;
             }
         }
-        if (commandProp != null) {
-            RobotComponent command = component.getRobotTree().getComponentByName((String) commandProp.getValue());
-            RobotComponent required = component.getRobotTree().getComponentByName((String) command.getProperty("Requires").getValue());
-            if (required == null) {
-                constantsList = new ArrayList<>();
-                requiredSubsystemName = "None";
-            } else {
-                constantsList = (List) required.getProperty("Constants").getValue();
-                requiredSubsystemName = required.getName();
-            }
+        if (commandProp == null) {
+            throw new NullPointerException("The given component does not have a command property");
+        }
+        RobotComponent command = component.getRobotTree().getComponentByName((String) commandProp.getValue());
+        RobotComponent required = null;
+        if (command != null) {
+            required = component.getRobotTree().getComponentByName((String) command.getProperty("Requires").getValue());
+            presetsProp = (ParameterSetProperty) command.getProperty("Parameter presets");
+        } else {
+            presetsProp = null;
+        }
+        if (required != null) {
+            constantsList = (List) required.getProperty("Constants").getValue();
+            requiredSubsystemName = required.getName();
         } else {
             constantsList = new ArrayList<>();
             requiredSubsystemName = "None";
@@ -60,6 +73,12 @@ public class ParameterEditorDialog extends CenteredDialog {
         parameterTable.setBackground(new Color(240, 240, 240));
         parameterTable.setGridColor(Color.BLACK);
         parameterList.stream().forEach(p -> getTableModel().addRow(p.toArray()));
+        List<String> options = new ArrayList<>();
+        options.addAll(presetsProp.getValue().stream()
+                .map(ParameterSet::getName)
+                .collect(Collectors.toList()));
+        presetsBox.setModel(new DefaultComboBoxModel(options.toArray(new String[0])));
+        presetsBox.setSelectedIndex(-1);
 
     }
 
@@ -96,6 +115,8 @@ public class ParameterEditorDialog extends CenteredDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         parameterTable = new robotbuilder.ParameterEditorTable(requiredSubsystemName, constantsList);
         saveButton = new javax.swing.JButton();
+        presetsLabel = new javax.swing.JLabel();
+        presetsBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -140,19 +161,42 @@ public class ParameterEditorDialog extends CenteredDialog {
             }
         });
 
+        presetsLabel.setText("Apply preset:");
+
+        presetsBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        presetsBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                presetsBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(saveButton))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(presetsLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(presetsBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(presetsLabel)
+                    .addComponent(presetsBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveButton))
         );
@@ -166,8 +210,28 @@ public class ParameterEditorDialog extends CenteredDialog {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void resizeTable(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_resizeTable
-        parameterTable.resizeToFit();
+        ((ParameterEditorTable) parameterTable).resizeToFit();
     }//GEN-LAST:event_resizeTable
+
+    private void presetsBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_presetsBoxActionPerformed
+        String selected = (String) presetsBox.getSelectedItem();
+        if (selected == null) {
+            return;
+        }
+        presetsBox.setSelectedIndex(-1);
+        System.out.println("Setting to preset \"" + selected + "\"");
+        Optional<ParameterSet> preset = presetsProp.getValue().stream()
+                .filter(p -> p.getName().equals(selected))
+                .findAny();
+        System.out.println("Preset: " + preset.get());
+        preset.ifPresent(p -> {
+            List<ValuedParameterDescriptor> parameters = p.getParameters();
+            for (int i = 0; i < parameters.size(); i++) {
+                parameterTable.setValueAt(parameters.get(i).getValue(), i, 2);
+            }
+        });
+        repaint();
+    }//GEN-LAST:event_presetsBoxActionPerformed
 
     private DefaultTableModel getTableModel() {
         return (DefaultTableModel) parameterTable.getModel();
@@ -175,7 +239,9 @@ public class ParameterEditorDialog extends CenteredDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private robotbuilder.ParameterEditorTable parameterTable;
+    private javax.swing.JTable parameterTable;
+    private javax.swing.JComboBox presetsBox;
+    private javax.swing.JLabel presetsLabel;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }

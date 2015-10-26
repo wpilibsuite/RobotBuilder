@@ -104,7 +104,7 @@ Defaults:
     Export: "OI"
     Declaration: "${ClassName}* #variable($Name);"
   Button:
-    Extra:  "#if(\"$Command\" != \"None\")#variable($Name)->${When_to_Run.substring(0,1).toUpperCase()}${When_to_Run.substring(1)}(new #class($Command)());#end"
+    Extra:  "#if(\"$Command\" != \"None\")#variable($Name)->${When_to_Run.substring(0,1).toUpperCase()}${When_to_Run.substring(1)}(#command_instantiation($Command $Parameters));#end"
   Command:
     Export: "OI"
     Import: "\\#include \"Commands/#class($Short_Name).h\""

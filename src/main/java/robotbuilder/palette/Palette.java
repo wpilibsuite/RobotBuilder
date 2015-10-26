@@ -42,6 +42,7 @@ import robotbuilder.data.properties.DoubleProperty;
 import robotbuilder.data.properties.FileProperty;
 import robotbuilder.data.properties.IntegerProperty;
 import robotbuilder.data.properties.ListProperty;
+import robotbuilder.data.properties.ParameterSetProperty;
 import robotbuilder.data.properties.ParametersProperty;
 import robotbuilder.data.properties.ParentProperty;
 import robotbuilder.data.properties.StringProperty;
@@ -95,6 +96,7 @@ public class Palette extends JPanel {
         constructor.addTypeDescription(new TypeDescription(ComponentSelectionProperty.class, "!ComponentSelectionProperty"));
         constructor.addTypeDescription(new TypeDescription(ParentProperty.class, "!ParentProperty"));
         constructor.addTypeDescription(new TypeDescription(ParametersProperty.class, "!Parameters"));
+        constructor.addTypeDescription(new TypeDescription(ParameterSetProperty.class, "!ParameterSet"));
         constructor.addTypeDescription(new TypeDescription(ConstantsProperty.class, "!ConstantsProperty"));
         constructor.addTypeDescription(new TypeDescription(ListProperty.class, "!ListProperty"));
 

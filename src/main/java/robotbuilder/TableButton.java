@@ -13,9 +13,9 @@ import robotbuilder.data.properties.Property;
  *
  * @author Sam Carlberg
  */
-class TableButtonRenderer extends JButton implements TableCellRenderer {
+class TableButton extends JButton implements TableCellRenderer {
 
-    public TableButtonRenderer() {
+    public TableButton() {
         setOpaque(true);
         setHorizontalAlignment(SwingConstants.LEFT);
     }

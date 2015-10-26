@@ -219,4 +219,27 @@ public class Utils {
         return new ParametersProperty();
     }
 
+    /**
+     * A python-style substring function that interprets a negative value for
+     * {@code end} as the distance from the end of the string (e.g.
+     * {@code substring("Hello, world!", 0, -1)} results in
+     * {@code "Hello, world"}; substring("Hello, world!", 0, -8) results in
+     * "Hello")
+     *
+     * @param str the string to get a substring of
+     * @param start the start index of the substring; this must be >= 0
+     * @param end the end index of the substring; this must be >= start or >=
+     * start - str.length()
+     * @return
+     */
+    public static String substring(String str, int start, int end) {
+        if (start > 0 && end >= start) {
+            return str.substring(start, end);
+        } else if (end < 0 && str.length() + end >= start) {
+            return str.substring(start, str.length() + end);
+        } else {
+            throw new IndexOutOfBoundsException("Base string: " + str + ", start: " + start + ", end: " + end);
+        }
+    }
+
 }

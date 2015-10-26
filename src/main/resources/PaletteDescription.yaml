@@ -717,6 +717,9 @@ Palette:
           - !Parameters
             name: Parameters
             default: []
+          - !ParameterSet
+            name: Parameter presets
+            default: []
       - !Component
         name: Command Group
         type: Command
@@ -731,6 +734,9 @@ Palette:
             validators: [List]
           - !Parameters
             name: Parameters
+            default: []
+          - !ParameterSet
+            name: Parameter presets
             default: []
       - !Component
         name: PID Command
@@ -747,6 +753,9 @@ Palette:
           - !Parameters
             name: Parameters
             default: {}
+          - !ParameterSet
+            name: Parameter presets
+            default: []
           - !TypeSelectionProperty
             name: Input
             type: PIDSource
@@ -810,3 +819,6 @@ Palette:
             name: Parameters
             value:
             - !!robotbuilder.data.properties.ParameterDescriptor {name: setpoint, type: double}
+          - !ParameterSet
+            name: Parameter presets
+            default: []

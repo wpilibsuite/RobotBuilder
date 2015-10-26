@@ -32,7 +32,7 @@
 #macro( param_declaration_java $param )$param.getType() $param.getName()#end
 
 ## Generate parameter use
-#macro( param_set $param )#if( $param.isSubsystemConstant() )#constant_use( $param )#elseif( $param.isReference() )$param.getValue().replaceAll("^\\$", "")#else #if( $param.getType() == "String" )"$param.getValue()"#else$param.getValue()#end#end#end
+#macro( param_set $param )#if( $param.isSubsystemConstant() )#constant_use( $param )#elseif( $param.isReference() )$param.getValue().replaceAll("^\\$", "")#else#if( $param.getType() == "String" )"$param.getValue()"#else#if( $param.getType() == "byte" )(byte) #end$param.getValue()#if( $param.getType() == "long" )L#end#end#end#end
 
 #macro( constant_use $constant )#class( $helper.stringSplit($constant.getValue(), "\.").get(0) ).$helper.stringSplit($constant.getValue(), "\.").get(1)#end
 

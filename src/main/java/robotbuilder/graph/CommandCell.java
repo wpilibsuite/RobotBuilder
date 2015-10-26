@@ -14,6 +14,13 @@ import robotbuilder.data.CommandGroupEntry;
  */
 public class CommandCell extends AbstractCell<CommandGroupEntry> {
 
+    /**
+     * Only used for performing a deep copy using YAML.
+     */
+    public CommandCell() {
+        super(new CommandGroupEntry(), new mxGeometry(), "");
+    }
+
     public CommandCell(CommandGroupEntry value, mxGeometry geometry, String style) {
         super(value, geometry, style);
     }

@@ -180,6 +180,9 @@ public class PropertiesDisplay extends JPanel {
                 if ("Constants".equals(name)) {
                     return new TableButtonEditor(new ConstantsAdderDialog(currentComponent, null, true)::showAndGet);
                 }
+                if ("Parameter presets".equals(name)) {
+                    return new TableButtonEditor(new ParameterSetsEditorDialog(currentComponent, null, true)::showAndGet);
+                }
                 if (value instanceof JComboBox) {
                     return new DefaultCellEditor((JComboBox) value);
                 } else if (value instanceof JFileChooser) {
@@ -238,11 +241,11 @@ public class PropertiesDisplay extends JPanel {
             }
             if (value != null) {
                 final String name = (String) super.getValueAt(row, 0);
-                if ("Parameters".equals(name) || "Constants".equals(name)) {
+                if ("Parameters".equals(name) || "Constants".equals(name) || "Parameter presets".equals(name)) {
                     if (currentComponent.getBaseType().equals("Setpoint Command")) {
                         return super.getCellRenderer(row, column);
                     }
-                    return new TableButtonRenderer();
+                    return new TableButton();
                 }
                 if (value instanceof JComboBox) {
                     return new TableCellRenderer() {
@@ -335,7 +338,9 @@ public class PropertiesDisplay extends JPanel {
 
         @Override
         public void setValueAt(Object val, int row, int column) {
-            assert column == 1; // TODO: Deal with more cleanly
+            if (column != 1) {
+                return;
+            }
             if (row == 0) {
                 String name = (String) val;
                 // Prevent top level components from being renamed

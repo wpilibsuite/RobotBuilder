@@ -14,7 +14,7 @@ import javax.swing.JTable;
  */
 class TableButtonEditor<T> extends DefaultCellEditor {
 
-    private final TableButtonRenderer button;
+    private final TableButton button;
     private boolean isPushed;
     private T value;
     private final Supplier<T> supplier;
@@ -29,7 +29,7 @@ class TableButtonEditor<T> extends DefaultCellEditor {
     public TableButtonEditor(Supplier<T> supplier) {
         super(new JCheckBox());
         this.supplier = supplier;
-        button = new TableButtonRenderer();
+        button = new TableButton();
         button.addActionListener(e -> fireEditingStopped());
     }
 
