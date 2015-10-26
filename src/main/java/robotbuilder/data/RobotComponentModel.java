@@ -9,6 +9,7 @@ import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.yaml.snakeyaml.Yaml;
 
 import robotbuilder.data.properties.Property;
@@ -49,6 +50,10 @@ public class RobotComponentModel implements Serializable {
         hash = 53 * hash + Objects.hashCode(this.base);
         hash = 53 * hash + Objects.hashCode(this.properties);
         return hash;
+    }
+
+    public Property getProperty(String key) {
+        return properties.get(key);
     }
 
 }

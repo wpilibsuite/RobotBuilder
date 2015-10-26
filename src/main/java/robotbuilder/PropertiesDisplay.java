@@ -8,6 +8,7 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
@@ -176,6 +177,9 @@ public class PropertiesDisplay extends JPanel {
                                     ? new ParameterAdderDialog(currentComponent, null, true)::showAndGetParameters
                                     : new ParameterEditorDialog(currentComponent, null, true)::showAndGetParameters);
                 }
+                if ("Constants".equals(name)) {
+                    return new TableButtonEditor(new ConstantsAdderDialog(currentComponent, null, true)::showAndGet);
+                }
                 if (value instanceof JComboBox) {
                     return new DefaultCellEditor((JComboBox) value);
                 } else if (value instanceof JFileChooser) {
@@ -234,7 +238,7 @@ public class PropertiesDisplay extends JPanel {
             }
             if (value != null) {
                 final String name = (String) super.getValueAt(row, 0);
-                if ("Parameters".equals(name)) {
+                if ("Parameters".equals(name) || "Constants".equals(name)) {
                     if (currentComponent.getBaseType().equals("Setpoint Command")) {
                         return super.getCellRenderer(row, column);
                     }

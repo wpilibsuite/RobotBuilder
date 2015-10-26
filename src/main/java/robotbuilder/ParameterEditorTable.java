@@ -3,16 +3,19 @@ package robotbuilder;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+
 import robotbuilder.data.properties.ParameterDescriptor;
 import robotbuilder.data.properties.ValuedParameterDescriptor;
 
@@ -26,7 +29,10 @@ public class ParameterEditorTable extends JTable {
     public static final Color INVALID_COLOR = new Color(255, 150, 150); // medium red
     public static final Color SELECTED_INVALID_COLOR = new Color(0xEC4659);
 
-    public ParameterEditorTable() {
+    private final String requiredSubsystemName;
+    private final List<ValuedParameterDescriptor> constants;
+
+    public ParameterEditorTable(String requiredSubsystemName, List<ValuedParameterDescriptor> constants) {
         setModel(new DefaultTableModel(new String[]{"Name", "Type", "Value"}, 0) {
             Class[] types = new Class[]{
                 String.class, String.class, Object.class
@@ -42,6 +48,8 @@ public class ParameterEditorTable extends JTable {
                 return columnIndex == 2;
             }
         });
+        this.requiredSubsystemName = requiredSubsystemName;
+        this.constants = constants;
     }
 
     @Override
@@ -54,12 +62,31 @@ public class ParameterEditorTable extends JTable {
         Object value = getValueAt(row, 2);
         DefaultCellEditor editor;
         switch (type) {
-            case "boolean":
-                editor = new DefaultCellEditor(new JCheckBox("", value instanceof Boolean ? (Boolean) value : false));
+            case "boolean": {
+                String[] possibleNames
+                        = constants.stream()
+                        .filter(d -> d.getType().equals(type))
+                        .map(p -> ("None".equals(requiredSubsystemName) ? "" : requiredSubsystemName + ".") + p.getName())
+                        .toArray(String[]::new);
+                Object[] options = new Object[possibleNames.length + 2];
+                options[0] = ValuedParameterDescriptor.BOOLEAN_TRUE;
+                options[1] = ValuedParameterDescriptor.BOOLEAN_FALSE;
+                System.arraycopy(possibleNames, 0, options, 2, possibleNames.length);
+                JComboBox combo = new JComboBox(options);
+                editor = new DefaultCellEditor(combo);
                 break;
-            default:
-                editor = new DefaultCellEditor(new JTextField());
+            }
+            default: {
+                String[] possibleNames
+                        = constants.stream()
+                        .filter(d -> d.getType().equals(type))
+                        .map(p -> ("None".equals(requiredSubsystemName) ? "" : requiredSubsystemName + ".") + p.getName())
+                        .toArray(String[]::new);
+                JComboBox combo = new JComboBox(possibleNames);
+                combo.setEditable(true);
+                editor = new DefaultCellEditor(combo);
                 break;
+            }
         }
         editor.setClickCountToStart(2);
         return editor;
@@ -82,16 +109,15 @@ public class ParameterEditorTable extends JTable {
 
     @Override
     public TableCellRenderer getCellRenderer(int row, int column) {
-        final Object valueHere = super.getValueAt(row, column);
         return new TableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JComponent component;
-                if (valueHere instanceof Boolean) {
-                    JCheckBox checkBox = new JCheckBox("", (Boolean) valueHere);
+                if (value instanceof Boolean) {
+                    JCheckBox checkBox = new JCheckBox("", (Boolean) value);
                     component = checkBox;
                 } else {
-                    JLabel label = new JLabel(String.valueOf(valueHere));
+                    JLabel label = new JLabel(String.valueOf(value));
                     label.setBorder(BorderFactory.createEmptyBorder(0, 4, 0, 0));
                     component = label;
                 }
@@ -109,6 +135,22 @@ public class ParameterEditorTable extends JTable {
                 return component;
             }
         };
+    }
+
+    /**
+     * Resizes the columns in the table to best fit their contents.
+     */
+    public void resizeToFit() {
+        final int minWidth = 50;
+        for (int column = 0; column < getColumnCount(); column++) {
+            int width = minWidth;
+            for (int row = 0; row < getRowCount(); row++) {
+                TableCellRenderer renderer = getCellRenderer(row, column);
+                Component comp = prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+            }
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
     }
 
 }

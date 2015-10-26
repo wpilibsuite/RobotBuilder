@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -353,6 +354,10 @@ public class GenericExporter {
 
     public RobotComponent getByName(final String name, RobotComponent robot) { // TODO: Make macro
         return robot.getRobotTree().getComponentByName(name);
+    }
+
+    public List<String> stringSplit(String string, String regex) { // TODO: don't make macro, it won't work
+        return Arrays.asList(string.split(regex));
     }
 
     // UTILITIES

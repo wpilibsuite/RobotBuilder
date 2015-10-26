@@ -106,7 +106,7 @@ Defaults:
     LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   OI:
     Export: "OI"
-    Import: "import edu.wpi.first.wpilibj.${ClassName};"
+    Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport ${package}.subsystems.*;"
     Declaration: "public ${ClassName} #variable($Name);"
   Button:
     Import: "import edu.wpi.first.wpilibj.buttons.*;"

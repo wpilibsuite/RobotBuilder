@@ -21,7 +21,9 @@ import robotbuilder.data.properties.ValuedParameterDescriptor;
 public class ParameterEditorDialog extends CenteredDialog {
 
     private final ParametersProperty paramProp;
-    private List<ValuedParameterDescriptor> parameterList;
+    private final List<ValuedParameterDescriptor> parameterList;
+    private final List<ValuedParameterDescriptor> constantsList;
+    private final String requiredSubsystemName;
 
     public ParameterEditorDialog(RobotComponent component, JFrame owner, boolean modal) {
         super(owner, "Edit parameters");
@@ -29,6 +31,28 @@ public class ParameterEditorDialog extends CenteredDialog {
         ParametersProperty commandParams = Utils.getParameters(component);
         paramProp.matchUpWith(commandParams);
         parameterList = (List<ValuedParameterDescriptor>) paramProp.getValue();
+
+        Property<?> commandProp = null;
+        for (String propKey : component.getPropertyKeys()) {
+            if (propKey.endsWith("Command")) {
+                commandProp = component.getProperty(propKey);
+                break;
+            }
+        }
+        if (commandProp != null) {
+            RobotComponent command = component.getRobotTree().getComponentByName((String) commandProp.getValue());
+            RobotComponent required = component.getRobotTree().getComponentByName((String) command.getProperty("Requires").getValue());
+            if (required == null) {
+                constantsList = new ArrayList<>();
+                requiredSubsystemName = "None";
+            } else {
+                constantsList = (List) required.getProperty("Constants").getValue();
+                requiredSubsystemName = required.getName();
+            }
+        } else {
+            constantsList = new ArrayList<>();
+            requiredSubsystemName = "None";
+        }
         initComponents();
         parameterTable.setShowHorizontalLines(true);
         parameterTable.setShowVerticalLines(true);
@@ -36,11 +60,7 @@ public class ParameterEditorDialog extends CenteredDialog {
         parameterTable.setBackground(new Color(240, 240, 240));
         parameterTable.setGridColor(Color.BLACK);
         parameterList.stream().forEach(p -> getTableModel().addRow(p.toArray()));
-    }
 
-    public ParametersProperty showAndGetProperty() {
-        setVisible(true);
-        return paramProp;
     }
 
     public List<ValuedParameterDescriptor> showAndGetParameters() {
@@ -74,7 +94,7 @@ public class ParameterEditorDialog extends CenteredDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        parameterTable = new robotbuilder.ParameterEditorTable();
+        parameterTable = new robotbuilder.ParameterEditorTable(requiredSubsystemName, constantsList);
         saveButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -102,9 +122,15 @@ public class ParameterEditorDialog extends CenteredDialog {
                 return canEdit [columnIndex];
             }
         });
+        parameterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         parameterTable.setDragEnabled(true);
         parameterTable.setShowGrid(true);
         parameterTable.getTableHeader().setReorderingAllowed(false);
+        parameterTable.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                resizeTable(evt);
+            }
+        });
         jScrollPane1.setViewportView(parameterTable);
 
         saveButton.setText("Save and close");
@@ -139,13 +165,17 @@ public class ParameterEditorDialog extends CenteredDialog {
         dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void resizeTable(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_resizeTable
+        parameterTable.resizeToFit();
+    }//GEN-LAST:event_resizeTable
+
     private DefaultTableModel getTableModel() {
         return (DefaultTableModel) parameterTable.getModel();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable parameterTable;
+    private robotbuilder.ParameterEditorTable parameterTable;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }

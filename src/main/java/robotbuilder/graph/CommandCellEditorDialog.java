@@ -23,6 +23,7 @@ import robotbuilder.MainFrame;
 import robotbuilder.ParameterEditorTable;
 import robotbuilder.Utils;
 import robotbuilder.data.CommandGroupEntry;
+import robotbuilder.data.RobotComponent;
 import robotbuilder.data.properties.ParametersProperty;
 import robotbuilder.data.properties.ValuedParameterDescriptor;
 
@@ -104,7 +105,11 @@ public class CommandCellEditorDialog extends CenteredDialog {
         orderLabel = new JLabel();
         orderBox = new JComboBox();
         tableScrollPane = new JScrollPane();
-        parameterTable = new ParameterEditorTable();
+
+        RobotComponent subsystem = MainFrame.getInstance().getCurrentRobotTree()
+                .getComponentByName((String) command.getCommand().getProperty("Requires").getValue());
+
+        parameterTable = new ParameterEditorTable(subsystem.getName(), (List) subsystem.getProperty("Constants").getValue());
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 

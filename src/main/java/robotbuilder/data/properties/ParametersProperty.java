@@ -5,18 +5,19 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
+import lombok.NoArgsConstructor;
+
 import robotbuilder.data.RobotComponent;
 
 /**
  *
  * @author Sam Carlberg
  */
+@NoArgsConstructor
 public class ParametersProperty extends Property<List<? extends ParameterDescriptor>> {
 
     private List<? extends ParameterDescriptor> value = new ArrayList<>();
-
-    public ParametersProperty() {
-    }
 
     public ParametersProperty(String name, List<? extends ParameterDescriptor> defaultValue, String[] validators, RobotComponent component) {
         super(name, defaultValue, validators, component);
@@ -44,11 +45,11 @@ public class ParametersProperty extends Property<List<? extends ParameterDescrip
             return;
         }
         List<? extends ParameterDescriptor> otherParams = other.getValue();
-        
-        if(otherParams.isEmpty()) {
+
+        if (otherParams.isEmpty()) {
             value.clear();
         }
-        
+
         List<ValuedParameterDescriptor> accum = new ArrayList<>();
 
         otherParams.forEach(p -> {

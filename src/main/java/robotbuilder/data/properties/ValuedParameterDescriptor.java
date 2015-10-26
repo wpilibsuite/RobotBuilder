@@ -1,10 +1,13 @@
 
 package robotbuilder.data.properties;
 
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import robotbuilder.MainFrame;
 import robotbuilder.Utils;
+import robotbuilder.data.RobotComponent;
 
 /**
  *
@@ -14,6 +17,9 @@ import robotbuilder.Utils;
 @NoArgsConstructor // required for yaml deserialization
 @EqualsAndHashCode(callSuper = true)
 public class ValuedParameterDescriptor extends ParameterDescriptor {
+
+    public static final String BOOLEAN_TRUE = "true";
+    public static final String BOOLEAN_FALSE = "false";
 
     /**
      * The value of this parameter. This can either be user-specified from
@@ -48,7 +54,7 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
     public void setValueToDefault() {
         switch (getType()) {
             case "boolean":
-                this.value = false;
+                this.value = BOOLEAN_FALSE;
                 break;
             case "byte":
             case "int":
@@ -94,7 +100,10 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
     public boolean valueMatchesType() {
         switch (getType()) {
             case "boolean":
-                return value instanceof Boolean;
+                return value instanceof String
+                        && (isReference()
+                        || value.equals(BOOLEAN_TRUE)
+                        || value.equals(BOOLEAN_FALSE));
             case "byte":
                 return value instanceof String
                         && (isReference()
@@ -122,10 +131,52 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
         return false;
     }
 
+    /**
+     * Checks if this parameter references a constant, a variable, or
+     * expression.
+     *
+     * @return
+     */
     public boolean isReference() {
         if (value instanceof String) {
             String s = (String) value;
-            return s.startsWith("$");
+            if (s.startsWith("$")) {
+                // Literal escape
+                return true;
+            } else if (isSubsystemConstant()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if this parameter is a reference to a subsystem constant (e.g.
+     * "Arm.UP").
+     *
+     * @return
+     */
+    public boolean isSubsystemConstant() {
+        if (value instanceof String) {
+            String s = (String) value;
+            if (s.contains(".")) {
+                String[] split = s.split("\\.");
+                if (split.length != 2) {
+                    return false;
+                }
+                RobotComponent subsystem = MainFrame.getInstance().getCurrentRobotTree().getComponentByName(split[0]);
+                if (subsystem == null) {
+                    return false;
+                }
+                ConstantsProperty cp = (ConstantsProperty) subsystem.getProperty("Constants");
+                if (cp == null) {
+                    return false;
+                }
+                List<ValuedParameterDescriptor> constants = cp.getValue();
+                return constants.stream()
+                        .map(ValuedParameterDescriptor::getName)
+                        .anyMatch(split[1]::equals);
+            }
         }
         return false;
     }

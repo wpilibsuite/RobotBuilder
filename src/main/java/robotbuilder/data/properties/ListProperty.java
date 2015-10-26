@@ -13,7 +13,7 @@ import robotbuilder.data.RobotComponent;
 @NoArgsConstructor
 public class ListProperty<T extends Validatable> extends Property<List<T>> {
 
-    private List<T> value;
+    protected List<T> value;
 
     public ListProperty(String name, List<T> defaultValue, String[] validators, RobotComponent component) {
         super(name, Utils.deepCopy(defaultValue), validators, component);
@@ -22,7 +22,7 @@ public class ListProperty<T extends Validatable> extends Property<List<T>> {
     @Override
     public Property copy() {
         ListProperty copy = new ListProperty(name, defaultValue, validators, component);
-        copy.setValueAndUpdate(Utils.deepCopy(value));
+        copy.setValue(Utils.deepCopy(value));
         return copy;
     }
 

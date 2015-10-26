@@ -5,6 +5,7 @@ package ${package}.commands;
 #set($commandDescriptors = $command.getProperty("Commands").getValue())
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import ${package}.subsystems.*;
 
 /**
  *

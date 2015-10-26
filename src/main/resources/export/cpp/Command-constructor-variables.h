@@ -5,7 +5,7 @@
 
 #if( $params.size() != 0 )
 #foreach( $param in $params )
-    #if( $param.getType() == "String" )std::string#elseif( $param.getType() == "boolean" )bool#else$param.getType()#end m_$param.getName();
+    #param_type( $param ) m_${param.getName()};
 ## generates Foo m_foo;
 #end
 #end

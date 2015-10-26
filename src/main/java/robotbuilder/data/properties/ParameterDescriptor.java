@@ -34,7 +34,7 @@ public class ParameterDescriptor implements Validatable, Serializable {
                     "enum", "struct", "union", "typedef");
 
     private static final String DEFAULT_NAME = "[change me]";
-    private static final String DEFAULT_TYPE = "String";
+    private static final String DEFAULT_TYPE = "double";
 
     /**
      * The name of the parameter. Defaults to "[change me]".
