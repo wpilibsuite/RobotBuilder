@@ -199,12 +199,16 @@ class TreeTransferHandler extends TransferHandler {
             return false;
         }
 
+        // Dragging a node into its own parent. No change so just return
+        if (parentNode.getChildren().contains(newNode)) {
+            return false;
+        }
+
         if (robotTree.getComponentByName(newNode.getFullName()) != null) {
             // If a component is dragged from one folder to another (e.g. between subsystems),
             // DnD will not remove it from the tree, so we have to do it manually
             robotTree.delete(newNode);
         }
-        robotTree.update();
 
         robotTree.treeModel.insertNodeInto(newNode, parentNode, childIndex);
         robotTree.treeModel.reload(parentNode); // reloads the tree without reverting to the root
