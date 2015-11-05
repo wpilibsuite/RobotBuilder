@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,26 +27,11 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 import robotbuilder.Utils;
-import robotbuilder.data.DistinctValidator;
-import robotbuilder.data.ExistsValidator;
-import robotbuilder.data.ListValidator;
+import robotbuilder.utils.YamlUtils;
 import robotbuilder.data.PaletteComponent;
-import robotbuilder.data.UniqueValidator;
 import robotbuilder.data.Validator;
-import robotbuilder.data.properties.BooleanProperty;
-import robotbuilder.data.properties.ChildSelectionProperty;
-import robotbuilder.data.properties.ChoicesProperty;
-import robotbuilder.data.properties.ComponentSelectionProperty;
-import robotbuilder.data.properties.ConstantsProperty;
-import robotbuilder.data.properties.DoubleProperty;
-import robotbuilder.data.properties.FileProperty;
-import robotbuilder.data.properties.IntegerProperty;
-import robotbuilder.data.properties.ListProperty;
-import robotbuilder.data.properties.ParameterSetProperty;
-import robotbuilder.data.properties.ParametersProperty;
-import robotbuilder.data.properties.ParentProperty;
-import robotbuilder.data.properties.StringProperty;
-import robotbuilder.data.properties.TypeSelectionProperty;
+import robotbuilder.extensions.ExtensionComponent;
+import robotbuilder.extensions.Extensions;
 
 /**
  * The Palette is the set of components that can be used to create the robot
@@ -81,36 +66,37 @@ public class Palette extends JPanel {
         context.put("home", System.getProperty("user.home").replace("\\", "\\\\") + Matcher.quoteReplacement(File.separator));
         ve.evaluate(context, writer, "RobotBuilder:PaletteDescription.yaml", in);
 
-        Constructor constructor = new Constructor();
-        constructor.addTypeDescription(new TypeDescription(PaletteComponent.class, "!Component"));
-
-        // Properties
-        constructor.addTypeDescription(new TypeDescription(StringProperty.class, "!StringProperty"));
-        constructor.addTypeDescription(new TypeDescription(BooleanProperty.class, "!BooleanProperty"));
-        constructor.addTypeDescription(new TypeDescription(IntegerProperty.class, "!IntegerProperty"));
-        constructor.addTypeDescription(new TypeDescription(DoubleProperty.class, "!DoubleProperty"));
-        constructor.addTypeDescription(new TypeDescription(FileProperty.class, "!FileProperty"));
-        constructor.addTypeDescription(new TypeDescription(ChoicesProperty.class, "!ChoicesProperty"));
-        constructor.addTypeDescription(new TypeDescription(ChildSelectionProperty.class, "!ChildSelectionProperty"));
-        constructor.addTypeDescription(new TypeDescription(TypeSelectionProperty.class, "!TypeSelectionProperty"));
-        constructor.addTypeDescription(new TypeDescription(ComponentSelectionProperty.class, "!ComponentSelectionProperty"));
-        constructor.addTypeDescription(new TypeDescription(ParentProperty.class, "!ParentProperty"));
-        constructor.addTypeDescription(new TypeDescription(ParametersProperty.class, "!Parameters"));
-        constructor.addTypeDescription(new TypeDescription(ParameterSetProperty.class, "!ParameterSet"));
-        constructor.addTypeDescription(new TypeDescription(ConstantsProperty.class, "!ConstantsProperty"));
-        constructor.addTypeDescription(new TypeDescription(ListProperty.class, "!ListProperty"));
-
-        constructor.addTypeDescription(new TypeDescription(DistinctValidator.class, "!DistinctValidator"));
-        constructor.addTypeDescription(new TypeDescription(ExistsValidator.class, "!ExistsValidator"));
-        constructor.addTypeDescription(new TypeDescription(UniqueValidator.class, "!UniqueValidator"));
-        constructor.addTypeDescription(new TypeDescription(ListValidator.class, "!ListValidator"));
-
-        Yaml yaml = new Yaml(constructor);
+        Yaml yaml = YamlUtils.yaml;
         Map<String, Object> description = (Map<String, Object>) yaml.load(writer.toString());
+        List<Map<String, List<PaletteComponent>>> sections = (List) description.get("Palette");
+        List<Validator> validatorList = (List) description.get("Validators");
+
+        List<ExtensionComponent> components = Extensions.getComponents();
+        components.stream()
+            .filter(ExtensionComponent::hasValidators)
+            .map(ExtensionComponent::getValidators)
+            .map(yaml::load)
+            .map(Validator.class::cast)
+            .peek(v -> System.out.println("Adding extension validator: " + v.getName()))
+            .forEach(validatorList::add);
+        sections.stream()
+                .forEach(section -> {
+                    String sectionName = section.keySet().toArray(new String[0])[0];
+                    System.out.println("Adding extensions for section: " + sectionName);
+                    components.stream()
+                        .filter(c -> c.getPaletteSection().equals(sectionName))
+                        .map(ExtensionComponent::getPaletteDescription)
+                        .map(yaml::load)
+                        .map(PaletteComponent.class::cast)
+                        .forEach(p -> {
+                            p.setIsExtension(true);
+                            section.get(sectionName).add(p);
+                        });
+                });
 
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Palette");
-        createPalette(root, (ArrayList<Map<String, ArrayList<PaletteComponent>>>) description.get("Palette"));
-        loadValidators((ArrayList<Validator>) description.get("Validators"));
+        createPalette(root, sections);
+        loadValidators(validatorList);
         model = new DefaultTreeModel(root);
 
         setLayout(new CardLayout());
@@ -154,11 +140,14 @@ public class Palette extends JPanel {
      * @param root The parent tree node
      * @param jSONObject The JSON object that corresponds to this level
      */
-    private void createPalette(DefaultMutableTreeNode root, ArrayList<Map<String, ArrayList<PaletteComponent>>> sections) {
+    private void createPalette(DefaultMutableTreeNode root, List<Map<String, List<PaletteComponent>>> sections) {
         // Allow order to be imposed on the palette
         sections.stream().forEach(section -> {
             String key = section.keySet().iterator().next();
-            ArrayList<PaletteComponent> items = section.get(key);
+            if (key.isEmpty()) {
+                return;
+            }
+            List<PaletteComponent> items = section.get(key);
             DefaultMutableTreeNode node = null;
             if (!key.equals("Hidden")) {
                 node = new DefaultMutableTreeNode(key);
@@ -179,7 +168,7 @@ public class Palette extends JPanel {
         }
     }
 
-    private void loadValidators(ArrayList<Validator> validatorsToAdd) {
+    private void loadValidators(List<Validator> validatorsToAdd) {
         validatorsToAdd.stream().forEach(validator -> validators.put(validator.getName(), validator));
     }
 

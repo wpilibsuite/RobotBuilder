@@ -11,6 +11,8 @@ import java.util.Objects;
 
 import robotbuilder.palette.Palette;
 import robotbuilder.data.properties.Property;
+import robotbuilder.extensions.Extensions;
+import robotbuilder.extensions.ExtensionComponent;
 
 /**
  *
@@ -34,6 +36,8 @@ public class PaletteComponent implements Serializable {
     // set of properties for the component
     private Map<String, Property> properties = new HashMap<>();
     private List<String> propertiesKeys = new ArrayList<>();
+
+    private boolean isExtension = false;
 
     public PaletteComponent() {
     }
@@ -100,6 +104,14 @@ public class PaletteComponent implements Serializable {
         return propertiesKeys;
     }
 
+    public boolean isExtension() {
+        return isExtension;
+    }
+
+    public void setIsExtension(boolean isExtension) {
+        this.isExtension = isExtension;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -135,7 +147,11 @@ public class PaletteComponent implements Serializable {
     }
 
     public String getHelpFile() {
-        return "/help/" + name + ".html";
+        if (isExtension) {
+            return Extensions.EXTENSIONS_FOLDER_PATH + name + "/" + ExtensionComponent.HTML_HELP_FILE_NAME;
+        } else {
+            return "/help/" + name + ".html";
+        }
     }
 
     public boolean supportsChildren() {

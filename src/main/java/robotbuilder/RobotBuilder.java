@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import robotbuilder.extensions.Extensions;
+
 /**
  *
  * @author brad
@@ -37,6 +39,7 @@ public class RobotBuilder {
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(RobotBuilder.class.getName()).log(Level.SEVERE, null, ex);
             }
+            Extensions.init();
             MainFrame frame = MainFrame.getInstance();
             frame.openDefaultFile();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

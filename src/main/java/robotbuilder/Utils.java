@@ -19,6 +19,7 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.SerializationException;
 import org.apache.commons.lang.SerializationUtils;
@@ -165,11 +166,21 @@ public class Utils {
     public static String getFileText(File file) {
         String text = "";
         try {
-            text = String.join("\n", Files.lines(file.toPath()).toArray(String[]::new));
+            text = Files.lines(file.toPath()).collect(Collectors.joining("\n"));
         } catch (IOException ex) {
             // Couldn't read from file, return empty String
         }
         return text;
+    }
+
+    /**
+     * Gets the text in the file at the given path. An empty String is returned
+     * if there is an error getting the text.
+     *
+     * @param filePath the absolute path of the file
+     */
+    public static String getFileText(String filePath) {
+        return getFileText(new File(filePath));
     }
 
     /**

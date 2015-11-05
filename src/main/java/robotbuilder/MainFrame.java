@@ -24,6 +24,7 @@ import javax.swing.event.HyperlinkEvent;
 
 import robotbuilder.palette.Palette;
 import robotbuilder.robottree.RobotTree;
+import robotbuilder.data.PaletteComponent;
 
 /**
  *
@@ -161,6 +162,18 @@ public class MainFrame extends JFrame {
             help.setPage(Utils.getResource(file));
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.WARNING, "Nonexistent help file: {0}", file);
+        }
+    }
+
+    public final void setHelp(PaletteComponent c) {
+        if (c.isExtension()) {
+            try {
+                help.setPage(new File(c.getHelpFile()).toURI().toURL());
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.WARNING, "Nonexistent help file: {0}", c.getHelpFile());
+            }
+        } else {
+            setHelp(c.getHelpFile());
         }
     }
 

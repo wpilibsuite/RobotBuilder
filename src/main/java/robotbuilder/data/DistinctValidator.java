@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import robotbuilder.data.properties.Property;
 
@@ -37,14 +38,17 @@ public class DistinctValidator implements Validator {
 
     @Override
     public void update(RobotComponent component, String property, Object value) {
-        assert fields.contains(property);
+        if (!fields.contains(property)) {
+            System.out.println("Fields does not contain property " + property);
+            return;
+        }
         claims.put(property, value);
     }
 
     @Override
     public boolean isValid(RobotComponent component, Property property) {
         return claims.values().stream()
-                .filter(claims.get(property.getName())::equals)
+                .filter(v -> Objects.equals(claims.get(property.getName()), v))
                 .count() == 1;
     }
 

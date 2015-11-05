@@ -706,7 +706,7 @@ public class RobotTree extends JPanel {
             if (node instanceof RobotComponent) {
                 RobotComponent comp = (RobotComponent) node;
                 properties.setCurrentComponent(comp);
-                MainFrame.getInstance().setHelp(comp.getBase().getHelpFile());
+                MainFrame.getInstance().setHelp(comp.getBase());
             }
         }
 

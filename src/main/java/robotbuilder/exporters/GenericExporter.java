@@ -36,6 +36,8 @@ import robotbuilder.RobotBuilder;
 import robotbuilder.robottree.RobotTree;
 import robotbuilder.Utils;
 import robotbuilder.data.RobotComponent;
+import robotbuilder.extensions.ExtensionComponent;
+import robotbuilder.extensions.Extensions;
 
 /**
  *
@@ -60,6 +62,9 @@ public class GenericExporter {
 
         // Setup velocity engine
         ve = new VelocityEngine(Utils.getVelocityProperties());
+
+        // Load extensions
+        List<ExtensionComponent> extensions = Extensions.getComponents();
 
         // Load YAML Description
         Yaml yaml = new Yaml();
@@ -86,8 +91,32 @@ public class GenericExporter {
         post_export_action = (String) description.get("Post Export Action");
         if (description.containsKey("Instructions")) {
             instructions = (List<String>) description.get("Instruction Names");
+            Map<String, Map<String, String>> components = (Map) description.get("Instructions");
+            switch (name) {
+                case "C++":
+                    // Add export description
+                    extensions.stream()
+                            .filter(ExtensionComponent::exportsToCpp)
+                            .map(ExtensionComponent::getCppExport)
+                            .map(yaml::load)
+                            .map(o -> (Map<String, Map<String, String>>) o)
+                            .forEach(components::putAll);
+                    break;
+                case "Java":
+                    // Add export description
+                    extensions.stream()
+                            .filter(ExtensionComponent::exportsToJava)
+                            .map(ExtensionComponent::getJavaExport)
+                            .map(yaml::load)
+                            .map(o -> (Map<String, Map<String, String>>) o)
+                            .forEach(components::putAll);
+                    break;
+                default:
+                    // Unknown language
+                    break;
+            }
             loadExportDescription((Map<String, Map<String, String>>) description.get("Defaults"),
-                    (Map<String, Map<String, String>>) description.get("Instructions"));
+                    components);
         }
     }
 

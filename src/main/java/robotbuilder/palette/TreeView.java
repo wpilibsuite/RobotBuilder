@@ -59,7 +59,7 @@ public class TreeView extends JPanel implements TreeSelectionListener {
 
         if (node != null) {
             try {
-                MainFrame.getInstance().setHelp(((PaletteComponent) node.getUserObject()).getHelpFile());
+                MainFrame.getInstance().setHelp((PaletteComponent) node.getUserObject());
             } catch (ClassCastException ex) { /* Ignore folders */ }
         }
     }

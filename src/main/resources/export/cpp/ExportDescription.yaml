@@ -69,6 +69,10 @@ Defaults:
   Component:
     Export: "RobotMap"
     Declaration: "static std::shared_ptr<${ClassName}> #variable($Name);"
+  CustomComponent:
+    Export: "RobotMap"
+    Import: "\\#include \"Custom/${ClassName}.h\""
+    Declaration: "static std::shared_ptr<${ClassName}> #variable($Name);"
   None:
     Export: ""
     Import: ""

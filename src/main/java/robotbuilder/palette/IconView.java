@@ -24,6 +24,8 @@ import javax.swing.tree.TreeModel;
 import robotbuilder.MainFrame;
 import robotbuilder.Utils;
 import robotbuilder.data.PaletteComponent;
+import robotbuilder.extensions.ExtensionComponent;
+import robotbuilder.extensions.Extensions;
 
 /**
  *
@@ -74,7 +76,7 @@ public class IconView extends JPanel {
             try {
                 setIcon(new ImageIcon(Utils.getResource("/icons/" + component.getName() + ".png")));
             } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
+                setIcon(new ImageIcon(Extensions.EXTENSIONS_FOLDER_PATH + component.getName() + "/" + ExtensionComponent.ICON_FILE_NAME));
             }
             setToolTipText(component.getName());
             setName(component.getName());
@@ -82,7 +84,7 @@ public class IconView extends JPanel {
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    MainFrame.getInstance().setHelp((component).getHelpFile());
+                    MainFrame.getInstance().setHelp(component);
                     JComponent comp = (JComponent) e.getSource();
                     TransferHandler th = comp.getTransferHandler();
                     th.exportAsDrag(comp, e, TransferHandler.COPY);

@@ -74,6 +74,10 @@ Defaults:
     Export: "RobotMap"
     Import: "import edu.wpi.first.wpilibj.${ClassName};"
     Declaration: "public static ${ClassName} #variable($Name);"
+  CustomComponent:
+    Export: "RobotMap"
+    Import: "import ${package}.${ClassName};"
+    Declaration: "public static ${ClassName} #variable($Name);"
   None:
     Export: ""
     Import: ""

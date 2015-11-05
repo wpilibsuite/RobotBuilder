@@ -2,7 +2,10 @@
 package robotbuilder.data.properties;
 
 import java.io.Serializable;
+
 import java.util.Arrays;
+import java.util.Objects;
+
 import robotbuilder.MainFrame;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.UniqueValidator;
@@ -79,7 +82,7 @@ public abstract class Property<T> implements Serializable {
         }
         if (component != null) {
             update();
-            if (!prevValue.equals(value)) {
+            if (!Objects.equals(prevValue, value)) {
                 component.getRobotTree().takeSnapshot();
             }
         }
