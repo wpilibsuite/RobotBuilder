@@ -1,5 +1,5 @@
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotMap", $component))
-#type($component)* RobotMap::#variable($component.fullName) = NULL;
+std::shared_ptr<#type($component)> RobotMap::#variable($component.fullName);
 #end
 #end

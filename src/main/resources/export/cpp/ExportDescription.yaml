@@ -68,7 +68,7 @@ Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWind
 Defaults:
   Component:
     Export: "RobotMap"
-    Declaration: "static ${ClassName}* #variable($Name);"
+    Declaration: "static std::shared_ptr<${ClassName}> #variable($Name);"
   None:
     Export: ""
     Import: ""
@@ -81,28 +81,28 @@ Defaults:
     PID: "#variable($Short_Name)->PIDGet()"
     ClassName: ""
   AnalogInput:
-    Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Analog});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Input_Channel_Analog}));"
     LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
     PID: "#variable($Short_Name)->GetAverageVoltage()"
   AnalogPotentiometer:
-    Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset}));"
     LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
     PID: "#variable($Short_Name)->Get()"
   DigitalInput:
-    Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Digital});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Input_Channel_Digital}));"
     LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   PWMOutput:
-    Construction: "#variable($Name) = new ${ClassName}(${Output_Channel_PWM});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_PWM}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   RelayOutput:
-    Construction: "#variable($Name) = new ${ClassName}(${Output_Channel_Relay});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_Relay}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   SolenoidOutput:
-    Construction: "#variable($Name) = new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   OI:
     Export: "OI"
-    Declaration: "${ClassName}* #variable($Name);"
+    Declaration: "std::shared_ptr<${ClassName}> #variable($Name);"
   Button:
     Extra:  "#if(\"$Command\" != \"None\")#variable($Name)->${When_to_Run.substring(0,1).toUpperCase()}${When_to_Run.substring(1)}(#command_instantiation($Command $Parameters));#end"
   Command:
@@ -122,19 +122,19 @@ Instructions:
     Defaults: "None"
     Export: "Robot"
     Import: "\\#include \"Subsystems/#class($Short_Name).h\""
-    Declaration: "static #class($Short_Name)* #variable($Short_Name);"
-    Construction: "#variable($Short_Name) = new #class($Short_Name)();"
+    Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
+    Construction: "#variable($Short_Name).reset(new #class($Short_Name)());"
   PID Subsystem:
     Defaults: "None"
     Export: "Robot"
     Import: "\\#include \"Subsystems/#class($Short_Name).h\""
-    Declaration: "static #class($Short_Name)* #variable($Short_Name);"
-    Construction: "#variable($Short_Name) = new #class($Short_Name)();"
+    Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
+    Construction: "#variable($Short_Name).reset(new #class($Short_Name)());"
 
   PID Controller:
     Defaults: "Component,None"
     ClassName: "PIDController"
-    Construction: "#variable($Name) = new ${ClassName}($P, $I, $D,/* F: $F, */ #variable($Input), #variable($Output), $Period);"
+    Construction: "#variable($Name).reset(new ${ClassName}($P, $I, $D,/* F: $F, */ #variable($Input).get(), #variable($Output).get(), $Period));"
     Extra: >
       #variable($Name)->SetContinuous(${Continuous});
       #variable($Name)->SetAbsoluteTolerance(${Tolerance});
@@ -153,7 +153,7 @@ Instructions:
   Robot Drive 2:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
-    Construction: "#variable($Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
+    Construction: "#variable($Name).reset(new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor)));"
     Extra: >
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
               #variable($Name)->SetExpiration($Safety_Expiration_Time);
@@ -169,8 +169,8 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
     Construction: >-
-      #variable($Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
-                    #variable($Right_Front_Motor), #variable($Right_Rear_Motor));
+      #variable($Name).reset(new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
+                    #variable($Right_Front_Motor), #variable($Right_Rear_Motor)));
     Extra: >
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
               #variable($Name)->SetExpiration($Safety_Expiration_Time);
@@ -202,14 +202,14 @@ Instructions:
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, Encoder::${Encoding_Type});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, Encoder::${Encoding_Type}));"
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
           #variable($Name)->SetPIDSourceType(PIDSourceType::${PID_Source});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}));"
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
           #variable($Name)->SetPIDSourceType(PIDSourceType::${PID_Source});
@@ -217,7 +217,7 @@ Instructions:
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
-    Construction: "#variable($Name) = new ${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive}));"
   Analog Potentiometer:
     Defaults: "AnalogPotentiometer,Component,None"
     ClassName: "AnalogPotentiometer"
@@ -233,22 +233,22 @@ Instructions:
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
-    Construction: "#variable($Name) = new ${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital}));"
 
   Speed Controller:
     Defaults: "PWMOutput,Component,None"
     ClassName: "SpeedController"
-    Construction: "#variable($Name) = new ${Type}(${Output_Channel_PWM});"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", (${Type}*) #variable($Name));"
+    Construction: "#variable($Name).reset(new ${Type}(${Output_Channel_PWM}));"
+    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", (${Type}&) #variable($Name));"
   CAN Jaguar:
     Defaults: "Component,None"
     ClassName: "CANJaguar"
-    Construction: "#variable($Name) = new ${ClassName}($CAN_ID);"
+    Construction: "#variable($Name).reset(new ${ClassName}($CAN_ID));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   CAN Talon:
     Defaults: "Component,None"
     ClassName: "CANTalon"
-    Construction: "#variable($Name) = new ${ClassName}($CAN_ID);"
+    Construction: "#variable($Name).reset(new ${ClassName}($CAN_ID));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   Servo:
     Defaults: "PWMOutput,Component,None"
@@ -256,7 +256,7 @@ Instructions:
   Digital Output:
     Defaults: "Component,None"
     ClassName: "DigitalOutput"
-    Construction: "#variable($Name) = new ${ClassName}(${Output_Channel_Digital});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_Digital}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   Spike:
     Defaults: "RelayOutput,Component,None"
@@ -265,7 +265,7 @@ Instructions:
   Compressor:
     Defaults: "Component,None"
     ClassName: "Compressor"
-    Construction: "#variable($Name) = new ${ClassName}(${PCM_ID});"
+    Construction: "#variable($Name).reset(new ${ClassName}(${PCM_ID}));"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "Solenoid"
@@ -280,22 +280,22 @@ Instructions:
 
       #end##
 
-      #variable($Name) = new ${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});
+      #variable($Name).reset(new ${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}));
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
 
   Joystick:
     Defaults: "OI,None"
     ClassName: "Joystick"
-    Construction: "#variable($Name) = new ${ClassName}(${Number});"
-    Prototype: "${ClassName}* get#class($Name)();"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Number}));"
+    Prototype: "std::shared_ptr<${ClassName}> get#class($Name)();"
     Function: >-
-      ${ClassName}* OI::get#class($Name)() {
+       std::shared_ptr<${ClassName}> OI::get#class($Name)() {
           return #variable($Name);
-      }
+       }
   Joystick Button:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"
-    Construction: "#variable($Name) = new ${ClassName}(#variable($Joystick), ${Button});"
+    Construction: "#variable($Name).reset(new ${ClassName}(#variable($Joystick).get(), ${Button}));"
 
   Command:
     Defaults: "Command,None"

@@ -1,4 +1,4 @@
-    LiveWindow* lw = LiveWindow::GetInstance();
+    LiveWindow *lw = LiveWindow::GetInstance();
 
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotMap", $component))
