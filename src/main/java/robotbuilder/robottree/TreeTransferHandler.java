@@ -80,6 +80,12 @@ class TreeTransferHandler extends TransferHandler {
                 System.out.println("IOException");
                 return false;
             }
+            if (dl.getChildIndex() == -1
+                && target.getChildren().contains(data)) {
+                // Cannot drag something into its own parent
+                // (This allows for reordering)
+                return false;
+            }
             Set<String> invalid = new HashSet();
             invalid.add("Robot");
             invalid.add("Subsystems");
@@ -199,15 +205,12 @@ class TreeTransferHandler extends TransferHandler {
             return false;
         }
 
-        // Dragging a node into its own parent. No change so just return
-        if (parentNode.getChildren().contains(newNode)) {
-            return false;
-        }
-
-        if (robotTree.getComponentByName(newNode.getFullName()) != null) {
+        if (!parentNode.getChildren().contains(newNode)
+            && robotTree.getComponentByName(newNode.getFullName()) != null) {
             // If a component is dragged from one folder to another (e.g. between subsystems),
             // DnD will not remove it from the tree, so we have to do it manually
             robotTree.delete(newNode);
+            robotTree.update();
         }
 
         robotTree.treeModel.insertNodeInto(newNode, parentNode, childIndex);
