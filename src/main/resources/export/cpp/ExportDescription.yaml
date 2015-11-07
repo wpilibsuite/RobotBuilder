@@ -188,9 +188,9 @@ Instructions:
 
               #variable($Name)->SetInvertedMotor(RobotDrive::kRearRightMotor, true);#end
 
-  Gyro:
+  AnalogGyro:
     Defaults: "AnalogInput,Component,None"
-    ClassName: "Gyro"
+    ClassName: "AnalogGyro"
     Extra: "#variable($Name)->SetSensitivity(${Sensitivity});"
     PID: "#variable($Short_Name)->PIDGet()"
   AnalogAccelerometer:

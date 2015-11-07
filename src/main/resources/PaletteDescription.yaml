@@ -479,7 +479,7 @@ Palette:
 
   - Sensors:
       - !Component
-        name: Gyro
+        name: AnalogGyro
         type: PIDSource
         help: An analog angular rate sensor.
         properties:

@@ -195,9 +195,9 @@ Instructions:
 
               #variable($Name).setInvertedMotor(RobotDrive.MotorType.kRearRight, true);#end
 
-  Gyro:
+  AnalogGyro:
     Defaults: "AnalogInput,Component,None"
-    ClassName: "Gyro"
+    ClassName: "AnalogGyro"
     Extra: "#variable($Name).setSensitivity(${Sensitivity});"
     PID: "#variable($Short_Name).pidGet()"
   AnalogAccelerometer:

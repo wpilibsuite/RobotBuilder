@@ -55,7 +55,7 @@ class AddItemAction extends AbstractAction {
         // Removes the "Add " in the beginning
         /*
          * Step one:   generate new name based off previous instances of this type of RobotComponent
-         * Step two:   get the PaletteComponent of this type (e.g. "Gyro")
+         * Step two:   get the PaletteComponent of this type (e.g. "AnalogGyro")
          */
         RobotComponent toAdd = new RobotComponent(tree.getDefaultComponentName(childToAdd, selectedComponent.getSubsystem()), childToAdd, tree);
         selectedComponent.addChild(toAdd);

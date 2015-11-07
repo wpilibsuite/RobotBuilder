@@ -47,7 +47,7 @@ public class TestUtils {
         rightVictor.setProperty("Type", "Victor");
         robotDrive.add(rightVictor);
         robotDrive.getProperty("Right Motor").setValueAndUpdate(rightVictor);
-        RobotComponent gyro = new RobotComponent("Gyro", "Gyro", tree);
+        RobotComponent gyro = new RobotComponent("Gyro", "AnalogGyro", tree);
         driveTrain.add(gyro);
         gyro.getProperty("Sensitivity").setValueAndUpdate(2.33);
 
