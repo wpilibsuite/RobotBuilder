@@ -49,11 +49,6 @@ import robotbuilder.utils.RelativePathAccessory;
  */
 public class PropertiesDisplay extends JPanel {
 
-    private enum Display {
-
-        DEFAULT, COMMAND_GROUP
-    }
-
     public JTable propTable;
     PropertiesTableModel propTableModel;
     @Getter
@@ -63,7 +58,6 @@ public class PropertiesDisplay extends JPanel {
     Label errorLabel;
     private int numRowsRemoved = 0;
     private JComponent currentDisplay;
-    private Display display = Display.DEFAULT;
 
     public PropertiesDisplay() {
         setLayout(new BorderLayout());
@@ -88,22 +82,16 @@ public class PropertiesDisplay extends JPanel {
         keys = currentComponent.getPropertyKeys();
         if (currentComponent.getBaseType().equals("Command Group")) {
             currentComponent.getRobotTree().getHistory().freeze(); // don't let the undo manager on the graph mess up the other one
-            if (display != Display.COMMAND_GROUP) {
-                remove(currentDisplay);
-                currentDisplay = new CommandGroupEditor();
-                add(currentDisplay, BorderLayout.CENTER);
-                ((JSplitPane) getParent()).setDividerLocation(0.65);
-                display = Display.COMMAND_GROUP;
-            }
+            remove(currentDisplay);
+            currentDisplay = new CommandGroupEditor();
+            add(currentDisplay, BorderLayout.CENTER);
+            ((JSplitPane) getParent()).setDividerLocation(0.65);
         } else {
             currentComponent.getRobotTree().getHistory().unfreeze();
-            if (display != Display.DEFAULT) {
-                remove(currentDisplay);
-                currentDisplay = new JScrollPane(propTable);
-                add(currentDisplay, BorderLayout.CENTER);
-                ((JSplitPane) getParent()).setDividerLocation(0.5);
-                display = Display.DEFAULT;
-            }
+            remove(currentDisplay);
+            currentDisplay = new JScrollPane(propTable);
+            add(currentDisplay, BorderLayout.CENTER);
+            ((JSplitPane) getParent()).setDividerLocation(0.5);
         }
         update();
     }

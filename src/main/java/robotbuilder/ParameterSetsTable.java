@@ -72,10 +72,12 @@ class ParameterSetsTable extends JTable {
 
     public void generateFrom(RobotComponent command) {
         System.out.println("Generating from command " + command.getName());
-        requiredSubsystemName = (String) command.getProperty("Requires").getValue();
-        RobotComponent requiredSubsystem = MainFrame.getInstance().getCurrentRobotTree().getComponentByName(requiredSubsystemName);
-        if (requiredSubsystem != null) {
-            constants = (List) requiredSubsystem.getProperty("Constants").getValue();
+        if (!command.getBaseType().equals("Command Group")) {
+            requiredSubsystemName = (String) command.getProperty("Requires").getValue();
+            RobotComponent requiredSubsystem = MainFrame.getInstance().getCurrentRobotTree().getComponentByName(requiredSubsystemName);
+            if (requiredSubsystem != null) {
+                constants = (List) requiredSubsystem.getProperty("Constants").getValue();
+            }
         }
         parametersProperty = (ParametersProperty) command.getProperty("Parameters");
         List<ParameterDescriptor> parameters = (List) parametersProperty.getValue();
@@ -203,6 +205,9 @@ class ParameterSetsTable extends JTable {
             return false;
         }
         if (offset == 0 && input.startsWith("$")) {
+            return true;
+        }
+        if (existing.startsWith("$")) {
             return true;
         }
         switch (type) {

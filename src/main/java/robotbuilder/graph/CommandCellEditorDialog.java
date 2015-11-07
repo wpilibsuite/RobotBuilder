@@ -106,11 +106,18 @@ public class CommandCellEditorDialog extends CenteredDialog {
         presetLabel = new javax.swing.JLabel();
         presetsBox = new javax.swing.JComboBox();
         tableScrollPane = new javax.swing.JScrollPane();
-        parameterTable = new ParameterEditorTable(
-            MainFrame.getInstance().getCurrentRobotTree()
-            .getComponentByName((String) command.getCommand().getProperty("Requires").getValue()).getName(),
-            (List) MainFrame.getInstance().getCurrentRobotTree()
-            .getComponentByName((String) command.getCommand().getProperty("Requires").getValue()).getProperty("Constants").getValue());
+        if (command.getCommand().getProperty("Requires") == null) {
+            parameterTable = new ParameterEditorTable("None", new ArrayList<>());
+        } else {
+            String requires = (String) command.getCommand().getProperty("Requires").getValue();
+            if (requires.equals("None")) {
+                parameterTable = new ParameterEditorTable(requires, new ArrayList<>());
+            } else {
+                parameterTable = new ParameterEditorTable(requires, 
+                                                         (List) MainFrame.getInstance().getCurrentRobotTree()
+                                                                .getComponentByName(requires).getProperty("Constants").getValue());
+            }
+        }
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -124,78 +131,82 @@ public class CommandCellEditorDialog extends CenteredDialog {
         orderLabel.setText("Set order:");
 
         orderBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] {CommandGroupEntry.PARALLEL, CommandGroupEntry.SEQUENTIAL}));
+        orderBox.setSelectedItem(command.getOrder());
 
         presetLabel.setText("Apply preset:");
 
         presetsBox.setModel(new javax.swing.DefaultComboBoxModel(presets.stream()
             .map(ParameterSet::getName)
             .toArray(String[]::new)));
-    presetsBox.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            presetsBoxActionPerformed(evt);
-        }
-    });
 
-    parameterTable.setModel((new DefaultTableModel(new String[]{"Name", "Type", "Value"}, 0) {
-        Class[] types = new Class[]{
-            String.class, String.class, Object.class
-        };
+        presetsBox.setSelectedIndex(-1);
 
-        @Override
-        public Class getColumnClass(int columnIndex) {
-            return types[columnIndex];
-        }
+        presetsBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                presetsBoxActionPerformed(evt);
+            }
+        });
 
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return columnIndex == 2;
-        }
-    })
-    );
-    tableScrollPane.setViewportView(parameterTable);
+        parameterTable.setModel((new DefaultTableModel(new String[]{"Name", "Type", "Value"}, 0) {
+            Class[] types = new Class[]{
+                String.class, String.class, Object.class
+            };
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-    getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(saveButton))
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(89, 89, 89)
-                            .addComponent(orderBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(orderLabel)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(presetLabel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(presetsBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addContainerGap())
-    );
-    layout.setVerticalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(orderLabel)
-                .addComponent(orderBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(presetLabel)
-                .addComponent(presetsBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(saveButton))
-    );
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
 
-    pack();
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return columnIndex == 2;
+            }
+        })
+        );
+        tableScrollPane.setViewportView(parameterTable);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(saveButton))
+                    .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(89, 89, 89)
+                                .addComponent(orderBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(orderLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(presetLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(presetsBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(orderLabel)
+                    .addComponent(orderBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(presetLabel)
+                    .addComponent(presetsBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(saveButton))
+        );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
