@@ -105,7 +105,7 @@ public class ParameterSetsEditorDialog extends JDialog {
             }
         });
 
-        addButton.setText("Add parameter set");
+        addButton.setText("Add preset");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);

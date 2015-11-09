@@ -36,7 +36,7 @@ public class ParameterEditorDialog extends CenteredDialog {
 
     public ParameterEditorDialog(@NonNull RobotComponent component, JFrame owner, boolean modal) {
         super(owner, "Edit parameters");
-        paramProp = (ParametersProperty) component.getProperty("Parameters");
+        paramProp = Utils.getParametersProperty(component);
         ParametersProperty commandParams = Utils.getParameters(component);
         paramProp.matchUpWith(commandParams);
         parameterList = (List<ValuedParameterDescriptor>) paramProp.getValue();
@@ -54,8 +54,11 @@ public class ParameterEditorDialog extends CenteredDialog {
         RobotComponent command = component.getRobotTree().getComponentByName((String) commandProp.getValue());
         RobotComponent required = null;
         if (command != null) {
-            required = component.getRobotTree().getComponentByName((String) command.getProperty("Requires").getValue());
             presetsProp = (ParameterSetProperty) command.getProperty("Parameter presets");
+            Property requiredProp = command.getProperty("Requires");
+            if (requiredProp != null) {
+                required = component.getRobotTree().getComponentByName((String) requiredProp.getValue());
+            }
         } else {
             presetsProp = null;
         }

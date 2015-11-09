@@ -7,7 +7,9 @@ import java.awt.Component;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -97,25 +99,32 @@ public class PropertiesDisplay extends JPanel {
     }
 
     /**
-     * Removes the parameters table row if the command for the current component
-     * doesn't take arguments. Also makes the parameters appear in the same
-     * order they've been declared in the command.
+     * Matches the "Parameters" property for the current component (if it's a command)
+     * to the parameters of the actual command to keep them in sync.
      */
     private void handleParameters() {
         if (currentComponent == null) {
             return;
         }
         keys = currentComponent.getPropertyKeys();
+        Optional<ParametersProperty> existingParams =
+            currentComponent.getPropertyKeys()
+                  .stream()
+                  .filter(k -> k.toLowerCase().endsWith("parameters"))
+                  .map(currentComponent::getProperty)
+                  .map(ParametersProperty.class::cast)
+                  .findFirst();
+        existingParams.ifPresent(p -> {
+            ParametersProperty commandParams = Utils.getParameters(currentComponent);
+            // Match the existing parameters to the ones in the command
+            p.matchUpWith(commandParams);
+        });
+    }
+
+    private void handleCommands() {
         numRowsRemoved = 0;
-        ParametersProperty existingParams = (ParametersProperty) currentComponent.getProperty("Parameters");
-        if (existingParams == null) {
-            return;
-        }
-        ParametersProperty commandParams = Utils.getParameters(currentComponent);
-        // Match the existing parameters to the ones in the command
-        existingParams.matchUpWith(commandParams);
         // Remove commands property from the display (for command groups)
-        if (currentComponent.getProperty("Commands") != null) {
+        if (currentComponent.getBaseType().equals("Command Group")) {
             keys = keys.stream().filter(k -> !k.equals("Commands")).collect(Collectors.toList());
             propTableModel.fireTableDataChanged();
             numRowsRemoved = 1;
@@ -132,6 +141,7 @@ public class PropertiesDisplay extends JPanel {
 
     public void update() {
         handleParameters();
+        handleCommands();
         updateUI();
     }
 
@@ -159,7 +169,7 @@ public class PropertiesDisplay extends JPanel {
             final String name = (String) super.getValueAt(row, 0);
             Object value = super.getValueAt(row, column);
             if (value != null) {
-                if ("Parameters".equals(name)) {
+                if (name.toLowerCase().endsWith("parameters")) {
                     return new TableButtonEditor(
                             currentComponent.getBaseType().contains("Command")
                                     ? new ParameterAdderDialog(currentComponent, null, true)::showAndGetParameters
@@ -229,7 +239,11 @@ public class PropertiesDisplay extends JPanel {
             }
             if (value != null) {
                 final String name = (String) super.getValueAt(row, 0);
-                if ("Parameters".equals(name) || "Constants".equals(name) || "Parameter presets".equals(name)) {
+                if ("Parameters".equals(name) ||
+                    "Default command parameters".equals(name) ||
+                    "Autonomous command parameters".equals(name) ||
+                    "Constants".equals(name) ||
+                    "Parameter presets".equals(name)) {
                     if (currentComponent.getBaseType().equals("Setpoint Command")) {
                         return super.getCellRenderer(row, column);
                     }

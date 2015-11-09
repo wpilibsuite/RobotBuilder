@@ -61,7 +61,7 @@ public class ParameterSetProperty extends ListProperty<ParameterSet> {
     @Override
     public boolean isEditable() {
         return super.isEditable()
-                && !((ParametersProperty) component.getProperty("Parameters")).getValue().isEmpty();
+                && !Utils.getParametersProperty(component).getValue().isEmpty();
     }
 
 }

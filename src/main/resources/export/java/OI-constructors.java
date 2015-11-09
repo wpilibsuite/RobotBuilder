@@ -15,7 +15,7 @@ ${Collections.reverse($components)}
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
 #if( $component.getProperty("Parameter presets").getValue().size() == 0 )
-#if( $component.getProperty("Parameters").getValue().size() == 0)
+#if( $component.getProperty("Default command parameters").getValue().size() == 0 )
 ## "Use the default constructor only if one's going to be generated"
         SmartDashboard.putData("$component.getName()", new #class($component.getName())());
 #end

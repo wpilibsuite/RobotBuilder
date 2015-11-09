@@ -220,6 +220,18 @@ public class Utils {
     }
 
     /**
+     * Gets the parameters property of the given component.
+     */
+    public static ParametersProperty getParametersProperty(RobotComponent component) {
+        return component.getPropertyKeys().stream()
+                                          .filter(k -> k.toLowerCase().endsWith("parameters"))
+                                          .map(component::getProperty)
+                                          .map(ParametersProperty.class::cast)
+                                          .findFirst()
+                                          .orElse(null);
+    }
+
+    /**
      * A python-style substring function that interprets a negative value for
      * {@code end} as the distance from the end of the string (e.g.
      * {@code substring("Hello, world!", 0, -1)} results in
