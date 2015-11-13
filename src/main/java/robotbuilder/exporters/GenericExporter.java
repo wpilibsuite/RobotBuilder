@@ -18,7 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -325,25 +325,23 @@ public class GenericExporter {
      * @return The resulting imports.
      */
     public String getImports(RobotComponent robot, final String category) { // TODO: make macro
-        final Set<String> imports = new TreeSet<>();
+        final Set<String> imports = new HashSet<>();
         robot.walk(component -> {
             Map<String, String> instructions = componentInstructions.get(component.getBase().getName());
             if (category.equals(instructions.get("Export"))) {
                 String instruction = instructions.get("Import");
-                System.out.println("Instruction: " + instruction);
-                String imp = eval(instruction, getContext(component));
-                System.out.println("Import: " + imp);
                 imports.add(eval(instruction, getContext(component)));
             }
         });
 
-        String out = "";
-        out = imports.stream()
-                .filter(imp -> (!"".equals(imp)))
-                .map(imp -> imp + "\r\n")
-                .reduce(out, String::concat);
-        System.out.println("Imports for " + robot + ", category=" + category + ":\n" + out);
-        return out;
+        return imports.stream()
+                      .map(imp -> imp.split("\r?\n")) // Split import instructions into distinct lines
+                      .flatMap(Arrays::stream)        // Put them into a stream
+                      .distinct()                     // Only have one of each import
+                      .sorted()                       // Sort alphabetically
+                      .filter(imp -> !imp.isEmpty())  // Remove empty imports
+                      .map(imp -> imp + "\r\n")       // Make sure it's good for Windows and Unix systems
+                      .reduce("", String::concat);    // Finally, concat them all into a single String
     }
 
     /**

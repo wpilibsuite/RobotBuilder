@@ -39,6 +39,7 @@
   source: ${exporter-path}RobotMap.java
   update: Modify
   modifications:
+    imports: ${exporter-path}RobotMap-imports.java
     declarations: ${exporter-path}RobotMap-declarations.java
     constructors: ${exporter-path}RobotMap-constructors.java
 
