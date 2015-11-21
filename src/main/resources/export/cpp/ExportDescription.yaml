@@ -238,6 +238,11 @@ Instructions:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
     Construction: "#variable($Name).reset(new ${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital}));"
+  PowerDistributionPanel:
+    Defaults: "Component,None"
+    ClassName: "PowerDistributionPanel"
+    Construction: "#variable($Name).reset(new ${ClassName}($CAN_ID));"
+    LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
 
   Speed Controller:
     Defaults: "PWMOutput,Component,None"
