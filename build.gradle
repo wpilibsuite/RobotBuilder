@@ -67,7 +67,7 @@ publishing {
     }
     repositories {
         maven {
-            url "${System.getenv('HOME')}/releases/maven"
+            url "${System.getProperty('user.home')}/releases/maven/${project.hasProperty('repo') ? repo : 'development'}"
         }
     }
 }
