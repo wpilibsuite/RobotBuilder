@@ -5,5 +5,5 @@
 #set($last = $len + 1)
 
 #if ($command != "None")
-        SetDefaultCommand(new #class($command)(#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $params.get($i) ), #end#end#param_set( $params.get($last) )));
+        SetDefaultCommand(#command_instantiation( $command $params ));
 #end
