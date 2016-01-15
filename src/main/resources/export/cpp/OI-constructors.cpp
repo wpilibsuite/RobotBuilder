@@ -14,8 +14,7 @@
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
-#if( $component.getProperty("Parameter presets").getValue().isEmpty() &&
-     $component.getProperty("Default command parameters").getValue().isEmpty() )
+#if( $component.getProperty("Parameter presets").getValue().isEmpty())
     SmartDashboard::PutData("$component.getName()", new #class($component.getName())());
 #else
 #foreach( $set in $component.getProperty("Parameter presets").getValue() )
