@@ -166,6 +166,7 @@
     pid: ${exporter-path}PIDSubsystem-pid.cpp
     source: ${exporter-path}PIDSubsystem-source.cpp
     output: ${exporter-path}PIDSubsystem-output.cpp
+    constants: ${exporter-path}Subsystem-constants.cpp
   variables:
     subsystem-name: ${subsystem.name}
 - !File
@@ -174,6 +175,7 @@
   update: Modify
   modifications:
     declarations: ${exporter-path}Subsystem-declarations.h
+    constants: ${exporter-path}Subsystem-constants.h
   variables:
     subsystem-name: ${subsystem.name}
 #else
@@ -184,6 +186,7 @@
   modifications:
     declarations: ${exporter-path}Subsystem-declarations.cpp
     default_command: ${exporter-path}Subsystem-default_command.cpp
+    constants: ${exporter-path}Subsystem-constants.cpp
   variables:
     subsystem-name: ${subsystem.name}
 - !File
@@ -192,6 +195,7 @@
   update: Modify
   modifications:
     declarations: ${exporter-path}Subsystem-declarations.h
+    constants: ${exporter-path}Subsystem-constants.h
   variables:
     subsystem-name: ${subsystem.name}
 #end

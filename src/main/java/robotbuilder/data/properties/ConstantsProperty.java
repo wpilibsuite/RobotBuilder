@@ -1,11 +1,14 @@
 
 package robotbuilder.data.properties;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+
 import robotbuilder.data.RobotComponent;
 
 /**
@@ -33,6 +36,31 @@ public class ConstantsProperty extends ListProperty<ValuedParameterDescriptor> {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean isValid() {
+        if (value.isEmpty()) {
+            return true;
+        }
+        List<String> names = new ArrayList<>();
+        for (ParameterDescriptor param : value) {
+            // check if the parameter itself is valid
+            if (!param.isValid()) {
+                return false;
+            }
+            // check for multiple ocurrences of a name
+            if (names.contains(param.getName())) {
+                return false;
+            }
+            names.add(param.getName());
+        }
+        return true;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return "Type mismatch, empty value, or constants with multiple names";
     }
 
     @Override
