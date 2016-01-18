@@ -248,7 +248,7 @@ Instructions:
     Defaults: "PWMOutput,Component,None"
     ClassName: "SpeedController"
     Construction: "#variable($Name).reset(new ${Type}(${Output_Channel_PWM}));"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", (${Type}&) #variable($Name));"
+    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", std::static_pointer_cast<${Type}>(#variable($Name)));"
   CAN Jaguar:
     Defaults: "Component,None"
     ClassName: "CANJaguar"
