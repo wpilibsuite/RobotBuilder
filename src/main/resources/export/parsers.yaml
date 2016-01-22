@@ -91,8 +91,8 @@ parsers:
   # screw this up
   - !Parser
     fileType: h
-    regex: class\w+:public(\w+)\{
-    groupNumber: 1
+    regex: class\w+:(public)?(\w+)\{
+    groupNumber: 2
     textFilters:
       # Remove block comments > line comments > whitespace
       - *id001
@@ -105,7 +105,7 @@ parsers:
   # the constructor of its superclass
   - !Parser
     fileType: cpp
-    regex: (\w+)::\1\(\w*\):(\w+)\(\w*\)\{
+    regex: (\w+)::\1\(\w*\):(\w+)(.*?)\{
     groupNumber: 2
     textFilters:
       # Remove block comments > line comments > whitespace
