@@ -34,8 +34,7 @@ import static robotbuilder.extensions.ExtensionComponent.VALIDATORS_FILE_NAME;
 public class Extensions {
 
     /**
-     * The path to the extensions folder. This is in the same directory as the
-     * jar. By default, it should be in {@code ${wpilib.dir}/tools}.
+     * The path to the extensions folder. By default, it should be in {@code ${user.home}/Robotbuilder/extensions/}.
      */
     public final String EXTENSIONS_FOLDER_PATH = System.getProperty("user.home") + "/Robotbuilder/extensions/";
     private File extensionsFolder;
