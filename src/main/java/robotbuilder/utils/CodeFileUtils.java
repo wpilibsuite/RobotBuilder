@@ -118,7 +118,6 @@ public class CodeFileUtils {
             textParserMap.put(parser.getFileType(), parser);
             fileParserMap.put(parser.getFileType(), file -> parser.apply(Utils.getFileText(file)));
         });
-        fileParserMap.put("cpp", CodeFileUtils::getSuperClassCpp);
     }
 
     /**
