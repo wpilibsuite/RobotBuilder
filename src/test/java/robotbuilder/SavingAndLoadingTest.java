@@ -1,12 +1,16 @@
 
 package robotbuilder;
 
-import robotbuilder.robottree.RobotTree;
-import java.io.File;
-import java.io.IOException;
-import static org.junit.Assert.*;
 import org.junit.*;
 import robotbuilder.data.RobotComponent;
+import robotbuilder.extensions.Extensions;
+import robotbuilder.robottree.RobotTree;
+
+import java.io.File;
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -19,6 +23,7 @@ public class SavingAndLoadingTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Extensions.init();
         MainFrame.getInstance();
     }
 

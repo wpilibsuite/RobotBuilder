@@ -2,10 +2,13 @@
 package robotbuilder.data;
 
 import org.junit.*;
-import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
-import robotbuilder.robottree.RobotTree;
 import robotbuilder.TestUtils;
+import robotbuilder.extensions.Extensions;
+import robotbuilder.robottree.RobotTree;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -18,6 +21,7 @@ public class UniqueValidatorTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Extensions.init();
         MainFrame.getInstance();
     }
 

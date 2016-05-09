@@ -1,13 +1,18 @@
 
 package robotbuilder.exporters;
 
-import robotbuilder.robottree.RobotTree;
-import robotbuilder.data.RobotWalker;
-import robotbuilder.data.RobotComponent;
-import java.io.*;
 import org.junit.*;
-import static org.junit.Assert.*;
 import robotbuilder.TestUtils;
+import robotbuilder.data.RobotComponent;
+import robotbuilder.data.RobotWalker;
+import robotbuilder.robottree.RobotTree;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import static org.junit.Assert.*;
 
 /**
  *
@@ -39,6 +44,7 @@ public class JavaExportTest {
     }
 
     @Test
+    @Ignore("This is dependent upon hardware and the system")
     public void testJavaExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
         tree.getRoot().setName("RobotBuilderTestProject");
