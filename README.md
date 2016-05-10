@@ -1,5 +1,6 @@
 # Robot Builder Project
 [![Build Status](https://travis-ci.org/wpilibsuite/RobotBuilder.svg?branch=master)](https://travis-ci.org/wpilibsuite/RobotBuilder)
+[![codecov.io](http://codecov.io/github/wpilibsuite/RobotBuilder/coverage.svg?branch=master)](http://codecov.io/github/Wwpilibsuite/RobotBuilder?branch=master)
 
 Welcome to the WPILib project. This repository contains the Robot Builder project. This program can be used to automatically generate Java and C++ FRC programs.
 
