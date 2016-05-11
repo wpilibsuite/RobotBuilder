@@ -1,12 +1,15 @@
 
 package robotbuilder.data.properties;
 
-import javax.swing.JComboBox;
 import org.junit.*;
-import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
-import robotbuilder.robottree.RobotTree;
 import robotbuilder.data.RobotComponent;
+import robotbuilder.robottree.RobotTree;
+
+import javax.swing.*;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
