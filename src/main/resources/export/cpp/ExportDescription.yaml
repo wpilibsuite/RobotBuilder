@@ -309,3 +309,5 @@ Instructions:
     Defaults: "Command,None"
   Timed Command:
     Defaults: "Command,None"
+  Conditional Command:
+    Defaults: "Command,None"

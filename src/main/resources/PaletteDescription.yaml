@@ -847,3 +847,22 @@ Palette:
           - !ParameterSet
             name: Parameter presets
             default: []
+      - !Component
+        name: Conditional Command
+        type: Command
+        help: A Command that chooses between two Commands
+        properties:
+          - !TypeSelectionProperty
+            name: On True Command
+            type: Command
+            default: None
+          - !TypeSelectionProperty
+            name: On False Command
+            type: Command
+            default: None
+          - !Parameters
+            name: Parameters
+            default: []
+          - !BooleanProperty
+            name: Button on SmartDashboard
+            default: true

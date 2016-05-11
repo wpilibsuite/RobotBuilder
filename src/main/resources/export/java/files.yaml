@@ -110,6 +110,15 @@
     requires: ${exporter-path}Command-requires.java
   variables:
     command-name: ${command.name}
+#elseif ($command.base.name == "Conditional Command")
+- !File
+  export: $package-path/commands/#class($command.name).java
+  source: ${exporter-path}ConditionalCommand.java
+  update: Modify
+  modifications:
+    parameters: ${exporter-path}ConditionalCommand-constructor.java
+  variables:
+    command-name: ${command.name}
 #else
 - !File
   export: $package-path/commands/#class($command.name).java

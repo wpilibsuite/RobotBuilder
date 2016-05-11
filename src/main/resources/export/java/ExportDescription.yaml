@@ -318,3 +318,5 @@ Instructions:
     Defaults: "Command,None"
   Instant Command:
     Defaults: "Command,None"
+  Conditional Command:
+    Defaults: "Command,None"
