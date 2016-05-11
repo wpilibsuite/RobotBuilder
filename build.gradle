@@ -1,13 +1,22 @@
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+    }
+}
+
 // seems to be not including the dependencies in the jar. I had thought that the compile
 // dependencies would become runtime dependcies and be built in.
 // and one of the unit tests fails
 
-apply plugin: 'java'
-apply plugin: "jacoco"
-apply plugin: 'maven'
-apply plugin: 'application' // lets us run the project from IDE
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'maven-publish'
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'maven'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+    id 'maven-publish'
+}
 
 jacoco {
     toolVersion = "0.7.5.201505241946"
@@ -35,12 +44,6 @@ repositories {
     }
 }
 
-buildscript {
-    repositories { jcenter() }
-    dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.1'
-    }
-}
 
 dependencies {
     compile 'org.apache.velocity:velocity:1.7'
@@ -48,6 +51,13 @@ dependencies {
     compile 'com.github.jgraph:jgraphx:v3.3.1.1'
     compile 'org.projectlombok:lombok:1.16.4'
     testCompile 'junit:junit:4.11'
+}
+
+test {
+    testLogging {
+        events "failed"
+        exceptionFormat "full"
+    }
 }
 
 
@@ -84,4 +94,8 @@ publishing {
             url "${System.getProperty('user.home')}/releases/maven/${project.hasProperty('repo') ? repo : 'development'}"
         }
     }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
 }

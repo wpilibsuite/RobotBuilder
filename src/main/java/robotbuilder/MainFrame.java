@@ -1,30 +1,22 @@
 
 package robotbuilder;
 
-import java.awt.BorderLayout;
-import java.awt.Point;
+import robotbuilder.data.PaletteComponent;
+import robotbuilder.palette.Palette;
+import robotbuilder.robottree.RobotTree;
+
+import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import java.io.File;
 import java.io.IOException;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
-
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JToolBar;
-import javax.swing.event.HyperlinkEvent;
-
-import robotbuilder.palette.Palette;
-import robotbuilder.robottree.RobotTree;
-import robotbuilder.data.PaletteComponent;
 
 /**
  *
@@ -34,7 +26,7 @@ import robotbuilder.data.PaletteComponent;
 public class MainFrame extends JFrame {
 
     Palette palette;
-    RobotTree robotTree;
+    private final RobotTree robotTree;
     PropertiesDisplay properties;
     JEditorPane help;
     JToolBar toolBar;
