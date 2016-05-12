@@ -1,5 +1,10 @@
 buildscript {
-    repositories { jcenter() }
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
     dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
     }
@@ -10,6 +15,7 @@ buildscript {
 // and one of the unit tests fails
 
 plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.6'
     id 'java'
     id 'jacoco'
     id 'maven'
@@ -17,6 +23,11 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '1.2.3'
     id 'maven-publish'
 }
+
+lombok {
+    version = "1.16.8"
+}
+
 
 jacoco {
     toolVersion = "0.7.5.201505241946"
@@ -49,7 +60,7 @@ dependencies {
     compile 'org.apache.velocity:velocity:1.7'
     compile 'org.yaml:snakeyaml:1.10'
     compile 'com.github.jgraph:jgraphx:v3.3.1.1'
-    compile 'org.projectlombok:lombok:1.16.4'
+    compile "org.projectlombok:lombok:${lombok.version}"
     testCompile 'junit:junit:4.11'
 }
 
