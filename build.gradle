@@ -23,6 +23,7 @@ plugins {
     id 'application'
     id 'com.github.johnrengelman.shadow' version '1.2.3'
     id 'maven-publish'
+    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '1.1'
 }
 apply plugin: 'net.ltgt.errorprone'
 
@@ -77,7 +78,6 @@ test {
     }
 }
 
-
 jar {
 
     from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }) {
@@ -88,7 +88,7 @@ jar {
 
     manifest {
         attributes('Implementation-Title': 'RobotBuilder',
-                    'Implementation-Version': '2.0.0',
+                    'Implementation-Version': WPILibVersion.version,
                     'Built-By': System.getProperty('user.name'),
                     'Built-Date': new Date(),
                     'Built-JDK': System.getProperty('java.version'))
@@ -103,12 +103,7 @@ publishing {
             }
             groupId 'edu.wpi.first.wpilib'
             artifactId 'RobotBuilder'
-            version '2.0.0-SNAPSHOT'
-        }
-    }
-    repositories {
-        maven {
-            url "${System.getProperty('user.home')}/releases/maven/${project.hasProperty('repo') ? repo : 'development'}"
+            version WPILibVersion.version
         }
     }
 }
