@@ -264,11 +264,6 @@ Instructions:
     ClassName: "CANJaguar"
     Construction: "#variable($Name) = new ${ClassName}($CAN_ID);"
     LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
-  CAN Talon:
-    Defaults: "Component,None"
-    ClassName: "CANTalon"
-    Construction: "#variable($Name) = new ${ClassName}($CAN_ID);"
-    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"

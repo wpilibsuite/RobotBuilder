@@ -625,16 +625,6 @@ Palette:
             choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
             default: "2"
       - !Component
-        name: CAN Talon
-        type: PIDOutput
-        help: A speed controller that allows you to set the speed of a motor using CAN.
-        properties:
-          - !ChoicesProperty
-            name: CAN ID
-            validators: [CANID]
-            choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
-            default: "2"
-      - !Component
         name: Servo
         type: Actuator
         help: A controllable motor; typically has a limited rotation.
