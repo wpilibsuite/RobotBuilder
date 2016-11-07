@@ -259,11 +259,6 @@ Instructions:
     Import: "import edu.wpi.first.wpilibj.${Type};\nimport edu.wpi.first.wpilibj.${ClassName};"
     Construction: "#variable($Name) = new ${Type}(${Output_Channel_PWM});"
     LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", (${Type}) #variable($Name));"
-  CAN Jaguar:
-    Defaults: "Component,None"
-    ClassName: "CANJaguar"
-    Construction: "#variable($Name) = new ${ClassName}($CAN_ID);"
-    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
