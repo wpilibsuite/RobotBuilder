@@ -53,12 +53,14 @@
   modifications:
     allocation: ${exporter-path}RobotMap-allocation.cpp
     constructors: ${exporter-path}RobotMap-constructors.cpp
+    includes: ${exporter-path}RobotMap-includes.cpp
 - !File
   export: $project/src/RobotMap.h
   source: ${exporter-path}RobotMap.h
   update: Modify
   modifications:
     declarations: ${exporter-path}RobotMap-declarations.h
+    includes: ${exporter-path}RobotMap-includes.h
 
 - !File
   export: $project/src/OI.cpp
