@@ -132,8 +132,8 @@ public class Extensions {
                 // Make sure these are valid yaml files
                 return Utils.doesNotError(() -> YamlUtils.load(Utils.getFileText(file)));
             default:
-                System.out.println("Unknown file in extensions directory: " + file);
-                return false;
+                System.out.println("Unexpected file in extensions directory: " + file + ", ignoring.");
+                return true;
         }
     }
 
