@@ -77,7 +77,7 @@ parsers:
   # screw this up
   - !Parser
     fileType: java
-    regex: class\w+extends(\w+)\{
+    regex: class\w+extends(\w+?)(implements\w+)?\{
     groupNumber: 1
     textFilters:
       # Remove block comments > line comments > whitespace
