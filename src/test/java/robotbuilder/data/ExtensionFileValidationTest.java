@@ -1,8 +1,8 @@
 
 package robotbuilder.data;
 
-import org.junit.*;
-import robotbuilder.MainFrame;
+import org.junit.Before;
+import org.junit.Test;
 import robotbuilder.extensions.Extensions;
 
 import java.io.File;
@@ -12,22 +12,10 @@ import java.lang.reflect.Method;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author phurleyk
+ * @author phurley
  */
 public class ExtensionFileValidationTest {
     Method isValidFile = null;
-
-    public ExtensionFileValidationTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-        MainFrame.getInstance();
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
 
     @Before
     public void setUp() {
@@ -38,10 +26,6 @@ public class ExtensionFileValidationTest {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test
