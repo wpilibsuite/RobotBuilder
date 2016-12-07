@@ -29,29 +29,17 @@ public class ExtensionFileValidationTest {
     }
 
     @Test
-    public void testExpectedFiles() {
-        try {
-            Object result = null;
-            result = isValidFile.invoke(Extensions.class, new File("help.html"));
-            assertTrue((boolean) result);
-        } catch (IllegalAccessException e1) {
-            e1.printStackTrace();
-        } catch (InvocationTargetException e1) {
-            e1.printStackTrace();
-        }
+    public void testExpectedFiles() throws InvocationTargetException, IllegalAccessException {
+        Object result = null;
+        result = isValidFile.invoke(Extensions.class, new File("help.html"));
+        assertTrue((boolean) result);
     }
 
     @Test
-    public void testExtraFile() {
-        try {
-            // This test failed prior to fix for issue #16
-            Object result = null;
-            result = isValidFile.invoke(Extensions.class, new File("extra-help.html"));
-            assertTrue((boolean) result);
-        } catch (IllegalAccessException e1) {
-            e1.printStackTrace();
-        } catch (InvocationTargetException e1) {
-            e1.printStackTrace();
-        }
+    public void testExtraFile() throws InvocationTargetException, IllegalAccessException {
+        // This test failed prior to fix for issue #16
+        Object result = null;
+        result = isValidFile.invoke(Extensions.class, new File("extra-help.html"));
+        assertTrue((boolean) result);
     }
 }
