@@ -134,6 +134,7 @@ Instructions:
     Import: "import ${package}.subsystems.*;"
     Declaration: "public static #class($Short_Name) #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new #class($Short_Name)();"
+    ClassName: "Subsystem"
   PID Subsystem:
     Defaults: "None"
     Export: "Robot"

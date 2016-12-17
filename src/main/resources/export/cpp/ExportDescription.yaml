@@ -128,6 +128,7 @@ Instructions:
     Import: "\\#include \"Subsystems/#class($Short_Name).h\""
     Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
     Construction: "#variable($Short_Name).reset(new #class($Short_Name)());"
+    ClassName: "Subsystem"
   PID Subsystem:
     Defaults: "None"
     Export: "Robot"
