@@ -313,3 +313,5 @@ Instructions:
     Defaults: "Command,None"
   Setpoint Command:
     Defaults: "Command,None"
+  Conditional Command:
+    Defaults: "Command,None"
