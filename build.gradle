@@ -7,7 +7,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '1.2.3'
     id 'maven-publish'
     id 'net.ltgt.errorprone' version '0.0.8'
-    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '1.2'
+    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '1.6'
 }
 
 configurations.errorprone {
