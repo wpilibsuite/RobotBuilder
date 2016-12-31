@@ -829,3 +829,21 @@ Palette:
           - !ParameterSet
             name: Parameter presets
             default: []
+      - !Component
+        name: Instant Command
+        type: Command
+        help: A command specifies an action that the robot can perform and finishes instantly.
+        properties:
+          - !TypeSelectionProperty
+            name: Requires
+            type: Subsystem
+            default: None
+          - !BooleanProperty
+            name: Button on SmartDashboard
+            default: true
+          - !Parameters
+            name: Parameters
+            default: []
+          - !ParameterSet
+            name: Parameter presets
+            default: []
