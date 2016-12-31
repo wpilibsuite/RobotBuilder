@@ -159,7 +159,7 @@ public class PropertiesDisplay extends JPanel {
         public boolean isCellEditable(int row, int column) {
             final String name = (String) super.getValueAt(row, 0);
             if ("Parameters".equals(name)) {
-                return !currentComponent.getBaseType().equals("Setpoint Command") && column == 1;
+                return !(currentComponent.getBaseType().equals("Setpoint Command") || currentComponent.getBaseType().equals("Timed Command")) && column == 1;
             }
             return getModel().isCellEditable(row, column);
         }
@@ -244,7 +244,7 @@ public class PropertiesDisplay extends JPanel {
                     "Autonomous command parameters".equals(name) ||
                     "Constants".equals(name) ||
                     "Parameter presets".equals(name)) {
-                    if (currentComponent.getBaseType().equals("Setpoint Command")) {
+                    if (currentComponent.getBaseType().equals("Setpoint Command") || currentComponent.getBaseType().equals("Timed Command")) {
                         return super.getCellRenderer(row, column);
                     }
                     return new TableButton();

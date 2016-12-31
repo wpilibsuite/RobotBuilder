@@ -90,6 +90,16 @@
     isFinished: ${exporter-path}SetpointCommand-isFinished.java
   variables:
     command-name: ${command.name}
+#elseif($command.base.name == "Timed Command")
+- !File
+  export: $package-path/commands/#class($command.name).java
+  source: ${exporter-path}TimedCommand.java
+  update: Modify
+  modifications:
+    parameters: ${exporter-path}TimedCommand-constructor.java
+    requires: ${exporter-path}Command-requires.java
+  variables:
+    command-name: ${command.name}
 #else
 - !File
   export: $package-path/commands/#class($command.name).java

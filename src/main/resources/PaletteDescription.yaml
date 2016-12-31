@@ -810,3 +810,22 @@ Palette:
           - !ParameterSet
             name: Parameter presets
             default: []
+      - !Component
+        name: Timed Command
+        type: Command
+        help: A command specifies an action that the robot can perform.
+        properties:
+          - !TypeSelectionProperty
+            name: Requires
+            type: Subsystem
+            default: None
+          - !BooleanProperty
+            name: Button on SmartDashboard
+            default: true
+          - !Parameters
+            name: Parameters
+            value:
+            - !!robotbuilder.data.properties.ParameterDescriptor {name: timeout, type: double}
+          - !ParameterSet
+            name: Parameter presets
+            default: []
