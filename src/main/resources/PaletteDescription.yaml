@@ -813,7 +813,7 @@ Palette:
       - !Component
         name: Timed Command
         type: Command
-        help: A command specifies an action that the robot can perform.
+        help: A command specifies an action that the robot can perform and finishes after a timeout.
         properties:
           - !TypeSelectionProperty
             name: Requires
