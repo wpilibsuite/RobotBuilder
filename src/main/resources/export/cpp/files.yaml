@@ -131,6 +131,24 @@
   update: Modify
   variables:
     command-name: ${command.name}
+#elseif($command.base.name == "Timed Command")
+- !File
+  export: $project/src/Commands/#class($command.name).cpp
+  source: ${exporter-path}TimedCommand.cpp
+  update: Modify
+  modifications:
+    requires: ${exporter-path}Command-requires.cpp
+    constructor: ${exporter-path}TimedCommand-constructor.cpp
+  variables:
+    command-name: ${command.name}
+- !File
+  export: $project/src/Commands/#class($command.name).h
+  source: ${exporter-path}TimedCommand.h
+  modifications:
+    constructor: ${exporter-path}Timed-constructor-header.h
+  update: Modify
+  variables:
+    command-name: ${command.name}
 #elseif($command.base.name == "Instant Command")
 - !File
   export: $project/src/Commands/#class($command.name).cpp
@@ -138,7 +156,7 @@
   update: Modify
   modifications:
     requires: ${exporter-path}Command-requires.cpp
-    constructor: ${exporter-path}Command-constructor.cpp
+    constructor: ${exporter-path}InstantCommand-constructor.cpp
   variables:
     command-name: ${command.name}
 - !File
