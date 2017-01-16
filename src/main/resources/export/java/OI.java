@@ -3,6 +3,7 @@
 package ${package};
 
 import ${package}.commands.*;
+import ${package}.commands.commandgroups.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 ${helper.getImports($robot, "OI")}
 

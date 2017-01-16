@@ -324,7 +324,9 @@ Instructions:
       #variable($Short_Name).setInverted(${Inverted});
   Servo:
     Defaults: "PWMOutput,Component,None"
-    ClassName: "Servo"
+    ClassName: "BBServo"
+    Import: "import org.usfirst.frc330.wpilibj.${ClassName};"
+    Construction: "#variable($Name) = new ${ClassName}(${Output_Channel_PWM}, ${Invert});"
   Digital Output:
     Defaults: "Component,None"
     ClassName: "DigitalOutput"
@@ -344,13 +346,15 @@ Instructions:
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
-    ClassName: "Solenoid"
+    ClassName: "BBSolenoid"
+    Import: "import org.usfirst.frc330.wpilibj.${ClassName};"
   Relay Solenoid:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
   Double Solenoid:
     Defaults: "Solenoid,Component,None"
-    ClassName: "DoubleSolenoid"
+    ClassName: "BBDoubleSolenoid"
+    Import: "import org.usfirst.frc330.wpilibj.${ClassName};"
     Construction: >-
       #if(${Forward_PCM_Solenoid} != ${Reverse_PCM_Solenoid})Warning, the two modules in robot builder are different!
 
