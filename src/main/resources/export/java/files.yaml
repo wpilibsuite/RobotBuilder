@@ -57,7 +57,7 @@
 #foreach ($command in $commands)
 #if ($command.base.name == "Command Group")
 - !File
-  export: $package-path/commands/#class($command.name).java
+  export: $package-path/commands/commandgroups/#class($command.name).java
   source: ${exporter-path}CommandGroup.java
   update: Modify
   modifications:
