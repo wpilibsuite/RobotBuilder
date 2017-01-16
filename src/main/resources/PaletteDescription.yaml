@@ -205,10 +205,10 @@ Palette:
             name: Autonomous command parameters
           - !IntegerProperty
             name: Team Number
-            default: 0
+            default: 330
           - !BooleanProperty
             name: Use Default Java Package
-            default: true
+            default: false
           - !StringProperty
             name: Java Package
             default: "org.usfirst.frc0000"
@@ -723,90 +723,6 @@ Palette:
           - !Parameters
             name: Parameters
             default: []
-          - !ParameterSet
-            name: Parameter presets
-            default: []
-      - !Component
-        name: PID Command
-        type: Command
-        help: A command that uses a PID controller to perform its desired action.
-        properties:
-          - !TypeSelectionProperty
-            name: Requires
-            type: Subsystem
-            default: "None"
-          - !BooleanProperty
-            name: Button on SmartDashboard
-            default: true
-          - !Parameters
-            name: Parameters
-            default: {}
-          - !ParameterSet
-            name: Parameter presets
-            default: []
-          - !TypeSelectionProperty
-            name: Input
-            type: PIDSource
-            validators: [TypeDropdownSelected]
-            default: "None"
-          - !TypeSelectionProperty
-            name: Output
-            type: PIDOutput
-            validators: [TypeDropdownSelected]
-            default: "None"
-          - !DoubleProperty
-            name: P
-            default: 1
-          - !DoubleProperty
-            name: I
-            default: 0
-          - !DoubleProperty
-            name: D
-            default: 0
-          - !DoubleProperty
-            name: Tolerance
-            default: 0.2
-          - !DoubleProperty
-            name: Period
-            default: .02
-          - !BooleanProperty
-            name: Continuous
-            default: false
-          - !BooleanProperty
-            name: Limit Input
-            default: false
-          - !DoubleProperty
-            name: Minimum Input
-            default: 0
-          - !DoubleProperty
-            name: Maximum Input
-            default: 5
-          - !BooleanProperty
-            name: Limit Output
-            default: false
-          - !DoubleProperty
-            name: Minimum Output
-            default: -1
-          - !DoubleProperty
-            name: Maximum Output
-            default: 1
-      - !Component
-        name: Setpoint Command
-        type: Command
-        help: A command that moves a PID subsystem to a predetermined setpoint.
-        properties:
-          - !ComponentSelectionProperty
-            name: Requires
-            validators: [TypeDropdownSelected]
-            componentName: PID Subsystem
-            default: None
-          - !BooleanProperty
-            name: Button on SmartDashboard
-            default: true
-          - !Parameters
-            name: Parameters
-            value:
-            - !!robotbuilder.data.properties.ParameterDescriptor {name: setpoint, type: double}
           - !ParameterSet
             name: Parameter presets
             default: []
