@@ -168,6 +168,24 @@
   update: Modify
   variables:
     command-name: ${command.name}
+#elseif ($command.base.name == "Conditional Command")
+- !File
+  export: $project/src/Commands/#class($command.name).cpp
+  source: ${exporter-path}ConditionalCommand.cpp
+  update: Modify
+  modifications:
+    constructor: ${exporter-path}ConditionalCommand-constructor.cpp
+  variables:
+    command-name: ${command.name}
+- !File
+  export: $project/src/Commands/#class($command.name).h
+  source: ${exporter-path}ConditionalCommand.h
+  modifications:
+    includes: ${exporter-path}ConditionalCommand-includes.h
+    constructor: ${exporter-path}Command-constructor-header.h
+  update: Modify  
+  variables:
+    command-name: ${command.name}
 #else
 - !File
   export: $project/src/Commands/#class($command.name).cpp

@@ -43,7 +43,6 @@ public class ExportFile {
         String newType = CodeFileUtils.getSavedSuperclass(exporter.evalResource(source, fileContext));
         System.out.println("Saved type: " + oldType);
         System.out.println("  New type: " + newType);
-
         // Export
         if (!export.exists() || update.equals("Overwrite") || !newType.equals(oldType)) {
             System.out.println("Overwriting " + export);
