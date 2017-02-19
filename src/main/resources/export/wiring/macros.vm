@@ -79,9 +79,14 @@
     #table_with_components($title, $label, "Channel (Relay)")
 #end ##macro
 
-## Generate the Analog table for a module
+## Generate the Analog Input table for a module
 #macro( Analog $title $label )
     #table_with_components($title, $label, "Channel (Analog)")
+#end ##macro
+
+## Generate the Analog Output table for a module
+#macro( AnalogOutput $title $label )
+    #table_with_components($title, $label, "Channel (AnalogOutput)")
 #end ##macro
 
 ## Generate the Solenoid table for a PCM
