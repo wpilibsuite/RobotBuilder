@@ -328,10 +328,12 @@ public class GenericExporter {
             for (String property : component.getPropertyKeys()) {
                 if (property.endsWith(propertyName)) {
                     // show speed controller type
+                    String delimiter = "\u0008"; // unicode backspace character. No way is this going to be in some text field
                     if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Speed Controller")) {
                         String type1 = component.getProperty("Type").getValue().toString();
-                        String delimiter = "\u0008"; // unicode backspace character. No way is this going to be in some text field
                         mapping.put(component.getProperty(property).getValue().toString(), component.getFullName() + delimiter + type1);
+                    } else if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Servo")) {
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getFullName() + delimiter + "Servo");
                     } else {
                         mapping.put(component.getProperty(property).getValue().toString(), component.getFullName());
                     }
