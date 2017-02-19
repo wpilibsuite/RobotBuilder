@@ -108,6 +108,9 @@ Defaults:
   SolenoidOutput:
     Construction: "#variable($Name) = new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid});"
     LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+  AnalogOutput:
+    Construction: "#variable($Name) = new ${ClassName}(${Output_Channel_AnalogOutput});"
+    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   OI:
     Export: "OI"
     Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport ${package}.subsystems.*;"
@@ -271,6 +274,9 @@ Instructions:
   Spike:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
+  Analog Output:
+    Defaults: "AnalogOutput,Component,None"
+    ClassName: "AnalogOutput"
 
   Compressor:
     Defaults: "Component,None"
