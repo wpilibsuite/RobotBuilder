@@ -25,6 +25,10 @@ Building Robot Builder is very straightforward. WPILib uses Gradle to compile.
 
 To run robotbuilder use the command `./gradlew run`.
 
+## Building
+
+To build robotbuilder use the command `./gradlew shadowjar`. The runnable jar is `build\libs\RobotBuilder.jar`.
+
 # Contributing to WPILib
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
