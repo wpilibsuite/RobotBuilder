@@ -101,6 +101,9 @@ Defaults:
   RelayOutput:
     Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_Relay}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+  AnalogOutput:
+    Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_AnalogOutput}));"
+    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   SolenoidOutput:
     Construction: "#variable($Name).reset(new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
@@ -261,6 +264,9 @@ Instructions:
   Spike:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
+  Analog Output:
+    Defaults: "AnalogOutput,Component,None"
+    ClassName: "AnalogOutput"
 
   Compressor:
     Defaults: "Component,None"

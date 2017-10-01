@@ -121,6 +121,13 @@
             choices: ["0", "1", "2", "3"]
             default: "0"
 #end
+#macro( AnalogOutput $Name )
+- !ChoicesProperty
+            name: $Name Channel (AnalogOutput)
+            validators: [AnalogOutput]
+            choices: ["0", "1"]
+            default: "0"
+#end
 #macro( Button $Name )
 - !TypeSelectionProperty
             name: $Name Command
@@ -188,6 +195,9 @@ Validators:
     fields: [PCM ID]
   - !ListValidator
     name: List
+  - !UniqueValidator
+    name: AnalogOutput
+    fields: [Channel (AnalogOutput)]
 
 Palette:
   - Hidden:
@@ -631,7 +641,12 @@ Palette:
         help: A motor controller that can run forwards/backwards/stopped.
         properties:
           #RelayOutput("Output")
-
+      - !Component
+        name: Analog Output
+        type: Actuator
+        help: An Analog Output.
+        properties:
+          #AnalogOutput("Output")
 
   - Pneumatics:
       - !Component
