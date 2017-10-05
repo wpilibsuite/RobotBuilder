@@ -620,7 +620,7 @@ Palette:
         properties:
           - !ChoicesProperty
             name: Type
-            choices: ["Victor", "Jaguar", "Talon", "VictorSP", "TalonSRX", "Spark", "SD540"]
+            choices: ["Victor", "Jaguar", "Talon", "VictorSP", "PWMTalonSRX", "Spark", "SD540"]
             default: "Talon"
           #PWMOutput("Output")
       - !Component
