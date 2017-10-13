@@ -27,6 +27,7 @@ public class #class($command.name) extends InstantCommand {
     }
 
     // Called once when this command runs
+    @Override
     protected void initialize() {
     }
 

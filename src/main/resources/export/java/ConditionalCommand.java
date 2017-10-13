@@ -18,6 +18,7 @@ public class #class($command.name) extends ConditionalCommand {
 
     }
 
+    @Override
     protected boolean condition(){
         return false;//TODO: Auto Generated method stub
     }
