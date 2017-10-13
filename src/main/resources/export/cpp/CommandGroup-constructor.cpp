@@ -8,3 +8,6 @@
 #else
 #class($command.name)::#class($command.name)() {
 #end
+#if ( $command.getProperty("Run When Disabled").getValue() )
+    SetRunWhenDisabled(true);
+#end

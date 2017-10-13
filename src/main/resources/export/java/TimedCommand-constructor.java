@@ -8,4 +8,6 @@
 
     public #class($command.name)(double timeout) {
         super(timeout);
-
+#if ( $command.getProperty("Run When Disabled").getValue() )
+        setRunWhenDisabled(true);
+#end

@@ -723,6 +723,9 @@ Palette:
           - !ParameterSet
             name: Parameter presets
             default: []
+          - !BooleanProperty
+            name: Run When Disabled
+            default: false
       - !Component
         name: Command Group
         type: Command
@@ -741,6 +744,9 @@ Palette:
           - !ParameterSet
             name: Parameter presets
             default: []
+          - !BooleanProperty
+            name: Run When Disabled
+            default: false
       - !Component
         name: PID Command
         type: Command
@@ -844,6 +850,9 @@ Palette:
           - !ParameterSet
             name: Parameter presets
             default: []
+          - !BooleanProperty
+            name: Run When Disabled
+            default: false
       - !Component
         name: Instant Command
         type: Command
@@ -862,6 +871,9 @@ Palette:
           - !ParameterSet
             name: Parameter presets
             default: []
+          - !BooleanProperty
+            name: Run When Disabled
+            default: false
       - !Component
         name: Conditional Command
         type: Command
@@ -881,3 +893,6 @@ Palette:
           - !BooleanProperty
             name: Button on SmartDashboard
             default: true
+          - !BooleanProperty
+            name: Run When Disabled
+            default: false

@@ -4,5 +4,7 @@
 
 
 #class($command.name)::#class($command.name)(): ConditionalCommand(new #class($onTrue), new #class($onFalse)) {
-
+#if ( $command.getProperty("Run When Disabled").getValue() )
+    SetRunWhenDisabled(true);
+#end
 }

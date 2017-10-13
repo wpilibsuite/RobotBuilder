@@ -7,3 +7,6 @@
 #else
     public #class($command.name)() {
 #end
+#if ( $command.getProperty("Run When Disabled").getValue() )
+        setRunWhenDisabled(true);
+#end
