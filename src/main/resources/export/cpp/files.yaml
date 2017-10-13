@@ -145,7 +145,7 @@
   export: $project/src/Commands/#class($command.name).h
   source: ${exporter-path}TimedCommand.h
   modifications:
-    constructor: ${exporter-path}Timed-constructor-header.h
+    constructor: ${exporter-path}TimedCommand-constructor-header.h
   update: Modify
   variables:
     command-name: ${command.name}
