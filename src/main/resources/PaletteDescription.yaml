@@ -275,6 +275,9 @@ Palette:
             default: None
           - !Parameters
             name: Default command parameters
+          - !BooleanProperty
+            name: Send to SmartDashboard
+            default: false
       - !Component
         name: PID Subsystem
         type: Subsystem
@@ -290,9 +293,9 @@ Palette:
             default: None
           - !Parameters
             name: Default command parameters
-##          - !BooleanProperty
-##            name: Send to SmartDashboard
-##            default: false
+          - !BooleanProperty
+            name: Send to SmartDashboard
+            default: false
           - !ChildSelectionProperty
             name: Input
             type: PIDSource
@@ -350,9 +353,6 @@ Palette:
         supports: {PIDSource: 1, PIDOutput: 1}
         help: PID controllers allow control of an actuator based off of feedback from a sensor.
         properties:
-##          - !BooleanProperty
-##            name: Send to SmartDashboard
-##            default: false
           - !ChildSelectionProperty
             name: Input
             type: PIDSource
@@ -402,6 +402,9 @@ Palette:
           - !DoubleProperty
             name: Maximum Output
             default: 1
+          - !BooleanProperty
+            name: Send to SmartDashboard
+            default: false
       - !Component
         name: Robot Drive 2
         type: Controller
