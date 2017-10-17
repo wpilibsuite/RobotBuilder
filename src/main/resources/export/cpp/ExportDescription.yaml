@@ -148,13 +148,13 @@ Instructions:
       #variable($Name)->SetAbsoluteTolerance(${Tolerance});
       #if($Limit_Input)
 
-              #variable($Name)->SetInputRange(${Minimum_Input}, ${Maximum_Input});#end
+          #variable($Name)->SetInputRange(${Minimum_Input}, ${Maximum_Input});#end
       #if(true)
 
-              #variable($Name)->SetOutputRange(${Minimum_Output}, ${Maximum_Output});#end
+          #variable($Name)->SetOutputRange(${Minimum_Output}, ${Maximum_Output});#end
       #if($Send_to_SmartDashboard)
 
-              //SmartDashboard->PutData("${Name}", #variable($Name));#end
+          SmartDashboard::PutData("${Name}", #variable($Name).get());#end
 
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
 
