@@ -28,6 +28,11 @@ void #class($subsystem.name)::InitDefaultCommand() {
 #end
 }
 
+void #class($subsystem.name)::Periodic() {
+    // Put code here to be run every loop
+
+}
+
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
