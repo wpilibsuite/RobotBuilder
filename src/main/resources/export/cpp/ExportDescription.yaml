@@ -204,6 +204,7 @@ Instructions:
   AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogAccelerometer"
+    PID: "#variable($Short_Name)->GetAcceleration()"
     Extra: >-
       #variable($Name)->SetSensitivity(${Volts_Per_G});
               #variable($Name)->SetZero(${Zero_G_Volts});
