@@ -68,11 +68,11 @@ Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWind
 Defaults:
   Component:
     Export: "RobotMap"
-    Declaration: "static std::shared_ptr<frc::${ClassName}> #variable($Name);"
+    Declaration: "static std::shared_ptr<${ClassName}> #variable($Name);"
   CustomComponent:
     Export: "RobotMap"
     Import: "\\#include \"Custom/${ClassName}.h\""
-    Declaration: "static std::shared_ptr<frc::${ClassName}> #variable($Name);"
+    Declaration: "static std::shared_ptr<${ClassName}> #variable($Name);"
   None:
     Export: ""
     Import: ""
@@ -85,31 +85,31 @@ Defaults:
     PID: "#variable($Short_Name)->PIDGet()"
     ClassName: ""
   AnalogInput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}));"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Input_Channel_Analog}));"
     LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
     PID: "#variable($Short_Name)->GetAverageVoltage()"
   AnalogPotentiometer:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset}));"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset}));"
     LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
     PID: "#variable($Short_Name)->Get()"
   DigitalInput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Digital}));"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Input_Channel_Digital}));"
     LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   PWMOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_PWM}));"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_PWM}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   RelayOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_Relay}));"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_Relay}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   AnalogOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_AnalogOutput}));"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_AnalogOutput}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   SolenoidOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid}));"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   OI:
     Export: "OI"
-    Declaration: "std::shared_ptr<frc::${ClassName}> #variable($Name);"
+    Declaration: "std::shared_ptr<${ClassName}> #variable($Name);"
   Button:
     Extra:  "#if(\"$Command\" != \"None\")#variable($Name)->${When_to_Run.substring(0,1).toUpperCase()}${When_to_Run.substring(1)}(#command_instantiation($Command $Parameters));#end"
   Command:
@@ -141,8 +141,8 @@ Instructions:
 
   PID Controller:
     Defaults: "Component,None"
-    ClassName: "PIDController"
-    Construction: "#variable($Name).reset(new frc::${ClassName}($P, $I, $D,/* F: $F, */ #variable($Input).get(), #variable($Output).get(), $Period));"
+    ClassName: "frc::PIDController"
+    Construction: "#variable($Name).reset(new ${ClassName}($P, $I, $D,/* F: $F, */ #variable($Input).get(), #variable($Output).get(), $Period));"
     Extra: >
       #variable($Name)->SetContinuous(${Continuous});
       #variable($Name)->SetAbsoluteTolerance(${Tolerance});
@@ -160,8 +160,8 @@ Instructions:
 
   Robot Drive 2:
     Defaults: "Component,None"
-    ClassName: "RobotDrive"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(#variable($Left_Motor), #variable($Right_Motor)));"
+    ClassName: "frc::RobotDrive"
+    Construction: "#variable($Name).reset(new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor)));"
     Extra: >
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
               #variable($Name)->SetExpiration($Safety_Expiration_Time);
@@ -175,9 +175,9 @@ Instructions:
 
   Robot Drive 4:
     Defaults: "Component,None"
-    ClassName: "RobotDrive"
+    ClassName: "frc::RobotDrive"
     Construction: >-
-      #variable($Name).reset(new frc::${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
+      #variable($Name).reset(new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
                     #variable($Right_Front_Motor), #variable($Right_Rear_Motor)));
     Extra: >
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
@@ -198,89 +198,89 @@ Instructions:
 
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
-    ClassName: "AnalogGyro"
+    ClassName: "frc::AnalogGyro"
     Extra: "#variable($Name)->SetSensitivity(${Sensitivity});"
     PID: "#variable($Short_Name)->PIDGet()"
   AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
-    ClassName: "AnalogAccelerometer"
+    ClassName: "frc::AnalogAccelerometer"
     Extra: >-
       #variable($Name)->SetSensitivity(${Volts_Per_G});
               #variable($Name)->SetZero(${Zero_G_Volts});
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
-    ClassName: "Encoder"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}));"
+    ClassName: "frc::Encoder"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}));"
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
           #variable($Name)->SetPIDSourceType(frc::PIDSourceType::${PID_Source});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
-    ClassName: "Encoder"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}));"
+    ClassName: "frc::Encoder"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}));"
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
           #variable($Name)->SetPIDSourceType(frc::PIDSourceType::${PID_Source});
           #variable($Name)->SetIndexSource((unsigned int)${Index_Channel_Digital}, frc::Encoder::IndexingType::${Indexing_Type});
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
-    ClassName: "GearTooth"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive}));"
+    ClassName: "frc::GearTooth"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive}));"
   Analog Potentiometer:
     Defaults: "AnalogPotentiometer,Component,None"
-    ClassName: "AnalogPotentiometer"
+    ClassName: "frc::AnalogPotentiometer"
   Analog Input:
     Defaults: "AnalogInput,Component,None"
-    ClassName: "AnalogInput"
+    ClassName: "frc::AnalogInput"
   Limit Switch:
     Defaults: "DigitalInput,Component,None"
-    ClassName: "DigitalInput"
+    ClassName: "frc::DigitalInput"
   Digital Input:
     Defaults: "DigitalInput,Component,None"
-    ClassName: "DigitalInput"
+    ClassName: "frc::DigitalInput"
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
-    ClassName: "Ultrasonic"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital}));"
+    ClassName: "frc::Ultrasonic"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital}));"
   PowerDistributionPanel:
     Defaults: "Component,None"
-    ClassName: "PowerDistributionPanel"
-    Construction: "#variable($Name).reset(new frc::${ClassName}($CAN_ID));"
+    ClassName: "frc::PowerDistributionPanel"
+    Construction: "#variable($Name).reset(new ${ClassName}($CAN_ID));"
     LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
 
   Speed Controller:
     Defaults: "PWMOutput,Component,None"
-    ClassName: "SpeedController"
+    ClassName: "frc::SpeedController"
     Construction: "#variable($Name).reset(new frc::${Type}(${Output_Channel_PWM}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", std::static_pointer_cast<frc::${Type}>(#variable($Name)));"
   Servo:
     Defaults: "PWMOutput,Component,None"
-    ClassName: "Servo"
+    ClassName: "frc::Servo"
   Digital Output:
     Defaults: "Component,None"
-    ClassName: "DigitalOutput"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_Digital}));"
+    ClassName: "frc::DigitalOutput"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_Digital}));"
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
   Spike:
     Defaults: "RelayOutput,Component,None"
-    ClassName: "Relay"
+    ClassName: "frc::Relay"
   Analog Output:
     Defaults: "AnalogOutput,Component,None"
-    ClassName: "AnalogOutput"
+    ClassName: "frc::AnalogOutput"
 
   Compressor:
     Defaults: "Component,None"
-    ClassName: "Compressor"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${PCM_ID}));"
+    ClassName: "frc::Compressor"
+    Construction: "#variable($Name).reset(new ${ClassName}(${PCM_ID}));"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
-    ClassName: "Solenoid"
+    ClassName: "frc::Solenoid"
   Relay Solenoid:
     Defaults: "RelayOutput,Component,None"
-    ClassName: "Relay"
+    ClassName: "frc::Relay"
   Double Solenoid:
     Defaults: "Solenoid,Component,None"
-    ClassName: "DoubleSolenoid"
+    ClassName: "frc::DoubleSolenoid"
     Construction: >-
       #if(${Forward_PCM_Solenoid} != ${Reverse_PCM_Solenoid})Warning, the two modules in robot builder are different!
 
@@ -291,17 +291,17 @@ Instructions:
 
   Joystick:
     Defaults: "OI,None"
-    ClassName: "Joystick"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Number}));"
-    Prototype: "std::shared_ptr<frc::${ClassName}> get#class($Name)();"
+    ClassName: "frc::Joystick"
+    Construction: "#variable($Name).reset(new ${ClassName}(${Number}));"
+    Prototype: "std::shared_ptr<${ClassName}> get#class($Name)();"
     Function: >-
-       std::shared_ptr<frc::${ClassName}> OI::get#class($Name)() {
+       std::shared_ptr<${ClassName}> OI::get#class($Name)() {
           return #variable($Name);
        }
   Joystick Button:
     Defaults: "Button,OI,None"
-    ClassName: "JoystickButton"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(#variable($Joystick).get(), ${Button}));"
+    ClassName: "frc::JoystickButton"
+    Construction: "#variable($Name).reset(new ${ClassName}(#variable($Joystick).get(), ${Button}));"
 
   Command:
     Defaults: "Command,None"
