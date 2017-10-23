@@ -161,7 +161,7 @@ Instructions:
               #variable($Name).setOutputRange(${Minimum_Output}, ${Maximum_Output});#end
       #if($Send_to_SmartDashboard)
 
-              //SmartDashboard.putData("${Name}", #variable($Name));#end
+              SmartDashboard.putData("${Name}", #variable($Name));#end
 
     LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
 
@@ -211,6 +211,7 @@ Instructions:
   AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogAccelerometer"
+    PID: "#variable($Short_Name).getAcceleration()"
     Extra: >-
       #variable($Name).setSensitivity(${Volts_Per_G});
               #variable($Name).setZero(${Zero_G_Volts});
