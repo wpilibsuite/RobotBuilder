@@ -7,7 +7,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '1.2.3'
     id 'maven-publish'
     id 'net.ltgt.errorprone' version '0.0.8'
-    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '1.6'
+    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '2.0'
 }
 
 configurations.errorprone {
@@ -78,6 +78,19 @@ jar {
     }
 }
 
+if (!hasProperty('releaseType')) {
+    WPILibVersion {
+        releaseType = 'dev'
+    }
+}
+
+def pubVersion = ''
+if (project.hasProperty("publishVersion")) {
+    pubVersion = project.publishVersion
+} else {
+    pubVersion = WPILibVersion.version
+}
+
 publishing {
     publications {
         maven(MavenPublication) {
@@ -86,7 +99,7 @@ publishing {
             }
             groupId 'edu.wpi.first.wpilib'
             artifactId 'RobotBuilder'
-            version WPILibVersion.version
+            version pubVersion
         }
     }
 }
