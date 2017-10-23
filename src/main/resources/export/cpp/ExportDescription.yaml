@@ -305,6 +305,7 @@ Instructions:
 
   Command:
     Defaults: "Command,None"
+    ClassName: "frc::Command"
   Command Group:
     Defaults: "Command,None"
   PID Command:
