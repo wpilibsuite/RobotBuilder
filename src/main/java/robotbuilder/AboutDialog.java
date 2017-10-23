@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 
 public class AboutDialog extends CenteredDialog {
 
-    public AboutDialog(JFrame parent, String applicationName, String description, String version) {
+    public AboutDialog(JFrame parent, String applicationName, String description, String version, String wpilibVersion) {
         super(parent, applicationName);
         Box aboutWindow = new Box(BoxLayout.Y_AXIS);
         JLabel productName = new JLabel(applicationName);
@@ -20,6 +20,8 @@ public class AboutDialog extends CenteredDialog {
         aboutWindow.add(Box.createVerticalStrut(10));
         aboutWindow.add(productName);
         aboutWindow.add(new JLabel("Version " + version));
+        aboutWindow.add(Box.createVerticalStrut(15));
+        aboutWindow.add(new JLabel("Exports to WPILIB Version " + wpilibVersion));
         aboutWindow.add(Box.createVerticalStrut(15));
         aboutWindow.add(new JLabel(description));
         aboutWindow.add(Box.createVerticalStrut(15));

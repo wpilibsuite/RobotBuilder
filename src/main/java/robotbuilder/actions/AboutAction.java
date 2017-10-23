@@ -31,7 +31,8 @@ public class AboutAction extends AbstractAction {
         AboutDialog aboutDialog = new AboutDialog(MainFrame.getInstance(),
                 "About RobotBuilder",
                 "This application builds robot maps",
-                RobotBuilder.VERSION);
+                RobotBuilder.VERSION,
+                RobotBuilder.WPILIB_VERSION);
         aboutDialog.show();
     }
 
