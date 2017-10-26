@@ -13,7 +13,7 @@
 #end
 \#include "OI.h"
 
-class Robot : public IterativeRobot {
+class Robot : public TimedRobot {
 public:
 	std::unique_ptr<Command> autonomousCommand;
 	static std::unique_ptr<OI> oi;
