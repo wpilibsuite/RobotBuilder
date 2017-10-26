@@ -1,5 +1,12 @@
 #set($command = $robot.getProperty("Autonomous Command").getValue())
-#set($params = $robot.getProperty("Autonomous command parameters").getValue())
 
-#if( $command != "None" )        autonomousCommand = #command_instantiation( $command $params );
+#foreach( $component in $components )
+#if ($component.getBase().getType() == "Command"
+     && $component.getProperty("Autonomous Selection").getValue())
+        chooser.addObject("$component.getName()", new #class($component.getName())());
+#end
+#end
+
+#if($command != "None")
+        chooser.addDefault("$command", new #class($command)());
 #end
