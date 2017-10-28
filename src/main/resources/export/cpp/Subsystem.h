@@ -12,7 +12,7 @@
  *
  * @author ExampleAuthor
  */
-class #class($subsystem.name): public #klass($subsystem) {
+class #class($subsystem.name): public frc::#klass($subsystem) {
 private:
 	// It's desirable that everything possible is private except
 	// for methods that implement subsystem capabilities
