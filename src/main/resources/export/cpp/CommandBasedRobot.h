@@ -13,7 +13,7 @@
 #end
 \#include "OI.h"
 
-class Robot : public frc::IterativeRobot {
+class Robot : public frc::TimedRobot {
 public:
 	std::unique_ptr<frc::Command> autonomousCommand;
 	static std::unique_ptr<OI> oi;
