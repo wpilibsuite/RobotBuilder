@@ -1,5 +1,5 @@
 #set($command = $helper.getByName($command-name, $robot))
-#macro( klass $cmd )#if( "#type($cmd)" == "" )Command#else#type($cmd)#end#end
+#macro( klass $cmd )#if( "#type($cmd)" == "" )frc::Command#else#type($cmd)#end#end
 #header()
 
 #ifndef #constant($command.name)_H

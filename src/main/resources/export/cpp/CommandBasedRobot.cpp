@@ -33,7 +33,7 @@ void Robot::DisabledInit(){
 }
 
 void Robot::DisabledPeriodic() {
-	Scheduler::GetInstance()->Run();
+	frc::Scheduler::GetInstance()->Run();
 }
 
 void Robot::AutonomousInit() {
@@ -42,7 +42,7 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
-	Scheduler::GetInstance()->Run();
+	frc::Scheduler::GetInstance()->Run();
 }
 
 void Robot::TeleopInit() {
@@ -55,7 +55,7 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-	Scheduler::GetInstance()->Run();
+	frc::Scheduler::GetInstance()->Run();
 }
 
 void Robot::TestPeriodic() {
