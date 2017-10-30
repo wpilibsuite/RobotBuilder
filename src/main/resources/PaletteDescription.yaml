@@ -893,6 +893,9 @@ Palette:
           - !Parameters
             name: Parameters
             default: []
+          - !ParameterSet
+            name: Parameter presets
+            default: []
           - !BooleanProperty
             name: Button on SmartDashboard
             default: true
