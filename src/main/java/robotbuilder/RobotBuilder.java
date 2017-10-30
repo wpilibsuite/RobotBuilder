@@ -47,7 +47,7 @@ public class RobotBuilder {
             frame.openDefaultFile();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             try {
-              frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Utils.getResource("/icons/RobotBuilder.png")));
+              frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Utils.getResource("/icons/robotbuilder.png")));
             } catch (Exception ex) {
               Logger.getLogger(RobotBuilder.class.getName()).log(Level.INFO, null, ex);
             }
