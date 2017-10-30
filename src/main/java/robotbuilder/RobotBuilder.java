@@ -2,6 +2,7 @@
 package robotbuilder;
 
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,6 +46,11 @@ public class RobotBuilder {
             MainFrame frame = MainFrame.getInstance();
             frame.openDefaultFile();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            try {
+              frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Utils.getResource("/icons/RobotBuilder.png")));
+            } catch (Exception ex) {
+              Logger.getLogger(RobotBuilder.class.getName()).log(Level.INFO, null, ex);
+            }
             frame.setVisible(true);
         });
     }
