@@ -161,6 +161,9 @@ Validators:
   - !DistinctValidator
     name: RobotDrive4
     fields: ["Left Front Motor", "Left Rear Motor", "Right Front Motor", "Right Rear Motor"]
+  - !DistinctValidator
+    name: SpeedControllerGroup
+    fields: ["SpeedController1", "SpeedController2", "SpeedController3", "SpeedController4"]
   - !ExistsValidator
     name: ChildDropdownSelected
     ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
@@ -489,6 +492,30 @@ Palette:
           - !DoubleProperty
             name: Safety Expiration Time
             default: .1
+      - !Component
+        name: Speed Controller Group
+        type: PIDOutput
+        supports: {PIDOutput: 4}
+        help: Speed Controller Group handles multiple speed controllers as one
+        properties:
+          - !ChildSelectionProperty
+            name: SpeedController1
+            type: PIDOutput
+            validators: [SpeedControllerGroup, ChildDropdownSelected]
+            default: 0
+          - !ChildSelectionProperty
+            name: SpeedController2
+            type: PIDOutput
+            validators: [SpeedControllerGroup, ChildDropdownSelected]
+            default: 1
+          - !ChildSelectionProperty
+            name: SpeedController3
+            type: PIDOutput
+            default: null
+          - !ChildSelectionProperty
+            name: SpeedController4
+            type: PIDOutput
+            default: null
 
   - Sensors:
       - !Component
@@ -624,8 +651,11 @@ Palette:
           - !ChoicesProperty
             name: Type
             choices: ["Victor", "Jaguar", "Talon", "VictorSP", "PWMTalonSRX", "Spark", "SD540"]
-            default: "Talon"
+            default: "Spark"
           #PWMOutput("Output")
+          - !BooleanProperty
+            name: Inverted
+            default: false
       - !Component
         name: Servo
         type: Actuator

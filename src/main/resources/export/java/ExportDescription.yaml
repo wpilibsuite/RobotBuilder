@@ -203,6 +203,12 @@ Instructions:
 
               #variable($Name).setInvertedMotor(RobotDrive.MotorType.kRearRight, true);#end
 
+  Speed Controller Group:
+    Defaults: "Component,None"
+    ClassName: "SpeedControllerGroup"
+    Construction: >-
+      #variable($Name) = new ${ClassName}(#variable($SpeedController1), #variable($SpeedController2)
+      #if(($SpeedController3)), #variable($SpeedController3)#end #if(($SpeedController4)), #variable($SpeedController4)#end);
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogGyro"
@@ -264,6 +270,8 @@ Instructions:
     Import: "import edu.wpi.first.wpilibj.${Type};\nimport edu.wpi.first.wpilibj.${ClassName};"
     Construction: "#variable($Name) = new ${Type}(${Output_Channel_PWM});"
     LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", (${Type}) #variable($Name));"
+    Extra: >-
+      #variable($Name).setInverted(${Inverted});
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
