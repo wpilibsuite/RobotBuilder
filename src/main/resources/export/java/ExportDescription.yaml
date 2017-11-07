@@ -209,6 +209,15 @@ Instructions:
     Construction: >-
       #variable($Name) = new ${ClassName}(#variable($SpeedController1), #variable($SpeedController2)
       #if(($SpeedController3)), #variable($SpeedController3)#end #if(($SpeedController4)), #variable($SpeedController4)#end);
+  Differential Drive:
+    Defaults: "Component,None"
+    ClassName: "DifferentialDrive"
+    Import: "import edu.wpi.first.wpilibj.drive.DifferentialDrive;"
+    Construction: "#variable($Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
+    Extra: >
+      #variable($Name).setSafetyEnabled($Safety_Enabled);
+              #variable($Name).setExpiration($Safety_Expiration_Time);
+              #variable($Name).setMaxOutput($Maximum_Output);
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogGyro"

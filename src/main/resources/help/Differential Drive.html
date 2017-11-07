@@ -4,17 +4,16 @@
   </head>
 
   <body>
-      <h1>Robot Drive (2 Speed Controllers)</h1>
+      <h1>Differential Drive</h1>
 
-      <center><img src="../icons/Robot Drive 2.png" /></center>
+      <center><img src="../icons/Differential Drive.png" /></center>
 
     <h2>What is it?</h2>
-    <p>Controller for handling robot drive based on a definition of
-       the motor configuration. The robot drive controller handles
-       basic driving for a robot. Currently, 2 and 4 motor standard
-       drive trains and holonomic drive trains are supported.</p>
-    <p>Robot Drive has been deprecated for 2018, and replaced by
-       DifferentialDrive or MecanumDrive</p>
+    <p>Differential Drive is a class for driving differential drive/skid-steer drive platforms 
+       such as the Kit of Parts drive base, "tank drive", or West Coast Drive.</p>
+    <p>These drive bases typically have drop-center / skid-steer with two or more wheels per side
+       e.g., 6WD or 8WD). This class takes a SpeedController per side. For four and
+       six motor drivetrains, use a SpeedControllerGroup.</p>
 
 
     <h2>Properties</h2>
@@ -22,14 +21,8 @@
     <dl>
       <dt>Left Motor</dt>
       <dd>The motor to use as the left motor for robot drive actions.</dd>
-      <dt>Left Motor Inverted</dt>
-      <dd>Whether or not the left motor is mounted backwards.</dd>
       <dt>Right Motor</dt>
       <dd>The motor to use as the right motor for robot drive actions.</dd>
-      <dt>Right Motor Inverted</dt>
-      <dd>Whether or not the right motor is mounted backwards.</dd>
-      <dt>Sensitivity</dt>
-      <dd></dd>
       <dt>Maximum Output</dt>
       <dd>Maximum allowable output to the motors, generally this should be one.</dd>
       <dt>Safety Enabled</dt>
@@ -44,10 +37,7 @@
         <a href="https://wpilib.screenstepslive.com/s/4485/m/26402/l/255451-driving-the-robot-with-tank-drive-and-joysticks">Screenstepslive Help</a>
       </li>
       <li>
-        <a href="Differential Drive.html">Differential Drive</a>
-      </li>
-      <li>
-        <a href="Mecanum Drive.html">Mecanum Drive</a>
+        <a href="Speed Controller Group.html">Speed Controller Group</a>
       </li>
     </ul>
   </body>

@@ -516,6 +516,31 @@ Palette:
             name: SpeedController4
             type: PIDOutput
             default: null
+      - !Component
+        name: Differential Drive
+        type: Controller
+        supports: {PIDOutput: 2}
+        help: RobotDrive handles tank and arcade drives
+        properties:
+          - !ChildSelectionProperty
+            name: Left Motor
+            type: PIDOutput
+            validators: [RobotDrive2, ChildDropdownSelected]
+            default: 0
+          - !ChildSelectionProperty
+            name: Right Motor
+            type: PIDOutput
+            validators: [RobotDrive2, ChildDropdownSelected]
+            default: 1
+          - !DoubleProperty
+            name: Maximum Output
+            default: 1
+          - !BooleanProperty
+            name: Safety Enabled
+            default: true
+          - !DoubleProperty
+            name: Safety Expiration Time
+            default: .1
 
   - Sensors:
       - !Component
