@@ -218,6 +218,18 @@ Instructions:
       #variable($Name).setSafetyEnabled($Safety_Enabled);
               #variable($Name).setExpiration($Safety_Expiration_Time);
               #variable($Name).setMaxOutput($Maximum_Output);
+  Mecanum Drive:
+    Defaults: "Component,None"
+    ClassName: "MecanumDrive"
+    Import: "import edu.wpi.first.wpilibj.drive.MecanumDrive;"
+    Construction: >-
+      #variable($Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
+                    #variable($Right_Front_Motor), #variable($Right_Rear_Motor));
+    Extra: >
+      #variable($Name).setSafetyEnabled($Safety_Enabled);
+              #variable($Name).setExpiration($Safety_Expiration_Time);
+              #variable($Name).setMaxOutput($Maximum_Output);
+
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogGyro"

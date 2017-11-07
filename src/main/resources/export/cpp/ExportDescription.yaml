@@ -210,6 +210,16 @@ Instructions:
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
               #variable($Name)->SetExpiration($Safety_Expiration_Time);
               #variable($Name)->SetMaxOutput($Maximum_Output);
+  Mecanum Drive:
+    Defaults: "Component,None"
+    ClassName: "frc::MecanumDrive"
+    Construction: >-
+      #variable($Name).reset(new ${ClassName}(*#variable($Left_Front_Motor), *#variable($Left_Rear_Motor),
+                    *#variable($Right_Front_Motor), *#variable($Right_Rear_Motor)));
+    Extra: >
+      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
+              #variable($Name)->SetExpiration($Safety_Expiration_Time);
+              #variable($Name)->SetMaxOutput($Maximum_Output);
 
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"

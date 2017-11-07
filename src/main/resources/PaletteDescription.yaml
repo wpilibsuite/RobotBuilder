@@ -541,6 +541,41 @@ Palette:
           - !DoubleProperty
             name: Safety Expiration Time
             default: .1
+      - !Component
+        name: Mecanum Drive
+        type: Controller
+        supports: {PIDOutput: 4}
+        help: Controller for Mecanum Drive Trains
+        properties:
+          - !ChildSelectionProperty
+            name: Left Front Motor
+            type: PIDOutput
+            validators: [RobotDrive4, ChildDropdownSelected]
+            default: 0
+          - !ChildSelectionProperty
+            name: Left Rear Motor
+            type: PIDOutput
+            validators: [RobotDrive4, ChildDropdownSelected]
+            default: 1
+          - !ChildSelectionProperty
+            name: Right Front Motor
+            type: PIDOutput
+            validators: [RobotDrive4, ChildDropdownSelected]
+            default: 2
+          - !ChildSelectionProperty
+            name: Right Rear Motor
+            type: PIDOutput
+            validators: [RobotDrive4, ChildDropdownSelected]
+            default: 3
+          - !DoubleProperty
+            name: Maximum Output
+            default: 1
+          - !BooleanProperty
+            name: Safety Enabled
+            default: true
+          - !DoubleProperty
+            name: Safety Expiration Time
+            default: .1
 
   - Sensors:
       - !Component
