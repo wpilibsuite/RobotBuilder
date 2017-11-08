@@ -220,6 +220,16 @@ Instructions:
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
               #variable($Name)->SetExpiration($Safety_Expiration_Time);
               #variable($Name)->SetMaxOutput($Maximum_Output);
+  Killough Drive:
+    Defaults: "Component,None"
+    ClassName: "frc::KilloughDrive"
+    Construction: >-
+      #variable($Name).reset(new ${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor),
+                    *#variable($Back_Motor)));
+    Extra: >
+      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
+              #variable($Name)->SetExpiration($Safety_Expiration_Time);
+              #variable($Name)->SetMaxOutput($Maximum_Output);
 
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
