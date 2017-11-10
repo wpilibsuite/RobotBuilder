@@ -203,6 +203,44 @@ Instructions:
 
               #variable($Name).setInvertedMotor(RobotDrive.MotorType.kRearRight, true);#end
 
+  Speed Controller Group:
+    Defaults: "Component,None"
+    ClassName: "SpeedControllerGroup"
+    Construction: >-
+      #variable($Name) = new ${ClassName}(#variable($SpeedController1), #variable($SpeedController2)
+      #if(($SpeedController3)), #variable($SpeedController3)#end #if(($SpeedController4)), #variable($SpeedController4)#end);
+  Differential Drive:
+    Defaults: "Component,None"
+    ClassName: "DifferentialDrive"
+    Import: "import edu.wpi.first.wpilibj.drive.DifferentialDrive;"
+    Construction: "#variable($Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
+    Extra: >
+      #variable($Name).setSafetyEnabled($Safety_Enabled);
+              #variable($Name).setExpiration($Safety_Expiration_Time);
+              #variable($Name).setMaxOutput($Maximum_Output);
+  Mecanum Drive:
+    Defaults: "Component,None"
+    ClassName: "MecanumDrive"
+    Import: "import edu.wpi.first.wpilibj.drive.MecanumDrive;"
+    Construction: >-
+      #variable($Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
+                    #variable($Right_Front_Motor), #variable($Right_Rear_Motor));
+    Extra: >
+      #variable($Name).setSafetyEnabled($Safety_Enabled);
+              #variable($Name).setExpiration($Safety_Expiration_Time);
+              #variable($Name).setMaxOutput($Maximum_Output);
+  Killough Drive:
+    Defaults: "Component,None"
+    ClassName: "KilloughDrive"
+    Import: "import edu.wpi.first.wpilibj.drive.KilloughDrive;"
+    Construction: >-
+      #variable($Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor),
+                     #variable($Back_Motor));
+    Extra: >
+      #variable($Name).setSafetyEnabled($Safety_Enabled);
+              #variable($Name).setExpiration($Safety_Expiration_Time);
+              #variable($Name).setMaxOutput($Maximum_Output);
+
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogGyro"
@@ -264,6 +302,8 @@ Instructions:
     Import: "import edu.wpi.first.wpilibj.${Type};\nimport edu.wpi.first.wpilibj.${ClassName};"
     Construction: "#variable($Name) = new ${Type}(${Output_Channel_PWM});"
     LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", (${Type}) #variable($Name));"
+    Extra: >-
+      #variable($Name).setInverted(${Inverted});
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
