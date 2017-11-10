@@ -131,7 +131,7 @@ Instructions:
     Import: "\\#include \"Subsystems/#class($Short_Name).h\""
     Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
     Construction: "#variable($Short_Name).reset(new #class($Short_Name)());"
-    ClassName: "Subsystem"
+    ClassName: "frc::Subsystem"
   PID Subsystem:
     Defaults: "None"
     Export: "Robot"
@@ -287,7 +287,7 @@ Instructions:
 
       #end##
 
-      #variable($Name).reset(new frc::${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}));
+      #variable($Name).reset(new ${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}));
     LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
 
   Joystick:
