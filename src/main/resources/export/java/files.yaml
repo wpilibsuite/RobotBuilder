@@ -142,6 +142,7 @@
   source: ${exporter-path}PIDSubsystem.java
   update: Modify
   modifications:
+    imports: ${exporter-path}Subsystem-imports.java
     declarations: ${exporter-path}Subsystem-declarations.java
     default_command: ${exporter-path}Subsystem-default_command.java
     pid: ${exporter-path}PIDSubsystem-pid.java
@@ -156,6 +157,7 @@
   source: ${exporter-path}Subsystem.java
   update: Modify
   modifications:
+    imports: ${exporter-path}Subsystem-imports.java
     declarations: ${exporter-path}Subsystem-declarations.java
     default_command: ${exporter-path}Subsystem-default_command.java
     constants: ${exporter-path}Subsystem-constants.java
