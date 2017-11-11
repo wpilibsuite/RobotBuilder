@@ -304,6 +304,13 @@ Instructions:
     LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", (${Type}) #variable($Name));"
     Extra: >-
       #variable($Name).setInverted(${Inverted});
+  Nidec Brushless:
+    Defaults: "Component,None"
+    ClassName: "NidecBrushless"
+    Construction: "#variable($Name) = new ${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital});"
+    LiveWindow: "LiveWindow.addActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    Extra: >-
+      #variable($Name).setInverted(${Inverted});
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
