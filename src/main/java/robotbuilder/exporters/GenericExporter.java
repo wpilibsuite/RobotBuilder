@@ -136,7 +136,7 @@ public class GenericExporter {
         // Check that the robot is valid for export
         if (!robotTree.isRobotValid()) {
             JOptionPane.showMessageDialog(MainFrame.getInstance(),
-                    "Your robot is not ready for export, the red components are not quiet finished, please finish and try again.",
+                    "Your robot is not ready for export, the red components are not quite finished, please finish and try again.",
                     "Unfinished robot", JOptionPane.ERROR_MESSAGE);
             return;
         }
