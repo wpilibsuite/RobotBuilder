@@ -750,6 +750,16 @@ Palette:
             name: Inverted
             default: false
       - !Component
+        name: Nidec Brushless
+        type: PIDOutput
+        help: A brushless motor with built in speed controller.
+        properties:
+          #PWMOutput("Output")
+          #DigitalChannel("Output")
+          - !BooleanProperty
+            name: Inverted
+            default: false
+      - !Component
         name: Servo
         type: Actuator
         help: A controllable motor; typically has a limited rotation.
