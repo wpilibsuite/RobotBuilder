@@ -1,52 +1,74 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
-    </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-    <body>
-        <h1>Potentiometer</h1>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+<head>
+  <link rel="stylesheet"
+        href="styles.css"
+        type="text/css"
+        media="screen" />
 
-        <center><img src="../icons/Analog Potentiometer.png" /></center>
+  <title>Potentiometer</title>
+</head>
 
-        <h2>What is it?</h2>
-        <p>A potentiometer is a variable resistor that is typically used on a robot
-            to measure shaft angle or number of turns of a shaft.
-            The potentiometer has a resistance that is proportional
-            to the angle of the shaft on the device. There are several styles of potentiometers
-            available. The potentiometers used on robots should be linear taper (not logarithmic
-            as used in audio equipment for volume controls).</p>
+<body>
+  <h1>Potentiometer</h1>
 
-        <p>
-            Typically a potentiometer shaft can rotate about 270 degrees before hitting the
-            hard stop. It is important to make sure that the mechanical system the potentiometer
-            is connected to doesn't exceed the maximum rotation of the potentiometer or it
-            will likely become damaged. For applications requiring more rotations, multi-turn
-            potentiometers are available. Using a 10-turn potentiometer often
-            simplifies the mechanical design of a system such as an elevator where the rotations
-            translate into elevator height.
-        </p>
+  <center>
+    <img src="../icons/Analog%20Potentiometer.png" />
+  </center>
 
+  <h2>What is it?</h2>
 
-        <h2>Properties</h2>
+  <p>A potentiometer is a variable resistor that is typically used
+  on a robot to measure shaft angle or number of turns of a shaft.
+  The potentiometer has a resistance that is proportional to the
+  angle of the shaft on the device. There are several styles of
+  potentiometers available. The potentiometers used on robots
+  should be linear taper (not logarithmic as used in audio
+  equipment for volume controls).</p>
 
-        <dl>
-      <dt>Input Port (Analog)</dt>
-      <dd>The analog input on the roboRIO or MXP that this potentiometer is plugged into.</dd>
-      <dt>Full Range</dt>
-      <dd>The range to scale the potentiometer to. For example, to scale to 270 degrees, use a full range of 270.</dd>
-      <dt>Offset</dt>
-      <dd>The offset from zero based on the full range. For a 270 degree potentiometer scaled from -135 to 135, use an offset of -135.</dd>
-        </dl>
+  <p>Typically a potentiometer shaft can rotate about 270 degrees
+  before hitting the hard stop. It is important to make sure that
+  the mechanical system the potentiometer is connected to doesn't
+  exceed the maximum rotation of the potentiometer or it will
+  likely become damaged. For applications requiring more rotations,
+  multi-turn potentiometers are available. Using a 10-turn
+  potentiometer often simplifies the mechanical design of a system
+  such as an elevator where the rotations translate into elevator
+  height.</p>
 
-        <h2>See Also</h2>
-        <ul>
-            <li>
-                <a href="https://en.wikipedia.org/wiki/Potentiometer" >Wikipedia</a>
-            </li>
-            <li>
-                <a href="https://wpilib.screenstepslive.com/s/4485/m/13809/l/241877-potentiometers-measuring-joint-angle-or-linear-motion">Potentiometer on screensteps</a>
-            </li>
-        </ul>
-    </body>
+  <h2>Properties</h2>
 
+  <dl>
+    <dt>Input Port (Analog)</dt>
+
+    <dd>The analog input on the roboRIO or MXP that this
+    potentiometer is plugged into.</dd>
+
+    <dt>Full Range</dt>
+
+    <dd>The range to scale the potentiometer to. For example, to
+    scale to 270 degrees, use a full range of 270.</dd>
+
+    <dt>Offset</dt>
+
+    <dd>The offset from zero based on the full range. For a 270
+    degree potentiometer scaled from -135 to 135, use an offset of
+    -135.</dd>
+  </dl>
+
+  <h2>See Also</h2>
+
+  <ul>
+    <li><a href=
+    "https://en.wikipedia.org/wiki/Potentiometer">Wikipedia</a></li>
+
+    <li><a href=
+    "https://wpilib.screenstepslive.com/s/4485/m/13809/l/241877-potentiometers-measuring-joint-angle-or-linear-motion">
+    Potentiometer on screensteps</a></li>
+  </ul>
+</body>
 </html>

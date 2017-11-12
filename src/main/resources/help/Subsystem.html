@@ -1,76 +1,95 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
-  </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-  <body>
-      <h1>Subsystem</h1>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+<head>
+  <link rel="stylesheet"
+        href="styles.css"
+        type="text/css"
+        media="screen" />
 
-      <center><img src="../icons/Subsystem.png" /></center>
+  <title>Subsystem</title>
+</head>
 
-    <h2>What is it?</h2>
-      <p>A subsystem on a robot is a distinct part of the robot that
-  	 performs a certain function. Within the command based robot
-	framework, subsystems are encapsulated (represented) by
-	classes.</p>
-      <p class="lead">Subsystems can contain the following attributes:</p>
-      <ol>
-	<li>Sensors: Things that sense including buttons, potentiometers,
-            encoders and more.</li>
-	<li>Actuators: Things that move or act in the physical world,
-	    usually motors or pneumatics.</li>
-	<li>State: The current status of the subsystem. This can
-	    include data recorded from sensors such as the position of
-	    an arm, the number of balls stored in a collector, information on
-	    progress towards a goal, a desired PID setpoint, and much
-	    more.</li>
-	<li>Capabilities: Higher level actions that the subsystem can
-            be told to perform by various commands. These are usually
-            implemented by functions that update the subsystems state
-            in some way.</li>
-	<p><b>Note:</b> Simple subsystems may be missing one or more of
-           these attributes.</p>
-      </ol>
+<body>
+  <h1>Subsystem</h1>
 
-    <h3>What is a default command?</h3>
-      <p>Default commands are commands that run on a subsystem when no
-         other command is running that requires the subsystem. They
-         are the default behavior for the subsystem. This is often as
-         simple as a do nothing command so that when a command driving
-         the robot stops, the drive train of the robot stops as
-         opposed to continuing the last motion it was given. It’s also
-         possible to have more complicated default commands such as a
-         turret that continuously tracks a target when not doing
-         anything else.</p>
-      <p>Default commands are created just like any other command. The
-	 only minor difference when creating default commands is that
-	 you should generally have the isFinished() method return
-	 false so that the command is running continuously as opposed
-	 to stopping and restarting continuously when no other command
-	 is running.</p>
+  <center>
+    <img src="../icons/Subsystem.png" />
+  </center>
 
+  <h2>What is it?</h2>
 
-    <h2>Properties</h2>
+  <p>A subsystem on a robot is a distinct part of the robot that
+  performs a certain function. Within the command based robot
+  framework, subsystems are encapsulated (represented) by
+  classes.</p>
 
-    <dl>
-      <dt>Default Command</dt>
-      <dd>The command that runs when no other command is running on
-          this subsystem. This command controls the default
-          behaviour of this subsystem.</dd>
-    </dl>
+  <p class="lead">Subsystems can contain the following
+  attributes:</p>
 
-    <h2>Usage</h2>
+  <ol>
+    <li>Sensors: Things that sense including buttons,
+    potentiometers, encoders and more.</li>
 
+    <li>Actuators: Things that move or act in the physical world,
+    usually motors or pneumatics.</li>
 
-    <h3>Organization</h3>
+    <li>State: The current status of the subsystem. This can
+    include data recorded from sensors such as the position of an
+    arm, the number of balls stored in a collector, information on
+    progress towards a goal, a desired PID setpoint, and much
+    more.</li>
 
-    <p>Subsystem are primarily used as an organizational concept. In
-       object oriented programming, they also are a very good basis
-       for dividing up your robot into seperate classes that
-       encapsulate the relevant behaviour.</p>
+    <li>Capabilities: Higher level actions that the subsystem can
+    be told to perform by various commands. These are usually
+    implemented by functions that update the subsystems state in
+    some way.
 
-  </body>
+      <p><b>Note:</b> Simple subsystems may be missing one or more
+      of these attributes.</p>
+    </li>
+  </ol>
+
+  <h3>What is a default command?</h3>
+
+  <p>Default commands are commands that run on a subsystem when no
+  other command is running that requires the subsystem. They are
+  the default behavior for the subsystem. This is often as simple
+  as a do nothing command so that when a command driving the robot
+  stops, the drive train of the robot stops as opposed to
+  continuing the last motion it was given. It's
+  also possible to have more complicated default commands such as a
+  turret that continuously tracks a target when not doing anything
+  else.</p>
+
+  <p>Default commands are created just like any other command. The
+  only minor difference when creating default commands is that you
+  should generally have the isFinished() method return false so
+  that the command is running continuously as opposed to stopping
+  and restarting continuously when no other command is running.</p>
+
+  <h2>Properties</h2>
+
+  <dl>
+    <dt>Default Command</dt>
+
+    <dd>The command that runs when no other command is running on
+    this subsystem. This command controls the default behaviour of
+    this subsystem.</dd>
+  </dl>
+
+  <h2>Usage</h2>
+
+  <h3>Organization</h3>
+
+  <p>Subsystem are primarily used as an organizational concept. In
+  object oriented programming, they also are a very good basis for
+  dividing up your robot into seperate classes that encapsulate the
+  relevant behaviour.</p>
 
   <p>UNFINISHED</p>
-
+</body>
 </html>

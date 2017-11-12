@@ -1,49 +1,68 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
-  </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-  <body>
-      <h1>Ultrasonic</h1>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+<head>
+  <link rel="stylesheet"
+        href="styles.css"
+        type="text/css"
+        media="screen" />
 
-      <center><img src="../icons/Ultrasonic.png" /></center>
+  <title>Ultrasonic Sensor</title>
+</head>
 
-    <h2>What is it?</h2>
-    <p>An ultrasonic rangefinder using high frequency sound to determine distance to
-    an object. The rangefinders generally operate at distances up to 7-9 feet. There
-    are two styles of sensors in common use, some that use two transducers (a microphone
-    and a speaker) and those that use a single transducer. The commonly used single
-    transducer sensor is supplied by Maxbotics and uses an analog connection to the robot.
-    </p>
-    <p>
-        The sensor implemented by this class is the double transducer style with two digital I/O
-        connections to the robot, one (output) to cause the sensor to send a ping and the other
-        (input) to determine the distance to the target.
-    </p>
-    <p>
-        <b>If your application uses the analog sensor, then don't use this class</b>. Instead
-        just use an analog input and refer to the sensor documentation for the mapping
-        between voltage and distance.
-    </p>
+<body>
+  <h1>Ultrasonic</h1>
 
-    <h2>Properties</h2>
+  <center>
+    <img src="../icons/Ultrasonic.png" />
+  </center>
 
-    <dl>
-      <dt>Ping Port (Digital)</dt>
-      <dd>The DIO Port on the roboRIO or MXP that the ping output is plugged into.</dd>
-      <dt>Echo Port (Digital)</dt>
-      <dd>The DIO Port on the roboRIO or MXP that the echo input is plugged into.</dd>
-    </dl>
+  <h2>What is it?</h2>
 
-    <h2>See Also</h2>
-    <ul>
-      <li>
-        <a href="https://en.wikipedia.org/wiki/Ultrasonic_sensor">Wikipedia</a>
-      </li>
-      <li>
-        <a href="https://wpilib.screenstepslive.com/s/4485/m/13809/l/241873-ultrasonic-sensors-measuring-robot-distance-to-a-surface">Ultrasonic on Screensteps</a>
-      </li>
-    </ul>
-  </body>
+  <p>An ultrasonic rangefinder using high frequency sound to
+  determine distance to an object. The rangefinders generally
+  operate at distances up to 7-9 feet. There are two styles of
+  sensors in common use, some that use two transducers (a
+  microphone and a speaker) and those that use a single transducer.
+  The commonly used single transducer sensor is supplied by
+  Maxbotics and uses an analog connection to the robot.</p>
 
+  <p>The sensor implemented by this class is the double transducer
+  style with two digital I/O connections to the robot, one (output)
+  to cause the sensor to send a ping and the other (input) to
+  determine the distance to the target.</p>
+
+  <p><b>If your application uses the analog sensor, then don't use
+  this class</b>. Instead just use an analog input and refer to the
+  sensor documentation for the mapping between voltage and
+  distance.</p>
+
+  <h2>Properties</h2>
+
+  <dl>
+    <dt>Ping Port (Digital)</dt>
+
+    <dd>The DIO Port on the roboRIO or MXP that the ping output is
+    plugged into.</dd>
+
+    <dt>Echo Port (Digital)</dt>
+
+    <dd>The DIO Port on the roboRIO or MXP that the echo input is
+    plugged into.</dd>
+  </dl>
+
+  <h2>See Also</h2>
+
+  <ul>
+    <li><a href=
+    "https://en.wikipedia.org/wiki/Ultrasonic_sensor">Wikipedia</a></li>
+
+    <li><a href=
+    "https://wpilib.screenstepslive.com/s/4485/m/13809/l/241873-ultrasonic-sensors-measuring-robot-distance-to-a-surface">
+    Ultrasonic on Screensteps</a></li>
+  </ul>
+</body>
 </html>

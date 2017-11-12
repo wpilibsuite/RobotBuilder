@@ -1,268 +1,428 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
-  </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-  <body>
-    <h1>Welcome to RobotBuilder</h1>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+<head>
+  <link rel="stylesheet"
+        href="styles.css"
+        type="text/css"
+        media="screen" />
 
-    <p>Currently, there is alot of development going on. For the
-       latest most accurate information, please go
-       to <a href="https://wpilib.screenstepslive.com/s/4485">screenstepslive.com</a>. Once
-       that documentation settles down, we hope to include it
-       here.</p>
+  <title>Introduction</title>
+</head>
 
-    <h2>What is it?</h2>
-    <p>RobotBuilder is an application designed to aid the robot
-       development process. Robot builder can help you:</p>
-    <ul>
-      <li>Generating boilerplate code.</li>
-      <li>Organize your robot and figure out what its key subsystems are.</li>
-      <li>Check that you have enough channels for all of your sensors and actuators.</li>
-      <li>Generate wiring diagrams.</li>
-      <li>Easily modify your operator interface.</li>
-      <li>More...</li>
-    </ul>
+<body>
+  <h1>Welcome to RobotBuilder</h1>
 
-    <h2>Getting Started</h2>
-    <p>This section will take you through the basics of using
-       RobotBuilder to develop a simple robot with tank drive. We will
-       cover:</p>
-    <ul>
-      <li>Subsystems: The physical parts of your robot.</li>
-      <li>Commands: The actions your robot can perform.</li>
-      <li>Operator Interface: How your drivers interact with the robot.</li>
-      <li>Generating boilerplate code.</li>
-      <li>Generating wiring diagrams.</li>
-    </ul>
+  <p>Currently, there is alot of development going on. For the
+  latest most accurate information, please go to <a href=
+  "https://wpilib.screenstepslive.com/s/4485">screenstepslive.com</a>.
+  Once that documentation settles down, we hope to include it
+  here.</p>
 
-    <h3>Subsystems</h3>
+  <h2>What is it?</h2>
 
-    <p>Subsystems are RobotBuilders way of organizing your robot. A
-       subsystem should represent a distinct part of the robot that
-       performs a particular subset of tasks. For example, a Drive
-       Train consists of a series of motors that drive it and maybe
-       some encoders to measure it's speed and distance. For more,
-       see: <a href="Subsystem.html">Subsystems</a>
-       and <a href="Subsystem.html">Subsystem</a>
+  <p>RobotBuilder is an application designed to aid the robot
+  development process. Robot builder can help you:</p>
 
-    <h4>Creating the Drive Train</h4>
-    <p>The first step on the way to a fully functional subsystem is to
-       create the subsystem, so that it exists in your robot tree.</p>
-    <p class="lead">To create the Drive Train subsystem:</p>
-    <ol>
-      <li>Click on "Subsystem" in the palette on the left.</li>
-      <li>Drag it over Subsystems in the robot tree and release.</li>
+  <ul>
+    <li>Generating boilerplate code.</li>
+
+    <li>Organize your robot and figure out what its key subsystems
+    are.</li>
+
+    <li>Check that you have enough channels for all of your sensors
+    and actuators.</li>
+
+    <li>Generate wiring diagrams.</li>
+
+    <li>Easily modify your operator interface.</li>
+
+    <li>More...</li>
+  </ul>
+
+  <h2>Getting Started</h2>
+
+  <p>This section will take you through the basics of using
+  RobotBuilder to develop a simple robot with tank drive. We will
+  cover:</p>
+
+  <ul>
+    <li>Subsystems: The physical parts of your robot.</li>
+
+    <li>Commands: The actions your robot can perform.</li>
+
+    <li>Operator Interface: How your drivers interact with the
+    robot.</li>
+
+    <li>Generating boilerplate code.</li>
+
+    <li>Generating wiring diagrams.</li>
+  </ul>
+
+  <h3>Subsystems</h3>
+
+  <p>Subsystems are RobotBuilders way of organizing your robot. A
+  subsystem should represent a distinct part of the robot that
+  performs a particular subset of tasks. For example, a Drive Train
+  consists of a series of motors that drive it and maybe some
+  encoders to measure it's speed and distance. For more, see:
+  <a href="Subsystem.html">Subsystems</a> and <a href=
+  "Subsystem.html">Subsystem</a></p>
+
+  <h4>Creating the Drive Train</h4>
+
+  <p>The first step on the way to a fully functional subsystem is
+  to create the subsystem, so that it exists in your robot
+  tree.</p>
+
+  <p class="lead">To create the Drive Train subsystem:</p>
+
+  <ol>
+    <li>Click on "Subsystem" in the palette on the left.</li>
+
+    <li>Drag it over Subsystems in the robot tree and release.
+
       <p>A new subystem has been created.</p>
-    </ol>
+    </li>
+  </ol>
 
-    <h4>Naming the Drive Train</h4>
-    <p>After you have a subsytem created, it is very helpful to give
-       it a name.</p>
-    <p class="lead">To name the subsystem:</p>
-    <ol>
-      <li>Click on the newly created "Subsystem".</li>
+  <h4>Naming the Drive Train</h4>
+
+  <p>After you have a subsytem created, it is very helpful to give
+  it a name.</p>
+
+  <p class="lead">To name the subsystem:</p>
+
+  <ol>
+    <li>Click on the newly created "Subsystem".
+
       <p>It's properties will appear on the right.</p>
-      <li>Double click the cell to the right of name, that contains "Subsystem".</li>
-      <li>Edit it to read "Drive Train".</li>
-      <p>It's new name appears in the tree.</p>
-    </ol>
+    </li>
 
-    <h4>Adding a Robot Drive to the Drive Train</h4>
-    <p>The easiest way to make your robot drive is to us the
-       RobotDrive object in WPILib. It provides methods for tank
-       drive, arcade drive and mecanum drive.</p>
-    <p class="lead">To add a robot drive to your Drive Train:</p>
-    <ol>
-      <li>Click on "Robot Drive 2" in the palette on the left.</li>
-      <li>Drag it over "Drive Train" in the robot tree and release.</li>
+    <li>Double click the cell to the right of name, that contains
+    "Subsystem".</li>
+
+    <li>Edit it to read "Drive Train".
+
+      <p>It's new name appears in the tree.</p>
+    </li>
+  </ol>
+
+  <h4>Adding a Robot Drive to the Drive Train</h4>
+
+  <p>The easiest way to make your robot drive is to us the
+  RobotDrive object in WPILib. It provides methods for tank drive,
+  arcade drive and mecanum drive.</p>
+
+  <p class="lead">To add a robot drive to your Drive Train:</p>
+
+  <ol>
+    <li>Click on "Robot Drive 2" in the palette on the left.</li>
+
+    <li>Drag it over "Drive Train" in the robot tree and release.
+
       <p>Your Drive Train now has a robot drive object.</p>
-      <li>Rename it to "Robot Drive", the same way you renamed the "Drive Train".</li>
-    </ol>
+    </li>
 
-    <h4>Adding Motors to the Robot Drive</h4>
-    <p>The RobotDrive object needs motors for both it's left and and
-       it's right side.</p>
-    <p class="lead">To add motors to your robot drive:</p>
-    <ol>
-      <li>Click on "Jaguar" in the palette on the left.</li>
-      <li>Drag it over "Robot Drive" in the robot tree and release.</li>
-      <li>Rename it to "Left Jaguar", the same way you renamed the "Drive Train".</li>
-      <li>Click on "Jaguar" in the palette on the left.</li>
-      <li>Drag it over "Robot Drive" in the robot tree and release.</li>
-      <li>Rename it to "Right Jaguar", the same way you renamed the "Drive Train".</li>
-    </ol>
+    <li>Rename it to "Robot Drive", the same way you renamed the
+    "Drive Train".</li>
+  </ol>
 
-    <h4>Checking That the Motors are Correctly Assigned</h4>
-    <p>The RobotDrive object tries to guess which motors are which,
-       but it's helpful to check that they are correctly assigned to
-       the proper side.</p>
-    <p class="lead">To add motors to your robot drive:</p>
-    <ol>
-      <li>Click on "Robot Drive".</li>
-      <li>Make sure that the "Left Motor" property is set to "Left Jaguar", if not click on it and select "Left Jaguar".</li>
-      <li>Make sure that the "Right Motor" property is set to "Right Jaguar", if not click on it and select "Right Jaguar".</li>
-    </ol>
+  <h4>Adding Motors to the Robot Drive</h4>
 
-    <p>You now have a subsystem representing your robots Drive Train!</p>
+  <p>The RobotDrive object needs motors for both it's left and and
+  it's right side.</p>
 
-    <h3>Commands</h3>
+  <p class="lead">To add motors to your robot drive:</p>
 
-    <p>Commands are a way of representing actions that your robot can
-       take. Commands can be bound to buttons and other triggers to
-       run under certain conditions. They can also be chained
-       in <a href="Command Group.html">command groups</a> to perform a
-       more complex series of actions built from existing
-       commands. For more, see: <a href="Commands.html">Commands</a>
-       and <a href="Command.html">Command</a></p>
+  <ol>
+    <li>Click on "Jaguar" in the palette on the left.</li>
 
-    <h4>Creating the Tank Drive Command</h4>
-    <p>The first step to create a command is to add it to the robot
-       tree under commands.</p>
-    <p class="lead">To create the command:</p>
-    <ol>
-      <li>Click on "Command" in the palette on the left.</li>
-      <li>Drag it over Commands in the robot tree and release.</li>
+    <li>Drag it over "Robot Drive" in the robot tree and
+    release.</li>
+
+    <li>Rename it to "Left Jaguar", the same way you renamed the
+    "Drive Train".</li>
+
+    <li>Click on "Jaguar" in the palette on the left.</li>
+
+    <li>Drag it over "Robot Drive" in the robot tree and
+    release.</li>
+
+    <li>Rename it to "Right Jaguar", the same way you renamed the
+    "Drive Train".</li>
+  </ol>
+
+  <h4>Checking That the Motors are Correctly Assigned</h4>
+
+  <p>The RobotDrive object tries to guess which motors are which,
+  but it's helpful to check that they are correctly assigned to the
+  proper side.</p>
+
+  <p class="lead">To add motors to your robot drive:</p>
+
+  <ol>
+    <li>Click on "Robot Drive".</li>
+
+    <li>Make sure that the "Left Motor" property is set to "Left
+    Jaguar", if not click on it and select "Left Jaguar".</li>
+
+    <li>Make sure that the "Right Motor" property is set to "Right
+    Jaguar", if not click on it and select "Right Jaguar".</li>
+  </ol>
+
+  <p>You now have a subsystem representing your robots Drive
+  Train!</p>
+
+  <h3>Commands</h3>
+
+  <p>Commands are a way of representing actions that your robot can
+  take. Commands can be bound to buttons and other triggers to run
+  under certain conditions. They can also be chained in <a href=
+  "Command%20Group.html">command groups</a> to perform a more
+  complex series of actions built from existing commands. For more,
+  see: <a href="Commands.html">Commands</a> and <a href=
+  "Command.html">Command</a></p>
+
+  <h4>Creating the Tank Drive Command</h4>
+
+  <p>The first step to create a command is to add it to the robot
+  tree under commands.</p>
+
+  <p class="lead">To create the command:</p>
+
+  <ol>
+    <li>Click on "Command" in the palette on the left.</li>
+
+    <li>Drag it over Commands in the robot tree and release.
+
       <p>A new command has been created.</p>
-    </ol>
+    </li>
+  </ol>
 
-    <h4>Naming the Tank Drive Command</h4>
-    <p>After you have a command created, it is very helpful to give
-       it a meaningful name.</p>
-    <p class="lead">To name the command:</p>
-    <ol>
-      <li>Click on the newly created "Command".</li>
+  <h4>Naming the Tank Drive Command</h4>
+
+  <p>After you have a command created, it is very helpful to give
+  it a meaningful name.</p>
+
+  <p class="lead">To name the command:</p>
+
+  <ol>
+    <li>Click on the newly created "Command".
+
       <p>It's properties will appear on the right.</p>
-      <li>Double click the cell to the right of name, that contains "Command".</li>
-      <li>Edit it to read "Tank Drive".</li>
+    </li>
+
+    <li>Double click the cell to the right of name, that contains
+    "Command".</li>
+
+    <li>Edit it to read "Tank Drive".
+
       <p>It's new name appears in the tree.</p>
-    </ol>
+    </li>
+  </ol>
 
-    <h4>Requiring the Drive Train</h4>
-    <p>After you have a command created and named, you must indicate
-       which subsystem it requires.</p>
-    <p class="lead">To require a subsystem:</p>
-    <ol>
-      <li>Click on the "Tank Drive".</li>
+  <h4>Requiring the Drive Train</h4>
+
+  <p>After you have a command created and named, you must indicate
+  which subsystem it requires.</p>
+
+  <p class="lead">To require a subsystem:</p>
+
+  <ol>
+    <li>Click on the "Tank Drive".
+
       <p>It's properties will appear on the right.</p>
-      <li>Click the cell to the right of requires, that contains "None".</li>
-      <li>Select "Drive Train".</li>
-    </ol>
+    </li>
 
-    <h4>Creating the Slow Tank Drive Command</h4>
-    <p>Follow the steps above to create a command named "Slow Tank Drive"</p>
+    <li>Click the cell to the right of requires, that contains
+    "None".</li>
 
-    <h4>Setting the Default Command for Drive Train</h4>
-    <p>Subsystems can have default commands that run when no other
-       command is running that performs the default behaviour.</p>
-    <p class="lead">To set the default command:</p>
-    <ol>
-      <li>Click on the "Drive Train".</li>
+    <li>Select "Drive Train".</li>
+  </ol>
+
+  <h4>Creating the Slow Tank Drive Command</h4>
+
+  <p>Follow the steps above to create a command named "Slow Tank
+  Drive"</p>
+
+  <h4>Setting the Default Command for Drive Train</h4>
+
+  <p>Subsystems can have default commands that run when no other
+  command is running that performs the default behaviour.</p>
+
+  <p class="lead">To set the default command:</p>
+
+  <ol>
+    <li>Click on the "Drive Train".
+
       <p>It's properties will appear on the right.</p>
-      <li>Click the cell to the right of default command, that contains "None".</li>
-      <li>Select "Tank Drive".</li>
-    </ol>
+    </li>
 
-    <h3>Operator Interface</h3>
+    <li>Click the cell to the right of default command, that
+    contains "None".</li>
 
-    <p>The operator interface is the glue that connects the buttons on
-       the operator interface to the commands that make the robot act
-       in interesting ways. For more, see: <a href="OI.html">Operator
-       Interface</a></p>
+    <li>Select "Tank Drive".</li>
+  </ol>
 
-    <h4>Adding Joysticks to the Operator Interface</h4>
-    <p>The operator interface needs some joysticks to control driving
-       and other commands.</p>
-    <p class="lead">To add joysticks to the operator interface:</p>
-    <ol>
-      <li>Click on "Joystick" in the palette on the left.</li>
-      <li>Drag it over "Operator Interface" in the robot tree and release.</li>
-      <li>Rename it to "Left Joystick".</li>
-      <li>Check that it is Number 0.</li>
-      <li>Click on "Joystick" in the palette on the left.</li>
-      <li>Drag it over "Operator Interface" in the robot tree and release.</li>
-      <li>Rename it to "Right Joystick".</li>
-      <li>Check that it is Number 1.</li>
-    </ol>
+  <h3>Operator Interface</h3>
 
-    <h4>Adding a Joystick Button to the Operator Interface</h4>
-    <p>Joystick buttons allow you to bind actions to buttons on a joystick.</p>
-    <p class="lead">To add a joystick button to the operator interface:</p>
-    <ol>
-      <li>Click on "Joystick Button" in the palette on the left.</li>
-      <li>Drag it over "Operator Interface" in the robot tree and release.</li>
-      <li>Rename it to "Slow Tank Drive Button".</li>
-    </ol>
+  <p>The operator interface is the glue that connects the buttons
+  on the operator interface to the commands that make the robot act
+  in interesting ways. For more, see: <a href="OI.html">Operator
+  Interface</a></p>
 
-    <h4>Configuring the Joystick Button</h4>
-    <p>For the joystick button to do anything interesting, you have to
-       configure it to run a command.</p>
-    <p class="lead">To configure a joystick button:</p>
-    <ol>
-      <li>Click on "Slow Tank Drive Button" in the robot tree.</li>
+  <h4>Adding Joysticks to the Operator Interface</h4>
+
+  <p>The operator interface needs some joysticks to control driving
+  and other commands.</p>
+
+  <p class="lead">To add joysticks to the operator interface:</p>
+
+  <ol>
+    <li>Click on "Joystick" in the palette on the left.</li>
+
+    <li>Drag it over "Operator Interface" in the robot tree and
+    release.</li>
+
+    <li>Rename it to "Left Joystick".</li>
+
+    <li>Check that it is Number 0.</li>
+
+    <li>Click on "Joystick" in the palette on the left.</li>
+
+    <li>Drag it over "Operator Interface" in the robot tree and
+    release.</li>
+
+    <li>Rename it to "Right Joystick".</li>
+
+    <li>Check that it is Number 1.</li>
+  </ol>
+
+  <h4>Adding a Joystick Button to the Operator Interface</h4>
+
+  <p>Joystick buttons allow you to bind actions to buttons on a
+  joystick.</p>
+
+  <p class="lead">To add a joystick button to the operator
+  interface:</p>
+
+  <ol>
+    <li>Click on "Joystick Button" in the palette on the left.</li>
+
+    <li>Drag it over "Operator Interface" in the robot tree and
+    release.</li>
+
+    <li>Rename it to "Slow Tank Drive Button".</li>
+  </ol>
+
+  <h4>Configuring the Joystick Button</h4>
+
+  <p>For the joystick button to do anything interesting, you have
+  to configure it to run a command.</p>
+
+  <p class="lead">To configure a joystick button:</p>
+
+  <ol>
+    <li>Click on "Slow Tank Drive Button" in the robot tree.
+
       <p>It's properties will appear on the right.</p>
-      <li>Click the cell to the right of joystick, that contains "None".</li>
-      <li>Select "Left Joystick".</li>
-      <li>Click the cell to the right of button.</li>
-      <li>Select "1".</li>
-      <li>Click the cell to the right of Command, that contains "None".</li>
-      <li>Select "Slow Tank Drive".</li>
-      <li>Click the cell to the right of when to run.</li>
-      <li>Select "whileHeld".</li>
-    </ol>
+    </li>
 
-    <h3>Generating Code</h3>
+    <li>Click the cell to the right of joystick, that contains
+    "None".</li>
 
-    <p>Once you've filled in RobotBuilder with the information you
-       want, it can generate all of the important files and the bulk
-       of code for an existing java project</p>
+    <li>Select "Left Joystick".</li>
 
-    <h4>Telling RobotBuilder Where to put the Project</h4>
-    <p>In order to export to java, RobotBuilder needs to know where
-       your java project should be.</p>
-    <p class="lead">To tell RobotBuilder about the java project:</p>
-    <ol>
-      <li>Select the root of your robot tree.</li>
-      <li>Select the folder for the Java Project property.</li>
-    </ol>
+    <li>Click the cell to the right of button.</li>
 
-    <h4>Exporting to Java</h4>
-    <p>RobotBuilder can generate the skeleton robot code from your
-       robot model for you.</p>
-    <p class="lead">To generate the code with RobotBuilder for java:</p>
-    <ol>
-      <li>Open up RobotBuilder.</li>
-      <li>Click Generate > Java.</li>
-    </ol>
+    <li>Select "1".</li>
 
-    <h3>Generating Wiring Tables</h3>
+    <li>Click the cell to the right of Command, that contains
+    "None".</li>
 
-    <p>RobotBuilder can generate wiring tables to simplify wiring of
-       the robot.</p>
+    <li>Select "Slow Tank Drive".</li>
 
-    <h4>Telling RobotBuilder Where to put the Table</h4>
-    <p>In order to export th table, RobotBuilder needs to know where
-       to put it.</p>
-    <p class="lead">To tell RobotBuilder where to put the wiring table:</p>
-    <ol>
-      <li>Open up RobotBuilder.</li>
-      <li>Select the root of your robot tree.</li>
-      <li>Click where it says "Click to Select" next to "wiring file location".</li>
-      <li>Select or create a file to export to.</li>
-    </ol>
+    <li>Click the cell to the right of when to run.</li>
 
-    <h4>Exporting to a Wiring Table</h4>
-    <p>RobotBuilder can generate a wiring table for you.</p>
-    <p class="lead">To generate the wiring with RobotBuilder :</p>
-    <ol>
-      <li>Open up RobotBuilder.</li>
-      <li>Click Generate > Wiring Table.</li>
-    </ol>
+    <li>Select "whileHeld".</li>
+  </ol>
 
-    <h3>Filling in the Code</h3>
+  <h3>Generating Code</h3>
 
-    <p>RobotBuilder is an application designed to aid the robot
-       development process. Robot builder can help you:</p>
+  <p>Once you've filled in RobotBuilder with the information you
+  want, it can generate all of the important files and the bulk of
+  code for an existing java project</p>
 
-  </body>
+  <h4>Telling RobotBuilder Where to put the Project</h4>
+
+  <p>In order to export to java, RobotBuilder needs to know where
+  your java project should be.</p>
+
+  <p class="lead">To tell RobotBuilder about the java project:</p>
+
+  <ol>
+    <li>Select the root of your robot tree.</li>
+
+    <li>Select the folder for the Java Project property.</li>
+  </ol>
+
+  <h4>Exporting to Java</h4>
+
+  <p>RobotBuilder can generate the skeleton robot code from your
+  robot model for you.</p>
+
+  <p class="lead">To generate the code with RobotBuilder for
+  java:</p>
+
+  <ol>
+    <li>Open up RobotBuilder.</li>
+
+    <li>Click Generate &gt; Java.</li>
+  </ol>
+
+  <h3>Generating Wiring Tables</h3>
+
+  <p>RobotBuilder can generate wiring tables to simplify wiring of
+  the robot.</p>
+
+  <h4>Telling RobotBuilder Where to put the Table</h4>
+
+  <p>In order to export th table, RobotBuilder needs to know where
+  to put it.</p>
+
+  <p class="lead">To tell RobotBuilder where to put the wiring
+  table:</p>
+
+  <ol>
+    <li>Open up RobotBuilder.</li>
+
+    <li>Select the root of your robot tree.</li>
+
+    <li>Click where it says "Click to Select" next to "wiring file
+    location".</li>
+
+    <li>Select or create a file to export to.</li>
+  </ol>
+
+  <h4>Exporting to a Wiring Table</h4>
+
+  <p>RobotBuilder can generate a wiring table for you.</p>
+
+  <p class="lead">To generate the wiring with RobotBuilder :</p>
+
+  <ol>
+    <li>Open up RobotBuilder.</li>
+
+    <li>Click Generate &gt; Wiring Table.</li>
+  </ol>
+
+  <h3>Filling in the Code</h3>
+
+  <p>RobotBuilder is an application designed to aid the robot
+  development process. Robot builder can help you:</p>
+</body>
 </html>

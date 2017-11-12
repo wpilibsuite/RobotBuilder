@@ -1,41 +1,73 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
-  </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-  <body>
-      <h1>Operator Interface</h1>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+<head>
+  <link rel="stylesheet"
+        href="styles.css"
+        type="text/css"
+        media="screen" />
 
-      <center><img src="../icons/oi background.png" /></center>
+  <title>Operator Interface</title>
+</head>
 
-    <h2>What is it?</h2>
-      <p>The OI is the operator interface. It connects the buttons and
-         joysticks that the operator uses to the commands which they
-         should trigger.  The buttons in the OI make it really easy to
-         change the functions that each button performs as you test
-         the code and add new commands to make the operators job
-         easier.</p>
+<body>
+  <h1>Operator Interface</h1>
 
-    <h2>What types of buttons are there?</h2>
-      <p>There are a number of buttons that can be used to trigger
-        commands.</p>
+  <center>
+    <img src="../icons/oi%20background.png" />
+  </center>
 
-      <table>
-	<tr><th>Button</th>
-	  <th>Class</th></tr>
-	<tr><td>JoystickButton</td>
-	  <td>A button on a joystick. This is probably the most useful
-              type of button.</td></tr>
-	<tr><td>InternalButton</td>
-	  <td>A virtual button that can be triggered in code or put on
-              the SmartDashboard.</td></tr>
-	<tr><td>NetworkButton</td>
-	  <td>A button that is triggered by a value on a network
-             table. This is useful for allowing code not on the roboRIO
-             to trigger commands.</td></tr>
-	<tr><td>Custom</td>
-	  <td>Custom buttons can be created by subclassing
-              Button and overriding the isPressed method.</td></tr>
-      </table>
-  </body>
+  <h2>What is it?</h2>
+
+  <p>The OI is the operator interface. It connects the buttons and
+  joysticks that the operator uses to the commands which they
+  should trigger. The buttons in the OI make it really easy to
+  change the functions that each button performs as you test the
+  code and add new commands to make the operators job easier.</p>
+
+  <h2>What types of buttons are there?</h2>
+
+  <p>There are a number of buttons that can be used to trigger
+  commands.</p>
+
+  <table>
+    <tr>
+      <th>Button</th>
+
+      <th>Class</th>
+    </tr>
+
+    <tr>
+      <td>JoystickButton</td>
+
+      <td>A button on a joystick. This is probably the most useful
+      type of button.</td>
+    </tr>
+
+    <tr>
+      <td>InternalButton</td>
+
+      <td>A virtual button that can be triggered in code or put on
+      the SmartDashboard.</td>
+    </tr>
+
+    <tr>
+      <td>NetworkButton</td>
+
+      <td>A button that is triggered by a value on a network table.
+      This is useful for allowing code not on the roboRIO to
+      trigger commands.</td>
+    </tr>
+
+    <tr>
+      <td>Custom</td>
+
+      <td>Custom buttons can be created by subclassing Button and
+      overriding the isPressed method.</td>
+    </tr>
+  </table>
+</body>
 </html>

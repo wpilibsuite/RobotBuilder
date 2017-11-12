@@ -1,68 +1,87 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
-  </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-  <body>
-      <h1>Limit Switch</h1>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+<head>
+  <link rel="stylesheet"
+        href="styles.css"
+        type="text/css"
+        media="screen" />
 
-      <center><img src="../icons/Limit Switch.png" /></center>
+  <title>Limit Switch</title>
+</head>
 
-    <h2>What is it?</h2>
-    <p>A limit switch is a simple digital input that can be in one of
-    two states: pressed or released (aka on and off). The states are
-    determined by whether or not the physical switch is being pressed</p>
+<body>
+  <h1>Limit Switch</h1>
 
+  <center>
+    <img src="../icons/Limit%20Switch.png" />
+  </center>
 
-    <h2>Properties</h2>
+  <h2>What is it?</h2>
 
-    <dl>
-      <dt>Input Port (Digital)</dt>
-      <dd>The DIO Port on the roboRIO or MXP that this limit switch is plugged into.</dd>
-    </dl>
+  <p>A limit switch is a simple digital input that can be in one of
+  two states: pressed or released (aka on and off). The states are
+  determined by whether or not the physical switch is being
+  pressed</p>
 
-    <h2>Applications</h2>
+  <h2>Properties</h2>
 
-    <h3>Limiting movement</h3>
-    <p>Limit switches can be used to prevent a manipulator from going
-       too far. To do this, the limit switch is placed near the end of
-       the desired motion in a way that guarantees that it gets
-       pressed at the point you want the manipulator to stop. When the
-       code detects the limit switch, it limits the motion of the
-       actuator so that it cannot move any farther in that
-       direction.</p>
+  <dl>
+    <dt>Input Port (Digital)</dt>
 
-    <h3>Detecting Objects</h3>
-    <p>Limit switches can be placed such that they detect a game piece
-       pressing against it. The robot can then react to the game piece
-       in some way, such as closing a claw to grab it.</p>
+    <dd>The DIO Port on the roboRIO or MXP that this limit switch
+    is plugged into.</dd>
+  </dl>
 
-    <h2>Usage</h2>
+  <h2>Applications</h2>
 
-    <h3>Mounting</h3>
+  <h3>Limiting movement</h3>
 
-    <p>Use the two holes to secure the sensor in place such that it is reliably pressed.</p>
+  <p>Limit switches can be used to prevent a manipulator from going
+  too far. To do this, the limit switch is placed near the end of
+  the desired motion in a way that guarantees that it gets pressed
+  at the point you want the manipulator to stop. When the code
+  detects the limit switch, it limits the motion of the actuator so
+  that it cannot move any farther in that direction.</p>
 
-    <h3>Wiring</h3>
+  <h3>Detecting Objects</h3>
 
-    <p>The white wire (signal wire) of a PWM cable connects to one pin
-       on the sensor. The black wire (ground wire) of a PWM cable
-       connects to the other pin on the sensor.</p>
-    <p>The other end of the PWM cable plugs into the DIO on the
-       roboRIO or MXP specified by the properties</p>
+  <p>Limit switches can be placed such that they detect a game
+  piece pressing against it. The robot can then react to the game
+  piece in some way, such as closing a claw to grab it.</p>
 
-    <h2>See Also</h2>
-    <ul>
-      <li>
-        <a href="https://en.wikipedia.org/wiki/Limit_switch">Wikipedia</a>
-      </li>
-      <li>
-        <a href="http://www.usfirst.org/uploadedFiles/Robotics_Programs/FRC/Game_and_Season__Info/2011_Assets/Kit_of_Parts/Honeywell%20Microswitch.pdf">FIRST KOP Datasheet</a>
-      </li>
-      <li>
-        <a href="https://wpilib.screenstepslive.com/s/4485/m/13809/l/241867-switches-using-limit-switches-to-control-behavior">Switches at Screensteps</a>
-      </li>
-    </ul>
-  </body>
+  <h2>Usage</h2>
 
+  <h3>Mounting</h3>
+
+  <p>Use the two holes to secure the sensor in place such that it
+  is reliably pressed.</p>
+
+  <h3>Wiring</h3>
+
+  <p>The white wire (signal wire) of a PWM cable connects to one
+  pin on the sensor. The black wire (ground wire) of a PWM cable
+  connects to the other pin on the sensor.</p>
+
+  <p>The other end of the PWM cable plugs into the DIO on the
+  roboRIO or MXP specified by the properties</p>
+
+  <h2>See Also</h2>
+
+  <ul>
+    <li><a href=
+    "https://en.wikipedia.org/wiki/Limit_switch">Wikipedia</a></li>
+
+    <li><a href=
+    "http://www.usfirst.org/uploadedFiles/Robotics_Programs/FRC/Game_and_Season__Info/2011_Assets/Kit_of_Parts/Honeywell%20Microswitch.pdf">
+    FIRST KOP Datasheet</a></li>
+
+    <li><a href=
+    "https://wpilib.screenstepslive.com/s/4485/m/13809/l/241867-switches-using-limit-switches-to-control-behavior">
+    Switches at Screensteps</a></li>
+  </ul>
+</body>
 </html>

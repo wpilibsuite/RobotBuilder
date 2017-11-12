@@ -1,156 +1,215 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
-  </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-  <body>
-    <h1>PID Controller</h1>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+<head>
+  <link rel="stylesheet"
+        href="styles.css"
+        type="text/css"
+        media="screen" />
 
-    <center><img src="images/PID Controller.png" />
-      <p class="attribution">Credit <a href="https://en.wikipedia.org/wiki/File:PID_en.svg">Arturo
-      Urquizo</a></p></center>
+  <title>PID Controller</title>
+</head>
 
-    <h2>What is it?</h2>
-    <p>A PID Controller implements the PID control algorithm. The PID
-       control is a useful form of control loop in robotics. It
-       simplifies control of a mechanism by creating a system that you
-       can tell to go to some setpoint and it takes care of automatically
-       moving to that setpoint and maintaining that setpoint as long
-       as the PID loop is tuned.</p>
+<body>
+  <h1>PID Controller</h1>
 
-    <p>There are 4 important constants that influence the behavior of
-       the PID Controller, by setting any of these to 0, you can
-       ignore that coefficient and use a simpler controller if it
-       meets your needs. The 4 constants are the proportional, integral,
-	   derivative, and forcing constants which are explained below.</p>
+  <center>
+    <img src="images/PID%20Controller.png" />
 
-    <h3>The Proportional Term</h3>
-    <p>The proportional control constant of the PID loop is often
-       referred to as P or kP. It is the simplest parameter to use and
-       in many cases when using PID you really only need the
-       proportional constant. The proportional term is very simple,
-       you know where you are and where you want to be (i.e. the setpoint),
-       so you just take the difference and multiply by kP which acts
-       as a scaling factor.</p>
+    <p class="attribution">Credit <a href=
+    "https://en.wikipedia.org/wiki/File:PID_en.svg">Arturo
+    Urquizo</a></p>
+  </center>
 
-    <h3>The Integral Term</h3>
-    <p>The integral control constant of the PID loop is often referred
-       to as I or kI. It is useful for overcoming unexpected
-       resistance that would stop a simple loop using only the
-       proportional constant. The integral term represents the area
-       under the curve of the error over time. You know where you are
-       and where you want to be (the setpoint), so you just add this
-       up over time and multiply by kI which acts as another scaling factor.</p>
+  <h2>What is it?</h2>
 
-    <h3>The Derivative Term</h3>
-    <p>The derivative control constant of the PID loop is often
-       referred to is D or kD. It is useful for preventing oscillation
-       that otherwise occurs in a control loop. Derivative is the rate
-       of change of the error over time. You know where you are and
-       where you want to be (the setpoint), and you know this from the
-       past time, so you take the setpoint difference, divide by the time
-       difference and as always multiply by a scaling factor. The scaling factor
-	   in this case is kD.</p>
+  <p>A PID Controller implements the PID control algorithm. The PID
+  control is a useful form of control loop in robotics. It
+  simplifies control of a mechanism by creating a system that you
+  can tell to go to some setpoint and it takes care of
+  automatically moving to that setpoint and maintaining that
+  setpoint as long as the PID loop is tuned.</p>
 
-    <h3>The Forcing Term</h3>
-    <p>The forcing control constant of the PID loop is often referred
-       to as F or kF. It is used as the feed forward term and is very
-       useful for velocity PID. TODO: Fill in</p>
+  <p>There are 4 important constants that influence the behavior of
+  the PID Controller, by setting any of these to 0, you can ignore
+  that coefficient and use a simpler controller if it meets your
+  needs. The 4 constants are the proportional, integral,
+  derivative, and forcing constants which are explained below.</p>
 
-    <h2>Properties</h2>
+  <h3>The Proportional Term</h3>
 
-    <dl>
-      <dt>Name</dt>
-      <dd>The name of this PID Controller.</dd>
-      <dt>Send to SmartDashboard</dt>
-      <dd>Whether or not to send this PID Controller to the
-          SmartDashboard for easy tuning and viewing.</dd>
-      <dt>Input</dt>
-      <dd>The sensor that tells the PID loop where it is.</dd>
-      <dt>Output</dt>
-      <dd>The actuator that controls movement of the mechanism.</dd>
-      <dt>P</dt>
-      <dd>The proportional constant for this PID Controller.</dd>
-      <dt>I</dt>
-      <dd>The integral constant for this PID Controller.</dd>
-      <dt>D</dt>
-      <dd>The derivative constant for this PID Controller.</dd>
-      <dt>F</dt>
-      <dd>The forcing constant for this PID Controller.</dd>
-      <dt>Tolerance</dt>
-      <dd>How close is close enough for the PID Controller to be
-          considered on target, or at the right location.</dd>
-      <dt>Period</dt>
-      <dd>The loop time for doing calculations. This particularly
-          effects calculations of the integral and differential
-          terms. The default is 20ms.</dd>
-      <dt>Continuous</dt>
-      <dd>When true, the PID controller to consider the input to be
-          continuous. Rather then using the max and min in as
-          constraints, it considers them to be the same point and
-          automatically calculates the shortest route to the
-          setpoint.</dd>
-      <dt>Limit Input</dt>
-      <dd>Whether or not to limit the range of acceptable input
-          values.</dd>
-      <dt>Minimum Input</dt>
-      <dd>The minimum input value, any value lower than this will be
-          considered to have this value.</dd>
-      <dt>Maximum Input</dt>
-      <dd>The maximum input value, any value higher than this will be
-          considered to have this value.</dd>
-      <dt>Limit Output</dt>
-      <dd>Whether or not to limit the range of acceptable output
-          values.</dd>
-      <dt>Minimum Output</dt>
-      <dd>The minimum output value, any output that would have value
-          lower will be output as this value.</dd>
-      <dt>Maximum Output</dt>
-      <dd>The maximum output value, any output that would have value
-          higher will be output as this value.</dd>
-    </dl>
+  <p>The proportional control constant of the PID loop is often
+  referred to as P or kP. It is the simplest parameter to use and
+  in many cases when using PID you really only need the
+  proportional constant. The proportional term is very simple, you
+  know where you are and where you want to be (i.e. the setpoint),
+  so you just take the difference and multiply by kP which acts as
+  a scaling factor.</p>
 
-    <h2>Applications</h2>
+  <h3>The Integral Term</h3>
 
-    <h3>Elevator Control</h3>
-    <p>When setup with an elevator and tuned appropriately, the
-       elevator can be told to go to predetermined heights by setting
-       the setpoint to predetermined values. With this, a press of a
-       button can move the elevator to a known height where it can
-       pickup and place pieces.</p>
+  <p>The integral control constant of the PID loop is often
+  referred to as I or kI. It is useful for overcoming unexpected
+  resistance that would stop a simple loop using only the
+  proportional constant. The integral term represents the area
+  under the curve of the error over time. You know where you are
+  and where you want to be (the setpoint), so you just add this up
+  over time and multiply by kI which acts as another scaling
+  factor.</p>
 
-    <h3>Shooter Control</h3>
-    <p>With a spinning wheel shooter, a PID controller with a forcing
-       term can be used to set the speed of the wheel. When the wheel
-       is spinning at the same speed, it will consistently shoot the
-       same distance. By determining the setpoint for a distance, you
-       can use PID controller to consistently shoot into a basket.</p>
+  <h3>The Derivative Term</h3>
 
-    <h2>Usage</h2>
+  <p>The derivative control constant of the PID loop is often
+  referred to is D or kD. It is useful for preventing oscillation
+  that otherwise occurs in a control loop. Derivative is the rate
+  of change of the error over time. You know where you are and
+  where you want to be (the setpoint), and you know this from the
+  past time, so you take the setpoint difference, divide by the
+  time difference and as always multiply by a scaling factor. The
+  scaling factor in this case is kD.</p>
 
-    <h3>Java</h3>
+  <h3>The Forcing Term</h3>
 
-    <p>Setting the setpoint in java is easy, just call <code>my_pid_controller.setSetpoint(2);</code></p>
+  <p>The forcing control constant of the PID loop is often referred
+  to as F or kF. It is used as the feed forward term and is very
+  useful for velocity PID. TODO: Fill in</p>
 
-    <h3>C++</h3>
+  <h2>Properties</h2>
 
-    <p>Setting the setpoint in C++ is easy, just call <code>my_pid_controller.Setsetpoint(2);</code></p>
+  <dl>
+    <dt>Name</dt>
 
-    <h2>See Also</h2>
-    <ul>
-      <li>
-        <a href="https://wpilib.screenstepslive.com/s/4485/m/26402/l/255452-writing-the-code-for-a-pidsubystem-in-java" >Writing the code for a PIDSubystem in Java</a>
-      </li>
-      <li>
-        <a href="https://wpilib.screenstepslive.com/s/4485/m/26402/l/255447-using-pidsubsystems-to-control-actuators-with-feedback-from-sensors" >Using PIDSubsystems to control a actuators with feedback from sensors</a>
-      </li>
-      <li>
-        <a href="https://en.wikipedia.org/wiki/PID_controller" >Wikipedia</a>
-      </li>
-      <li>
-        <a href="http://www.youtube.com/watch?v=1WLk1_Ye_U8" >WPILIB PID Tuning Video</a>
-      </li>
-    </ul>
-  </body>
+    <dd>The name of this PID Controller.</dd>
 
+    <dt>Send to SmartDashboard</dt>
+
+    <dd>Whether or not to send this PID Controller to the
+    SmartDashboard for easy tuning and viewing.</dd>
+
+    <dt>Input</dt>
+
+    <dd>The sensor that tells the PID loop where it is.</dd>
+
+    <dt>Output</dt>
+
+    <dd>The actuator that controls movement of the mechanism.</dd>
+
+    <dt>P</dt>
+
+    <dd>The proportional constant for this PID Controller.</dd>
+
+    <dt>I</dt>
+
+    <dd>The integral constant for this PID Controller.</dd>
+
+    <dt>D</dt>
+
+    <dd>The derivative constant for this PID Controller.</dd>
+
+    <dt>F</dt>
+
+    <dd>The forcing constant for this PID Controller.</dd>
+
+    <dt>Tolerance</dt>
+
+    <dd>How close is close enough for the PID Controller to be
+    considered on target, or at the right location.</dd>
+
+    <dt>Period</dt>
+
+    <dd>The loop time for doing calculations. This particularly
+    effects calculations of the integral and differential terms.
+    The default is 20ms.</dd>
+
+    <dt>Continuous</dt>
+
+    <dd>When true, the PID controller to consider the input to be
+    continuous. Rather then using the max and min in as
+    constraints, it considers them to be the same point and
+    automatically calculates the shortest route to the
+    setpoint.</dd>
+
+    <dt>Limit Input</dt>
+
+    <dd>Whether or not to limit the range of acceptable input
+    values.</dd>
+
+    <dt>Minimum Input</dt>
+
+    <dd>The minimum input value, any value lower than this will be
+    considered to have this value.</dd>
+
+    <dt>Maximum Input</dt>
+
+    <dd>The maximum input value, any value higher than this will be
+    considered to have this value.</dd>
+
+    <dt>Limit Output</dt>
+
+    <dd>Whether or not to limit the range of acceptable output
+    values.</dd>
+
+    <dt>Minimum Output</dt>
+
+    <dd>The minimum output value, any output that would have value
+    lower will be output as this value.</dd>
+
+    <dt>Maximum Output</dt>
+
+    <dd>The maximum output value, any output that would have value
+    higher will be output as this value.</dd>
+  </dl>
+
+  <h2>Applications</h2>
+
+  <h3>Elevator Control</h3>
+
+  <p>When setup with an elevator and tuned appropriately, the
+  elevator can be told to go to predetermined heights by setting
+  the setpoint to predetermined values. With this, a press of a
+  button can move the elevator to a known height where it can
+  pickup and place pieces.</p>
+
+  <h3>Shooter Control</h3>
+
+  <p>With a spinning wheel shooter, a PID controller with a forcing
+  term can be used to set the speed of the wheel. When the wheel is
+  spinning at the same speed, it will consistently shoot the same
+  distance. By determining the setpoint for a distance, you can use
+  PID controller to consistently shoot into a basket.</p>
+
+  <h2>Usage</h2>
+
+  <h3>Java</h3>
+
+  <p>Setting the setpoint in java is easy, just call
+  <code>my_pid_controller.setSetpoint(2);</code></p>
+
+  <h3>C++</h3>
+
+  <p>Setting the setpoint in C++ is easy, just call
+  <code>my_pid_controller.Setsetpoint(2);</code></p>
+
+  <h2>See Also</h2>
+
+  <ul>
+    <li><a href=
+    "https://wpilib.screenstepslive.com/s/4485/m/26402/l/255452-writing-the-code-for-a-pidsubystem-in-java">
+    Writing the code for a PIDSubystem in Java</a></li>
+
+    <li><a href=
+    "https://wpilib.screenstepslive.com/s/4485/m/26402/l/255447-using-pidsubsystems-to-control-actuators-with-feedback-from-sensors">
+    Using PIDSubsystems to control a actuators with feedback from
+    sensors</a></li>
+
+    <li><a href=
+    "https://en.wikipedia.org/wiki/PID_controller">Wikipedia</a></li>
+
+    <li><a href="http://www.youtube.com/watch?v=1WLk1_Ye_U8">WPILIB
+    PID Tuning Video</a></li>
+  </ul>
+</body>
 </html>

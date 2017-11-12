@@ -1,40 +1,57 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
-  </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-  <body>
-      <h1>Analog Gyro</h1>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+<head>
+  <link rel="stylesheet"
+        href="styles.css"
+        type="text/css"
+        media="screen" />
 
-      <center><img src="../icons/AnalogGyro.png" /></center>
+  <title>Analog Gyro</title>
+</head>
 
-    <h2>What is it?</h2>
-    <p>Use a gyro to return the robots heading relative to a starting
-       position. As the robot rotates the new heading is computed by
-       integrating the rate of rotation returned by the sensor. When
-       the gyro is instantiated, it does a short calibration routine
-       where it samples the gyro while at rest to determine the
-       default offset. This is subtracted from each sample to
-       determine the heading.</p>
+<body>
+  <h1>Analog Gyro</h1>
 
-    <h2>Properties</h2>
+  <center>
+    <img src="../icons/AnalogGyro.png" />
+  </center>
 
-    <dl>
-      <dt>Input Port (Analog)</dt>
-      <dd>The analog input on the roboRIO that this gyro is plugged into.</dd>
-      <dt>Sensitivity</dt>
-      <dd>The sensitivity of this gyro in volts/degree/second.</dd>
-    </dl>
+  <h2>What is it?</h2>
 
-    <h2>See Also</h2>
-    <ul>
-      <li>
-        <a href="https://en.wikipedia.org/wiki/Rate_gyro">Wikipedia</a>
-      </li>
-      <li>
-        <a href="https://wpilib.screenstepslive.com/s/4485/m/13809/l/241871-gyros-measuring-rotation-and-controlling-robot-driving-direction">Gyro on Screensteps</a>
-      </li>
-    </ul>
-  </body>
+  <p>Use a gyro to return the robots heading relative to a starting
+  position. As the robot rotates the new heading is computed by
+  integrating the rate of rotation returned by the sensor. When the
+  gyro is instantiated, it does a short calibration routine where
+  it samples the gyro while at rest to determine the default
+  offset. This is subtracted from each sample to determine the
+  heading.</p>
 
+  <h2>Properties</h2>
+
+  <dl>
+    <dt>Input Port (Analog)</dt>
+
+    <dd>The analog input on the roboRIO that this gyro is plugged
+    into.</dd>
+
+    <dt>Sensitivity</dt>
+
+    <dd>The sensitivity of this gyro in volts/degree/second.</dd>
+  </dl>
+
+  <h2>See Also</h2>
+
+  <ul>
+    <li><a href=
+    "https://en.wikipedia.org/wiki/Rate_gyro">Wikipedia</a></li>
+
+    <li><a href=
+    "https://wpilib.screenstepslive.com/s/4485/m/13809/l/241871-gyros-measuring-rotation-and-controlling-robot-driving-direction">
+    Gyro on Screensteps</a></li>
+  </ul>
+</body>
 </html>
