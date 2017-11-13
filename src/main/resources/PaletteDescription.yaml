@@ -217,6 +217,8 @@ Palette:
             name: Autonomous Command
             type: Command
             default: None
+          - !Parameters
+            name: Autonomous command parameters
           - !IntegerProperty
             name: Team Number
             default: 0
@@ -998,6 +1000,9 @@ Palette:
             default: []
           - !BooleanProperty
             name: Run When Disabled
+            default: false
+          - !BooleanProperty
+            name: Autonomous Selection
             default: false
       - !Component
         name: Instant Command
