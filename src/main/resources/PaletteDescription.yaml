@@ -862,6 +862,9 @@ Palette:
           - !BooleanProperty
             name: Run When Disabled
             default: false
+          - !BooleanProperty
+            name: Autonomous Selection
+            default: false
       - !Component
         name: Command Group
         type: Command
@@ -882,6 +885,9 @@ Palette:
             default: []
           - !BooleanProperty
             name: Run When Disabled
+            default: false
+          - !BooleanProperty
+            name: Autonomous Selection
             default: false
       - !Component
         name: PID Command
@@ -947,6 +953,9 @@ Palette:
           - !DoubleProperty
             name: Maximum Output
             default: 1
+          - !BooleanProperty
+            name: Autonomous Selection
+            default: false
       - !Component
         name: Setpoint Command
         type: Command
@@ -967,6 +976,9 @@ Palette:
           - !ParameterSet
             name: Parameter presets
             default: []
+          - !BooleanProperty
+            name: Autonomous Selection
+            default: false
       - !Component
         name: Timed Command
         type: Command
@@ -989,6 +1001,9 @@ Palette:
           - !BooleanProperty
             name: Run When Disabled
             default: false
+          - !BooleanProperty
+            name: Autonomous Selection
+            default: false
       - !Component
         name: Instant Command
         type: Command
@@ -1009,6 +1024,9 @@ Palette:
             default: []
           - !BooleanProperty
             name: Run When Disabled
+            default: false
+          - !BooleanProperty
+            name: Autonomous Selection
             default: false
       - !Component
         name: Conditional Command
@@ -1034,4 +1052,7 @@ Palette:
             default: true
           - !BooleanProperty
             name: Run When Disabled
+            default: false
+          - !BooleanProperty
+            name: Autonomous Selection
             default: false
