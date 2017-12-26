@@ -270,7 +270,8 @@ class ParameterSetsTable extends JTable {
         if (trimmed.isEmpty()) {
             return false;
         }
-        return getModel().getDataVector().stream()
+        return ParameterDescriptor.isValidParamName(name) &&
+                 getModel().getDataVector().stream()
                 .map(row -> ((List) row).get(0))
                 .noneMatch(n -> name != n && trimmed.equals(n));
     }
