@@ -24,7 +24,8 @@ public class ExportFile {
     private Map<String, String> modifications = new HashMap<>();
     private Map<String, String> vars = new HashMap<>();
 
-    public void export(GenericExporter exporter) throws IOException {
+    public boolean export(GenericExporter exporter) throws IOException {
+        boolean newProject = false;
         // Build the context
         Context fileContext = new VelocityContext(exporter.rootContext);
         if (vars != null) {
@@ -37,6 +38,7 @@ public class ExportFile {
             backup(exporter); // Create a backup for the user!
         } else {
             mkdir(export.getParentFile());
+            newProject = true;
         }
 
         String oldType = CodeFileUtils.getSavedSuperclass(export);
@@ -65,6 +67,7 @@ public class ExportFile {
                 out.write(file);
             }
         }
+        return newProject;
     }
 
     void backup(GenericExporter exporter) throws IOException {
