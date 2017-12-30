@@ -86,27 +86,27 @@ Defaults:
     ClassName: ""
   AnalogInput:
     Construction: "#variable($Name).reset(new ${ClassName}(${Input_Channel_Analog}));"
-    LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddSensor(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
     PID: "#variable($Short_Name)->GetAverageVoltage()"
   AnalogPotentiometer:
     Construction: "#variable($Name).reset(new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset}));"
-    LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddSensor(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
     PID: "#variable($Short_Name)->Get()"
   DigitalInput:
     Construction: "#variable($Name).reset(new ${ClassName}(${Input_Channel_Digital}));"
-    LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddSensor(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
   PWMOutput:
     Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_PWM}));"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
   RelayOutput:
     Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_Relay}));"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
   AnalogOutput:
     Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_AnalogOutput}));"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
   SolenoidOutput:
     Construction: "#variable($Name).reset(new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid}));"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
   OI:
     Export: "OI"
     Declaration: "std::shared_ptr<${ClassName}> #variable($Name);"
@@ -156,7 +156,7 @@ Instructions:
 
           SmartDashboard::PutData("${Name}", #variable($Name).get());#end
 
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
 
   Robot Drive 2:
     Defaults: "Component,None"
@@ -199,6 +199,7 @@ Instructions:
   Speed Controller Group:
     Defaults: "Component,None"
     ClassName: "frc::SpeedControllerGroup"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
     Construction: >-
       #variable($Name) = std::make_shared<${ClassName}>(*#variable($SpeedController1), *#variable($SpeedController2)
       #if(($SpeedController3)), *#variable($SpeedController3)#end #if(($SpeedController4)), *#variable($SpeedController4)#end);
@@ -206,6 +207,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "frc::DifferentialDrive"
     Construction: "#variable($Name).reset(new ${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor)));"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
     Extra: >
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
               #variable($Name)->SetExpiration($Safety_Expiration_Time);
@@ -213,6 +215,7 @@ Instructions:
   Mecanum Drive:
     Defaults: "Component,None"
     ClassName: "frc::MecanumDrive"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
     Construction: >-
       #variable($Name).reset(new ${ClassName}(*#variable($Left_Front_Motor), *#variable($Left_Rear_Motor),
                     *#variable($Right_Front_Motor), *#variable($Right_Rear_Motor)));
@@ -223,6 +226,7 @@ Instructions:
   Killough Drive:
     Defaults: "Component,None"
     ClassName: "frc::KilloughDrive"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
     Construction: >-
       #variable($Name).reset(new ${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor),
                     *#variable($Back_Motor)));
@@ -282,18 +286,18 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "frc::PowerDistributionPanel"
     Construction: "#variable($Name).reset(new ${ClassName}($CAN_ID));"
-    LiveWindow: "lw->AddSensor(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddSensor(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
 
   Speed Controller:
     Defaults: "PWMOutput,Component,None"
     ClassName: "frc::SpeedController"
     Construction: "#variable($Name).reset(new frc::${Type}(${Output_Channel_PWM}));"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", std::static_pointer_cast<frc::${Type}>(#variable($Name)));"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", std::static_pointer_cast<frc::${Type}>(#variable($Name)));"
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "frc::NidecBrushless"
     Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital}));"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "frc::Servo"
@@ -301,7 +305,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "frc::DigitalOutput"
     Construction: "#variable($Name).reset(new ${ClassName}(${Output_Channel_Digital}));"
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
   Spike:
     Defaults: "RelayOutput,Component,None"
     ClassName: "frc::Relay"
@@ -313,6 +317,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "frc::Compressor"
     Construction: "#variable($Name).reset(new ${ClassName}(${PCM_ID}));"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "frc::Solenoid"
@@ -328,7 +333,7 @@ Instructions:
       #end##
 
       #variable($Name).reset(new ${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}));
-    LiveWindow: "lw->AddActuator(\"$Subsystem\", \"$Short_Name\", #variable($Name));"
+    LiveWindow: "lw->AddActuator(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
 
   Joystick:
     Defaults: "OI,None"
