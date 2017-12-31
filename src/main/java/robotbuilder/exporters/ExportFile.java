@@ -37,8 +37,7 @@ public class ExportFile {
         if (export.exists()) {
             backup(exporter); // Create a backup for the user!
         } else {
-            mkdir(export.getParentFile());
-            newProject = true;
+            newProject = mkdir(export.getParentFile());
         }
 
         String oldType = CodeFileUtils.getSavedSuperclass(export);
@@ -122,12 +121,13 @@ public class ExportFile {
      * Make a directory and any directory above it if necessary.
      *
      * @param dir The directory to make
+     * @return true if a directory was created
      */
-    private void mkdir(File dir) {
+    private boolean mkdir(File dir) {
         if (dir.exists()) {
-            return;
+            return false;
         }
         mkdir(dir.getParentFile());
-        dir.mkdir();
+        return dir.mkdir();
     }
 }
