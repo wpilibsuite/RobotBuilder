@@ -120,7 +120,7 @@ public class GenericExporter {
         }
     }
 
-    public void export(RobotTree robotTree) throws IOException {
+    public boolean export(RobotTree robotTree) throws IOException {
         // Check that all necessary properties are filled in.
         RobotComponent robot = robotTree.getRoot();
         for (String prop : requires) {
@@ -129,7 +129,7 @@ public class GenericExporter {
                 JOptionPane.showMessageDialog(MainFrame.getInstance(),
                         "You need to fill in the '" + prop + "' property of your robot for this export to work.\nYou can edit this with the main settings for your robot by clicking on " + robot.getName() + ".",
                         "Missing Property", JOptionPane.ERROR_MESSAGE);
-                return;
+                return false;
             }
         }
 
@@ -138,7 +138,7 @@ public class GenericExporter {
             JOptionPane.showMessageDialog(MainFrame.getInstance(),
                     "Your robot is not ready for export, the red components are not quite finished, please finish and try again.",
                     "Unfinished robot", JOptionPane.ERROR_MESSAGE);
-            return;
+            return false;
         }
 
         // Prepare the main context
@@ -160,8 +160,10 @@ public class GenericExporter {
 
         // Export to all files
         Collection<ExportFile> newFiles = getFiles();
+        boolean newProject = false;
         for (ExportFile file : newFiles) {
-            file.export(this);
+            if (file.export(this))
+              newProject = true;
         }
 
         MainFrame.getInstance().setStatus("Export succesful.");
@@ -181,6 +183,7 @@ public class GenericExporter {
                 Process pr = rt.exec(action);
             }
         }
+        return newProject;
     }
 
     /**
