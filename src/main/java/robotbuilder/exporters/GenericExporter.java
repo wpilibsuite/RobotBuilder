@@ -319,10 +319,13 @@ public class GenericExporter {
             }
             ports.keySet().stream()
                     .filter(key -> module.equals(modules.get(key)))
-                    .forEach(key -> mapping.put(ports.get(key), component.getFullName() + " " + key));
+                    .forEach(key -> mapping.put(ports.get(key), component.getSubsystem() + delimiter + component.getFullName() + " " + key));
         });
         return mapping;
     }
+    
+    private String delimiter = "\u0008"; // unicode backspace character. No way is this going to be in some text field
+    private String delimiter2 = "\u2502"; // unicode pipe character.
 
     // TODO: make macro
     public Map<String, String> filterComponents(final String propertyName, RobotComponent robot) {
@@ -331,16 +334,15 @@ public class GenericExporter {
             for (String property : component.getPropertyKeys()) {
                 if (property.endsWith(propertyName)) {
                     // show speed controller type
-                    String delimiter = "\u0008"; // unicode backspace character. No way is this going to be in some text field
                     if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Speed Controller")) {
                         String type1 = component.getProperty("Type").getValue().toString();
-                        mapping.put(component.getProperty(property).getValue().toString(), component.getFullName() + delimiter + type1);
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getFullName() + delimiter2 + type1);
                     } else if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Servo")) {
-                        mapping.put(component.getProperty(property).getValue().toString(), component.getFullName() + delimiter + "Servo");
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getFullName() + delimiter2 + "Servo");
                     } else if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Nidec Brushless")) {
-                        mapping.put(component.getProperty(property).getValue().toString(), component.getFullName() + delimiter + "Nidec Brushless");
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getFullName() + delimiter2 + "Nidec Brushless");
                     } else {
-                        mapping.put(component.getProperty(property).getValue().toString(), component.getFullName());
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getFullName());
                     }
                 }
             }

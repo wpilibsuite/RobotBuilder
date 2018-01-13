@@ -4,7 +4,6 @@ package ${package}.commands;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import ${package}.Robot;
-import ${package}.RobotMap;
 
 #set($command = $helper.getByName($command-name, $robot))
 /**

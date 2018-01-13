@@ -238,7 +238,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
         if (getBase().getType().equals("Subsystem")) {
             return getName();
         } else {
-            return getSubsystem() + getName();
+            return /*getSubsystem() + */getName();
         }
     }
 

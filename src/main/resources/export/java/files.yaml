@@ -35,15 +35,6 @@
     constructors: ${exporter-path}RobotTemplate-constructors.java
 
 - !File
-  export: $package-path/RobotMap.java
-  source: ${exporter-path}RobotMap.java
-  update: Modify
-  modifications:
-    imports: ${exporter-path}RobotMap-imports.java
-    declarations: ${exporter-path}RobotMap-declarations.java
-    constructors: ${exporter-path}RobotMap-constructors.java
-
-- !File
   export: $package-path/OI.java
   source: ${exporter-path}OI.java
   update: Modify
@@ -149,6 +140,8 @@
     source: ${exporter-path}PIDSubsystem-source.java
     output: ${exporter-path}PIDSubsystem-output.java
     constants: ${exporter-path}Subsystem-constants.java
+    constructors: ${exporter-path}Subsystem-constructors.java
+    pidgetters: ${exporter-path}Subsystem-pidgetters.java
   variables:
     subsystem-name: ${subsystem.name}
 #else
@@ -161,6 +154,8 @@
     declarations: ${exporter-path}Subsystem-declarations.java
     default_command: ${exporter-path}Subsystem-default_command.java
     constants: ${exporter-path}Subsystem-constants.java
+    constructors: ${exporter-path}Subsystem-constructors.java
+    pidgetters: ${exporter-path}Subsystem-pidgetters.java
   variables:
     subsystem-name: ${subsystem.name}
 #end
