@@ -271,7 +271,7 @@ Instructions:
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Import: "import edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.PIDSourceType;\nimport edu.wpi.first.wpilibj.Encoder.IndexingType;"
+    Import: "import edu.wpi.first.wpilibj.Encoder;\nimport edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.PIDSourceType;\nimport edu.wpi.first.wpilibj.Encoder.IndexingType;"
     Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction});"
     LiveWindow: "LiveWindow.addSensor(\"#class($Subsystem)\", \"$Short_Name\", #variable($Name));"
     Extra: >-
