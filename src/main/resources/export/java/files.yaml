@@ -141,7 +141,7 @@
     output: ${exporter-path}PIDSubsystem-output.java
     constants: ${exporter-path}Subsystem-constants.java
     constructors: ${exporter-path}Subsystem-constructors.java
-    pidgetters: ${exporter-path}Subsystem-pidgetters.java
+    cmdpidgetters: ${exporter-path}Subsystem-pidgetters.java
   variables:
     subsystem-name: ${subsystem.name}
 #else
