@@ -309,6 +309,7 @@ Instructions:
     Defaults: "PWMOutput,Component,None"
     ClassName: "SpeedController"
     Import: "import edu.wpi.first.wpilibj.${Type};\nimport edu.wpi.first.wpilibj.${ClassName};"
+    Declaration: "private ${Type} #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new ${Type}(${Output_Channel_PWM});"
     LiveWindow: "addChild(#variable($Short_Name));"
     Extra: >-
