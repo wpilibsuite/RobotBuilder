@@ -61,8 +61,9 @@
         <h2>$title</h2>
         <table><tr>
             <th class="pound">#</th>
+            <th>Subsystem</th>
             <th>$label</th>
-                <th>Type</th></tr>
+            <th>Type</th></tr>
           #to_rows($ports)
         </table>
     #end ##if
@@ -75,6 +76,7 @@
         <h2>$title</h2>
     <table><tr>
     <th class="pound">ID</th>
+    <th>Subsystem</th>
     <th>Device</th></tr>
     #to_rows($ports)
     </table>
