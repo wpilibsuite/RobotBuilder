@@ -131,9 +131,9 @@ public class RobotComponent extends DefaultMutableTreeNode {
 
     public final void setName(String name) {
         if (model.getName() != null) {
-            robot.removeName(getFullName());
+            robot.removeName(getName());
             model.setName(name);
-            robot.addName(getFullName());
+            robot.addName(getName());
         } else {
             model.setName(name);
         }
@@ -238,7 +238,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
         if (getBase().getType().equals("Subsystem")) {
             return getName();
         } else {
-            return /*getSubsystem() + */getName();
+            return getSubsystem() + getName();
         }
     }
 
@@ -249,7 +249,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
         Vector<String> names = new Vector<>();
         children.forEach(child -> {
             if (type.equals(((RobotComponent) child).getBase().getType())) {
-                names.add(((RobotComponent) child).getFullName());
+                names.add(((RobotComponent) child).getName());
             }
             names.addAll(((RobotComponent) child).getChildrenOfTypeNames(type));
         });
@@ -263,7 +263,7 @@ public class RobotComponent extends DefaultMutableTreeNode {
         Vector<String> names = new Vector<>();
         children.forEach(child -> {
             if (componentName.equals(((RobotComponent) child).getBase().getName())) {
-                names.add(((RobotComponent) child).getFullName());
+                names.add(((RobotComponent) child).getName());
             }
             names.addAll(((RobotComponent) child).getChildrenOfComponentNames(componentName));
         });

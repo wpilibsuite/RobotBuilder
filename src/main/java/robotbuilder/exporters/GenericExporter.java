@@ -267,7 +267,7 @@ public class GenericExporter {
         Context context = new VelocityContext(rootContext);
         final Map<String, String> instructions = componentInstructions.get(comp.getBase().getName());
         context.put("ClassName", instructions.get("ClassName"));
-        context.put("Name", comp.getFullName());
+        context.put("Name", comp.getName());
         context.put("Short_Name", comp.getName());
         if (!comp.getSubsystem().isEmpty()) {
             context.put("Subsystem", comp.getSubsystem().substring(0, comp.getSubsystem().length() - 1));
@@ -319,7 +319,7 @@ public class GenericExporter {
             }
             ports.keySet().stream()
                     .filter(key -> module.equals(modules.get(key)))
-                    .forEach(key -> mapping.put(ports.get(key), component.getSubsystem() + delimiter + component.getFullName() + " " + key));
+                    .forEach(key -> mapping.put(ports.get(key), component.getSubsystem() + delimiter + component.getName() + " " + key));
         });
         return mapping;
     }
@@ -336,13 +336,13 @@ public class GenericExporter {
                     // show speed controller type
                     if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Speed Controller")) {
                         String type1 = component.getProperty("Type").getValue().toString();
-                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getFullName() + delimiter2 + type1);
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + type1);
                     } else if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Servo")) {
-                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getFullName() + delimiter2 + "Servo");
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + "Servo");
                     } else if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Nidec Brushless")) {
-                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getFullName() + delimiter2 + "Nidec Brushless");
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + "Nidec Brushless");
                     } else {
-                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getFullName());
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName());
                     }
                 }
             }

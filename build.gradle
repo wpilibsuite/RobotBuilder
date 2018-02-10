@@ -57,7 +57,7 @@ dependencies {
     compile 'org.apache.velocity:velocity:1.7'
     compile 'org.yaml:snakeyaml:1.10'
     compile 'com.github.jgraph:jgraphx:v3.3.1.1'
-    compileOnly 'org.projectlombok:lombok:1.16.18'
+    compile 'org.projectlombok:lombok:1.16.18'
     testCompile 'junit:junit:4.11'
 }
 
