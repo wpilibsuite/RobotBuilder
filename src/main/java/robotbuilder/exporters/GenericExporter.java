@@ -341,6 +341,9 @@ public class GenericExporter {
                         mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + "Servo");
                     } else if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Nidec Brushless")) {
                         mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + "Nidec Brushless");
+                    } else if (propertyName.equals("CAN ID")) {
+                        String type1 = component.getBase().toString();
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + type1);
                     } else {
                         mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName());
                     }

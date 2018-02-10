@@ -77,7 +77,8 @@
     <table><tr>
     <th class="pound">ID</th>
     <th>Subsystem</th>
-    <th>Device</th></tr>
+    <th>Device</th>
+    <th>Type</th></tr>
     #to_rows($ports)
     </table>
     #end
