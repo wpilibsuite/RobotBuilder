@@ -1,0 +1,2 @@
+def TEAM = ${team-number}
+def ROBOT_CLASS = "${package}.${robot-name}"

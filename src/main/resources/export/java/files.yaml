@@ -1,27 +1,45 @@
-## Eclipse Project Files
+## Project Files
 - !File
   export: $project/BSD_License_for_WPILib_code.txt
   source: ${exporter-path}BSD_License_for_WPILib_code.txt
   update: None
 
 - !File
-  export: $project/build.properties
-  source: ${exporter-path}build.properties
+  export: $project/build.gradle
+  source: ${exporter-path}build.gradle
+  update: Modify
+  modifications:
+    team-info: ${exporter-path}gradle-team-info.txt
+
+- !File
+  export: $project/.gitignore
+  source: ${exporter-path}gitignore.txt
   update: None
 
 - !File
-  export: $project/build.xml
-  source: ${exporter-path}build.xml
+  export: $project/.wpilib/wpilib_preferences.json
+  source: ${exporter-path}wpilib_properties.json
+  update: Overwrite
+
+## Gradle Wrapper Files
+- !File
+  export: $project/gradle/wrapper/gradle-wrapper.jar
+  source: ${exporter-path}../gradle/wrapper/gradle-wrapper.jar
   update: None
 
 - !File
-  export: $project/.project
-  source: ${exporter-path}.project
+  export: $project/gradle/wrapper/gradle-wrapper.properties
+  source: ${exporter-path}../gradle/wrapper/gradle-wrapper.properties
   update: None
 
 - !File
-  export: $project/.classpath
-  source: ${exporter-path}.classpath
+  export: $project/gradlew
+  source: ${exporter-path}../gradle/scripts/gradlew
+  update: None
+
+- !File
+  export: $project/gradlew.bat
+  source: ${exporter-path}../gradle/scripts/gradlew.bat
   update: None
 
 ## Key Java Files
