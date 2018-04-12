@@ -16,6 +16,11 @@
   source: ${exporter-path}gitignore.txt
   update: None
 
+- !File
+  export: $project/.wpilib/wpilib_preferences.json
+  source: ${exporter-path}wpilib_properties.json
+  update: Overwrite
+
 ## Gradle Wrapper Files
 - !File
   export: $project/gradle/wrapper/gradle-wrapper.jar
