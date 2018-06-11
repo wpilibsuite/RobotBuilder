@@ -1,5 +1,5 @@
 #foreach ($component in $components)
-#if ($helper.exportsTo("RobotMap", $component))
+#if ($component.subsystem == $subsystem.subsystem && $component != $subsystem)
         #constructor($component)
 
         #livewindow($component)

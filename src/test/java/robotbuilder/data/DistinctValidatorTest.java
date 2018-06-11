@@ -55,8 +55,8 @@ public class DistinctValidatorTest {
         RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
         robotDrive.add(rightVictor);
 
-        robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getFullName());
-        robotDrive.getProperty("Right Motor").setValueAndUpdate(rightVictor.getFullName());
+        robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getName());
+        robotDrive.getProperty("Right Motor").setValueAndUpdate(rightVictor.getName());
 
         assertTrue("Left motor should be selected.", robotDrive.getProperty("Left Motor").isValid());
         assertTrue("Right motor should be selected.", robotDrive.getProperty("Right Motor").isValid());
@@ -78,8 +78,8 @@ public class DistinctValidatorTest {
         RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
         robotDrive.add(rightVictor);
 
-        robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getFullName());
-        robotDrive.getProperty("Right Motor").setValueAndUpdate(leftVictor.getFullName());
+        robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getName());
+        robotDrive.getProperty("Right Motor").setValueAndUpdate(leftVictor.getName());
 
         assertFalse("Left motor should be selected.", robotDrive.getProperty("Left Motor").isValid());
         assertFalse("Right motor should be selected.", robotDrive.getProperty("Right Motor").isValid());
@@ -101,20 +101,20 @@ public class DistinctValidatorTest {
         RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
         robotDrive.add(rightVictor);
 
-        robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getFullName());
-        robotDrive.getProperty("Right Motor").setValueAndUpdate(rightVictor.getFullName());
+        robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getName());
+        robotDrive.getProperty("Right Motor").setValueAndUpdate(rightVictor.getName());
 
         assertTrue("Left motor should be selected.", robotDrive.getProperty("Left Motor").isValid());
         assertTrue("Right motor should be selected.", robotDrive.getProperty("Right Motor").isValid());
 
-        robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getFullName());
-        robotDrive.getProperty("Right Motor").setValueAndUpdate(leftVictor.getFullName());
+        robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getName());
+        robotDrive.getProperty("Right Motor").setValueAndUpdate(leftVictor.getName());
 
         assertFalse("Left motor should be selected.", robotDrive.getProperty("Left Motor").isValid());
         assertFalse("Right motor should be selected.", robotDrive.getProperty("Right Motor").isValid());
 
-        robotDrive.getProperty("Left Motor").setValueAndUpdate(rightVictor.getFullName());
-        robotDrive.getProperty("Right Motor").setValueAndUpdate(leftVictor.getFullName());
+        robotDrive.getProperty("Left Motor").setValueAndUpdate(rightVictor.getName());
+        robotDrive.getProperty("Right Motor").setValueAndUpdate(leftVictor.getName());
 
         assertTrue("Left motor should be selected.", robotDrive.getProperty("Left Motor").isValid());
         assertTrue("Right motor should be selected.", robotDrive.getProperty("Right Motor").isValid());
