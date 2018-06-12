@@ -5,16 +5,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.context.Context;
 
+import robotbuilder.Utils;
 import robotbuilder.utils.CodeFileUtils;
 
 /**
- *
  * @author Alex Henning
  */
 public class ExportFile {
@@ -47,8 +49,13 @@ public class ExportFile {
         // Export
         if (!export.exists() || update.equals("Overwrite") || !newType.equals(oldType)) {
             System.out.println("Overwriting " + export);
-            try (FileWriter out = new FileWriter(export)) {
-                out.write(exporter.evalResource(source, fileContext));
+            if (export.getName().endsWith(".jar")) {
+                // Don't attempt to parse binary files - they get corrupted if run through Velocity
+                IOUtils.copy(Utils.getResourceAsStream(source), Files.newOutputStream(export.toPath()));
+            } else {
+                try (FileWriter out = new FileWriter(export)) {
+                    out.write(exporter.evalResource(source, fileContext));
+                }
             }
         } else if (update.equals("Modify")) {
             System.out.println("Modifying " + export);

@@ -61,7 +61,7 @@ Vars:
   project: ${robot.getPropertyAbsolutePath('Eclipse Workspace')}$file-separator$robot-name
   use-default-package-p: ${robot.getProperty('Use Default Java Package').getValue()}
   package: "#if($use-default-package-p==true)org.usfirst.frc${team-number}.${robot-name}#else${robot.getProperty('Java Package').getValue()}#end"
-  package-path: ${project}/src/${package.replace('.', '/')}
+  package-path: ${project}/src/main/java${package.replace('.', '/')}
 
 Macros: macros.vm
 
