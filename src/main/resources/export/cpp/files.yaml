@@ -1,32 +1,52 @@
-## Eclipse Project Files
+## WPI Project Files
+
 - !File
-  export: $project/.project
-  source: ${exporter-path}.project
+  export: $project/.wpilib/wpilib_preferences.json
+  source: ${exporter-path}../wpi/wpilib_preferences.json
   update: None
 
 - !File
-  export: $project/.cproject
-  source: ${exporter-path}.cproject
+  export: $project/BSD_License_for_WPILib_code.txt
+  source: ${exporter-path}../wpi/BSD_License_for_WPILib_code.txt
+  update: None
+
+## Gradle Files
+
+- !File
+  export: $project/build.gradle
+  source: ${exporter-path}build.gradle
   update: None
 
 - !File
-  export: $project/build.properties
-  source: ${exporter-path}build.properties
+  export: $project/gradlew
+  source: ${exporter-path}../gradle/scripts/gradlew
   update: None
 
 - !File
-  export: $project/build.xml
-  source: ${exporter-path}build.xml
+  export: $project/gradlew.bat
+  source: ${exporter-path}../gradle/scripts/gradlew.bat
   update: None
 
 - !File
-  export: $project/.settings/language.settings.xml
-  source: ${exporter-path}language.settings.xml
+  export: $project/gradle/wrapper/gradle-wrapper.properties
+  source: ${exporter-path}../gradle/wrapper/gradle-wrapper.properties
   update: None
 
 - !File
-  export: $project/.settings/org.eclipse.cdt.managedbuilder.core.prefs
-  source: ${exporter-path}org.eclipse.cdt.managedbuilder.core.prefs
+  export: $project/gradle/wrapper/gradle-wrapper.jar
+  source: ${exporter-path}../gradle/wrapper/gradle-wrapper.jar
+  update: None
+
+## VS Code Files
+
+- !File
+  export: $project/.vscode/launch.json
+  source: ${exporter-path}../vscode/launch.json
+  update: None
+
+- !File
+  export: $project/.vscode/settings.json
+  source: ${exporter-path}../vscode/settings.json
   update: None
 
 ## Key C++ Files
