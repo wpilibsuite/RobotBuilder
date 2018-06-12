@@ -2,12 +2,12 @@
 
 - !File
   export: $project/.wpilib/wpilib_preferences.json
-  source: ${exporter-path}wpilib_preferences.json
+  source: ${exporter-path}../wpi/wpilib_preferences.json
   update: None
 
 - !File
   export: $project/BSD_License_for_WPILib_code.txt
-  source: ${exporter-path}BSD_License_for_WPILib_code.txt
+  source: ${exporter-path}../wpi/BSD_License_for_WPILib_code.txt
   update: None
 
 ## Gradle Files
