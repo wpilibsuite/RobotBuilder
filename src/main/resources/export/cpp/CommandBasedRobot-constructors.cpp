@@ -1,9 +1,6 @@
 #foreach ($component in $components)
 #if ($helper.exportsTo("Robot", $component))
-    #constructor($component)
+    Robot::#variable($component.name) = std::make_unique<#class($component.name)>
+#end
+#end
 
-#if ($component.getProperty("Send to SmartDashboard").getValue())
-    SmartDashboard::PutData(#variable($component.name).get());
-#end
-#end
-#end
