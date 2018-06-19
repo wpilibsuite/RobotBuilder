@@ -48,23 +48,7 @@
   export: $project/.vscode/settings.json
   source: ${exporter-path}../vscode/settings.json
   update: None
-
-## Some other files
-- !File
-  export: $project/.clang-format
-  source: ${exporter-path}.clang-format
-  update: None
-
-- !File
-  export: $project/.styleguide
-  source: ${exporter-path}.styleguide
-  update: None
-
-- !File
-  export: $project/.styleguide-license
-  source: ${exporter-path}.styleguide-license
-  update: None
-
+  
 ## Key C++ Files
 - !File
   export: $project/src/cpp/Robot.cpp
