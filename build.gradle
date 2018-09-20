@@ -3,11 +3,14 @@ plugins {
     id 'jacoco'
     id 'maven'
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '1.2.3'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
     id 'maven-publish'
-    id 'net.ltgt.errorprone' version '0.0.10'
+    id 'net.ltgt.errorprone' version '0.0.16'
     id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '2.0'
+	id 'io.franzbecker.gradle-lombok' version '1.14'
 }
+
+mainClassName = "robotbuilder.RobotBuilder"
 
 if (!hasProperty('releaseType')) {
     WPILibVersion {
@@ -20,10 +23,6 @@ if (project.hasProperty("publishVersion")) {
     pubVersion = project.publishVersion
 } else {
     pubVersion = WPILibVersion.version
-}
-
-configurations.errorprone {
-    resolutionStrategy.force 'com.google.errorprone:error_prone_core:2.0.9'
 }
 
 jacoco {
@@ -39,7 +38,10 @@ jacocoTestReport {
 
 check.dependsOn jacocoTestReport
 
-mainClassName = "robotbuilder.RobotBuilder"
+lombok {
+    version = "1.18.2"
+    sha256 = ""
+}
 
 if (!hasProperty('mainClass')) {
     ext.mainClass = mainClassName
@@ -54,11 +56,14 @@ repositories {
 
 
 dependencies {
+    errorprone 'com.google.errorprone:error_prone_core:2.0.9'
     compile 'org.apache.velocity:velocity:1.7'
     compile 'org.yaml:snakeyaml:1.10'
     compile 'com.github.jgraph:jgraphx:v3.3.1.1'
-    compile 'org.projectlombok:lombok:1.16.18'
+	compile 'com.sun.activation:javax.activation:1.2.0'
     testCompile 'junit:junit:4.11'
+	annotationProcessor 'org.projectlombok:lombok:1.18.2'
+	compileOnly 'org.projectlombok:lombok:1.18.2'
 }
 
 test {
@@ -98,6 +103,6 @@ publishing {
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.1'
+wrapper {
+    gradleVersion = '4.10.2'
 }
