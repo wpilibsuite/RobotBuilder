@@ -7,7 +7,7 @@ plugins {
     id 'maven-publish'
     id 'net.ltgt.errorprone' version '0.0.16'
     id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '2.0'
-	id 'io.franzbecker.gradle-lombok' version '1.14'
+    id 'io.franzbecker.gradle-lombok' version '1.14'
 }
 
 mainClassName = "robotbuilder.RobotBuilder"
@@ -56,14 +56,14 @@ repositories {
 
 
 dependencies {
-    errorprone 'com.google.errorprone:error_prone_core:2.0.9'
+    errorprone 'com.google.errorprone:error_prone_core:2.3.1'
     compile 'org.apache.velocity:velocity:1.7'
     compile 'org.yaml:snakeyaml:1.10'
     compile 'com.github.jgraph:jgraphx:v3.3.1.1'
-	compile 'com.sun.activation:javax.activation:1.2.0'
+    compile 'com.sun.activation:javax.activation:1.2.0'
     testCompile 'junit:junit:4.11'
-	annotationProcessor 'org.projectlombok:lombok:1.18.2'
-	compileOnly 'org.projectlombok:lombok:1.18.2'
+    annotationProcessor 'org.projectlombok:lombok:1.18.2'
+    compileOnly 'org.projectlombok:lombok:1.18.2'
 }
 
 test {
@@ -105,4 +105,9 @@ publishing {
 
 wrapper {
     gradleVersion = '4.10.2'
+}
+
+tasks.withType(JavaCompile).configureEach {
+  //disable ParameterCheck due to https://github.com/google/error-prone/issues/860
+  options.compilerArgs += [ '-Xep:ParameterName:OFF', '-Xep:TryFailThrowable:WARN' ]
 }
