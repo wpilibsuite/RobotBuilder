@@ -10,7 +10,7 @@ save*.yaml
 *.exec
 dependency-reduced-pom.xml
 nbactions.xml
-
+.DS_Store
 
 # Created by https://www.gitignore.io/api/gradle,eclipse,intellij,java
 
