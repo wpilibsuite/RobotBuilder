@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
@@ -52,7 +53,7 @@ public class ExportFile {
             try (InputStream in = Utils.getResourceAsStream(source)) {
                 Files.copy(in, export.toPath());
             }
-        } else if (!export.exists() || "Overwrite".equals(update) || !equals(newType, oldType)) {
+        } else if (!export.exists() || "Overwrite".equals(update) || !Objects.equals(newType, oldType)) {
             System.out.println("Overwriting " + export);
             try (FileWriter out = new FileWriter(export)) {
                 out.write(exporter.evalResource(source, fileContext));
@@ -84,10 +85,6 @@ public class ExportFile {
         try (FileWriter out = new FileWriter(backup)) {
             out.write(exporter.openFile(export.getAbsolutePath()));
         }
-    }
-
-    private boolean equals(String s1, String s2) {
-        return (s1 == null) ? (s2 == null) : (s1.equals(s2));
     }
 
     // Getters and Setters for YAML
