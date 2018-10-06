@@ -43,7 +43,7 @@ public class ParameterSetsEditorDialog extends JDialog {
     }
 
     public void save() {
-        Vector<Vector<Object>> tableData = setsTable.getModel().getDataVector();
+        Vector<Vector> tableData = setsTable.getModel().getDataVector();
         sets.clear();
         tableData.stream()
                 .map(this::generateSet)

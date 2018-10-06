@@ -303,7 +303,7 @@ class ParameterSetsTable extends JTable {
         }
 
         @Override
-        public Vector<Vector<Object>> getDataVector() {
+        public Vector<Vector> getDataVector() {
             return super.getDataVector();
         }
 
