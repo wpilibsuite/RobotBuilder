@@ -47,7 +47,7 @@ public class ParameterSetsEditorDialog extends JDialog {
         sets.clear();
         tableData.stream()
                 .map(this::generateSet)
-                .forEach(sets::add);
+                .forEach(e -> sets.add((ParameterSet)e));
     }
 
     private ParameterSet generateSet(Vector<Object> row) {
