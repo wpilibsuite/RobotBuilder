@@ -9,6 +9,7 @@ pool:
 steps:
   - powershell: |
       mkdir build
+      $ProgressPreference = 'SilentlyContinue'
       wget "https://download.java.net/java/ga/jdk11/openjdk-11_windows-x64_bin.zip" -O "build\jdk.zip"
     displayName: 'Download JDK'
   - task: JavaToolInstaller@0
