@@ -85,7 +85,7 @@ public class ParameterAdderDialog extends CenteredDialog {
      * any data that previously existed in the property.
      */
     private void save() {
-        Vector<Vector<Object>> dataVector = getTableModel().getDataVector();
+        Vector<Vector> dataVector = getTableModel().getDataVector();
         parameterList.clear();
         dataVector.stream().forEach((dataRow) -> {
             String name = (String) dataRow.get(0);

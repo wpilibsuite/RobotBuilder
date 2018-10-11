@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 
 import lombok.Getter;
 
@@ -157,14 +158,14 @@ public class RobotComponent extends DefaultMutableTreeNode {
 
     public Vector<RobotComponent> getChildren() {
         if (children != null) {
-            return children;
+            return (Vector<RobotComponent>)(Object)children;
         } else {
             return new Vector<>();
         }
     }
 
     public void setChildren(Vector<DefaultMutableTreeNode> children) {
-        this.children = children;
+        this.children = (Vector<TreeNode>)(Object)children;
     }
 
     public String getBaseType() {

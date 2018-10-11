@@ -68,7 +68,7 @@ public class CommandCellEditorDialog extends CenteredDialog {
 
     public void save() {
         // Save the parameters
-        Vector<Vector<Object>> dataVector = parameterTable.getModel().getDataVector();
+        Vector<Vector> dataVector = parameterTable.getModel().getDataVector();
         List<ValuedParameterDescriptor> params = new ArrayList<>();
         dataVector.stream().forEach((dataRow) -> {
             String name = (String) dataRow.get(0);
@@ -113,7 +113,7 @@ public class CommandCellEditorDialog extends CenteredDialog {
             if (requires.equals("None")) {
                 parameterTable = new ParameterEditorTable(requires, new ArrayList<>());
             } else {
-                parameterTable = new ParameterEditorTable(requires, 
+                parameterTable = new ParameterEditorTable(requires,
                                                          (List) MainFrame.getInstance().getCurrentRobotTree()
                                                                 .getComponentByName(requires).getProperty("Constants").getValue());
             }
