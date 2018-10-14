@@ -95,7 +95,7 @@ public class ParameterEditorDialog extends CenteredDialog {
     }
 
     private void save() {
-        Vector<Vector<Object>> dataVector = getTableModel().getDataVector();
+        Vector<Vector> dataVector = getTableModel().getDataVector();
         List<ValuedParameterDescriptor> params = new ArrayList<>();
         dataVector.stream().forEach((dataRow) -> {
             String name = (String) dataRow.get(0);
