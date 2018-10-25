@@ -47,31 +47,6 @@
   update: None
 
 - !File
-  export: $project/build.properties
-  source: ${exporter-path}eclipse_build.properties
-  update: None
-
-- !File
-  export: $project/build.xml
-  source: ${exporter-path}eclipse_build.xml
-  update: None
-
-- !File
-  export: $project/.project
-  source: ${exporter-path}eclipse.project
-  update: None
-
-- !File
-  export: $project/.classpath
-  source: ${exporter-path}eclipse.classpath
-  update: None
-
-- !File
-  export: $project/.settings/org.eclipse.buildship.core.prefs
-  source: ${exporter-path}eclipse_buildship.prefs
-  update: None
-
-- !File
   export: $project/gradle/wrapper/gradle-wrapper.jar
   source: ${exporter-path}gradle/wrapper/gradle-wrapper.jar_exact
   update: Exact
@@ -81,7 +56,17 @@
   source: ${exporter-path}gradle/wrapper/gradle-wrapper.properties
   update: None
 
+- !File
+  export: $project/src/main/deploy/example.txt
+  source: ${exporter-path}deploy_example.txt
+  update: None
+  
 ## Key Java Files
+- !File
+  export: $package-path/Main.java
+  source: ${exporter-path}MainTemplate.java
+  update: Modify
+  
 - !File
   export: $package-path/Robot.java
   source: ${exporter-path}RobotTemplate.java

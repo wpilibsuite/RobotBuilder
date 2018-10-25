@@ -43,31 +43,6 @@
   update: None
 
 - !File
-  export: $project/build.properties
-  source: ${exporter-path}eclipse_build.properties
-  update: None
-
-- !File
-  export: $project/build.xml
-  source: ${exporter-path}eclipse_build.xml
-  update: None
-
-- !File
-  export: $project/.project
-  source: ${exporter-path}eclipse.project
-  update: None
-
-- !File
-  export: $project/.settings/language.settings.xml
-  source: ${exporter-path}language.settings.xml
-  update: None
-
-- !File
-  export: $project/.settings/org.eclipse.cdt.managedbuilder.core.prefs
-  source: ${exporter-path}eclipse_managedbuilder.prefs
-  update: None
-
-- !File
   export: $project/gradle/wrapper/gradle-wrapper.jar
   source: ${exporter-path}gradle/wrapper/gradle-wrapper.jar_exact
   update: Exact
@@ -77,6 +52,11 @@
   source: ${exporter-path}gradle/wrapper/gradle-wrapper.properties
   update: None
 
+- !File
+  export: $project/src/main/deploy/example.txt
+  source: ${exporter-path}deploy_example.txt
+  update: None
+  
 ## Key C++ Files
 - !File
   export: $project/src/main/cpp/Robot.cpp
