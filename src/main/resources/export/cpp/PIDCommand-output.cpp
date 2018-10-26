@@ -2,5 +2,5 @@
 #set($component = $command.getProperty("Output").getValue())
 #set($name = ${helper.getByName($component, $robot).fullName})
 #set($subsystem = $command.getProperty("Requires").getValue())
-    #if($name)        return Robot.#variable($subsystem).get#class($name)().pidWrite(output);
+#if($name)        Robot.#variable($subsystem).get#class($name)().pidWrite(output);
 #end

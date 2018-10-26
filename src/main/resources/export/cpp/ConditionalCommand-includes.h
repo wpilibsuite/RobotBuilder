@@ -5,5 +5,5 @@
 
 \#include "Commands/#class($onTrue).h"
 \#include "Commands/#class($onFalse).h"
-\#include "Commands/ConditionalCommand.h"
+\#include "frc/commands/ConditionalCommand.h"
 

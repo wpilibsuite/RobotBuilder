@@ -4,8 +4,8 @@
 
 #ifndef #constant($subsystem.name)_H
 \#define #constant($subsystem.name)_H
-\#include "Commands/Subsystem.h"
-\#include "WPILib.h"
+\#include "frc/commands/Subsystem.h"
+\#include "frc/WPILib.h"
 
 /**
  *

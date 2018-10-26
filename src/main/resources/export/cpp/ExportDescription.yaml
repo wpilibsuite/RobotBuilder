@@ -54,6 +54,7 @@ Required Properties:
   - Eclipse Workspace
 
 Vars:
+  project-lang: cpp
   team-number: ${robot.getProperty('Team Number').getValue()}
   robot-name: ${robot.getName()}
   world-file: ${robot.getProperty('Simulation World File').getValue()}

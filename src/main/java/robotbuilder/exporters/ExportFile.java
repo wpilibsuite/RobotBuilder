@@ -5,12 +5,16 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.context.Context;
 
+import robotbuilder.Utils;
 import robotbuilder.utils.CodeFileUtils;
 
 /**
@@ -47,8 +51,13 @@ public class ExportFile {
         // Export
         if (!export.exists() || update.equals("Overwrite") || !newType.equals(oldType)) {
             System.out.println("Overwriting " + export);
-            try (FileWriter out = new FileWriter(export)) {
-                out.write(exporter.evalResource(source, fileContext));
+            if (export.getName().endsWith(".jar")) {
+                // Don't attempt to parse binary files - they get corrupted if run through Velocity
+                IOUtils.copy(Utils.getResourceAsStream(source), Files.newOutputStream(export.toPath()));
+            } else {
+                try (FileWriter out = new FileWriter(export)) {
+                    out.write(exporter.evalResource(source, fileContext));
+                }
             }
         } else if (update.equals("Modify")) {
             System.out.println("Modifying " + export);
@@ -59,7 +68,7 @@ public class ExportFile {
                 String beginning = exporter.eval(exporter.begin_modification, idContext);
                 String end = exporter.eval(exporter.end_modification, idContext);
                 file = file.replaceAll("(" + beginning + ")([\\s\\S]*?)(" + end + ")",
-                        "$1\r\n" + exporter.evalResource(modifications.get(id), idContext) + "\r\n    $3");
+                        "$1\r\n" + Matcher.quoteReplacement(exporter.evalResource(modifications.get(id), idContext)) + "\r\n    $3");
             }
             try (FileWriter out = new FileWriter(export)) {
                 file = file.replaceAll("\r\n?|\n", "\r\n");

@@ -15,5 +15,5 @@
 #end
 
 #if($command != "None")
-	chooser.AddDefault("$command", #command_instantiation( $command, $params));
+	chooser.SetDefaultOption("$command", #command_instantiation( $command, $params));
 #end
