@@ -1,4 +1,4 @@
-## Eclipse Project Files
+## GradleRIO Project Files
 
 - !File
   export: $project/.gitignore

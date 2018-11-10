@@ -1,4 +1,5 @@
-## Eclipse Project Files
+## GradleRIO Project Files
+
 - !File
   export: $project/BSD_License_for_WPILib_code.txt
   source: ${exporter-path}BSD_License_for_WPILib_code.txt
