@@ -30,6 +30,9 @@ public class RobotBuilder {
     public static final String SAVE_FILE_TYPE = "yaml";
 
     public static void main(String[] args) {
+        // Force GTK2 - GTK3 has issues
+        // See https://github.com/wpilibsuite/RobotBuilder/issues/114
+        System.setProperty("jdk.gtk.version", "2");
         EventQueue.invokeLater(() -> {
             // All files should use the standard windows line endings to
             // maximize compatibility.
