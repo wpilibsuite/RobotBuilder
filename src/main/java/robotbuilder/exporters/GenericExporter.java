@@ -1,14 +1,10 @@
 
 package robotbuilder.exporters;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
+import java.awt.*;
+import java.io.*;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +29,7 @@ import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
+import robotbuilder.ActionsClass;
 import robotbuilder.MainFrame;
 import robotbuilder.RobotBuilder;
 import robotbuilder.robottree.RobotTree;
@@ -140,6 +139,28 @@ public class GenericExporter {
                     "Unfinished robot", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        // This should work but can be finicky sometimes
+        String wpilibRelease = RobotBuilder.class.getPackage().getImplementationVersion();
+
+        // If that didnt work, try the more classic approach of reading the manifest f
+        if(wpilibRelease == null) {
+            String className = RobotBuilder.class.getSimpleName() + ".class";
+            String classPath = RobotBuilder.class.getResource(className).toString();
+
+            String manifestPath = classPath.substring(0, classPath.lastIndexOf("!") + 1) +
+                    "/META-INF/MANIFEST.MF";
+            try {
+                Manifest manifest = new Manifest(new URL(manifestPath).openStream());
+                Attributes attr = manifest.getMainAttributes();
+                wpilibRelease = attr.getValue("Manifest-Version");
+            } catch (IOException ex) {
+              // just catch error, because we still have another fallback method. no need to report this.
+            }
+        }
+        if(wpilibRelease == null) {
+            wpilibRelease = "2019.1.1-beta-2a"; // this shouldn't need to be relied upon,
+                                                // but its better than generating nothing.
+        }
 
         // Prepare the main context
         rootContext.put("version", RobotBuilder.VERSION);
@@ -149,11 +170,13 @@ public class GenericExporter {
         rootContext.put("Collections", Collections.class);
         rootContext.put("file-separator", File.separator);
         rootContext.put("exporter-path", path);
+        rootContext.put("exporters-path", ActionsClass.EXPORTERS_PATH);
         rootContext.put("components", getComponents(robot));
         rootContext.put("export-subsystems", robot.getProperty("Export Subsystems").getValue());
         rootContext.put("subsystems", robotTree.getSubsystems());
         rootContext.put("export-commands", robot.getProperty("Export Commands").getValue());
         rootContext.put("commands", robotTree.getCommands());
+        rootContext.put("wpilib-version", wpilibRelease);
         for (String key : varKeys) {
             rootContext.put(key, eval(vars.get(key)));
         }
@@ -190,8 +213,8 @@ public class GenericExporter {
      * Loads the export description file that contains the instructions for
      * export.
      *
-     * @param path The path to the export descriptions file.
-     * @param properties The properties that each component must have.
+     * @param defaults Default properties for each component.
+     * @param components The components to populate.
      */
     private void loadExportDescription(Map<String, Map<String, String>> defaults,
             Map<String, Map<String, String>> components) {

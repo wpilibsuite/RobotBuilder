@@ -2,12 +2,12 @@
 
 - !File
   export: $project/.wpilib/wpilib_preferences.json
-  source: ${exporter-path}../wpi/wpilib_preferences.json
+  source: ${exporters-path}wpi/wpilib_preferences.json
   update: None
 
 - !File
   export: $project/BSD_License_for_WPILib_code.txt
-  source: ${exporter-path}../wpi/BSD_License_for_WPILib_code.txt
+  source: ${exporters-path}wpi/BSD_License_for_WPILib_code.txt
   update: None
 
 ## Gradle Files
@@ -19,39 +19,39 @@
 
 - !File
   export: $project/gradlew
-  source: ${exporter-path}../gradle/scripts/gradlew
+  source: ${exporters-path}gradle/scripts/gradlew
   update: None
 
 - !File
   export: $project/gradlew.bat
-  source: ${exporter-path}../gradle/scripts/gradlew.bat
+  source: ${exporters-path}gradle/scripts/gradlew.bat
   update: None
 
 - !File
   export: $project/gradle/wrapper/gradle-wrapper.properties
-  source: ${exporter-path}../gradle/wrapper/gradle-wrapper.properties
+  source: ${exporters-path}gradle/wrapper/gradle-wrapper.properties
   update: None
 
 - !File
   export: $project/gradle/wrapper/gradle-wrapper.jar
-  source: ${exporter-path}../gradle/wrapper/gradle-wrapper.jar
+  source: ${exporters-path}gradle/wrapper/gradle-wrapper.notjar
   update: None
 
 ## VS Code Files
 
 - !File
   export: $project/.vscode/launch.json
-  source: ${exporter-path}../vscode/launch.json
+  source: ${exporters-path}vscode/launch.json
   update: None
 
 - !File
   export: $project/.vscode/settings.json
-  source: ${exporter-path}../vscode/settings.json
+  source: ${exporters-path}vscode/settings.json
   update: None
   
 ## Key C++ Files
 - !File
-  export: $project/src/cpp/Robot.cpp
+  export: $project/src/main/cpp/Robot.cpp
   source: ${exporter-path}CommandBasedRobot.cpp
   update: Modify
   modifications:
@@ -59,7 +59,7 @@
     constructors: ${exporter-path}CommandBasedRobot-constructors.cpp
     initialization: ${exporter-path}CommandBasedRobot-initialization.cpp
 - !File
-  export: $project/src/include/Robot.h
+  export: $project/src/main/include/Robot.h
   source: ${exporter-path}CommandBasedRobot.h
   update: Modify
   modifications:
@@ -67,7 +67,7 @@
     declarations: ${exporter-path}CommandBasedRobot-declarations.cpp
 
 - !File
-  export: $project/src/cpp/OI.cpp
+  export: $project/src/main/cpp/OI.cpp
   source: ${exporter-path}OI.cpp
   update: Modify
   modifications:
@@ -75,19 +75,24 @@
     constructors: ${exporter-path}OI-constructors.cpp
     functions: ${exporter-path}OI-functions.cpp
 - !File
-  export: $project/src/include/OI.h
+  export: $project/src/main/include/OI.h
   source: ${exporter-path}OI.h
   update: Modify
   modifications:
     declarations: ${exporter-path}OI-declarations.h
     prototypes: ${exporter-path}OI-prototypes.h
 
+- !File
+  export: $project/src/test/cpp/main.cpp
+  source: ${exporter-path}main.cpp
+  update: None
+
 ## Export Commands as files
 #if ($export-commands)
 #foreach ($command in $commands)
 #if ($command.base.name == "Command Group")
 - !File
-  export: $project/src/cpp/Commands/#class($command.name).cpp
+  export: $project/src/main/cpp/Commands/#class($command.name).cpp
   source: ${exporter-path}CommandGroup.cpp
   update: None
   modifications:
@@ -96,7 +101,7 @@
   variables:
     command-name: ${command.name}
 - !File
-  export: $project/src/include/Commands/#class($command.name).h
+  export: $project/src/main/include/Commands/#class($command.name).h
   source: ${exporter-path}CommandGroup.h
   update: Modify
   modifications:
@@ -105,7 +110,7 @@
     command-name: ${command.name}
 #elseif($command.base.name == "PID Command")
 - !File
-   export: $project/src/cpp/commands/#class($command.name).cpp
+   export: $project/src/main/cpp/commands/#class($command.name).cpp
    source: ${exporter-path}PIDCommand.cpp
    update: Modify
    modifications:
@@ -113,11 +118,21 @@
      requires: ${exporter-path}Command-requires.cpp
      source: ${exporter-path}PIDCommand-source.cpp
      output: ${exporter-path}PIDCommand-output.cpp
+     constructor: ${exporter-path}PIDCommand-constructor.cpp
+   variables:
+     command-name: ${command.name}
+- !File
+   export: $project/src/main/include/Commands/#class($command.name).h
+   source: ${exporter-path}PIDCommand.h
+   update: Modify
+   modifications:
+     constructor: ${exporter-path}Command-constructor-header.h
+     variables: ${exporter-path}Command-constructor-variables.h
    variables:
      command-name: ${command.name}
 #elseif($command.base.name == "Setpoint Command")
 - !File
-  export: $project/src/cpp/Commands/#class($command.name).cpp
+  export: $project/src/main/cpp/Commands/#class($command.name).cpp
   source: ${exporter-path}SetpointCommand.cpp
   update: Modify
   modifications:
@@ -128,7 +143,7 @@
   variables:
     command-name: ${command.name}
 - !File
-  export: $project/src/include/Commands/#class($command.name).h
+  export: $project/src/main/include/Commands/#class($command.name).h
   source: ${exporter-path}SetpointCommand.h
   modifications:
     constructor: ${exporter-path}Command-constructor-header.h
@@ -137,7 +152,7 @@
     command-name: ${command.name}
 #elseif($command.base.name == "Timed Command")
 - !File
-  export: $project/src/cpp/Commands/#class($command.name).cpp
+  export: $project/src/main/cpp/Commands/#class($command.name).cpp
   source: ${exporter-path}TimedCommand.cpp
   update: Modify
   modifications:
@@ -146,7 +161,7 @@
   variables:
     command-name: ${command.name}
 - !File
-  export: $project/src/include/Commands/#class($command.name).h
+  export: $project/src/main/include/Commands/#class($command.name).h
   source: ${exporter-path}TimedCommand.h
   modifications:
     constructor: ${exporter-path}TimedCommand-constructor-header.h
@@ -155,7 +170,7 @@
     command-name: ${command.name}
 #elseif($command.base.name == "Instant Command")
 - !File
-  export: $project/src/cpp/Commands/#class($command.name).cpp
+  export: $project/src/main/cpp/Commands/#class($command.name).cpp
   source: ${exporter-path}InstantCommand.cpp
   update: Modify
   modifications:
@@ -164,7 +179,7 @@
   variables:
     command-name: ${command.name}
 - !File
-  export: $project/src/include/Commands/#class($command.name).h
+  export: $project/src/main/include/Commands/#class($command.name).h
   modifications:
     constructor: ${exporter-path}Command-constructor-header.h
     variables: ${exporter-path}Command-constructor-variables.h
@@ -174,7 +189,7 @@
     command-name: ${command.name}
 #elseif ($command.base.name == "Conditional Command")
 - !File
-  export: $project/src/cpp/Commands/#class($command.name).cpp
+  export: $project/src/main/cpp/Commands/#class($command.name).cpp
   source: ${exporter-path}ConditionalCommand.cpp
   update: Modify
   modifications:
@@ -182,7 +197,7 @@
   variables:
     command-name: ${command.name}
 - !File
-  export: $project/src/include/Commands/#class($command.name).h
+  export: $project/src/main/include/Commands/#class($command.name).h
   source: ${exporter-path}ConditionalCommand.h
   modifications:
     includes: ${exporter-path}ConditionalCommand-includes.h
@@ -192,7 +207,7 @@
     command-name: ${command.name}
 #else
 - !File
-  export: $project/src/cpp/Commands/#class($command.name).cpp
+  export: $project/src/main/cpp/Commands/#class($command.name).cpp
   source: ${exporter-path}Command.cpp
   update: Modify
   modifications:
@@ -201,7 +216,7 @@
   variables:
     command-name: ${command.name}
 - !File
-  export: $project/src/include/Commands/#class($command.name).h
+  export: $project/src/main/include/Commands/#class($command.name).h
   modifications:
     constructor: ${exporter-path}Command-constructor-header.h
     variables: ${exporter-path}Command-constructor-variables.h
@@ -218,7 +233,7 @@
 #foreach ($subsystem in $subsystems)
 #if ($subsystem.base.name == "PID Subsystem")
 - !File
-  export: $project/src/cpp/Subsystems/#class($subsystem.name).cpp
+  export: $project/src/main/cpp/Subsystems/#class($subsystem.name).cpp
   source: ${exporter-path}PIDSubsystem.cpp
   update: Modify
   modifications:
@@ -232,7 +247,7 @@
   variables:
     subsystem-name: ${subsystem.name}
 - !File
-  export: $project/src/include/Subsystems/#class($subsystem.name).h
+  export: $project/src/main/include/Subsystems/#class($subsystem.name).h
   source: ${exporter-path}PIDSubsystem.h
   update: Modify
   modifications:
@@ -242,7 +257,7 @@
     subsystem-name: ${subsystem.name}
 #else
 - !File
-  export: $project/src/cpp/Subsystems/#class($subsystem.name).cpp
+  export: $project/src/main/cpp/Subsystems/#class($subsystem.name).cpp
   source: ${exporter-path}Subsystem.cpp
   update: Modify
   modifications:
@@ -253,7 +268,7 @@
   variables:
     subsystem-name: ${subsystem.name}
 - !File
-  export: $project/src/include/Subsystems/#class($subsystem.name).h
+  export: $project/src/main/include/Subsystems/#class($subsystem.name).h
   source: ${exporter-path}Subsystem.h
   update: Modify
   modifications:

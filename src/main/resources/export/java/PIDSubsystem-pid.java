@@ -2,7 +2,8 @@
         super("#class($subsystem-name)", ${subsystem.getProperty("P").getValue()}, ${subsystem.getProperty("I").getValue()}, ${subsystem.getProperty("D").getValue()});
         setAbsoluteTolerance(${subsystem.getProperty("Tolerance").getValue()});
         getPIDController().setContinuous(${subsystem.getProperty("Continuous").getValue()});
-        LiveWindow.addchild(getPIDController());
+        getPIDController().setName("$subsystem-name", "PIDSubsystem Controller");
+        LiveWindow.add(getPIDController());
 #if($subsystem.getProperty("Limit Input").getValue())
         getPIDController().setInputRange(${subsystem.getProperty("Minimum Input").getValue()}, ${subsystem.getProperty("Maximum Input").getValue()});
 #end

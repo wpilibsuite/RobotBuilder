@@ -1,6 +1,8 @@
 #set($command = $helper.getByName($command-name, $robot))
-#set($component = $command.getProperty("Input").getValue())
-#set($name = ${helper.getByName($component, $robot).fullName})
+#set($sensor = $command.getProperty("Input").getValue())
 #set($subsystem = $command.getProperty("Requires").getValue())
-#if($name)        return Robot::#variable($subsystem).get#class($name)().pidGet();
+#foreach ($component in $components)
+#if ($component.name == $sensor)
+        return Robot::#variable($subsystem)->Get#class($component.name)()->PIDGet();
+#end
 #end

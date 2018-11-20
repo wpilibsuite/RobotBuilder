@@ -1,6 +1,8 @@
 #set($command = $helper.getByName($command-name, $robot))
-#set($component = $command.getProperty("Output").getValue())
-#set($name = ${helper.getByName($component, $robot).fullName})
+#set($actuator = $command.getProperty("Output").getValue())
 #set($subsystem = $command.getProperty("Requires").getValue())
-#if($name)        Robot.#variable($subsystem).get#class($name)().pidWrite(output);
+#foreach ($component in $components)
+#if ($component.name == $actuator)
+    Robot::#variable($subsystem)->Get#class($component.name)()->PIDWrite(output);
+#end
 #end

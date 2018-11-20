@@ -1,2 +1,2 @@
-\#include "SmartDashboard/SmartDashboard.h"
+\#include "frc/smartdashboard/SmartDashboard.h"
 ${helper.getImports($robot, "OI")}

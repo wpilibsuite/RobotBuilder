@@ -1,7 +1,8 @@
 plugins {
     id "cpp"
     id "visual-studio"
-    id "edu.wpi.first.GradleRIO" version "2019.1.1-beta-1"
+    id "google-test-test-suite"
+    id "edu.wpi.first.GradleRIO" version "${wpilib-version}"
 }
 
 deploy {
@@ -21,11 +22,24 @@ deploy {
             // Debug can be overridden by command line, for use with VSCode
             debug = getDebugOrDefault(false)
         }
+
+        // Built in artifact to deploy arbitrary files to the roboRIO.
+        fileTreeArtifact('frcStaticFileDeploy') {
+            // The directory below is the local directory to deploy
+            files = fileTree(dir: 'src/main/deploy')
+            // Deploy to RoboRIO target, into /home/lvuser/deploy
+            targets << "roborio"
+            directory = '/home/lvuser/deploy'
+        }
     }
 }
 
-// Defining my C++ project. In this case, it is called 'FRCUserProgram',
-// and is of the language C++.
+// Set this to true to include the src folder in the include directories passed
+// to the compiler. Some eclipse project imports depend on this behavior.
+// We recommend leaving this disabled if possible. Note for eclipse project
+// imports this is enabled by default. For new projects, its disabled
+def includeSrcInIncludeRoot = false
+
 model {
     components {
         frcUserProgram(NativeExecutableSpec) {
@@ -34,14 +48,33 @@ model {
 
             sources.cpp {
                 source {
-                    srcDir 'src/cpp'
+                    srcDir 'src/main/cpp'
                 }
                 exportedHeaders {
-                    srcDir 'src/include'
+                    srcDir 'src/main/include'
+                    if (includeSrcInIncludeRoot) {
+                        srcDir 'src/main/cpp'
+                    }
                 }
             }
+
             // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
             useLibrary(it, "wpilib")
+            useCppVendorLibraries(it)
+        }
+    }
+    testSuites {
+        frcUserProgramTest(GoogleTestTestSuiteSpec) {
+            testing $.components.frcUserProgram
+
+            sources.cpp {
+                source {
+                    srcDir 'src/test/cpp'
+                    include '**/*.cpp'
+                }
+            }
+
+            useLibrary(it, "wpilib", "googletest")
             useCppVendorLibraries(it)
         }
     }

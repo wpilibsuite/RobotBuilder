@@ -8,11 +8,11 @@
         chooser.addObject("$component.getName()", new #class($component.getName())());
 #else
 #foreach( $set in $component.getProperty("Parameter presets").getValue() )
-        chooser.addObject("$component.getName(): $set.getName()", #command_instantiation( $component.getName(), $set.getParameters() ));
+        chooser.addOption("$component.getName(): $set.getName()", #command_instantiation( $component.getName(), $set.getParameters() ));
 #end
 #end
 #end
 #end
 #if($command != "None")
-        chooser.addDefault("$command", #command_instantiation( $command $params ));
+        chooser.setDefaultOption("$command", #command_instantiation( $command $params ));
 #end
