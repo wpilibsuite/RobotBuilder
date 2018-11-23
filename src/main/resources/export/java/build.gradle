@@ -2,7 +2,7 @@ plugins {
     id "java"
     id "eclipse"
     id "idea"
-    id "edu.wpi.first.GradleRIO" version "2019.1.1-beta-2a"
+    id "edu.wpi.first.GradleRIO" version "${wpilib-version}"
 }
 
 def ROBOT_MAIN_CLASS = "${package}.Main"

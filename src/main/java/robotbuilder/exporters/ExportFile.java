@@ -28,7 +28,6 @@ public class ExportFile {
     private boolean executable = false;
 
     public boolean export(GenericExporter exporter) throws IOException {
-        System.out.println("Exporting:  " + source + " to " + export);
         boolean newProject = false;
         // Build the context
         Context fileContext = new VelocityContext(exporter.rootContext);
