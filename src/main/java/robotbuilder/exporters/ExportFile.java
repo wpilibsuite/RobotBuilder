@@ -27,6 +27,7 @@ public class ExportFile {
     private String source, update;
     private Map<String, String> modifications = new HashMap<>();
     private Map<String, String> vars = new HashMap<>();
+    private boolean executable = false;
 
     public boolean export(GenericExporter exporter) throws IOException {
         boolean newProject = false;
@@ -74,6 +75,9 @@ public class ExportFile {
                 file = file.replaceAll("\r\n?|\n", "\r\n");
                 out.write(file);
             }
+        }
+        if (executable) {
+            export.setExecutable(true);
         }
         return newProject;
     }
@@ -124,6 +128,14 @@ public class ExportFile {
 
     public void setVariables(Map<String, String> vars) {
         this.vars = vars;
+    }
+
+    public void setExecutable(boolean b) {
+        executable = b;
+    }
+
+    public boolean isExecutable() {
+        return executable;
     }
 
     /**

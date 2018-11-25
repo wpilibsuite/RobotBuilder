@@ -21,11 +21,13 @@
   export: $project/gradlew
   source: ${exporters-path}gradle/scripts/gradlew
   update: None
+  executable: true
 
 - !File
   export: $project/gradlew.bat
   source: ${exporters-path}gradle/scripts/gradlew.bat
   update: None
+  executable: true
 
 - !File
   export: $project/gradle/wrapper/gradle-wrapper.properties
@@ -47,6 +49,11 @@
 - !File
   export: $project/.vscode/settings.json
   source: ${exporters-path}vscode/settings.json
+  update: None
+ 
+- !File
+  export: $project/src/main/deploy/example.txt
+  source: ${exporter-path}deploy_example.txt
   update: None
   
 ## Key C++ Files
