@@ -1,11 +1,15 @@
 plugins {
     id "java"
+    id "eclipse"
+    id "idea"
     id "visual-studio"
     id "edu.wpi.first.GradleRIO" version "${wpilib-version}"
 }
 
-def ROBOT_MAIN_CLASS = "${package}.${robot-name}"
+def ROBOT_MAIN_CLASS = "${package}.Main"
 
+// Define my targets (RoboRIO) and artifacts (deployable files)
+// This is added by GradleRIO's backing project EmbeddedTools.
 deploy {
     targets {
         roboRIO("roborio") {
@@ -32,6 +36,14 @@ deploy {
         }
     }
 }
+
+// Maven central needed for JUnit
+repositories {
+    mavenCentral()
+}
+
+// Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
+// Also defines JUnit 4.
 dependencies {
     compile wpilib()
     compile javaVendorLibraries()
@@ -40,6 +52,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+// Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
+// in order to make them all available at runtime. Also adding the manifest so WPILib
+// knows where to look for our Robot Class.
 jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
