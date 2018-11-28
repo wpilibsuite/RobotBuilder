@@ -54,11 +54,11 @@ Required Properties:
   - Eclipse Workspace
 
 Vars:
+  project-lang: cpp
   team-number: ${robot.getProperty('Team Number').getValue()}
   robot-name: ${robot.getName()}
   world-file: ${robot.getProperty('Simulation World File').getValue()}
   project: ${robot.getPropertyAbsolutePath('Eclipse Workspace')}$file-separator$robot-name
-
 Macros: macros.vm
 
 Post Export Action: "#Message:You have successfully exported. You can now open the project in Eclipse and extend the generated code."

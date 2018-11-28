@@ -6,8 +6,8 @@
 \#define #constant($command.name)_H
 
 
-\#include "Commands/Subsystem.h"
-\#include "../Robot.h"
+\#include "frc/commands/Subsystem.h"
+\#include "Robot.h"
 
 /**
  *

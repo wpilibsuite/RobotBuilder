@@ -3,7 +3,7 @@
 #ifndef OI_H
 \#define OI_H
 
-\#include "WPILib.h"
+\#include "frc/WPILib.h"
 
 class OI {
 private:

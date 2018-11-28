@@ -1,5 +1,6 @@
 #set($subsystem = $helper.getByName($subsystem-name, $robot))
-#set($component = $subsystem.getProperty("Output").getValue())
-#set($name = ${helper.getByName($component, $robot).name})
-#if($name)    #variable($name)->PIDWrite(output);
+#foreach ($component in $components)
+#if ($component.name == $subsystem.getProperty("Output").getValue())
+    #variable($component.name)->PIDWrite(output);
+#end
 #end

@@ -5,7 +5,7 @@
 #ifndef #constant($command.name)_H
 \#define #constant($command.name)_H
 
-\#include "Commands/CommandGroup.h"
+\#include "frc/commands/CommandGroup.h"
 
 /**
  *
