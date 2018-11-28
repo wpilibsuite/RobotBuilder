@@ -48,7 +48,7 @@ public class JavaExportTest {
     public void testJavaExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
         tree.getRoot().setName("RobotBuilderTestProject");
-        tree.getRoot().getProperty("Eclipse Workspace").setValueAndUpdate(new File("test-resources/").getAbsolutePath());
+        tree.getRoot().getProperty("Export Directory").setValueAndUpdate(new File("test-resources/").getAbsolutePath());
         tree.getRoot().getProperty("Java Package").setValueAndUpdate("robotcode");
         tree.walk(new RobotWalker() {
             @Override

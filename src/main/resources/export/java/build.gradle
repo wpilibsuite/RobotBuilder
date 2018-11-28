@@ -1,6 +1,5 @@
 plugins {
     id "java"
-    id "eclipse"
     id "idea"
     id "visual-studio"
     id "edu.wpi.first.GradleRIO" version "${wpilib-version}"
