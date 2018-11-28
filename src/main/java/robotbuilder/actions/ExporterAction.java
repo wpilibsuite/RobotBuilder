@@ -43,7 +43,7 @@ public class ExporterAction extends AbstractAction {
         if (newProject)
             JOptionPane.showMessageDialog(MainFrame.getInstance(),
                 "Project successfully exported for the first time. Open project directory in"
-                + "VS Code.", "New Project Exported",
+                + " VS Code.", "New Project Exported",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
