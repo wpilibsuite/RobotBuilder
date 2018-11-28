@@ -229,10 +229,10 @@ Palette:
             name: Java Package
             default: "org.usfirst.frc0000"
           - !FileProperty
-            name: Eclipse Workspace
+            name: Export Directory
             extension: null
             folder: true
-            default: "${home}workspace"
+            default: "${home}FRCProjects"
           - !BooleanProperty
             name: Export Subsystems
             default: true

@@ -42,8 +42,8 @@ public class ExporterAction extends AbstractAction {
         MainFrame.getInstance().setCursor(Cursor.DEFAULT_CURSOR);
         if (newProject)
             JOptionPane.showMessageDialog(MainFrame.getInstance(),
-                "Project successfully exported for the first time. After importing project in"
-                + " Eclipse, close and reopen Eclipse", "New Project Exported", 
+                "Project successfully exported for the first time. Open project directory in"
+                + "VS Code.", "New Project Exported",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
