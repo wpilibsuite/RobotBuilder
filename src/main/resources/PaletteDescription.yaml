@@ -227,7 +227,7 @@ Palette:
             default: true
           - !StringProperty
             name: Java Package
-            default: "org.usfirst.frc0000"
+            default: "frc.robot"
           - !FileProperty
             name: Export Directory
             extension: null
@@ -239,9 +239,6 @@ Palette:
           - !BooleanProperty
             name: Export Commands
             default: true
-          - !StringProperty
-            name: Simulation World File
-            default: "/usr/share/frcsim/worlds/GearsBotDemo.world"
           - !FileProperty
             name: Wiring file location
             folder: true

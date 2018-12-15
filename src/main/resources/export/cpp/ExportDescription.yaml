@@ -55,9 +55,7 @@ Required Properties:
 
 Vars:
   project-lang: cpp
-  team-number: ${robot.getProperty('Team Number').getValue()}
   robot-name: ${robot.getName()}
-  world-file: ${robot.getProperty('Simulation World File').getValue()}
   project: ${robot.getPropertyAbsolutePath('Export Directory')}$file-separator$robot-name
 Macros: macros.vm
 

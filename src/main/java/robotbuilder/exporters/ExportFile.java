@@ -46,13 +46,16 @@ public class ExportFile {
         }
 
         String oldType = CodeFileUtils.getSavedSuperclass(export);
-        String newType = CodeFileUtils.getSavedSuperclass(exporter.evalResource(source, fileContext));
+        String newType = oldType;
+        if(!export.getName().endsWith("jar")) {
+            newType = CodeFileUtils.getSavedSuperclass(exporter.evalResource(source, fileContext));
+        }
         System.out.println("Saved type: " + oldType);
         System.out.println("  New type: " + newType);
         // Export
         if (!export.exists() || update.equals("Overwrite") || !newType.equals(oldType)) {
             System.out.println("Overwriting " + export);
-            if (export.getName().endsWith(".jar")) {
+            if (export.getName().endsWith("jar")) {
                 // Don't attempt to parse binary files - they get corrupted if run through Velocity
                 IOUtils.copy(Utils.getResourceAsStream(source), Files.newOutputStream(export.toPath()));
             } else {
