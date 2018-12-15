@@ -269,7 +269,7 @@ Palette:
       - !Component
         name: Subsystem
         type: Subsystem
-        supports: {Sensor: -1, Actuator: -1, Controller: -1, PIDSource: -1, PIDOutput: -1}
+        supports: {Sensor: -1, Actuator: -1, Controller: -1, PIDSource: -1, PIDOutput: -1, PIDCANOutput: -1}
         help: A functional part of your robot that groups the sensors and actuators together.
         properties:
           - !ConstantsProperty
@@ -287,7 +287,7 @@ Palette:
       - !Component
         name: PID Subsystem
         type: Subsystem
-        supports: {Sensor: -1, Actuator: -1, Controller: -1, Pneumatic: -1, PIDSource: -1, PIDOutput: -1}
+        supports: {Sensor: -1, Actuator: -1, Controller: -1, Pneumatic: -1, PIDSource: -1, PIDOutput: -1, PIDCANOutput: -1}
         help: A PID Subsystem is a subsystem that uses a PID control loop.
         properties:
           - !ConstantsProperty
@@ -356,7 +356,7 @@ Palette:
       - !Component
         name: PID Controller
         type: Controller
-        supports: {PIDSource: 1, PIDOutput: 1}
+        supports: {PIDSource: 1, PIDOutput: 1, PIDCANOutput: 1}
         help: PID controllers allow control of an actuator based off of feedback from a sensor.
         properties:
           - !ChildSelectionProperty
@@ -414,7 +414,7 @@ Palette:
       - !Component
         name: Robot Drive 2
         type: Controller
-        supports: {PIDOutput: 2}
+        supports: {PIDOutput: 2, PIDCANOutput: 2}
         help: RobotDrive handles tank, arcade, holonomic and mecanum drive.
         properties:
           - !ChildSelectionProperty
@@ -448,7 +448,7 @@ Palette:
       - !Component
         name: Robot Drive 4
         type: Controller
-        supports: {PIDOutput: 4}
+        supports: {PIDOutput: 4, PIDCANOutput: 4}
         help: RobotDrive handles tank, arcade, holonomic and mecanum drive.
         properties:
           - !ChildSelectionProperty
@@ -498,7 +498,7 @@ Palette:
       - !Component
         name: Speed Controller Group
         type: PIDOutput
-        supports: {PIDOutput: 4}
+        supports: {PIDOutput: 4, PIDCANOutput: 4}
         help: Speed Controller Group handles multiple speed controllers as one
         properties:
           - !ChildSelectionProperty
@@ -522,7 +522,7 @@ Palette:
       - !Component
         name: Differential Drive
         type: Controller
-        supports: {PIDOutput: 2}
+        supports: {PIDOutput: 2, PIDCANOutput: 2}
         help: RobotDrive handles tank and arcade drives
         properties:
           - !ChildSelectionProperty
@@ -547,7 +547,7 @@ Palette:
       - !Component
         name: Mecanum Drive
         type: Controller
-        supports: {PIDOutput: 4}
+        supports: {PIDOutput: 4, PIDCANOutput: 4}
         help: Controller for Mecanum Drive Trains
         properties:
           - !ChildSelectionProperty
@@ -582,7 +582,7 @@ Palette:
       - !Component
         name: Killough Drive
         type: Controller
-        supports: {PIDOutput: 3}
+        supports: {PIDOutput: 3, PIDCANOutput: 3}
         help: RobotDrive handles tank and arcade drives
         properties:
           - !ChildSelectionProperty
