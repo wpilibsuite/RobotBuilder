@@ -1,3 +1,55 @@
+## WPI Project Files
+
+- !File
+  export: $project/.wpilib/wpilib_preferences.json
+  source: ${exporters-path}wpi/wpilib_preferences.json
+  update: None
+
+- !File
+  export: $project/BSD_License_for_WPILib_code.txt
+  source: ${exporters-path}wpi/BSD_License_for_WPILib_code.txt
+  update: None
+
+## Gradle Files
+
+- !File
+  export: $project/build.gradle
+  source: ${exporter-path}build.gradle
+  update: None
+
+- !File
+  export: $project/gradlew
+  source: ${exporters-path}gradle/scripts/gradlew
+  update: None
+  executable: true
+
+- !File
+  export: $project/gradlew.bat
+  source: ${exporters-path}gradle/scripts/gradlew.bat
+  update: None
+  executable: true
+
+- !File
+  export: $project/gradle/wrapper/gradle-wrapper.properties
+  source: ${exporters-path}gradle/wrapper/gradle-wrapper.properties
+  update: None
+
+- !File
+  export: $project/gradle/wrapper/gradle-wrapper.jar
+  source: ${exporters-path}gradle/wrapper/gradle-wrapper.notjar
+  update: None
+
+## VS Code Files
+
+- !File
+  export: $project/.vscode/launch.json
+  source: ${exporters-path}vscode/launch.json
+  update: None
+
+- !File
+  export: $project/.vscode/settings.json
+  source: ${exporters-path}vscode/settings.json
+  update: None
 
 - !File
   export: $project/src/main/deploy/example.txt

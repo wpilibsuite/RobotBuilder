@@ -242,7 +242,7 @@ public class RobotTree extends JPanel {
     /**
      * Gets the default name of a given component in the specified subsystem.
      *
-     * @param componentType The type of component to generate a default name for.
+     * @param component The type of component to generate a default name for.
      * @return The default name.
      */
     String getDefaultComponentName(PaletteComponent componentType, String subsystem) {
@@ -564,6 +564,7 @@ public class RobotTree extends JPanel {
         if (OKToClose()) {
             resetTree();
             getRoot().setName(name);
+            getRoot().setProperty("Team Number", team);
             getRoot().setProperty("Java Package", "org.usfirst.frc" + team);
             saved = true;
             setFilePath(null);

@@ -139,6 +139,28 @@ public class GenericExporter {
                     "Unfinished robot", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        // This should work but can be finicky sometimes
+        String wpilibRelease = RobotBuilder.class.getPackage().getImplementationVersion();
+
+        // If that didnt work, try the more classic approach of reading the manifest f
+        if(wpilibRelease == null) {
+            String className = RobotBuilder.class.getSimpleName() + ".class";
+            String classPath = RobotBuilder.class.getResource(className).toString();
+
+            String manifestPath = classPath.substring(0, classPath.lastIndexOf("!") + 1) +
+                    "/META-INF/MANIFEST.MF";
+            try {
+                Manifest manifest = new Manifest(new URL(manifestPath).openStream());
+                Attributes attr = manifest.getMainAttributes();
+                wpilibRelease = attr.getValue("Manifest-Version");
+            } catch (IOException ex) {
+              // just catch error, because we still have another fallback method. no need to report this.
+            }
+        }
+        if(wpilibRelease == null) {
+            wpilibRelease = "2019.1.1-beta-2a"; // this shouldn't need to be relied upon,
+                                                // but its better than generating nothing.
+        }
 
         // Prepare the main context
         rootContext.put("version", RobotBuilder.VERSION);
@@ -154,6 +176,7 @@ public class GenericExporter {
         rootContext.put("subsystems", robotTree.getSubsystems());
         rootContext.put("export-commands", robot.getProperty("Export Commands").getValue());
         rootContext.put("commands", robotTree.getCommands());
+        rootContext.put("wpilib-version", wpilibRelease);
         for (String key : varKeys) {
             rootContext.put(key, eval(vars.get(key)));
         }
