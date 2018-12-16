@@ -15,7 +15,7 @@ mainClassName = "robotbuilder.RobotBuilder"
 if (!hasProperty('releaseType')) {
     WPILibVersion {
         releaseType = 'dev'
-        version = '2019.1.1-beta-2a'
+        version = '2019.1.1-beta-4'
     }
 }
 

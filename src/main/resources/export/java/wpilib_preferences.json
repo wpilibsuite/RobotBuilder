@@ -1,4 +1,6 @@
 {
-    "teamNumber": ${team-number},
-    "currentLanguage": "java"
+    "enableCppIntellisense": false,
+    "currentLanguage": "java",
+    "projectYear": "2019",
+    "teamNumber": ${team-number}
 }

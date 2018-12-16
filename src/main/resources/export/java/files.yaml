@@ -2,7 +2,7 @@
 
 - !File
   export: $project/.wpilib/wpilib_preferences.json
-  source: ${exporters-path}wpi/wpilib_preferences.json
+  source: ${exporter-path}wpilib_preferences.json
   update: None
 
 - !File
@@ -10,11 +10,21 @@
   source: ${exporters-path}wpi/BSD_License_for_WPILib_code.txt
   update: None
 
+- !File
+  export: $project/.gitignore
+  source: ${exporters-path}wpi/dot.gitignore
+  update: None
+
 ## Gradle Files
 
 - !File
   export: $project/build.gradle
   source: ${exporter-path}build.gradle
+  update: None
+
+- !File
+  export: $project/settings.gradle
+  source: ${exporters-path}gradle/settings.gradle
   update: None
 
 - !File
@@ -48,7 +58,7 @@
 
 - !File
   export: $project/.vscode/settings.json
-  source: ${exporters-path}vscode/settings.json
+  source: ${exporter-path}settings.json
   update: None
 
 - !File
