@@ -31,6 +31,7 @@ public class MainFrame extends JFrame {
     JEditorPane help;
     JToolBar toolBar;
     StatusPanel statusPanel;
+    NewProjectDialog newProjectDialog;
     private static MainFrame instance = null;
     public Preferences prefs;
 
@@ -103,6 +104,8 @@ public class MainFrame extends JFrame {
         statusPanel = new StatusPanel();
         add(statusPanel, BorderLayout.SOUTH);
 
+        newProjectDialog = new NewProjectDialog(null);
+
         pack();
 
         setSize(prefs.getInt("Width", 600), prefs.getInt("Height", 480));
@@ -129,7 +132,7 @@ public class MainFrame extends JFrame {
         if (fileName.length() > 0) {
             robotTree.load(new File(fileName));
         } else {
-            robotTree.load();
+            newProjectDialog.display();
         }
         robotTree.takeSnapshot();
         robotTree.setSaved();
@@ -182,6 +185,6 @@ public class MainFrame extends JFrame {
     }
 
     public void showNewProjectDialog() {
-        JOptionPane.showMessageDialog(null, "New projects should be created in VS Code.");
+        newProjectDialog.display();
     }
 }

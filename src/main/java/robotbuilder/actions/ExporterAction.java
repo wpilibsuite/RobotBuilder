@@ -33,13 +33,13 @@ public class ExporterAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent ae) {
         boolean newProject = false;
-        MainFrame.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        MainFrame.getInstance().setCursor(Cursor.WAIT_CURSOR);
         try {
             newProject = exporter.export(MainFrame.getInstance().getCurrentRobotTree());
         } catch (IOException ex) {
             Logger.getLogger(ExporterAction.class.getName()).log(Level.SEVERE, null, ex);
         }
-        MainFrame.getInstance().setCursor(Cursor.getDefaultCursor());
+        MainFrame.getInstance().setCursor(Cursor.DEFAULT_CURSOR);
         if (newProject)
             JOptionPane.showMessageDialog(MainFrame.getInstance(),
                 "Project successfully exported for the first time. Open project directory in"
