@@ -4,7 +4,7 @@ plugins {
     id 'maven'
     id 'application'
     id 'maven-publish'
-    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '2.2'
+    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '2.3'
     id 'io.franzbecker.gradle-lombok' version '1.14'
     id "com.github.johnrengelman.shadow" version "4.0.2"
 }
@@ -15,7 +15,6 @@ mainClassName = "robotbuilder.RobotBuilder"
 if (!hasProperty('releaseType')) {
     WPILibVersion {
         releaseType = 'dev'
-        version = '2019.1.1-beta-4'
     }
 }
 
@@ -106,5 +105,5 @@ publishing {
 }
 
 wrapper {
-    gradleVersion = '5.0-milestone-1'
+    gradleVersion = '5.0'
 }
