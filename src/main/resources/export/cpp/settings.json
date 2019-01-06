@@ -9,7 +9,8 @@
     "**/.DS_Store": true,
     "bin/": true,
     ".classpath": true,
-    ".project": true
+    ".project": true,
+    "**/*~": true
   },
   "C_Cpp.default.configurationProvider": "vscode-wpilib",
   "wpilib.online": true
