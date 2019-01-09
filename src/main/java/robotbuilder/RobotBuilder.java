@@ -25,7 +25,7 @@ public class RobotBuilder {
 
     public static final String VERSION = VERSION_MAJOR + "." + VERSION_MINOR;
 
-    public static final String WPILIB_VERSION = "2018";
+    public static final String WPILIB_VERSION = "2019";
 
     public static final String SAVE_FILE_TYPE = "yaml";
 
