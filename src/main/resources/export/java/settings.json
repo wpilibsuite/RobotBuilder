@@ -10,6 +10,5 @@
     ".classpath": true,
     ".project": true,
     "**/*~": true
-  },
-  "wpilib.online": true
+  }
 }
