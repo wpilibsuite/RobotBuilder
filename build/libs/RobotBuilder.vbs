@@ -11,10 +11,11 @@ toolsFolder = fso.GetParentFolderName(WScript.ScriptFullName)
 fullJarPath = fso.BuildPath(toolsFolder, jarName)
 
 'Get the full path to the JDK
-jdkDir = fso.GetParentFolderName(toolsFolder)
-jdkDir = fso.BuildPath(jdkDir, "jdk")
-jdkDir = fso.BuildPath(jdkDir, "bin")
-jdkDir = fso.BuildPath(jdkDir, "javaw.exe")
+'jdkDir = fso.GetParentFolderName(toolsFolder)
+'jdkDir = fso.BuildPath(jdkDir, "jdk")
+'jdkDir = fso.BuildPath(jdkDir, "bin")
+'jdkDir = fso.BuildPath(jdkDir, "javaw.exe")
+jdkDir = fso.BuildPath("c:\\users\\public\\frc2019", "jdk\\bin\\javaw.exe")
 
 
 ' Get the full shell to run
