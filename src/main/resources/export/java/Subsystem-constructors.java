@@ -6,6 +6,5 @@
 
         #extra($component)
 
-        
 #end
 #end
