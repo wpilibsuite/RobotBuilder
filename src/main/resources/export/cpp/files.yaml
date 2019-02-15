@@ -271,6 +271,7 @@
   modifications:
     declarations: ${exporter-path}Subsystem-declarations.h
     constants: ${exporter-path}Subsystem-constants.h
+    cmdpidgetters: ${exporter-path}Subsystem-pidgetters.h
   variables:
     subsystem-name: ${subsystem.name}
 #else
