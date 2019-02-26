@@ -158,7 +158,7 @@ public class GenericExporter {
             }
         }
         if(wpilibRelease == null) {
-            wpilibRelease = "2019.3.1"; // this shouldn't need to be relied upon,
+            wpilibRelease = "2019.4.1"; // this shouldn't need to be relied upon,
                                         // but its better than generating nothing.
         }
 
@@ -346,7 +346,7 @@ public class GenericExporter {
         });
         return mapping;
     }
-    
+
     private String delimiter = "\u0008"; // unicode backspace character. No way is this going to be in some text field
     private String delimiter2 = "\u2502"; // unicode pipe character.
 
