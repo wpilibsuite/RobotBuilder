@@ -107,7 +107,7 @@ test {
 
 if (project.hasProperty('headless')) {
     test {
-        systemProperty 'java.awt.headless', 'true'
+        systemProperty 'java.awt.headless', 'false'
     }
 }
 
