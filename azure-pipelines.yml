@@ -29,7 +29,7 @@ stages:
           publishJUnitResults: false
           testResultsFiles: '**/TEST-*.xml'
           tasks: 'check'
-          options: '-PbuildServer -Pheadless'
+          options: '-PbuildServer -x test'
 
   - job: Windows_64_Bit
     pool:
@@ -99,9 +99,7 @@ stages:
   jobs:
   - job: PublishJob
     pool:
-      vmImage: 'Ubuntu 16.04'
-
-    container: wpilib2020
+      vmImage: 'vs2017-win2016'
 
     steps:
 # PR Builds
@@ -110,8 +108,9 @@ stages:
         workingDirectory: ''
         gradleWrapperFile: 'gradlew'
         gradleOptions: '-Xmx3072m'
+        jdkVersionOption: '1.11'
         tasks: 'publish'
-        options: '-PbuildServer -Pheadless'
+        options: '-PbuildServer'
       condition: and(succeeded(), and(ne(variables['Build.SourceBranch'], 'refs/heads/master'), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))))
 
 # Master Builds
@@ -120,8 +119,9 @@ stages:
         workingDirectory: ''
         gradleWrapperFile: 'gradlew'
         gradleOptions: '-Xmx3072m'
+        jdkVersionOption: '1.11'
         tasks: 'publish'
-        options: '-PbuildServer -Pheadless'
+        options: '-PbuildServer'
       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
       env:
         RUN_AZURE_ARTIFACTORY_RELEASE: 'TRUE'
@@ -133,9 +133,10 @@ stages:
       inputs:
         workingDirectory: ''
         gradleWrapperFile: 'gradlew'
+        jdkVersionOption: '1.11'
         gradleOptions: '-Xmx3072m'
         tasks: 'publish '
-        options: '-PreleaseMode -PbuildServer -Pheadless'
+        options: '-PreleaseMode -PbuildServer'
       condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
       env:
         RUN_AZURE_ARTIFACTORY_RELEASE: 'TRUE'
