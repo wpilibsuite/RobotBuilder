@@ -72,6 +72,10 @@ lombok {
     sha256 = ""
 }
 
+compileJava {
+    options.encoding = "UTF-8"
+}
+
 if (!hasProperty('mainClass')) {
     ext.mainClass = mainClassName
 }
