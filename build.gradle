@@ -4,26 +4,55 @@ plugins {
     id 'maven'
     id 'application'
     id 'maven-publish'
-    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '2.3'
+    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '4.0.1'
+    id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.1'
     id 'io.franzbecker.gradle-lombok' version '1.14'
     id "com.github.johnrengelman.shadow" version "4.0.2"
 }
 
+if (project.hasProperty('buildServer')) {
+    wpilibVersioning.buildServerMode = true
+}
+
+if (project.hasProperty('releaseMode')) {
+    wpilibVersioning.releaseMode = true
+}
+
+repositories {
+    mavenCentral()
+}
+if (project.hasProperty('releaseMode')) {
+    wpilibRepositories.addAllReleaseRepositories(project)
+} else {
+    wpilibRepositories.addAllDevelopmentRepositories(project)
+}
+
+if (System.getenv()['RUN_AZURE_ARTIFACTORY_RELEASE'] != null) {
+  artifactory {
+    contextUrl = 'https://frcmaven.wpi.edu/artifactory' // base artifactory url
+    publish {
+      repository {
+        if (project.hasProperty('releaseMode')) {
+          repoKey = 'release'
+        } else {
+          repoKey = 'development'
+        }
+        username = System.getenv()['ARTIFACTORY_PUBLISH_USERNAME']
+        password = System.getenv()['ARTIFACTORY_PUBLISH_PASSWORD']
+        maven = true
+      }
+      defaults {
+          publications ('maven')
+      }
+    }
+  }
+  publish.dependsOn artifactoryPublish
+}
+
+
 mainClassName = "robotbuilder.RobotBuilder"
 
-
-if (!hasProperty('releaseType')) {
-    WPILibVersion {
-        releaseType = 'dev'
-    }
-}
-
-def pubVersion = ''
-if (project.hasProperty("publishVersion")) {
-    pubVersion = project.publishVersion
-} else {
-    pubVersion = WPILibVersion.version
-}
+wpilibVersioning.version.finalizeValue()
 
 jacoco {
     toolVersion = "0.8.2"
@@ -82,7 +111,7 @@ jar {
 
     manifest {
         attributes('Implementation-Title': 'RobotBuilder',
-                    'Implementation-Version': WPILibVersion.version,
+                    'Implementation-Version': wpilibVersioning.version.get(),
                     'Built-By': System.getProperty('user.name'),
                     'Built-Date': new Date(),
                     'Built-JDK': System.getProperty('java.version'))
@@ -99,7 +128,7 @@ publishing {
             }
             groupId 'edu.wpi.first.wpilib'
             artifactId 'RobotBuilder'
-            version pubVersion
+            version wpilibVersioning.version.get()
         }
     }
 }
