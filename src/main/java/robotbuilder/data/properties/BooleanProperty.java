@@ -33,7 +33,7 @@ public class BooleanProperty extends Property {
 
     @Override
     public Object getDisplayValue() {
-        return ((Boolean) getValue()).booleanValue();
+        return getValue();
     }
 
     @Override

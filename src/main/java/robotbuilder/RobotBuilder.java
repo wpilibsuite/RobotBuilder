@@ -20,12 +20,12 @@ import robotbuilder.extensions.Extensions;
  */
 public class RobotBuilder {
 
-    public static final int VERSION_MAJOR = 2;
+    public static final int VERSION_MAJOR = 3;
     public static final int VERSION_MINOR = 0;
 
     public static final String VERSION = VERSION_MAJOR + "." + VERSION_MINOR;
 
-    public static final String WPILIB_VERSION = "2019";
+    public static final String WPILIB_VERSION = "2020";
 
     public static final String SAVE_FILE_TYPE = "yaml";
 

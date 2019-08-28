@@ -1,4 +1,4 @@
-#set($command = $helper.getByName($command-name, $robot))
+#set($command = $helper.getByName($command_name, $robot))
 #set($params = $command.getProperty("Parameters").getValue())
 #set($len = $params.size() - 2)
 #set($last = $len + 1)

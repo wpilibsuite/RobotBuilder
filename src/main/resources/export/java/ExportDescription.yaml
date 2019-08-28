@@ -55,14 +55,14 @@ Required Properties:
   - Java Package
 
 Vars:
-  project-lang: java
-  team-number: ${robot.getProperty('Team Number').getValue()}
-  robot-name: ${robot.getName().replace(' ', '')}
-  world-file: ${robot.getProperty('Simulation World File').getValue()}
-  project: ${robot.getPropertyAbsolutePath('Export Directory')}$file-separator$robot-name
-  use-default-package-p: ${robot.getProperty('Use Default Java Package').getValue()}
-  package: "#if($use-default-package-p==true)org.usfirst.frc${team-number}.${robot-name}#else${robot.getProperty('Java Package').getValue()}#end"
-  package-path: ${project}/src/main/java/${package.replace('.', '/')}
+  project_lang: java
+  team_number: ${robot.getProperty('Team Number').getValue()}
+  robot_name: ${robot.getName().replace(' ', '')}
+  world_file: ${robot.getProperty('Simulation World File').getValue()}
+  project: ${robot.getPropertyAbsolutePath('Export Directory')}$file_separator$robot_name
+  use_default_package_p: ${robot.getProperty('Use Default Java Package').getValue()}
+  package: "#if($use_default_package_p==true)frc.robot#else${robot.getProperty('Java Package').getValue()}#end"
+  package_path: ${project}/src/main/java/${package.replace('.', '/')}
 
 Macros: macros.vm
 
@@ -272,7 +272,6 @@ Instructions:
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Construction: "#variable($Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction});"
     Import: "import edu.wpi.first.wpilibj.Encoder;\nimport edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.PIDSourceType;\nimport edu.wpi.first.wpilibj.Encoder.IndexingType;"
     Construction: "#variable($Short_Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"

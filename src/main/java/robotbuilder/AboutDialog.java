@@ -21,7 +21,7 @@ public class AboutDialog extends CenteredDialog {
         aboutWindow.add(productName);
         aboutWindow.add(new JLabel("Version " + version));
         aboutWindow.add(Box.createVerticalStrut(15));
-        aboutWindow.add(new JLabel("Exports to WPILIB Version " + wpilibVersion));
+        aboutWindow.add(new JLabel("Exports to WPILib Version " + wpilibVersion));
         aboutWindow.add(Box.createVerticalStrut(15));
         aboutWindow.add(new JLabel(description));
         aboutWindow.add(Box.createVerticalStrut(15));

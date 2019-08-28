@@ -1,4 +1,4 @@
-#set($command = $helper.getByName($command-name, $robot))
+#set($command = $helper.getByName($command_name, $robot))
 #set($subsystem = $command.getProperty("Requires").getValue())
 #set($subsystem-instance = $helper.getByName($subsystem,$robot))
 #foreach ($component in $components)

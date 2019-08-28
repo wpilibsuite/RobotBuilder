@@ -94,46 +94,46 @@
 
 ## Macros:
 #macro( AnalogInput $Name )
-- !ChoicesProperty
+          - !ChoicesProperty
             name: $Name Channel (Analog)
             choices: ["0", "1", "2", "3", "4", "5", "6", "7"]
             validators: [AnalogInput]
             default: "0"
 #end
 #macro( DigitalChannel $Name )
-- !ChoicesProperty
+          - !ChoicesProperty
             name: $Name Channel (Digital)
             validators: [DigitalChannel]
             choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"]
             default: "0"
 #end
 #macro( PWMOutput $Name )
-- !ChoicesProperty
+          - !ChoicesProperty
             name: $Name Channel (PWM)
             validators: [PWMOutput]
             choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]
             default: "0"
 #end
 #macro( RelayOutput $Name )
-- !ChoicesProperty
+          - !ChoicesProperty
             name: $Name Channel (Relay)
             validators: [RelayOutput]
             choices: ["0", "1", "2", "3"]
             default: "0"
 #end
 #macro( AnalogOutput $Name )
-- !ChoicesProperty
+          - !ChoicesProperty
             name: $Name Channel (AnalogOutput)
             validators: [AnalogOutput]
             choices: ["0", "1"]
             default: "0"
 #end
 #macro( Button $Name )
-- !TypeSelectionProperty
-            name: $Name Command
-            type: Command
-            validators: [TypeDropdownSelected]
-            default: None
+          - !TypeSelectionProperty
+              name: $Name Command
+              type: Command
+              validators: [TypeDropdownSelected]
+              default: None
           - !Parameters
             name: $Name Parameters
           - !ChoicesProperty
@@ -142,11 +142,11 @@
             default: whileHeld
 #end
 #macro( Solenoid $Name )
-- !ChoicesProperty
-            name: $Name PCM (Solenoid)
-            validators: [Solenoid]
-            choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
-            default: "0"
+          - !ChoicesProperty
+              name: $Name PCM (Solenoid)
+              validators: [Solenoid]
+              choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
+              default: "0"
           - !ChoicesProperty
             name: $Name Channel (Solenoid)
             validators: [Solenoid]
@@ -170,11 +170,11 @@ Validators:
   - !ExistsValidator
     name: ChildDropdownSelected
     ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
-    error: "You must select a component of the valid type beneath this item. If no options exist, drag one under this component."
+    "error": "You must select a component of the valid type beneath this item. If no options exist, drag one under this component."
   - !ExistsValidator
     name: TypeDropdownSelected
     ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
-    error: "You must select a component of the valid type. If no options exist, create a new component of the right type."
+    "error": "You must select a component of the valid type. If no options exist, create a new component of the right type."
   - !UniqueValidator
     name: AnalogInput
     fields: [Channel (Analog)]
@@ -227,7 +227,7 @@ Palette:
             default: true
           - !StringProperty
             name: Java Package
-            default: "org.usfirst.frc0000"
+            default: "frc.robot"
           - !FileProperty
             name: Export Directory
             extension: null

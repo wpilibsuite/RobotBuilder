@@ -1,3 +1,3 @@
-#set($command = $helper.getByName($command-name, $robot))
+#set($command = $helper.getByName($command_name, $robot))
 
 #class($command.name)(double timeout);
