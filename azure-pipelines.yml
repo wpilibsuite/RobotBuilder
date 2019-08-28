@@ -29,7 +29,7 @@ stages:
           publishJUnitResults: false
           testResultsFiles: '**/TEST-*.xml'
           tasks: 'check'
-          options: '-PbuildServer'
+          options: '-PbuildServer -Pheadless'
 
   - job: Windows_64_Bit
     pool:
@@ -111,7 +111,7 @@ stages:
         gradleWrapperFile: 'gradlew'
         gradleOptions: '-Xmx3072m'
         tasks: 'publish'
-        options: '-PbuildServer'
+        options: '-PbuildServer -Pheadless'
       condition: and(succeeded(), and(ne(variables['Build.SourceBranch'], 'refs/heads/master'), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))))
 
 # Master Builds
@@ -121,7 +121,7 @@ stages:
         gradleWrapperFile: 'gradlew'
         gradleOptions: '-Xmx3072m'
         tasks: 'publish'
-        options: '-PbuildServer'
+        options: '-PbuildServer -Pheadless'
       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
       env:
         RUN_AZURE_ARTIFACTORY_RELEASE: 'TRUE'
@@ -135,7 +135,7 @@ stages:
         gradleWrapperFile: 'gradlew'
         gradleOptions: '-Xmx3072m'
         tasks: 'publish '
-        options: '-PreleaseMode -PbuildServer'
+        options: '-PreleaseMode -PbuildServer -Pheadless'
       condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
       env:
         RUN_AZURE_ARTIFACTORY_RELEASE: 'TRUE'

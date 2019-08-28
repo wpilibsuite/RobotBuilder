@@ -105,6 +105,12 @@ test {
     }
 }
 
+if (project.hasProperty('headless')) {
+    test {
+        systemProperty 'java.awt.headless', 'true'
+    }
+}
+
 jar {
 
     from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }) {
