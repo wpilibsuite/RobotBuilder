@@ -4,6 +4,7 @@ plugins {
     id 'maven'
     id 'application'
     id 'maven-publish'
+    id "com.jfrog.artifactory" version "4.9.8"
     id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '4.0.1'
     id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.1'
     id 'io.franzbecker.gradle-lombok' version '1.14'
@@ -45,6 +46,7 @@ if (System.getenv()['RUN_AZURE_ARTIFACTORY_RELEASE'] != null) {
           publications ('maven')
       }
     }
+    clientConfig.info.setBuildName('RobotBuilder')
   }
   publish.dependsOn artifactoryPublish
 }
