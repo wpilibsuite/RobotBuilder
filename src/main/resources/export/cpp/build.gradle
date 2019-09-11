@@ -1,7 +1,7 @@
 plugins {
     id "cpp"
     id "google-test-test-suite"
-    id "edu.wpi.first.GradleRIO" version "${wpilib-version}"
+    id "edu.wpi.first.GradleRIO" version "${wpilib_version}"
 }
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
