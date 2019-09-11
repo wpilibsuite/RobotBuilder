@@ -1,7 +1,7 @@
 #header()
 
 package ${package}.subsystems;
-#set($subsystem = $helper.getByName($subsystem-name, $robot))
+#set($subsystem = $helper.getByName($subsystem_name, $robot))
 
 import ${package}.commands.*;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;

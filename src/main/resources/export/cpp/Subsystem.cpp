@@ -1,5 +1,5 @@
-#set($subsystem = $helper.getByName($subsystem-name, $robot))
-#macro( klass $cmd )#if( "#type($cmd)" == "" )Subsystem#else#type($cmd)#end#end
+#set($subsystem = $helper.getByName($subsystem_name, $robot))
+#macro( klass $cmd )#if( "#type($cmd)" == "" )SendableSubsystemBase#else#type($cmd)#end#end
 #header()
 
 \#include "Subsystems/#class($subsystem.name).h"

@@ -8,4 +8,4 @@ Vars:
   export-path: ${robot.getPropertyAbsolutePath('Wiring file location')}/wiring.html
 Macros: macros.vm
 ## Else deals with the hell that is windows.
-Post Export Action: "#if(${export-path.startsWith(\"/\")})#Browse:file://${export-path}#else#Browse:file:///${export-path.replace(\"\\\", \"/\").replace(\" \", \"%20\")}#end"
+Post Export Action: "#if(${export_path.startsWith(\"/\")})#Browse:file://${export_path}#else#Browse:file:///${export_path.replace(\"\\\", \"/\").replace(\" \", \"%20\")}#end"

@@ -63,14 +63,14 @@ public class Utils {
     }
 
     /**
-     * Handle velocity template loader frome either resource or file.
+     * Handle velocity template loader from either resource or file.
      *
      * @return
      */
     public static Properties getVelocityProperties() {
         Properties p = new Properties();
-        p.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        p.setProperty("resource.loaders.classpath.class", ClasspathResourceLoader.class.getName());
+        p.setProperty("resource.loaders", "class");
+        p.setProperty("resource.loader.class.class",  "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         return p;
     }
 

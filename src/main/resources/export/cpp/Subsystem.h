@@ -1,5 +1,5 @@
-#set($subsystem = $helper.getByName($subsystem-name, $robot))
-#macro( klass $cmd )#if( "#type($cmd)" == "" )frc::Subsystem#else#type($cmd)#end#end
+#set($subsystem = $helper.getByName($subsystem_name, $robot))
+#macro( klass $cmd )#if( "#type($cmd)" == "" )frc::SendableSubsystemBase#else#type($cmd)#end#end
 #header()
 
 #ifndef #constant($subsystem.name)_H

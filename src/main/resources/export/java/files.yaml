@@ -68,12 +68,12 @@
   
 ## Key Java Files
 - !File
-  export: $package-path/Main.java
+  export: $package_path/Main.java
   source: ${exporter_path}MainTemplate.java
   update: Modify
   
 - !File
-  export: $package-path/Robot.java
+  export: $package_path/Robot.java
   source: ${exporter_path}RobotTemplate.java
   update: Modify
   modifications:
@@ -82,7 +82,7 @@
     constructors: ${exporter_path}RobotTemplate-constructors.java
 
 - !File
-  export: $package-path/OI.java
+  export: $package_path/OI.java
   source: ${exporter_path}OI.java
   update: Modify
   modifications:
@@ -95,7 +95,7 @@
 #foreach ($command in $commands)
 #if ($command.base.name == "Command Group")
 - !File
-  export: $package-path/commands/#class($command.name).java
+  export: $package_path/commands/#class($command.name).java
   source: ${exporter_path}CommandGroup.java
   update: Modify
   modifications:
@@ -105,7 +105,7 @@
     command_name: ${command.name}
 #elseif($command.base.name == "PID Command")
 - !File
-  export: $package-path/commands/#class($command.name).java
+  export: $package_path/commands/#class($command.name).java
   source: ${exporter_path}PIDCommand.java
   update: Modify
   modifications:
@@ -118,7 +118,7 @@
     command_name: ${command.name}
 #elseif($command.base.name == "Setpoint Command")
 - !File
-  export: $package-path/commands/#class($command.name).java
+  export: $package_path/commands/#class($command.name).java
   source: ${exporter_path}SetpointCommand.java
   update: Modify
   modifications:
@@ -130,7 +130,7 @@
     command_name: ${command.name}
 #elseif($command.base.name == "Timed Command")
 - !File
-  export: $package-path/commands/#class($command.name).java
+  export: $package_path/commands/#class($command.name).java
   source: ${exporter_path}TimedCommand.java
   update: Modify
   modifications:
@@ -140,7 +140,7 @@
     command_name: ${command.name}
 #elseif($command.base.name == "Instant Command")
 - !File
-  export: $package-path/commands/#class($command.name).java
+  export: $package_path/commands/#class($command.name).java
   source: ${exporter_path}InstantCommand.java
   update: Modify
   modifications:
@@ -150,7 +150,7 @@
     command_name: ${command.name}
 #elseif ($command.base.name == "Conditional Command")
 - !File
-  export: $package-path/commands/#class($command.name).java
+  export: $package_path/commands/#class($command.name).java
   source: ${exporter_path}ConditionalCommand.java
   update: Modify
   modifications:
@@ -159,7 +159,7 @@
     command_name: ${command.name}
 #else
 - !File
-  export: $package-path/commands/#class($command.name).java
+  export: $package_path/commands/#class($command.name).java
   source: ${exporter_path}Command.java
   update: Modify
   modifications:
@@ -176,7 +176,7 @@
 #foreach ($subsystem in $subsystems)
 #if ($subsystem.base.name == "PID Subsystem")
 - !File
-  export: $package-path/subsystems/#class($subsystem.name).java
+  export: $package_path/subsystems/#class($subsystem.name).java
   source: ${exporter_path}PIDSubsystem.java
   update: Modify
   modifications:
@@ -190,10 +190,10 @@
     constructors: ${exporter_path}Subsystem-constructors.java
     pidgetters: ${exporter_path}Subsystem-pidgetters.java
   variables:
-    subsystem-name: ${subsystem.name}
+    subsystem_name: ${subsystem.name}
 #else
 - !File
-  export: $package-path/subsystems/#class($subsystem.name).java
+  export: $package_path/subsystems/#class($subsystem.name).java
   source: ${exporter_path}Subsystem.java
   update: Modify
   modifications:
@@ -204,7 +204,7 @@
     constructors: ${exporter_path}Subsystem-constructors.java
     pidgetters: ${exporter_path}Subsystem-pidgetters.java
   variables:
-    subsystem-name: ${subsystem.name}
+    subsystem_name: ${subsystem.name}
 #end
 #end
 #end
