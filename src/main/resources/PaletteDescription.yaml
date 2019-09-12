@@ -743,7 +743,7 @@ Palette:
         properties:
           - !ChoicesProperty
             name: Type
-            choices: ["Victor", "Jaguar", "Talon", "VictorSP", "PWMTalonSRX", "Spark", "SD540", "PWMVictorSPX", "DMC60"]
+            choices: ["Victor", "Jaguar", "Talon", "VictorSP", "PWMTalonSRX", "Spark", "SD540", "PWMVictorSPX", "DMC60", PWMSparkMax]
             default: "Spark"
           #PWMOutput("Output")
           - !BooleanProperty
