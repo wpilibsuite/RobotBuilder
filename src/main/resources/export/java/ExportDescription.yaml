@@ -134,16 +134,16 @@ Instructions:
     Defaults: "None"
   Subsystem:
     Defaults: "None"
-    Export: "Robot"
+    Export: "RobotContainer"
     Import: "import ${package}.subsystems.*;"
-    Declaration: "public static #class($Short_Name) #variable($Short_Name);"
+    Declaration: "private final #class($Short_Name) #variable($Short_Name) = new #class($Short_Name)();"
     Construction: "#variable($Short_Name) = new #class($Short_Name)();"
     ClassName: "SubsystemBase"
   PID Subsystem:
     Defaults: "None"
-    Export: "Robot"
+    Export: "RobotContainer"
     Import: "import ${package}.subsystems.*;"
-    Declaration: "public static #class($Short_Name) #variable($Short_Name);"
+    Declaration: "private final #class($Short_Name) #variable($Short_Name)  = new #class($Short_Name)();"
     Construction: "#variable($Short_Name) = new #class($Short_Name)();"
 
   PID Controller:

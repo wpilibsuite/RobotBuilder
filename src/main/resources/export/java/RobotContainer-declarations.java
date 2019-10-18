@@ -1,5 +1,6 @@
 #foreach ($component in $components)
-#if ($helper.exportsTo("Robot", $component))
+#if ($helper.exportsTo("RobotContainer", $component))
     #declaration($component)
+
 #end
 #end
