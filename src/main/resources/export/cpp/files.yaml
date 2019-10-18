@@ -83,21 +83,53 @@
     includes: ${exporter_path}CommandBasedRobot-includes.h
     declarations: ${exporter_path}CommandBasedRobot-declarations.cpp
 
+#- !File
+#  export: $project/src/main/cpp/OI.cpp
+#  source: ${exporter_path}OI.cpp
+#  update: Modify
+#  modifications:
+#    includes: ${exporter_path}OI-includes.h
+#    constructors: ${exporter_path}OI-constructors.cpp
+#    functions: ${exporter_path}OI-functions.cpp
+#- !File
+#  export: $project/src/main/include/OI.h
+#  source: ${exporter_path}OI.h
+#  update: Modify
+#  modifications:
+#    declarations: ${exporter_path}OI-declarations.h
+#    prototypes: ${exporter_path}OI-prototypes.h
+
 - !File
-  export: $project/src/main/cpp/OI.cpp
-  source: ${exporter_path}OI.cpp
+  export: $project/src/main/cpp/Constants.cpp
+  source: ${exporter_path}Constants.cpp
   update: Modify
-  modifications:
-    includes: ${exporter_path}OI-includes.h
-    constructors: ${exporter_path}OI-constructors.cpp
-    functions: ${exporter_path}OI-functions.cpp
+  #modifications:
+  #  includes: ${exporter_path}Constants-includes.h
+  #  constructors: ${exporter_path}Constants-constructors.cpp
+  #  functions: ${exporter_path}Constants-functions.cpp
 - !File
-  export: $project/src/main/include/OI.h
-  source: ${exporter_path}OI.h
+  export: $project/src/main/include/Constants.h
+  source: ${exporter_path}Constants.h
   update: Modify
-  modifications:
-    declarations: ${exporter_path}OI-declarations.h
-    prototypes: ${exporter_path}OI-prototypes.h
+  #modifications:
+  #  declarations: ${exporter_path}Constants-declarations.h
+  #  prototypes: ${exporter_path}Constants-prototypes.h
+
+- !File
+  export: $project/src/main/cpp/RobotContainer.cpp
+  source: ${exporter_path}RobotContainer.cpp
+  update: Modify
+  #modifications:
+  #  includes: ${exporter_path}RobotContainer-includes.h
+  #  constructors: ${exporter_path}RobotContainer-constructors.cpp
+  #  functions: ${exporter_path}RobotContainer-functions.cpp
+- !File
+  export: $project/src/main/include/RobotContainer.h
+  source: ${exporter_path}RobotContainer.h
+  update: Modify
+  #modifications:
+  #  declarations: ${exporter_path}RobotContainer-declarations.h
+  #  prototypes: ${exporter_path}RobotContainer-prototypes.h
 
 - !File
   export: $project/src/test/cpp/main.cpp

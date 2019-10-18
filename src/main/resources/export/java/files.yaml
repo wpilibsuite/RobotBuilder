@@ -81,14 +81,32 @@
     declarations: ${exporter_path}RobotTemplate-declarations.java
     constructors: ${exporter_path}RobotTemplate-constructors.java
 
+#- !File
+#  export: $package_path/OI.java
+#  source: ${exporter_path}OI.java
+#  update: Modify
+#  modifications:
+#    declarations: ${exporter_path}OI-declarations.java
+#    constructors: ${exporter_path}OI-constructors.java
+#    functions: ${exporter_path}OI-functions.java
+
 - !File
-  export: $package_path/OI.java
-  source: ${exporter_path}OI.java
+  export: $package_path/Constants.java
+  source: ${exporter_path}Constants.java
   update: Modify
-  modifications:
-    declarations: ${exporter_path}OI-declarations.java
-    constructors: ${exporter_path}OI-constructors.java
-    functions: ${exporter_path}OI-functions.java
+  #modifications:
+  #  declarations: ${exporter_path}Constants-declarations.java
+  #  constructors: ${exporter_path}Constants-constructors.java
+  #  functions: ${exporter_path}Constants-functions.java
+
+- !File
+  export: $package_path/RobotContainer.java
+  source: ${exporter_path}RobotContainer.java
+  update: Modify
+  #modifications:
+  #  declarations: ${exporter_path}RobotContainer-declarations.java
+  #  constructors: ${exporter_path}RobotContainer-constructors.java
+  #  functions: ${exporter_path}RobotContainer-functions.java
 
 ## Export Commands as files
 #if ($export_commands)
