@@ -112,10 +112,10 @@ Defaults:
   AnalogOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_AnalogOutput});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
-  OI:
-    Export: "OI"
-    Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport ${package}.subsystems.*;"
-    Declaration: "public ${ClassName} #variable($Name);"
+  #OI:
+  #  Export: "OI"
+  #  Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport ${package}.subsystems.*;"
+  #  Declaration: "public ${ClassName} #variable($Name);"
   Button:
     Import: "import edu.wpi.first.wpilibj.buttons.*;"
     Extra:  "#if(\"$Command\" != \"None\")#variable($Name).${When_to_Run}(#command_instantiation(${Command} ${Parameters}));#end"
@@ -138,7 +138,7 @@ Instructions:
     Import: "import ${package}.subsystems.*;"
     Declaration: "public static #class($Short_Name) #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new #class($Short_Name)();"
-    ClassName: "Subsystem"
+    ClassName: "SubsystemBase"
   PID Subsystem:
     Defaults: "None"
     Export: "Robot"
