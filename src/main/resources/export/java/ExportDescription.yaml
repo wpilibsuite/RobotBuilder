@@ -68,7 +68,7 @@ Macros: macros.vm
 
 Post Export Action: "#Message:You have successfully exported. You can now open or import the project in VS Code and extend the generated code."
 
-Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWindow", "Extra", "Function", "PID", "ClassName"]
+Instruction Names: ["Export", "Import", "Declaration", "Construction", "NewObject", "LiveWindow", "Extra", "Function", "PID", "ClassName"]
 
 Defaults:
   Component:
@@ -84,6 +84,7 @@ Defaults:
     Import: ""
     Declaration: ""
     Construction: ""
+    NewObject: ""
     LiveWindow: ""
     Extra: ""
     Function: ""
@@ -91,26 +92,33 @@ Defaults:
     ClassName: ""
   AnalogInput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog});"
+    NewObject: "private final ${ClassName} #variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     PID: "#variable($Short_Name).getAverageVoltage()"
   AnalogPotentiometer:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset});"
+    NewObject: "private final ${ClassName} #variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     PID: "#variable($Short_Name).get()"
   DigitalInput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Digital});"
+    NewObject: "private final ${ClassName} #variable($Short_Name) = new ${ClassName}(${Input_Channel_Digital});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   PWMOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_PWM});"
+    NewObject: "private final ${ClassName} #variable($Short_Name) = new ${ClassName}(${Output_Channel_PWM});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   RelayOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_Relay});"
+    NewObject: "private final ${ClassName} #variable($Short_Name) = new ${ClassName}(${Output_Channel_Relay});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   SolenoidOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid});"
+    NewObject: "private final ${ClassName} #variable($Short_Name) = new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   AnalogOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_AnalogOutput});"
+    NewObject: "private final ${ClassName} #variable($Short_Name) = new ${ClassName}(${Output_Channel_AnalogOutput});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   OI:
     Export: "OI"
@@ -136,21 +144,24 @@ Instructions:
     Defaults: "None"
     Export: "RobotContainer"
     Import: "import ${package}.subsystems.*;"
-    Declaration: "private final #class($Short_Name) #variable($Short_Name) = new #class($Short_Name)();"
+    Declaration: "private #class($Short_Name) #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new #class($Short_Name)();"
+    NewObject: "private final #class($Short_Name) #variable($Short_Name) = new #class($Short_Name)();"
     ClassName: "SubsystemBase"
   PID Subsystem:
     Defaults: "None"
     Export: "RobotContainer"
     Import: "import ${package}.subsystems.*;"
-    Declaration: "private final #class($Short_Name) #variable($Short_Name)  = new #class($Short_Name)();"
+    Declaration: "private #class($Short_Name) #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new #class($Short_Name)();"
+    NewObject: "private final #class($Short_Name) #variable($Short_Name)  = new #class($Short_Name)();"
 
   PID Controller:
     Defaults: "Component,None"
     ClassName: "PIDController"
     Import: "import edu.wpi.first.wpilibj.smartdashboard.*;\nimport edu.wpi.first.wpilibj.PIDController;"
     Construction: "#variable($Short_Name) = new ${ClassName}($P, $I, $D, $F, #variable($Input), #variable($Output), $Period);"
+    NewObject: "private final ${ClassName} #variable($Short_Name) = new ${ClassName}($P, $I, $D, $F, #variable($Input), #variable($Output), $Period);"
     Extra: >
       #variable($Short_Name).setContinuous(${Continuous});
               #variable($Short_Name).setAbsoluteTolerance(${Tolerance});
@@ -310,7 +321,8 @@ Instructions:
     ClassName: "SpeedController"
     Import: "import edu.wpi.first.wpilibj.${Type};\nimport edu.wpi.first.wpilibj.${ClassName};"
     Declaration: "private ${Type} #variable($Short_Name);"
-    Construction: "#variable($Short_Name) = new ${Type}(${Output_Channel_PWM});"
+    Construction: "${Type} #variable($Short_Name) = new ${Type}(${Output_Channel_PWM});"
+    NewObject: "private final ${Type} #variable($Short_Name) = new ${Type}(${Output_Channel_PWM});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
       #variable($Short_Name).setInverted(${Inverted});
@@ -361,7 +373,8 @@ Instructions:
   Joystick:
     Defaults: "OI,None"
     ClassName: "Joystick"
-    Construction: "private final ${ClassName} #variable($Name) = new ${ClassName}(${Number});"
+    Construction: "#variable($Name) = new ${ClassName}(${Number});"
+    NewObject: "private final ${ClassName} #variable($Name) = new ${ClassName}(${Number});"
     Function: >-
       public ${ClassName} get#class($Name)() {
               return #variable($Name);

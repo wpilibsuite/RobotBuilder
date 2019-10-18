@@ -13,6 +13,9 @@
 ## Get the declaration instruction of a robot component
 #macro( declaration $component )${helper.getInstruction($component, "Declaration")}#end
 
+## Get the newObject instruction of a robot component
+#macro( newObject $component )${helper.getInstruction($component, "NewObject")}#end
+
 ## Get the constructor instruction of a robot component
 #macro( constructor $component )${helper.getInstruction($component, "Construction")}#end
 
