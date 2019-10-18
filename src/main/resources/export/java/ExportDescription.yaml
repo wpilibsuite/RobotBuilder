@@ -112,10 +112,10 @@ Defaults:
   AnalogOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_AnalogOutput});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
-  #OI:
-  #  Export: "OI"
-  #  Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport ${package}.subsystems.*;"
-  #  Declaration: "public ${ClassName} #variable($Name);"
+  OI:
+    Export: "OI"
+    Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport ${package}.subsystems.*;"
+    Declaration: "public ${ClassName} #variable($Name);"
   Button:
     Import: "import edu.wpi.first.wpilibj.buttons.*;"
     Extra:  "#if(\"$Command\" != \"None\")#variable($Name).${When_to_Run}(#command_instantiation(${Command} ${Parameters}));#end"
@@ -361,7 +361,7 @@ Instructions:
   Joystick:
     Defaults: "OI,None"
     ClassName: "Joystick"
-    Construction: "#variable($Name) = new ${ClassName}(${Number});"
+    Construction: "private final ${ClassName} #variable($Name) = new ${ClassName}(${Number});"
     Function: >-
       public ${ClassName} get#class($Name)() {
               return #variable($Name);
@@ -369,7 +369,7 @@ Instructions:
   Joystick Button:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"
-    Construction: "#variable($Name) = new ${ClassName}(#variable($Joystick), ${Button});"
+    Construction: "final ${ClassName} #variable($Name) = new ${ClassName}(#variable($Joystick), ${Button});"
 
   Command:
     Defaults: "Command,None"
