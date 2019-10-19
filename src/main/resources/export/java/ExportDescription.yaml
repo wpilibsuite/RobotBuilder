@@ -90,27 +90,27 @@ Defaults:
     PID: "#variable($Short_Name).pidGet()"
     ClassName: ""
   AnalogInput:
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     PID: "#variable($Short_Name).getAverageVoltage()"
   AnalogPotentiometer:
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     PID: "#variable($Short_Name).get()"
   DigitalInput:
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Digital});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Input_Channel_Digital});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   PWMOutput:
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_PWM});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Output_Channel_PWM});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   RelayOutput:
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_Relay});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Output_Channel_Relay});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   SolenoidOutput:
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   AnalogOutput:
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_AnalogOutput});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Output_Channel_AnalogOutput});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   OI:
     Export: "OI"
@@ -168,7 +168,7 @@ Instructions:
   Robot Drive 2:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
-    Construction: "#variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
     Extra: >
       #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
               #variable($Short_Name).setExpiration($Safety_Expiration_Time);
@@ -184,7 +184,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
     Construction: >-
-      #variable($Short_Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
+      ${ClassName} #variable($Short_Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
                     #variable($Right_Front_Motor), #variable($Right_Rear_Motor));
     Extra: >
       #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
@@ -207,14 +207,14 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "SpeedControllerGroup"
     Construction: >-
-      #variable($Short_Name) = new ${ClassName}(#variable($SpeedController1), #variable($SpeedController2)
+      ${ClassName} #variable($Short_Name) = new ${ClassName}(#variable($SpeedController1), #variable($SpeedController2)
       #if(($SpeedController3)), #variable($SpeedController3)#end #if(($SpeedController4)), #variable($SpeedController4)#end);
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   Differential Drive:
     Defaults: "Component,None"
     ClassName: "DifferentialDrive"
     Import: "import edu.wpi.first.wpilibj.drive.DifferentialDrive;"
-    Construction: "#variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >
       #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
@@ -226,7 +226,7 @@ Instructions:
     Import: "import edu.wpi.first.wpilibj.drive.MecanumDrive;"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Construction: >-
-      #variable($Short_Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
+      ${ClassName} #variable($Short_Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
                     #variable($Right_Front_Motor), #variable($Right_Rear_Motor));
     Extra: >
       #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
@@ -238,7 +238,7 @@ Instructions:
     Import: "import edu.wpi.first.wpilibj.drive.KilloughDrive;"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Construction: >-
-      #variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor),
+      ${ClassName} #variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor),
                      #variable($Back_Motor));
     Extra: >
       #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
@@ -263,7 +263,7 @@ Instructions:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
     Import: "import edu.wpi.first.wpilibj.Encoder;\nimport edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.PIDSourceType;"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, EncodingType.${Encoding_Type});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, EncodingType.${Encoding_Type});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
       #variable($Short_Name).setDistancePerPulse(${Distance_Per_Pulse});
@@ -272,7 +272,7 @@ Instructions:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
     Import: "import edu.wpi.first.wpilibj.Encoder;\nimport edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.PIDSourceType;\nimport edu.wpi.first.wpilibj.Encoder.IndexingType;"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
       #variable($Short_Name).setDistancePerPulse(${Distance_Per_Pulse});
@@ -281,7 +281,7 @@ Instructions:
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive});"
   Analog Potentiometer:
     Defaults: "AnalogPotentiometer,Component,None"
     ClassName: "AnalogPotentiometer"
@@ -297,11 +297,11 @@ Instructions:
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital});"
   PowerDistributionPanel:
     Defaults: "Component,None"
     ClassName: "PowerDistributionPanel"
-    Construction: "#variable($Short_Name) = new ${ClassName}($CAN_ID);"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}($CAN_ID);"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
 
   Speed Controller:
@@ -316,7 +316,7 @@ Instructions:
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "NidecBrushless"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
       #variable($Short_Name).setInverted(${Inverted});
@@ -326,7 +326,7 @@ Instructions:
   Digital Output:
     Defaults: "Component,None"
     ClassName: "DigitalOutput"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_Digital});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${Output_Channel_Digital});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   Spike:
     Defaults: "RelayOutput,Component,None"
@@ -338,7 +338,7 @@ Instructions:
   Compressor:
     Defaults: "Component,None"
     ClassName: "Compressor"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${PCM_ID});"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}(${PCM_ID});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
@@ -354,7 +354,7 @@ Instructions:
 
       #end##
 
-      #variable($Short_Name) = new ${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});
+      ${ClassName} #variable($Short_Name) = new ${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
 
   Joystick:
