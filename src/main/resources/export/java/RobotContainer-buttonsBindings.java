@@ -17,10 +17,24 @@ ${Collections.reverse($components)}
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
 #if( $component.getProperty("Parameter presets").getValue().isEmpty() )
+#if ($component.getProperty("Requires").getValue() != "None")
+        //is required
         SmartDashboard.putData("$component.getName()", new #class($component.getName())(m_#variable($component.getProperty("Requires").getValue())));
 #else
+        //not required
+        SmartDashboard.putData("$component.getName()", new #class($component.getName())());
+#end
+#else
+#if ($component.getProperty("Requires").getValue() != "None")
 #foreach( $set in $component.getProperty("Parameter presets").getValue() )
+        //is requited w presets
         SmartDashboard.putData("$component.getName(): $set.getName()", #command_instantiation( $component.getName(), $set.getParameters() ));
+#end
+#else
+#foreach( $set in $component.getProperty("Parameter presets").getValue() )
+        //not required with Presets
+        SmartDashboard.putData("$component.getName(): $set.getName()", #command_instantiation( $component.getName(), $set.getParameters() ));
+#end
 #end
 #end
 #end

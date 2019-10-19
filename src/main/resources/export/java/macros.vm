@@ -40,7 +40,7 @@
 #macro( command_instantiation $command $params )
 #set($len = $params.size() - 2)
 #set($last = $len + 1)
-new #class($command)(#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $params.get($i) ), #end#end#if( $last >= 0 )#param_set( $params.get($last) )#end)#end
+new #class($command)(#if($component.getProperty("Requires").getValue() != "None")m_#variable($component.getProperty("Requires").getValue()),#end#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $params.get($i) ), #end#end#if( $last >= 0 )#param_set( $params.get($last) )#end)#end
 
 ## Generate constants
 #macro( declare_constant $constant )
