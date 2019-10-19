@@ -125,7 +125,7 @@ Defaults:
     Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport ${package}.subsystems.*;"
     Declaration: "public ${ClassName} #variable($Name);"
   Button:
-    Import: "import edu.wpi.first.wpilibj.buttons.*;"
+    Import: "import edu.wpi.first.wpilibj2.command.button.JoystickButton;"
     Extra:  "#if(\"$Command\" != \"None\")#variable($Name).${When_to_Run}(#command_instantiation(${Command} ${Parameters}));#end"
   Command:
     Export: ""
