@@ -3,8 +3,7 @@
 #if ($helper.exportsTo("RobotContainer", $component)
 && "#type($component)" != "" 
 && "#type($component)" == "SubsystemBase")
-    #declaration($component)
-
+    private final #class($component.getName()) m_#variable($component.getName()) = new #class($component.getName())();
 #end
 #end
 
