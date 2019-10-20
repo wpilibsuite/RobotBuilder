@@ -360,7 +360,7 @@ Instructions:
   Joystick:
     Defaults: "OI,None"
     ClassName: "Joystick"
-    Construction: "#variable($Name) = new ${ClassName}(${Number});"
+    Construction: "private final ${ClassName} #variable($Name) = new ${ClassName}(${Number});"
     Function: >-
       public ${ClassName} get#class($Name)() {
               return #variable($Name);
