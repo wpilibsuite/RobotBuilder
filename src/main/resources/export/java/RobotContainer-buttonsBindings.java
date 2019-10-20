@@ -5,8 +5,38 @@ ${Collections.reverse($components)}
     && "#type($component)" != "Joystick" 
     && ("#constructor($component)" != "" || "#extra($component)" != ""))
         #constructor($component)
+        ${Collections.reverse($commands)}
+        #foreach ($command in $commands)
+                #if($command.name == $component.getProperty("Command").value)
+                        #if ($command.getProperty("Requires").getValue() != "None")
+                                //Does require Subsystem
+                                //#required_subsystem($command)
+                                #if( $command.getProperty("Parameter presets").getValue().isEmpty() )
+                                        //No Parameters
+                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)(m_#required_subsystem($command))); 
+                                #else
+                                        //Has Paramters
+                                        #foreach( $set in $command.getProperty("Parameter presets").getValue() )
+                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)(m_#required_subsystem($command),#command_params($set.getParameters()))); 
+                                        #end
+                                #end
+                        #else
+                                //Does Not Require Subsystem
+                                #if( $command.getProperty("Parameter presets").getValue().isEmpty() )
+                                        //No Parameters
+                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)()); 
+                                #else
+                                        //Has Paramters
+                                        #foreach( $set in $command.getProperty("Parameter presets").getValue() )
+                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)(#command_params($set.getParameters()))); 
+                                        #end
+                                #end
+                        #end
+                #end
+        #end
+        
+        
 
-        #extra($component)
 
 #end
 #end
@@ -16,27 +46,29 @@ ${Collections.reverse($components)}
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
-#if( $component.getProperty("Parameter presets").getValue().isEmpty() )
-#if ($component.getProperty("Requires").getValue() != "None")
-        //is required
-        SmartDashboard.putData("$component.getName()", new #class($component.getName())(m_#variable($component.getProperty("Requires").getValue())));
-#else
-        //not required
-        SmartDashboard.putData("$component.getName()", new #class($component.getName())());
-#end
-#else
-#if ($component.getProperty("Requires").getValue() != "None")
-#foreach( $set in $component.getProperty("Parameter presets").getValue() )
-        //is requited w presets
-        SmartDashboard.putData("$component.getName(): $set.getName()", #command_instantiation( $component.getName(), $set.getParameters() ));
-#end
-#else
-#foreach( $set in $component.getProperty("Parameter presets").getValue() )
-        //not required with Presets
-        SmartDashboard.putData("$component.getName(): $set.getName()", #command_instantiation( $component.getName(), $set.getParameters() ));
-#end
-#end
-#end
+        #if( $component.getProperty("Parameter presets").getValue().isEmpty() )
+                //No Parameters
+                #if ($component.getProperty("Requires").getValue() != "None")
+                        //Does Require Subsystem
+                        SmartDashboard.putData("$component.getName()", new #class($component.getName())(m_#required_subsystem($component)));
+                #else
+                        //Does Not Require Subsystem
+                        SmartDashboard.putData("$component.getName()", new #class($component.getName())());
+                #end
+        #else
+                //Has Parameters
+                #if ($component.getProperty("Requires").getValue() != "None")
+                        //Does Require Subsystem
+                        #foreach( $set in $component.getProperty("Parameter presets").getValue() )
+                                SmartDashboard.putData("$component.getName(): $set.getName()", new #class($component.getName())(m_#required_subsystem($component),#command_params($set.getParameters())));
+                        #end
+                #else
+                        //Does Not Require Subsystem
+                        #foreach( $set in $component.getProperty("Parameter presets").getValue() )
+                                SmartDashboard.putData("$component.getName(): $set.getName()", new #class($component.getName())(#command_params($set.getParameters())));
+                        #end
+                #end
+        #end
 #end
 #end
 

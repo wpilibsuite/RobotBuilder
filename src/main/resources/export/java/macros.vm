@@ -42,6 +42,17 @@
 #set($last = $len + 1)
 new #class($command)(#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $params.get($i) ), #end#end#if( $last >= 0 )#param_set( $params.get($last) )#end)#end
 
+## Generates 'new command_params(arg0, arg1, arg2, ...)'
+#macro( command_params $params )
+#set($len = $params.size() - 2)
+#set($last = $len + 1)
+(#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $params.get($i) ), #end#end#if( $last >= 0 )#param_set( $params.get($last) )#end)#end
+
+## Generate required_subsystem
+#macro( required_subsystem $command )
+#variable(${command.getProperty("Requires").getValue()})
+#end
+
 ## Generate constants
 #macro( declare_constant $constant )
 public static final $constant.getType() $constant.getName() = #if( $constant.getType() == "String" )"$constant.getValue()"#else$constant.getValue()#end;
