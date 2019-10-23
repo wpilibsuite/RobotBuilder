@@ -16,9 +16,8 @@ ${Collections.reverse($components)}
                                         #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)(m_#required_subsystem($command))); 
                                 #else
                                         //Has Paramters
-                                        #foreach( $set in $command.getProperty("Parameter presets").getValue() )
-                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)(m_#required_subsystem($command),#command_params($set.getParameters()))); 
-                                        #end
+                                        #set($params = $component.getProperty("Parameters").getValue())
+                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)(m_#required_subsystem($command),#command_params($params))); 
                                 #end
                         #else
                                 //Does Not Require Subsystem
@@ -27,9 +26,8 @@ ${Collections.reverse($components)}
                                         #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)()); 
                                 #else
                                         //Has Paramters
-                                        #foreach( $set in $command.getProperty("Parameter presets").getValue() )
-                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)(#command_params($set.getParameters()))); 
-                                        #end
+                                        #set($params = $component.getProperty("Parameters").getValue())
+                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)(#command_params($params))); 
                                 #end
                         #end
                 #end
