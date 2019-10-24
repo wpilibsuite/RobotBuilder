@@ -74,7 +74,7 @@ public class RobotBuilder {
                 frcHome = new File(publicFolder, "wpilib\\" + frcYear).getAbsolutePath();
             } else {
                 String userFolder = System.getProperty("user.home");
-                frcHome = new File(userFolder, "wpilib\\" + frcYear).getAbsolutePath();
+                frcHome = new File(userFolder, "wpilib/" + frcYear).getAbsolutePath();
             }
         }
         return frcHome;
