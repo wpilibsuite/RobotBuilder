@@ -187,12 +187,12 @@
   update: Modify
   modifications:
     imports: ${exporter_path}Subsystem-imports.java
-    declarations: ${exporter_path}Subsystem-declarations.java
+    declarations: ${exporter_path}PIDSubsystem-declarations.java
     default_command: ${exporter_path}Subsystem-default_command.java
     pid: ${exporter_path}PIDSubsystem-pid.java
     source: ${exporter_path}PIDSubsystem-source.java
     output: ${exporter_path}PIDSubsystem-output.java
-    constants: ${exporter_path}Subsystem-constants.java
+    constants: ${exporter_path}PIDSubsystem-constants.java
     constructors: ${exporter_path}Subsystem-constructors.java
     pidgetters: ${exporter_path}Subsystem-pidgetters.java
   variables:
