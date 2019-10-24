@@ -169,7 +169,7 @@
   modifications:
     imports: ${exporter_path}Command-imports.java
     constructors: ${exporter_path}Command-constructors.java
-    declarations: ${exporter_path}Command-variable-declarations.java
+    variable_declarations: ${exporter_path}Command-variable-declarations.java
     requires: ${exporter_path}Command-requires.java
   variables:
     command_name: ${command.name}
