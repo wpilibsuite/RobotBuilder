@@ -114,7 +114,7 @@
   update: Modify
   modifications:
     pid: ${exporter_path}PIDCommand-pid.java
-    parameters: ${exporter_path}Command-constructor.java
+    parameters: ${exporter_path}Command-constructors.java
     requires: ${exporter_path}Command-requires.java
     source: ${exporter_path}PIDCommand-source.java
     output: ${exporter_path}PIDCommand-output.java
@@ -126,7 +126,7 @@
   source: ${exporter_path}SetpointCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}Command-constructor.java
+    parameters: ${exporter_path}Command-constructors.java
     requires: ${exporter_path}Command-requires.java
     initialize: ${exporter_path}SetpointCommand-initialize.java
     isFinished: ${exporter_path}SetpointCommand-isFinished.java
@@ -138,7 +138,7 @@
   source: ${exporter_path}TimedCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}TimedCommand-constructor.java
+    parameters: ${exporter_path}TimedCommand-constructors.java
     requires: ${exporter_path}Command-requires.java
   variables:
     command_name: ${command.name}
@@ -148,7 +148,7 @@
   source: ${exporter_path}InstantCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}Command-constructor.java
+    parameters: ${exporter_path}Command-constructors.java
     requires: ${exporter_path}Command-requires.java
   variables:
     command_name: ${command.name}
@@ -158,7 +158,7 @@
   source: ${exporter_path}ConditionalCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}ConditionalCommand-constructor.java
+    parameters: ${exporter_path}ConditionalCommand-constructors.java
   variables:
     command_name: ${command.name}
 #else
