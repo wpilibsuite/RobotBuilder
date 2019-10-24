@@ -8,28 +8,9 @@ ${Collections.reverse($components)}
         ${Collections.reverse($commands)}
         #foreach ($command in $commands)
                 #if($command.name == $component.getProperty("Command").value)
-                        #if ($command.getProperty("Requires").getValue() != "None")
-                                //Does require Subsystem
-                                //#required_subsystem($command)
-                                #if( $command.getProperty("Parameter presets").getValue().isEmpty() )
-                                        //No Parameters
-                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)(m_#required_subsystem($command))); 
-                                #else
-                                        //Has Paramters
-                                        #set($params = $component.getProperty("Parameters").getValue())
-                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)(m_#required_subsystem($command),#command_params($params))); 
-                                #end
-                        #else
-                                //Does Not Require Subsystem
-                                #if( $command.getProperty("Parameter presets").getValue().isEmpty() )
-                                        //No Parameters
-                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)()); 
-                                #else
-                                        //Has Paramters
-                                        #set($params = $component.getProperty("Parameters").getValue())
-                                        #variable($component.name).$component.getProperty("When to Run").getValue()(new #class($command.name)(#command_params($params))); 
-                                #end
-                        #end
+                        //test
+                        #set($params = $component.getProperty("Parameters").getValue())
+                        #variable($component.name).$component.getProperty("When to Run").getValue()#new_command_instantiation($component,$command,$params)
                 #end
         #end
         

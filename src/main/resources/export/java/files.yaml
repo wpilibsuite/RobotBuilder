@@ -93,6 +93,7 @@
   modifications:
     declarations: ${exporter_path}RobotContainer-declarations.java
     constructors: ${exporter_path}RobotContainer-constructors.java
+    subsystem_default_Command: ${exporter_path}RobotContainer-subsystem_default_Command.java
 
 ## Export Commands as files
 #if ($export_commands)
@@ -205,7 +206,6 @@
   modifications:
     imports: ${exporter_path}Subsystem-imports.java
     declarations: ${exporter_path}Subsystem-declarations.java
-    default_command: ${exporter_path}Subsystem-default_command.java
     constants: ${exporter_path}Subsystem-constants.java
     constructors: ${exporter_path}Subsystem-constructors.java
     pidgetters: ${exporter_path}Subsystem-pidgetters.java

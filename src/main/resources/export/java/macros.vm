@@ -42,6 +42,14 @@
 #set($last = $len + 1)
 new #class($command)(#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $params.get($i) ), #end#end#if( $last >= 0 )#param_set( $params.get($last) )#end)#end
 
+## Generates 'new MyCommand(arg0, arg1, arg2, ...)'
+#macro( new_command_instantiation $component $command $params )
+#set($len = $params.size() - 2)
+#set($last = $len + 1)
+(new #class($command.name)(#if($command.getProperty("Requires").getValue() != "None")m_#required_subsystem($command)#end#if($command.getProperty("Parameter presets").getValue().isEmpty())#else,#command_params($params)#end));
+#end
+
+
 ## Generates 'new command_params(arg0, arg1, arg2, ...)'
 #macro( command_params $params )
 #set($len = $params.size() - 2)
