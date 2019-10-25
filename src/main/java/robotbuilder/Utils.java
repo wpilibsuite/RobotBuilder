@@ -21,8 +21,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang.SerializationException;
-import org.apache.commons.lang.SerializationUtils;
+import org.apache.commons.lang3.SerializationException;
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
@@ -63,14 +63,14 @@ public class Utils {
     }
 
     /**
-     * Handle velocity template loader frome either resource or file.
+     * Handle velocity template loader from either resource or file.
      *
      * @return
      */
     public static Properties getVelocityProperties() {
         Properties p = new Properties();
-        p.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        p.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        p.setProperty("resource.loaders", "class");
+        p.setProperty("resource.loader.class.class",  "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         return p;
     }
 
@@ -153,7 +153,7 @@ public class Utils {
             return null;
         }
         try {
-            return (T) SerializationUtils.clone(original);
+            return SerializationUtils.clone(original);
         } catch (SerializationException notSerializable) {
             return (T) deepCopy((Object) original);
         }

@@ -3,7 +3,7 @@ package robotbuilder;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
-
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,14 +20,18 @@ import robotbuilder.extensions.Extensions;
  */
 public class RobotBuilder {
 
-    public static final int VERSION_MAJOR = 2;
+    public static final int VERSION_MAJOR = 3;
     public static final int VERSION_MINOR = 0;
 
     public static final String VERSION = VERSION_MAJOR + "." + VERSION_MINOR;
 
-    public static final String WPILIB_VERSION = "2019";
+    public static final String WPILIB_VERSION = "2020";
+
+    public static final String FRC_HOME = findFrcHome(WPILIB_VERSION);
 
     public static final String SAVE_FILE_TYPE = "yaml";
+
+
 
     public static void main(String[] args) {
         // Force GTK2 - GTK3 has issues
@@ -56,5 +60,23 @@ public class RobotBuilder {
             }
             frame.setVisible(true);
         });
+    }
+
+    private static final String findFrcHome(String frcYear) {
+        String frcHome = System.getenv("FRC_HOME");
+        if (frcHome == null) {
+            boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
+            if (isWindows) {
+                String publicFolder = System.getenv("PUBLIC");
+                if (publicFolder == null) {
+                    publicFolder = "C:\\Users\\Public";
+                }
+                frcHome = new File(publicFolder, "wpilib\\" + frcYear).getAbsolutePath();
+            } else {
+                String userFolder = System.getProperty("user.home");
+                frcHome = new File(userFolder, "wpilib/" + frcYear).getAbsolutePath();
+            }
+        }
+        return frcHome;
     }
 }

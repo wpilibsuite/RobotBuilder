@@ -1,5 +1,5 @@
-#set($command = $helper.getByName($command-name, $robot))
-        super("#class($command-name)", ${command.getProperty("P").getValue()}, ${command.getProperty("I").getValue()}, ${command.getProperty("D").getValue()}, ${command.getProperty("Period").getValue()});
+#set($command = $helper.getByName($command_name, $robot))
+        super("#class($command_name)", ${command.getProperty("P").getValue()}, ${command.getProperty("I").getValue()}, ${command.getProperty("D").getValue()}, ${command.getProperty("Period").getValue()});
         getPIDController().setContinuous(${command.getProperty("Continuous").getValue()});
         getPIDController().setAbsoluteTolerance(${command.getProperty("Tolerance").getValue()});
 #if($command.getProperty("Limit Input").getValue())

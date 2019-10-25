@@ -1,6 +1,6 @@
 {
     "enableCppIntellisense": true,
     "currentLanguage": "cpp",
-    "projectYear": "2019",
-    "teamNumber": ${team-number}
+    "projectYear": "Beta2020",
+    "teamNumber": ${team_number}
 }

@@ -30,7 +30,7 @@ public class AboutAction extends AbstractAction {
     public void actionPerformed(ActionEvent ae) {
         AboutDialog aboutDialog = new AboutDialog(MainFrame.getInstance(),
                 "About RobotBuilder",
-                "This application builds robot maps",
+                "This application builds robot code.",
                 RobotBuilder.VERSION,
                 RobotBuilder.WPILIB_VERSION);
         aboutDialog.show();

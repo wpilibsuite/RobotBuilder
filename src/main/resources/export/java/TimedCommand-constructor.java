@@ -1,4 +1,4 @@
-#set($command = $helper.getByName($command-name, $robot))
+#set($command = $helper.getByName($command_name, $robot))
 
 ## parameters are hardcoded -- Timed Commands only take a single double argument
 

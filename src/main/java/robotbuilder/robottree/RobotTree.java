@@ -18,6 +18,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -295,6 +297,7 @@ public class RobotTree extends JPanel {
     public void save(String path) {
         setFilePath(path);
         try {
+            Files.createDirectories(Path.of(path).getParent());
             FileWriter save = new FileWriter(path);
             save.write(this.encode());
             save.close();
@@ -419,7 +422,7 @@ public class RobotTree extends JPanel {
                     }
                     for (Object childDescription : (List) details.get("Children")) {
                         RobotComponent child = new RobotComponent();
-                        child.visit(this, (Map<String, Object>) childDescription);
+                        child.visit(this, childDescription);
                         self.add(child);
                     }
                     return null;
@@ -468,12 +471,9 @@ public class RobotTree extends JPanel {
             // Major version is too high
             return false;
         }
-        if (majorMinor[0] == RobotBuilder.VERSION_MAJOR
-                && majorMinor[1] > RobotBuilder.VERSION_MINOR) {
-            // Major version is good, but minor version is too high
-            return false;
-        }
-        return true;
+        // Major version is good, but minor version is too high
+        return majorMinor[0] != RobotBuilder.VERSION_MAJOR
+                || majorMinor[1] <= RobotBuilder.VERSION_MINOR;
     }
 
     public void load() {
@@ -621,7 +621,7 @@ public class RobotTree extends JPanel {
     }
 
     public boolean isRobotValid() {
-        final boolean valid[] = {true};
+        final boolean[] valid = {true};
         walk((RobotComponent self) -> {
             if (!self.isValid()) {
                 valid[0] = false;

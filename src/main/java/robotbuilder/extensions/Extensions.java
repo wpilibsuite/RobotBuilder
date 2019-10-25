@@ -25,6 +25,7 @@ import static robotbuilder.extensions.ExtensionComponent.ICON_FILE_NAME;
 import static robotbuilder.extensions.ExtensionComponent.JAVA_EXPORT_FILE_NAME;
 import static robotbuilder.extensions.ExtensionComponent.PALETTE_FILE_NAME;
 import static robotbuilder.extensions.ExtensionComponent.VALIDATORS_FILE_NAME;
+import static robotbuilder.RobotBuilder.FRC_HOME;
 
 /**
  *
@@ -36,7 +37,7 @@ public class Extensions {
     /**
      * The path to the extensions folder. By default, it should be in {@code ${user.home}/Robotbuilder/extensions/}.
      */
-    public final String EXTENSIONS_FOLDER_PATH = System.getProperty("user.home") + "/Robotbuilder/extensions/";
+    public final String EXTENSIONS_FOLDER_PATH = FRC_HOME + "/Robotbuilder/extensions/";
     private File extensionsFolder;
 
     private List<ExtensionComponent> components;

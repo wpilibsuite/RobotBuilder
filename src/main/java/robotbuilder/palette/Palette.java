@@ -7,10 +7,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 
-import java.util.List;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 
 import javax.swing.JPanel;
@@ -20,11 +17,10 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 
 import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
-import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 
 import robotbuilder.Utils;
 import robotbuilder.utils.YamlUtils;
@@ -51,26 +47,27 @@ public class Palette extends JPanel {
 
     public enum Layouts {
 
-        TREE, ICONS;
+        TREE, ICONS
     }
 
     private Palette() {
         this.validators = new HashMap<String, Validator>();
         InputStreamReader in;
         in = new InputStreamReader(Utils.getResourceAsStream("/PaletteDescription.yaml"));
-
         // Apply macros, if any
         StringWriter writer = new StringWriter();
+        Velocity.setProperty("runtime.conversion.handler","none");
+        Velocity.setProperty("parser.space_gobbling","structured");
+        Velocity.setProperty("directive.if.empty_check","false");
         VelocityEngine ve = new VelocityEngine();
         Context context = new VelocityContext();
+
         context.put("home", System.getProperty("user.home").replace("\\", "\\\\") + Matcher.quoteReplacement(File.separator));
         ve.evaluate(context, writer, "RobotBuilder:PaletteDescription.yaml", in);
-
         Yaml yaml = YamlUtils.yaml;
-        Map<String, Object> description = (Map<String, Object>) yaml.load(writer.toString());
+        LinkedHashMap<String, Object> description = yaml.load(writer.toString());
         List<Map<String, List<PaletteComponent>>> sections = (List) description.get("Palette");
         List<Validator> validatorList = (List) description.get("Validators");
-
         List<ExtensionComponent> components = Extensions.getComponents();
         components.stream()
             .filter(ExtensionComponent::hasValidators)
@@ -138,7 +135,7 @@ public class Palette extends JPanel {
      * Build the palette tree recursively by traversing the JSON data object
      *
      * @param root The parent tree node
-     * @param jSONObject The JSON object that corresponds to this level
+     * @param sections Palette component data
      */
     private void createPalette(DefaultMutableTreeNode root, List<Map<String, List<PaletteComponent>>> sections) {
         // Allow order to be imposed on the palette

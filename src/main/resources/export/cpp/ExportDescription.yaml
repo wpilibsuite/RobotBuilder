@@ -54,11 +54,11 @@ Required Properties:
   - Export Directory
 
 Vars:
-  project-lang: cpp
-  team-number: ${robot.getProperty('Team Number').getValue()}
-  robot-name: ${robot.getName()}
-  world-file: ${robot.getProperty('Simulation World File').getValue()}
-  project: ${robot.getPropertyAbsolutePath('Export Directory')}$file-separator$robot-name
+  project_lang: cpp
+  team_number: ${robot.getProperty('Team Number').getValue()}
+  robot_name: ${robot.getName()}
+  world_file: ${robot.getProperty('Simulation World File').getValue()}
+  project: ${robot.getPropertyAbsolutePath('Export Directory')}$file_separator$robot_name
 Macros: macros.vm
 
 Post Export Action: "#Message:You have successfully exported. You can now open the project in VS Code and extend the generated code."

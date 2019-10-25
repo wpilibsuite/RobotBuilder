@@ -67,14 +67,14 @@ public class GenericExporter {
 
         // Load YAML Description
         Yaml yaml = new Yaml();
-        Map<String, Object> description = (Map<String, Object>) yaml.load(
+        Map<String, Object> description = yaml.load(
                 new InputStreamReader(Utils.getResourceAsStream(path + "ExportDescription.yaml")));
         name = (String) description.get("Name");
         type = (String) description.get("Type");
         filesPath = (String) description.get("Files");
         begin_modification = (String) description.get("Begin Modification");
         end_modification = (String) description.get("End Modification");
-        evalResource(path + (String) description.get("Macros")); // Loads Macros Globally
+        evalResource(path + description.get("Macros")); // Loads Macros Globally
         showOnToolbar = (Boolean) description.get("Toolbar");
         if (description.containsKey("Required Properties")) {
             for (String prop : ((ArrayList<String>) description.get("Required Properties"))) {
@@ -158,25 +158,25 @@ public class GenericExporter {
             }
         }
         if(wpilibRelease == null) {
-            wpilibRelease = "2019.4.1"; // this shouldn't need to be relied upon,
-                                        // but its better than generating nothing.
+            wpilibRelease = "2020.1.1-beta-1"; // this shouldn't need to be relied upon,
+                                               // but its better than generating nothing.
         }
 
         // Prepare the main context
         rootContext.put("version", RobotBuilder.VERSION);
-        rootContext.put("version-indicator", "RobotBuilder Version: " + RobotBuilder.VERSION);
+        rootContext.put("version_indicator", "RobotBuilder Version: " + RobotBuilder.VERSION);
         rootContext.put("robot", robot);
         rootContext.put("helper", this);
         rootContext.put("Collections", Collections.class);
-        rootContext.put("file-separator", File.separator);
-        rootContext.put("exporter-path", path);
-        rootContext.put("exporters-path", ActionsClass.EXPORTERS_PATH);
+        rootContext.put("file_separator", File.separator);
+        rootContext.put("exporter_path", path);
+        rootContext.put("exporters_path", ActionsClass.EXPORTERS_PATH);
         rootContext.put("components", getComponents(robot));
-        rootContext.put("export-subsystems", robot.getProperty("Export Subsystems").getValue());
+        rootContext.put("export_subsystems", robot.getProperty("Export Subsystems").getValue());
         rootContext.put("subsystems", robotTree.getSubsystems());
-        rootContext.put("export-commands", robot.getProperty("Export Commands").getValue());
+        rootContext.put("export_commands", robot.getProperty("Export Commands").getValue());
         rootContext.put("commands", robotTree.getCommands());
-        rootContext.put("wpilib-version", wpilibRelease);
+        rootContext.put("wpilib_version", wpilibRelease);
         for (String key : varKeys) {
             rootContext.put(key, eval(vars.get(key)));
         }
@@ -254,7 +254,7 @@ public class GenericExporter {
         Constructor constructor = new Constructor();
         constructor.addTypeDescription(new TypeDescription(ExportFile.class, "!File"));
         Yaml yaml = new Yaml(constructor);
-        ArrayList<ExportFile> filesYaml = (ArrayList<ExportFile>) yaml.load(filesString);
+        ArrayList<ExportFile> filesYaml = yaml.load(filesString);
         return filesYaml;
     }
 

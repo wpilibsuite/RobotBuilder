@@ -1,4 +1,4 @@
-#set($command = $helper.getByName($command-name, $robot))
+#set($command = $helper.getByName($command_name, $robot))
         GetPIDController()->SetContinuous(${command.getProperty("Continuous").getValue()});
         GetPIDController()->SetAbsoluteTolerance(${command.getProperty("Tolerance").getValue()});
 #if($command.getProperty("Limit Input").getValue())

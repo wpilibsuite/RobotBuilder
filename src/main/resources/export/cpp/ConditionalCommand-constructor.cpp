@@ -1,4 +1,4 @@
-#set($command = $helper.getByName($command-name, $robot))
+#set($command = $helper.getByName($command_name, $robot))
 #set($onTrue = $command.getProperty("On True Command").getValue())
 #set($onFalse = $command.getProperty("On False Command").getValue())
 

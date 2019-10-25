@@ -82,7 +82,7 @@ stages:
           export JAVA_HOME=`/usr/libexec/java_home -v 11`
         displayName: 'Setup JDK'
       - script: |
-          rm /Users/vsts/.gradle/init.d/log-gradle-version-plugin.gradle
+          rm -f /Users/vsts/.gradle/init.d/log-gradle-version-plugin.gradle
         displayName: 'Delete Version init script'
       - task: Gradle@2
         inputs:
