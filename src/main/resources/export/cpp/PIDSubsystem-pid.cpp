@@ -3,7 +3,7 @@
     SetAbsoluteTolerance(${subsystem.getProperty("Tolerance").getValue()});
     GetPIDController()->SetContinuous(${subsystem.getProperty("Continuous").getValue()});
     GetPIDController()->SetName("$subsystem_name", "PIDSubsystem Controller");
-    frc::LiveWindow::GetInstance()->Add(GetPIDController());
+    AddChild(GetPIDController());
 #if($subsystem.getProperty("Limit Input").getValue())
     GetPIDController()->SetInputRange(${subsystem.getProperty("Minimum Input").getValue()}, ${subsystem.getProperty("Maximum Input").getValue()});
 #end

@@ -3,6 +3,9 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "${wpilib_version}"
 }
 
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
 def ROBOT_MAIN_CLASS = "${package}.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
@@ -46,9 +49,14 @@ repositories {
 // Also defines JUnit 4.
 dependencies {
     compile wpi.deps.wpilib()
+    nativeZip wpi.deps.wpilibJni(wpi.platforms.roborio)
+    nativeDesktopZip wpi.deps.wpilibJni(wpi.platforms.desktop)
+
+
     compile wpi.deps.vendor.java()
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
+
     testCompile 'junit:junit:4.12'
 }
 
@@ -56,6 +64,6 @@ dependencies {
 // in order to make them all available at runtime. Also adding the manifest so WPILib
 // knows where to look for our Robot Class.
 jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
