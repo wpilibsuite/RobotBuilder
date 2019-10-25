@@ -149,17 +149,20 @@ Instructions:
   PID Controller:
     Defaults: "Component,None"
     ClassName: "PIDController"
-    Import: "import edu.wpi.first.wpilibj.smartdashboard.*;\nimport edu.wpi.first.wpilibj.PIDController;"
-    Construction: "#variable($Short_Name) = new ${ClassName}($P, $I, $D, $F, #variable($Input), #variable($Output), $Period);"
+    Import: "import edu.wpi.first.wpilibj.smartdashboard.*;\nimport edu.wpi.first.wpilibj.controller.PIDController;"
+    Construction: "${ClassName} #variable($Short_Name) = new ${ClassName}($P, $I, $D, $Period);"
     Extra: >
-      #variable($Short_Name).setContinuous(${Continuous});
-              #variable($Short_Name).setAbsoluteTolerance(${Tolerance});
+      #if($Continuous)
+              #variable($Short_Name).enableContinuousInput(${Minimum_Input}, ${Maximum_Input});
+      #end
+              //Find New methods
+              //#variable($Short_Name).setAbsoluteTolerance(${Tolerance});
       #if($Limit_Input)
-
-              #variable($Short_Name).setInputRange(${Minimum_Input}, ${Maximum_Input});#end
-      #if(true)
-
-              #variable($Short_Name).setOutputRange(${Minimum_Output}, ${Maximum_Output});#end
+              //Find New methods
+              //#variable($Short_Name).setInputRange(${Minimum_Input}, ${Maximum_Input});#end
+      #if($Limit_Output)
+              //Find New methods
+              //#variable($Short_Name).setOutputRange(${Minimum_Output}, ${Maximum_Output});#end
       #if($Send_to_SmartDashboard)
 
               SmartDashboard.putData("${Name}", #variable($Short_Name));#end
