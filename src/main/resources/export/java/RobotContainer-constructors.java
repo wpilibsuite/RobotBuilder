@@ -1,5 +1,4 @@
 // Create some buttons
-${Collections.reverse($components)}
 #foreach( $component in $components )
 #if ($helper.exportsTo("OI", $component)
     && "#type($component)" != "Joystick" 
@@ -16,7 +15,6 @@ ${Collections.reverse($components)}
 #end
 #end
 
-${Collections.reverse($components)}
         // SmartDashboard Buttons
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "Command"
