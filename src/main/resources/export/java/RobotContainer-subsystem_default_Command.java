@@ -3,10 +3,15 @@
 && "#type($component)" != "" 
 && ("#type($component)" == "SubsystemBase"
      || "#type($component)" == "PIDSubsystem"))
+#foreach ($command in $commands)
+#if($command.name == $component.getProperty("Default Command").value)
 #if ($component.getProperty("Default Command").value != "None")
-    m_#variable($component.getName()).setDefaultCommand(new #class($component.getProperty("Default Command").value)(m_#variable($component.getName())));
+#set($params = $component.getProperty("Parameters").getValue())
+    m_#variable($component.getName()).setDefaultCommand(#new_command_instantiation($component,$command,$params));
 #else
     //m_#variable($component.getName()).setDefaultCommand(new "Add a Command");
+#end
+#end
 #end
 #end
 #end
