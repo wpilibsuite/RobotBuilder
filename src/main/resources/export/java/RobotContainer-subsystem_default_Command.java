@@ -6,7 +6,7 @@
 #foreach ($command in $commands)
 #if($command.name == $component.getProperty("Default Command").value)
 #if ($component.getProperty("Default Command").value != "None")
-#set($params = $component.getProperty("Parameters").getValue())
+#set($params = $component.getProperty("Default command parameters").getValue())
     m_#variable($component.getName()).setDefaultCommand(#new_command_instantiation($component,$command,$params));
 #else
     //m_#variable($component.getName()).setDefaultCommand(new "Add a Command");
