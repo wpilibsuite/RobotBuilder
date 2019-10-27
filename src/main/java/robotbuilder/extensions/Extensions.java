@@ -35,6 +35,8 @@ public class Extensions {
 
     /**
      * The path to the extensions folder. By default, it should be in {@code ${user.home}/Robotbuilder/extensions/}.
+     * 
+     * I promote that we change is to C:\Users\Public\wpilib\2020\tools + "/Robotbuilder/extensions/
      */
     public final String EXTENSIONS_FOLDER_PATH = System.getProperty("user.home") + "/Robotbuilder/extensions/";
     private File extensionsFolder;
