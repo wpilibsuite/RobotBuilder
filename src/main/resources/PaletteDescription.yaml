@@ -991,6 +991,31 @@ Palette:
           - !BooleanProperty
             name: Autonomous Selection
             default: false
+      - !Component
+        name: Wait Command
+        type: Command
+        help: A command specifies an action that the robot can perform and finishes after a timeout.
+        properties:
+          - !TypeSelectionProperty
+            name: Requires
+            type: Subsystem
+            default: None
+          - !BooleanProperty
+            name: Button on SmartDashboard
+            default: true
+          - !Parameters
+            name: Parameters
+            value:
+            - !!robotbuilder.data.properties.ParameterDescriptor {name: timeout, type: double}
+          - !ParameterSet
+            name: Parameter presets
+            default: []
+          - !BooleanProperty
+            name: Run When Disabled
+            default: false
+          - !BooleanProperty
+            name: Autonomous Selection
+            default: false
 ##      - !Component ## Replace with the Command Decorator .withTimeOut
 ##        name: Timed Command
 ##        type: Command

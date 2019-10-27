@@ -135,15 +135,29 @@
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "Timed Command")
+##- !File
+##  export: $package_path/commands/#class($command.name).java
+##  source: ${exporter_path}TimedCommand.java
+##  update: Modify
+##  modifications:
+##    parameters: ${exporter_path}TimedCommand-constructors.java
+##    requires: ${exporter_path}Command-requires.java
+##    imports: ${exporter_path}TimedCommand-imports.java
+##    variable_declarations: ${exporter_path}Command-variable-declarations.java
+##  variables:
+##    command_name: ${command.name}
+#elseif($command.base.name == "Wait Command")
 - !File
   export: $package_path/commands/#class($command.name).java
-  source: ${exporter_path}TimedCommand.java
+  source: ${exporter_path}WaitCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}TimedCommand-constructors.java
+    parameters: ${exporter_path}WaitCommand-constructors.java
     requires: ${exporter_path}Command-requires.java
-    imports: ${exporter_path}TimedCommand-imports.java
+    imports: ${exporter_path}WaitCommand-imports.java
     variable_declarations: ${exporter_path}Command-variable-declarations.java
+    initialize: ${exporter_path}WaitCommand-initialize.java
+    end: ${exporter_path}WaitCommand-end.java
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "Instant Command")
