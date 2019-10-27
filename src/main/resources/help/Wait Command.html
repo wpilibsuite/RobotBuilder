@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+<head>
+  <link rel="stylesheet"
+        href="styles.css"
+        type="text/css"
+        media="screen" />
+
+  <title>Wait Command</title>
+</head>
+
+<body>
+  <h1>Wait Command</h1>
+
+  <center>
+    <img src="../icons/Wait%20Command.png" />
+  </center>
+
+  <h2>What is it?</h2>
+
+  <p>Creates a new command that is a single action performed by the robot. Commands
+  usually require at least one subsystem which they act with. After
+  being started, a command runs for a period of time until either
+  it is finished performing its task or it is interrupted.
+  Interruptions can occur either when a command is canceled or when
+  another command that requires the same command is run.</p>
+
+  <p>A <b>WaitCommand</b> runs until it times out</p>
+
+  <h3>What does it mean for a command to require a subsystem?</h3>
+
+  <p>Commands can require a subsystem using the requires() method
+  of commands. When a command requires a subsystem, it claims
+  exclusive control over that subsystem and will interrupt any
+  other command that requires the same subsystem. This only works
+  if all your commands properly require the subsystems that they
+  use.</p>
+
+  <h2>Properties</h2>
+
+  <dl>
+    <dt>Requires</dt>
+
+    <dd>The subsystem that this command requires.</dd>
+
+    <dt>Button on SmartDashboard</dt>
+
+    <dd>Whether or not to automatically place a button on the
+    SmartDashboard.</dd>
+
+    <dt>Timeout</dt>
+
+    <dd>How long in seconds the command should run until it times
+    out.</dd>
+  </dl>
+</body>
+</html>
