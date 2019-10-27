@@ -141,6 +141,8 @@
   modifications:
     parameters: ${exporter_path}TimedCommand-constructors.java
     requires: ${exporter_path}Command-requires.java
+    imports: ${exporter_path}TimedCommand-imports.java
+    variable_declarations: ${exporter_path}Command-variable-declarations.java
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "Instant Command")
