@@ -116,9 +116,7 @@
   modifications:
     pid: ${exporter_path}PIDCommand-pid.java
     parameters: ${exporter_path}Command-constructors.java
-    requires: ${exporter_path}Command-requires.java
-    source: ${exporter_path}PIDCommand-source.java
-    output: ${exporter_path}PIDCommand-output.java
+    constructor: ${exporter_path}Command-constructors.java
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "Setpoint Command")
