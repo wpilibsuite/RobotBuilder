@@ -3,7 +3,7 @@
 package ${package}.commands;
 #set($command = $helper.getByName($command_name, $robot))
 #set($params = $command.getProperty("Parameters").getValue())
-import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import ${package}.Robot;
 
 /**
@@ -28,7 +28,7 @@ public class #class($command.name) extends InstantCommand {
 
     // Called once when this command runs
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
 }
