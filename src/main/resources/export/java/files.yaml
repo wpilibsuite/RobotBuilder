@@ -117,6 +117,7 @@
     pid: ${exporter_path}PIDCommand-pid.java
     parameters: ${exporter_path}Command-constructors.java
     constructor: ${exporter_path}Command-constructors.java
+    imports: ${exporter_path}PIDCommand-imports.java
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "Setpoint Command")
@@ -129,6 +130,7 @@
     requires: ${exporter_path}Command-requires.java
     initialize: ${exporter_path}SetpointCommand-initialize.java
     isFinished: ${exporter_path}SetpointCommand-isFinished.java
+    imports: ${exporter_path}SetpointCommand-imports.java
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "Timed Command")
