@@ -33,7 +33,7 @@
                 #if ($component.getProperty("Requires").getValue() != "None")
                         //Does Require Subsystem
                         #foreach( $set in $component.getProperty("Parameter presets").getValue() )
-                                SmartDashboard.putData("$component.getName(): $set.getName()", new #class($component.getName())(m_#required_subsystem($component),#command_params($set.getParameters())));
+                                SmartDashboard.putData("$component.getName(): $set.getName()", new #class($component.getName())(#command_params($set.getParameters()), m_#required_subsystem($component)));
                         #end
                 #else
                         //Does Not Require Subsystem
