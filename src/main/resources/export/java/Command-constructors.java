@@ -17,10 +17,9 @@
 
 #else
     public #class($command.name)() {
-        
 #end
 #end
-
-#if ( $command.getProperty("Run When Disabled").getValue() )
-        setRunWhenDisabled(true);
+        // Decorator Methods
+#if ( $command.getProperty("Add Timeout").getValue() )
+        this.withTimeout($command.getProperty("Timeout").getValue());
 #end

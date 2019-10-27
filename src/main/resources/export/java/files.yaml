@@ -94,6 +94,7 @@
     declarations: ${exporter_path}RobotContainer-declarations.java
     constructors: ${exporter_path}RobotContainer-constructors.java
     subsystem_default_Command: ${exporter_path}RobotContainer-subsystem_default_Command.java
+    imports: ${exporter_path}RobotContainer-imports.java
 
 ## Export Commands as files
 #if ($export_commands)
@@ -151,8 +152,11 @@
   source: ${exporter_path}InstantCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}Command-constructors.java
+    imports: ${exporter_path}Command-imports.java
+    constructors: ${exporter_path}Command-constructors.java
+    variable_declarations: ${exporter_path}Command-variable-declarations.java
     requires: ${exporter_path}Command-requires.java
+    overrides: ${exporter_path}Command-overrides.java
   variables:
     command_name: ${command.name}
 #elseif ($command.base.name == "Conditional Command")
@@ -174,6 +178,7 @@
     constructors: ${exporter_path}Command-constructors.java
     variable_declarations: ${exporter_path}Command-variable-declarations.java
     requires: ${exporter_path}Command-requires.java
+    overrides: ${exporter_path}Command-overrides.java
   variables:
     command_name: ${command.name}
 #end
