@@ -109,6 +109,16 @@
     parameters: ${exporter_path}CommandGroup-constructor.java
   variables:
     command_name: ${command.name}
+#elseif($command.base.name == "Sequential Command Group")
+- !File
+  export: $package_path/commands/#class($command.name).java
+  source: ${exporter_path}SequentialCommandGroup.java
+  update: Modify
+  modifications:
+    constructor: ${exporter_path}SequentialCommandGroup-constructors.java
+    imports: ${exporter_path}SequentialCommandGroup-imports.java
+  variables:
+    command_name: ${command.name}
 #elseif($command.base.name == "PID Command")
 - !File
   export: $package_path/commands/#class($command.name).java

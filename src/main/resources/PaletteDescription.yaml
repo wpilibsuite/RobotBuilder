@@ -902,6 +902,30 @@ Palette:
             name: Autonomous Selection
             default: false
       - !Component
+        name: Sequential Command Group
+        type: Command
+        help: A group of commands set to run together in a prescribed way.
+        properties:
+          - !BooleanProperty
+            name: Button on SmartDashboard
+            default: true
+          - !ListProperty
+            name: Commands
+            default: []
+            validators: [List]
+          - !Parameters
+            name: Parameters
+            default: []
+          - !ParameterSet
+            name: Parameter presets
+            default: []
+          - !BooleanProperty
+            name: Run When Disabled
+            default: false
+          - !BooleanProperty
+            name: Autonomous Selection
+            default: false
+      - !Component
         name: PID Command
         type: Command
         help: A command that uses a PID controller to perform its desired action.

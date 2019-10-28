@@ -378,6 +378,8 @@ Instructions:
     Defaults: "Command,None"
   Command Group:
     Defaults: "Command,None"
+  Sequential Command Group:
+    Defaults: "Command,None"
   PID Command:
     Defaults: "Command,None"
   Setpoint Command:
