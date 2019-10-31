@@ -56,4 +56,7 @@ public class RobotComponentModel implements Serializable {
         return properties.get(key);
     }
 
+    public void setName(String name) {
+        this.name = (name == null) ? null : name.trim();
+    }
 }

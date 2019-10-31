@@ -25,6 +25,7 @@ import static robotbuilder.extensions.ExtensionComponent.ICON_FILE_NAME;
 import static robotbuilder.extensions.ExtensionComponent.JAVA_EXPORT_FILE_NAME;
 import static robotbuilder.extensions.ExtensionComponent.PALETTE_FILE_NAME;
 import static robotbuilder.extensions.ExtensionComponent.VALIDATORS_FILE_NAME;
+import static robotbuilder.RobotBuilder.FRC_HOME;
 
 /**
  *
@@ -34,11 +35,10 @@ import static robotbuilder.extensions.ExtensionComponent.VALIDATORS_FILE_NAME;
 public class Extensions {
 
     /**
-     * The path to the extensions folder. By default, it should be in {@code ${user.home}/Robotbuilder/extensions/}.
-     * 
-     * I promote that we change is to C:\Users\Public\wpilib\2020\tools + "/Robotbuilder/extensions/
+     * The path to the extensions folder. By default, it should be in {@code FRC_HOME/Robotbuilder/extensions/}
+     * where FRC_HOME is {@code ~/wpilib/YEAR} on *nix and macOS and {@code c:\Users\Public\wpilib\YEAR} on Windows.
      */
-    public final String EXTENSIONS_FOLDER_PATH = System.getProperty("user.home") + "/Robotbuilder/extensions/";
+    public final String EXTENSIONS_FOLDER_PATH = FRC_HOME + "/Robotbuilder/extensions/";
     private File extensionsFolder;
 
     private List<ExtensionComponent> components;
