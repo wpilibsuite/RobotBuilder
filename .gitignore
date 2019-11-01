@@ -13,8 +13,9 @@ nbactions.xml
 
 
 
-# Created by https://www.gitignore.io/api/gradle,eclipse,intellij,java,visualstudiocode
-# Edit at https://www.gitignore.io/?templates=gradle,eclipse,intellij,java,visualstudiocode
+
+# Created by https://www.gitignore.io/api/java,gradle,eclipse,intellij
+# Edit at https://www.gitignore.io/?templates=java,gradle,eclipse,intellij
 
 ### Eclipse ###
 .metadata
@@ -198,17 +199,6 @@ fabric.properties
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
-
 ### Gradle ###
 .gradle
 build/
@@ -228,4 +218,8 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
-# End of https://www.gitignore.io/api/gradle,eclipse,intellij,java,visualstudiocode
+# End of https://www.gitignore.io/api/java,gradle,eclipse,intellij
+
+
+# VS Code settings file
+.vscode/
