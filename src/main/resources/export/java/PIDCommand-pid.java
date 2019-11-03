@@ -16,7 +16,7 @@ already created in your subsystem
 
 */
 #set($command = $helper.getByName($command_name, $robot))
-        super(new PIDController(${command.getProperty("P").getValue()}, ${command.getProperty("I").getValue()}, ${command.getProperty("D").getValue()}),  subsystem::getPIDCommand_Input, ThisSetpoint , output -> subsystem.setThisPID(output));
+        super(new PIDController(${command.getProperty("P").getValue()}, ${command.getProperty("I").getValue()}, ${command.getProperty("D").getValue()}),  subsystem::getPIDCommand_Input, setpoint , output -> subsystem.setThisPID(output));
         getController().setTolerance(${command.getProperty("Tolerance").getValue()});
         #if(${command.getProperty("Continuous").getValue()})
         getController().enableContinuousInput(${command.getProperty("Minimum Input").getValue()}, ${command.getProperty("Maximum Input").getValue()});
