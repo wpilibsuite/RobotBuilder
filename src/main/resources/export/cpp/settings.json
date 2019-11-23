@@ -12,6 +12,7 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
+    "**/*~": true
   },
   "C_Cpp.default.configurationProvider": "vscode-wpilib"
 }
