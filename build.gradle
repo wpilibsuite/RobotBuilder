@@ -74,7 +74,6 @@ def downloadOldCommands = tasks.register('downloadOldCommands', Download) {
 }
 
 check.dependsOn jacocoTestReport
-build.dependsOn downloadOldCommands
 
 lombok {
     version = "1.18.8"
@@ -83,6 +82,7 @@ lombok {
 
 compileJava {
     options.encoding = "UTF-8"
+    dependsOn downloadOldCommands
 }
 
 if (!hasProperty('mainClass')) {

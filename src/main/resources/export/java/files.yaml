@@ -71,7 +71,6 @@
   export: $project/src/main/deploy/example.txt
   source: ${exporter_path}deploy_example.txt
   update: None
-  
 
 ## Key Java Files
 - !File
