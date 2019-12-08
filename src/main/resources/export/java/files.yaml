@@ -1,3 +1,9 @@
+## Vendordep
+- !File
+  export: $project/vendordeps/WPILibOldCommands.json
+  source: ${exporters_path}/vendordeps/WPILibOldCommands.json
+  update: None
+
 ## WPI Project Files
 
 - !File
@@ -65,7 +71,7 @@
   export: $project/src/main/deploy/example.txt
   source: ${exporter_path}deploy_example.txt
   update: None
-  
+
 ## Key Java Files
 - !File
   export: $package_path/Main.java
