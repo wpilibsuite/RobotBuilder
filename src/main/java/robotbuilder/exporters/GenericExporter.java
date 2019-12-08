@@ -158,7 +158,7 @@ public class GenericExporter {
             }
         }
         if(wpilibRelease == null) {
-            wpilibRelease = "2020.1.1-beta-3"; // this shouldn't need to be relied upon,
+            wpilibRelease = "2020.1.1-beta-4"; // this shouldn't need to be relied upon,
                                                // but its better than generating nothing.
         }
 
@@ -189,7 +189,7 @@ public class GenericExporter {
               newProject = true;
         }
 
-        MainFrame.getInstance().setStatus("Export succesful.");
+        MainFrame.getInstance().setStatus("Export successful.");
         if (post_export_action != null) {
             String action = eval(post_export_action);
             if (action.startsWith("#")) {
@@ -218,7 +218,7 @@ public class GenericExporter {
      */
     private void loadExportDescription(Map<String, Map<String, String>> defaults,
             Map<String, Map<String, String>> components) {
-        // Load the intstructions to export items from the palette
+        // Load the instructions to export items from the palette
         componentInstructions = new HashMap<>();
         for (String key : components.keySet()) {
             Map<String, String> componentBase = components.get(key);
