@@ -1,7 +1,7 @@
 ## Vendordep
 - !File
   export: $project/vendordeps/WPILibOldCommands.json
-  source: ${exporters_path}/vendordeps/WPILibOldCommands.json
+  source: ${exporters_path}vendordeps/WPILibOldCommands.json
   update: None
 
 ## WPI Project Files
