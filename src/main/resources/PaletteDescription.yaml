@@ -743,8 +743,8 @@ Palette:
         properties:
           - !ChoicesProperty
             name: Type
-            choices: ["Victor", "Jaguar", "Talon", "VictorSP", "PWMTalonSRX", "Spark", "SD540", "PWMVictorSPX", "DMC60", PWMSparkMax]
-            default: "Spark"
+            choices: ["Victor", "Jaguar", "Talon", "VictorSP", "PWMTalonSRX", "Spark", "SD540", "PWMVictorSPX", "DMC60", "PWMSparkMax", "PWMTalonFX", "PWMVenom"]
+            default: "PWMVictorSPX"
           #PWMOutput("Output")
           - !BooleanProperty
             name: Inverted
