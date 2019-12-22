@@ -1,8 +1,7 @@
 #set($subsystem = $helper.getByName($subsystem_name, $robot))
 #header()
 
-#ifndef #constant($subsystem.name)_H
-\#define #constant($subsystem.name)_H
+#pragma once
 
 \#include "frc/commands/PIDSubsystem.h"
 \#include "frc/WPILib.h"
@@ -31,4 +30,3 @@ class #class($subsystem.name): public frc::PIDSubsystem {
 #end
 };
 
-#endif

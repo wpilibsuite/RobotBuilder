@@ -1,10 +1,8 @@
 #set($command = $helper.getByName($command_name, $robot))
-#macro( klass $cmd )#if( "#type($cmd)" == "" )frc::Command#else#type($cmd)#end#end
+#macro( klass $cmd )#if( "#type($cmd)" == "" )frc::Command#else frc::#type($cmd)#end#end
 #header()
 
-#ifndef #constant($command.name)_H
-\#define #constant($command.name)_H
-
+#pragma once
 
 \#include "frc/commands/Subsystem.h"
 \#include "Robot.h"
@@ -31,5 +29,3 @@ private:
 #parse("${exporter_path}Command-constructor-variables.h")
 #end
 };
-
-#endif

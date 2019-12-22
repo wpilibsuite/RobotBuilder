@@ -1,9 +1,9 @@
 #header()
 
-#ifndef OI_H
-\#define OI_H
+#pragma once
 
-\#include "frc/WPILib.h"
+\#include "frc/Joystick.h"
+\#include "frc/buttons/JoystickButton.h"
 
 class OI {
 private:
@@ -18,4 +18,3 @@ public:
 #end
 };
 
-#endif

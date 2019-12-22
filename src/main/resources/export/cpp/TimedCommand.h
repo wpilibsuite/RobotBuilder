@@ -1,8 +1,7 @@
 #set($command = $helper.getByName($command_name, $robot))
 #header()
 
-#ifndef #constant($command.name)_H
-\#define #constant($command.name)_H
+#pragma once
 
 
 \#include "frc/commands/Subsystem.h"
@@ -29,4 +28,3 @@ private:
 #end
 };
 
-#endif
