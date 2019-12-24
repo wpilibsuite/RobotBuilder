@@ -3,8 +3,8 @@
 
 #pragma once
 
-
 \#include "frc/commands/Subsystem.h"
+\#include "frc/commands/TimedCommand.h"
 \#include "Robot.h"
 
 /**
