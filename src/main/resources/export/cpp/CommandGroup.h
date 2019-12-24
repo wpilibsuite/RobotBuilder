@@ -2,7 +2,7 @@
 
 #set($command = $helper.getByName($command_name, $robot))
 
-\#pragma once
+#pragma once
 
 \#include "frc/commands/CommandGroup.h"
 

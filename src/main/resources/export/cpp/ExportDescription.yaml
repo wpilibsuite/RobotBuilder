@@ -209,6 +209,7 @@ Instructions:
     ClassName: "DifferentialDrive"
     Construction: "#variable($Name).reset(new frc::${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor)));"
     LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Import: "\\#include \"frc/drive/${ClassName}.h\""
     Extra: >
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
               #variable($Name)->SetExpiration($Safety_Expiration_Time);
@@ -217,6 +218,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "MecanumDrive"
     LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Import: "\\#include \"frc/drive/${ClassName}.h\""
     Construction: >-
       #variable($Name).reset(new frc::${ClassName}(*#variable($Left_Front_Motor), *#variable($Left_Rear_Motor),
                     *#variable($Right_Front_Motor), *#variable($Right_Rear_Motor)));
@@ -228,6 +230,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "KilloughDrive"
     LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Import: "\\#include \"frc/drive/${ClassName}.h\""
     Construction: >-
       #variable($Name).reset(new frc::${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor),
                     *#variable($Back_Motor)));
