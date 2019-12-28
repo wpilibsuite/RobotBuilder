@@ -51,10 +51,8 @@ public class TestUtils {
         // Create a drive train subsystem
         RobotComponent driveTrain = new RobotComponent("Drive Train", "Subsystem", tree);
         subsystems.add(driveTrain);
-        RobotComponent robotDrive = new RobotComponent("Robot Drive", "Robot Drive 2", tree);
-        robotDrive.getProperty("Left Motor Inverted").setValueAndUpdate(true);
+        RobotComponent robotDrive = new RobotComponent("Robot Drive", "Differential Drive", tree);
         robotDrive.getProperty("Safety Enabled").setValueAndUpdate(false);
-        robotDrive.getProperty("Sensitivity").setValueAndUpdate(0.25);
         driveTrain.add(robotDrive);
         RobotComponent leftVictor = new RobotComponent("Left Victor", "Speed Controller", tree);
         leftVictor.setProperty("Type", "Victor");
