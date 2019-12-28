@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="en"
       lang="en">
@@ -9,62 +8,45 @@
         href="styles.css"
         type="text/css"
         media="screen" />
-
   <title>Command</title>
 </head>
-
 <body>
   <h1>Command</h1>
-
   <center>
-    <img src="../icons/Command.png" alt="Command"/>
+    <img src="../icons/Command.png"
+            alt="Command" />
   </center>
-
   <h2>What is it?</h2>
-
   <p>A command is a single action performed by the robot. Commands
   usually require at least one subsystem which they act with. After
   being started, a command runs for a period of time until either
   it is finished performing its task or it is interrupted.
   Interruptions can occur either when a command is canceled or when
   another command that requires the same command is run.</p>
-
   <h3>What does it mean for a command to require a subsystem?</h3>
-
   <p>Commands can require a subsystem using the requires() method
   of commands. When a command requires a subsystem, it claims
   exclusive control over that subsystem and will interrupt any
   other command that requires the same subsystem. This only works
   if all your commands properly require the subsystems that they
   use.</p>
-
   <h3>What are parameters and how are they used in a command?</h3>
-
   <p>Parameters are variables that are passed into a command to be
   used later. By adding parameters to your command, the parameters
   are defined in your command class as a variable of the same type.
   The arguments passed in by the parameters can then be used by
   methods inside of the command.</p>
-
   <h2>Properties</h2>
-
   <dl>
     <dt>Requires</dt>
-
     <dd>The subsystem that this command requires.</dd>
-
     <dt>Button on SmartDashboard</dt>
-
     <dd>Whether or not to automatically place a button on the
     SmartDashboard.</dd>
-
     <dt>Parameters</dt>
-
     <dd>Variables to be passed into the command. Data can be of
     types boolean, byte, int, long, double, or string.</dd>
-
     <dt>Run When Disabled</dt>
-
     <dd>Sets whether or not this Command should run when the robot
     is disabled.</dd>
   </dl>

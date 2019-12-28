@@ -132,6 +132,8 @@ jar {
     }
 }
 
+import org.aim42.htmlsanitycheck.check.*
+
 htmlSanityCheck {
     sourceDir = new File( "src/main/resources/help" )
 
@@ -140,6 +142,13 @@ htmlSanityCheck {
 
     // fail build on errors?
     failOnErrors = true
+
+    checkerClasses = [BrokenCrossReferencesChecker,
+             BrokenHttpLinksChecker,
+             DuplicateIdChecker,
+             ImageMapChecker,
+             MissingAltInImageTagsChecker,
+             MissingLocalResourcesChecker]
 
 }
 

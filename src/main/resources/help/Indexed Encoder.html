@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="en"
       lang="en">
@@ -9,19 +8,15 @@
         href="styles.css"
         type="text/css"
         media="screen" />
-
   <title>Indexed Encoder</title>
 </head>
-
 <body>
   <h1>Indexed Encoder</h1>
-
   <center>
-    <img src="../icons/Indexed Encoder.png" alt="Indexed Encoder" />
+    <img src="../icons/Indexed%20Encoder.png"
+            alt="Indexed Encoder" />
   </center>
-
   <h2>What is it?</h2>
-
   <p>Indexed encoders are devices that count shaft rotation and can
   sense direction. The output of the encoder class is an integer
   that can count either up or down, and can go negative for reverse
@@ -29,53 +24,35 @@
   an A Channel, a B Channel that are out of phase with each other
   to allow the FPGA to do direction sensing and an Index Channel
   that resets the count.</p>
-
   <h2>Properties</h2>
-
   <dl>
     <dt>Channel A Port (Digital)</dt>
-
     <dd>The DIO port on the roboRIO or MXP that channel A of the
     encoder is plugged into.</dd>
-
     <dt>Channel B Port (Digital)</dt>
-
     <dd>The DIO Port on the roboRIO or MXP that channel B of the
     encoder is plugged into.</dd>
-
     <dt>Index Port (Digital)</dt>
-
     <dd>The DIO Port on the roboRIO or MXP that the index of the
     encoder is plugged into.</dd>
-
     <dt>Reverse Direction</dt>
-
     <dd>Whether or not to reverse the direction considered positive
     by the encoder.</dd>
-
     <dt>Distance Per Pulse</dt>
-
     <dd>Conversion factor to convert pulses to meaningful
     distance.</dd>
-
     <dt>PID Source</dt>
-
     <dd>Whether this encoder is being used for position or velocity
     PID.</dd>
-
     <dt>Indexing Type</dt>
-
     <dd>When to reset the based on the index. kResetWhileHigh,
     kResetWhileLow, kResetOnFallingEdge, or
     kResetOnRisingEdge.</dd>
   </dl>
-
   <h2>See Also</h2>
-
   <ul>
     <li><a href=
     "https://en.wikipedia.org/wiki/Rotary_encoder">Wikipedia</a></li>
-
     <li><a href=
     "https://wpilib.screenstepslive.com/s/4485/m/13809/l/241874-counters-measuring-rotation-counting-pulses-and-more">
     Encoder on Screensteps</a></li>
