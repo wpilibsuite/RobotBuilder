@@ -10,6 +10,7 @@ plugins {
     id 'io.franzbecker.gradle-lombok' version '3.1.0'
     id "com.github.johnrengelman.shadow" version "5.1.0"
     id "de.undercouch.download" version "4.0.1"
+    id 'org.aim42.htmlSanityCheck' version '1.1.3'
 }
 
 if (project.hasProperty('buildServer')) {
@@ -74,6 +75,7 @@ def downloadOldCommands = tasks.register('downloadOldCommands', Download) {
 }
 
 check.dependsOn jacocoTestReport
+check.dependsOn htmlSanityCheck
 
 lombok {
     version = "1.18.8"
@@ -130,7 +132,16 @@ jar {
     }
 }
 
+htmlSanityCheck {
+    sourceDir = new File( "src/main/resources/help" )
 
+    // where to put results of sanityChecks...
+    checkingResultsDir = new File( "$buildDir/reports/htmlchecks" )
+
+    // fail build on errors?
+    failOnErrors = true
+
+}
 
 publishing {
     publications {
