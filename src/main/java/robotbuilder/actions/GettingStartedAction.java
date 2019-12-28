@@ -15,7 +15,8 @@ import robotbuilder.Utils;
  */
 public class GettingStartedAction extends AbstractAction {
 
-    private static final String url = "https://wpilib.screenstepslive.com/s/4485/m/26402/l/255426-overview-of-robotbuilder";
+    private static final String url =
+            "http://docs.wpilib.org/en/latest/docs/software/wpilib-tools/robotbuilder/introduction/robotbuilder-overview.html";
 
     public GettingStartedAction() {
         putValue(Action.NAME, "Getting Started");
