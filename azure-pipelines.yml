@@ -30,6 +30,8 @@ stages:
           testResultsFiles: '**/TEST-*.xml'
           tasks: 'check'
           options: '-PbuildServer'
+        variables:
+          DISPLAY: :99.0
 
   - job: Windows_64_Bit
     pool:
