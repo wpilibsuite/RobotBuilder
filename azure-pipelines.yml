@@ -29,7 +29,7 @@ stages:
           publishJUnitResults: false
           testResultsFiles: '**/TEST-*.xml'
           tasks: 'check'
-          options: '-PbuildServer -x test'
+          options: '-PbuildServer'
 
   - job: Windows_64_Bit
     pool:
