@@ -11,6 +11,11 @@ resources:
 variables:
 - group: Artifactory-Package-Publish
 
+pr:
+  branches:
+    include:
+    - '*'  # must quote since "*" is a YAML reserved character; we want a string
+
 stages:
 - stage: Build
   jobs:
