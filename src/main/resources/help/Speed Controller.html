@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="en"
       lang="en">
@@ -9,83 +8,71 @@
         href="styles.css"
         type="text/css"
         media="screen" />
-
   <title>Speed Controller</title>
 </head>
-
 <body>
   <h1>Speed Controller</h1>
-
   <center>
-    <img src="../icons/Speed%20Controller.png" />
+    <img src="../icons/Speed%20Controller.png"
+            alt="Speed Controller" />
   </center>
-
   <h2>What is it?</h2>
-
   <p>A speed controller that uses PWM signals to control the speed
-  of the attached motor. There are ten main PWM speed controllers
-  available for use in FRC: Victor, Talon, Jaguar, Victor SP,
-  Talon SRX, Spark, SD540, Victor SPX, DMC 60, and Spark Max.</p>
-
+  of the attached motor. There are twelve main PWM speed
+  controllers available for use in FRC: Victor, Talon, Jaguar,
+  Victor SP, Talon SRX, Spark, SD540, Victor SPX, DMC 60, Spark
+  Max, Talon FX, and the Venom Smart Motor.</p>
   <h2>Properties</h2>
-
   <dl>
     <dt>Type</dt>
-
     <dd>The type of speed controller to use.</dd>
-
     <dt>Output Port (PWM)</dt>
-
     <dd>The PWM port on the roboRIO or MXP that the output is
-    plugged into.</dd>
-
+    plugged into. Ports 0-9 are on the roboRIO and 10-19 are on the
+    MXP.</dd>
     <dt>Inverted</dt>
-
     <dd>Whether to invert the direction of the speed
     controller.</dd>
   </dl>
-
   <h2>See Also</h2>
-
   <ul>
     <li><a href=
     "https://en.wikipedia.org/wiki/Electronic_speed_control">Wikipedia</a></li>
-
     <li><a href=
-    "http://www.vexrobotics.com/217-2769.html">Victor</a></li>
-
+    "https://web.archive.org/web/20180727030842/https://www.vexrobotics.com/217-2769.html">
+    Victor</a></li>
     <li><a href=
-    "https://www.vexrobotics.com/217-3367.html">Jaguar</a></li>
-
+    "https://web.archive.org/web/20181116020319/https://www.vexrobotics.com/217-3367.html">
+    Jaguar</a></li>
     <li><a href=
-    "https://www.andymark.com/Talon-p/am-talon-discontinued.htm">Talon</a></li>
-
+    "https://web.archive.org/web/20180801063333/https://www.andymark.com/Talon-p/am-talon-discontinued.htm">
+    Talon</a></li>
     <li><a href=
-    "http://www.vexrobotics.com/vexpro/motors-electronics/217-9090.html">
+    "https://web.archive.org/web/20181107114840/https://www.vexrobotics.com/vexpro/motors-electronics/217-9090.html">
     Victor SP</a></li>
-
     <li><a href=
-    "http://www.vexrobotics.com/vexpro/motors-electronics/217-8080.html">
+    "https://www.vexrobotics.com/vexpro/motors-electronics/217-8080.html">
     Talon SRX</a></li>
-
     <li><a href=
-    "http://www.revrobotics.com/rev-11-1200/">Spark</a></li>
-
+    "https://www.revrobotics.com/rev-11-1200/">Spark</a></li>
     <li><a href=
-    "http://www.mindsensors.com/frc/135-motor-controller-for-frc">SD540</a></li>
-
+    "http://www.mindsensors.com/frc/135-sd540b-pwm-motor-controller-for-frc">
+    SD540</a></li>
+    <li><a href="https://www.vexrobotics.com/217-9191.html">Victor
+    SPX</a></li>
     <li><a href=
-    "https://www.vexrobotics.com/217-9191.html">Victor SPX</a></li>
-
+    "https://store.digilentinc.com/dmc-60-digital-motor-controller-retired/">
+    DMC 60</a></li>
+    <li><a href="https://www.revrobotics.com/rev-11-2158/">Spark
+    Max</a></li>
     <li><a href=
-    "http://store.digilentinc.com/dmc-60-digital-motor-controller/">DMC 60</a></li>
-
+    "https://www.ctr-electronics.com/talon-fx.html">Talon
+    FX</a></li>
     <li><a href=
-    "http://www.revrobotics.com/rev-11-2158/">Spark Max</a></li>
-
+    "https://www.playingwithfusion.com/productview.php?pdid=99">Venom</a></li>
     <li><a href=
-    "https://wpilib.screenstepslive.com/s/4485/m/13809/l/241859-driving-motors-with-speed-controller-objects-victors-talons-and-jaguars">
-    Speed Controllers on Screensteps</a></li>
+    "https://docs.wpilib.org/en/latest/docs/software/actuators/pwm-controllers.html">
+    Speed Controllers on frc-docs</a></li>
   </ul>
 </body>
 </html>

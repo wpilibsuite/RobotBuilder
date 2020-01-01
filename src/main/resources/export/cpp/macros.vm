@@ -22,13 +22,13 @@
 ## Get the extra instruction of a robot component
 #macro( extra $component )${helper.getInstruction($component, "Extra")}#end
 
-## Get the extra instruction of a robot component
+## Get the prototype instruction of a robot component
 #macro( prototype $component )${helper.getInstruction($component, "Prototype")}#end
 
-## Get the extra instruction of a robot component
+## Get the function instruction of a robot component
 #macro( function $component )${helper.getInstruction($component, "Function")}#end
 
-## Get the extra instruction of a robot component
+## Get the pid instruction of a robot component
 #macro( pid $component )${helper.getInstruction($component, "PID")}#end
 
 ## Gets the C++ type of the parameter
