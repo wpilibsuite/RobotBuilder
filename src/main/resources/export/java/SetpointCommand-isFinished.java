@@ -1,2 +1,2 @@
 #set($command = $helper.getByName($command_name, $robot))
-        return Robot.#variable(${command.getProperty("Requires").getValue()}).onTarget();
+        return m_#variable(${command.getProperty("Requires").getValue()}).getController().atSetpoint();
