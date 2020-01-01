@@ -68,9 +68,9 @@ jacocoTestReport {
     }
 }
 
-def downloadOldCommands = tasks.register('downloadOldCommands', Download) {
-  src 'https://raw.githubusercontent.com/wpilibsuite/allwpilib/master/wpilibOldCommands/WPILibOldCommands.json'
-  dest 'src/main/resources/export/vendordeps/WPILibOldCommands.json'
+def downloadNewCommands = tasks.register('downloadNewCommands', Download) {
+  src 'https://raw.githubusercontent.com/wpilibsuite/allwpilib/master/wpilibNewCommands/WPILibNewCommands.json'
+  dest 'src/main/resources/export/vendordeps/WPILibNewCommands.json'
   overwrite true
 }
 
@@ -84,7 +84,7 @@ lombok {
 
 compileJava {
     options.encoding = "UTF-8"
-    dependsOn downloadOldCommands
+    dependsOn downloadNewCommands
 }
 
 if (!hasProperty('mainClass')) {
