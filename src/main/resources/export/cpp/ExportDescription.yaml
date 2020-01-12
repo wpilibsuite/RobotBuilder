@@ -73,7 +73,7 @@ Defaults:
   CustomComponent:
     Export: "RobotMap"
     Import: "\\#include \"Custom/${ClassName}.h\""
-    Declaration: "static std::shared_ptr<frc::${ClassName}> #variable($Name);"
+    Declaration: "static std::shared_ptr<${ClassName}> #variable($Name);"
   None:
     Export: ""
     Import: ""
