@@ -18,7 +18,7 @@ void Robot::RobotInit() {
 	// This MUST be here. If the OI creates Commands (which it very likely
 	// will), constructing it during the construction of CommandBase (from
 	// which commands extend), subsystems are not guaranteed to be
-	// yet. Thus, their requires() statements may grab null pointers. Bad
+	// yet. Thus, their Requires() statements may grab null pointers. Bad
 	// news. Don't move it.
 	oi.reset(new OI());
 
