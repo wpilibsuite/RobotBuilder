@@ -82,10 +82,6 @@
   export: $package_path/Robot.java
   source: ${exporter_path}RobotTemplate.java
   update: Modify
-  modifications:
-    autonomous: ${exporter_path}RobotTemplate-autonomous.java
-    declarations: ${exporter_path}RobotTemplate-declarations.java
-    constructors: ${exporter_path}RobotTemplate-constructors.java
 
 - !File
   export: $package_path/Constants.java
