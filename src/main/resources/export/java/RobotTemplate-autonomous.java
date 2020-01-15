@@ -5,7 +5,7 @@
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Autonomous Selection").getValue())
 #if( $component.getProperty("Parameter presets").getValue().isEmpty() )
-        chooser.addOption("$component.getName()", new #class($component.getName())());
+        chooser.addObject("$component.getName()", new #class($component.getName())());
 #else
 #foreach( $set in $component.getProperty("Parameter presets").getValue() )
         chooser.addOption("$component.getName(): $set.getName()", #command_instantiation( $component.getName(), $set.getParameters() ));
