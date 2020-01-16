@@ -138,14 +138,17 @@
             name: $Name Parameters
           - !ChoicesProperty
             name: $Name When to Run
-            choices: [whileHeld, whenPressed, whenReleased]
-            default: whileHeld
+            choices: [whenPressed, whenReleased, whileHeld, whenHeld, toggleWhenPressed]
+            default: whenPressed
           - !BooleanProperty
             name: Add Timeout
             default: false
           - !DoubleProperty
             name: Timeout
             default: 0
+          - !BooleanProperty
+            name: Interruptible
+            default: true
 #end
 #macro( Solenoid $Name )
           - !ChoicesProperty
