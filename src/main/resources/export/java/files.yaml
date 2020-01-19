@@ -108,6 +108,7 @@
   modifications:
     command_declarations: ${exporter_path}CommandGroup-declarations.java
     parameters: ${exporter_path}CommandGroup-constructor.java
+    disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "PID Command")
@@ -159,6 +160,7 @@
     variable_declarations: ${exporter_path}Command-variable-declarations.java
     initialize: ${exporter_path}WaitCommand-initialize.java
     end: ${exporter_path}WaitCommand-end.java
+    disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "Instant Command")
@@ -171,6 +173,7 @@
     constructors: ${exporter_path}Command-constructors.java
     variable_declarations: ${exporter_path}Command-variable-declarations.java
     requires: ${exporter_path}Command-requires.java
+    disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
 #elseif ($command.base.name == "Conditional Command")
@@ -180,6 +183,7 @@
   update: Modify
   modifications:
     parameters: ${exporter_path}ConditionalCommand-constructors.java
+    disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
 #else
@@ -192,6 +196,7 @@
     constructors: ${exporter_path}Command-constructors.java
     variable_declarations: ${exporter_path}Command-variable-declarations.java
     requires: ${exporter_path}Command-requires.java
+    disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
 #end
