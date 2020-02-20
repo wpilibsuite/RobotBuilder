@@ -97,6 +97,7 @@
     constructors: ${exporter_path}RobotContainer-constructors.java
     subsystem_default_Command: ${exporter_path}RobotContainer-subsystem_default_Command.java
     imports: ${exporter_path}RobotContainer-imports.java
+    autonomous: ${exporter_path}RobotContainer-autonomous.java
 ## Export Commands as files
 #if ($export_commands)
 #foreach ($command in $commands)
