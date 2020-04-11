@@ -46,7 +46,7 @@ new #class($command)(#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $param
 #macro( new_command_instantiation $component $command $params )
 #set($len = $params.size() - 2)
 #set($last = $len + 1)
-new #class($command.name)(#if($command.getProperty("Requires").getValue() != "None")#if(!$command.getProperty("Parameter presets").getValue().isEmpty())#command_params($params), m_#required_subsystem($command)#else m_#required_subsystem($command) #end#else#if(!$command.getProperty("Parameter presets").getValue().isEmpty())#command_params($params)#end#end), $component.getProperty("Interruptible").getValue() #end
+new #class($command.name)(#if($command.getProperty("Requires").getValue() != "None")#if(!$command.getProperty("Parameter presets").getValue().isEmpty())#command_params($params), m_#required_subsystem($command)#else m_#required_subsystem($command) #end#else#if(!$command.getProperty("Parameter presets").getValue().isEmpty())#command_params($params)#end#end)#if($command.getProperty("Add Timeout").value == true).withTimeout($command.getProperty("Timeout").value)#else#end#end
 
 
 ## Generates 'new command_params(arg0, arg1, arg2, ...)'

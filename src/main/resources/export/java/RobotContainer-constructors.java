@@ -8,8 +8,7 @@
         #foreach ($command in $commands)
                 #if($command.name == $component.getProperty("Command").value)
                         #set($params = $component.getProperty("Parameters").getValue())
-                        #variable($component.name).$component.getProperty("When to Run").getValue()(#new_command_instantiation($component,$command,$params)#if($component.getProperty("Add Timeout").value == true).withTimeout($component.getProperty("Timeout").value));#else#if($command.getProperty("Add Timeout").value == true).withTimeout($command.getProperty("Timeout").value));#else);#end#end
-                        
+                        #variable($component.name).$component.getProperty("When to Run").getValue()(#new_command_instantiation($component,$command,$params)#if($component.getProperty("Add Timeout").value == true).withTimeout($component.getProperty("Timeout").value)#else#end, $component.getProperty("Interruptible").getValue());
                 #end
         #end
         
