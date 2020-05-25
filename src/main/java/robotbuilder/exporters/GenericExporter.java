@@ -259,6 +259,8 @@ public class GenericExporter {
     }
 
     String evalResource(String resource, Context context) {
+        // System.out.println(resource);
+        // System.out.println(context);
         InputStreamReader in;
         in = new InputStreamReader(Utils.getResourceAsStream(resource));
         StringWriter w = new StringWriter();
