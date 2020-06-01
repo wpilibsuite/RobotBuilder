@@ -90,16 +90,16 @@
     declarations: ${exporter_path}CommandBasedRobot-declarations.cpp
 
 - !File
-  export: $project/src/main/cpp/OI.cpp
-  source: ${exporter_path}OI.cpp
+  export: $project/src/main/cpp/RobotContainer.cpp
+  source: ${exporter_path}RobotContainer.cpp
   update: Modify
   modifications:
     includes: ${exporter_path}OI-includes.h
     constructors: ${exporter_path}OI-constructors.cpp
     functions: ${exporter_path}OI-functions.cpp
 - !File
-  export: $project/src/main/include/OI.h
-  source: ${exporter_path}OI.h
+  export: $project/src/main/include/RobotContainer.h
+  source: ${exporter_path}RobotContainer.h
   update: Modify
   modifications:
     declarations: ${exporter_path}OI-declarations.h

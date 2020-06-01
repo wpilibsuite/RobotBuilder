@@ -132,7 +132,7 @@ Instructions:
     Import: "\\#include \"Subsystems/#class($Short_Name).h\""
     Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
     Construction: "#variable($Short_Name).reset(new #class($Short_Name)());"
-    ClassName: "frc::Subsystem"
+    ClassName: "frc2::SubsystemBase"
   PID Subsystem:
     Defaults: "None"
     Export: "Robot"
@@ -357,7 +357,7 @@ Instructions:
 
   Command:
     Defaults: "Command,None"
-    ClassName: "frc::Command"
+    ClassName: "frc2::CommandBase"
   Command Group:
     Defaults: "Command,None"
   PID Command:

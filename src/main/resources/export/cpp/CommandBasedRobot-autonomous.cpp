@@ -13,7 +13,3 @@
 #end
 #end
 #end
-
-#if($command != "None")
-	chooser.SetDefaultOption("$command", #command_instantiation( $command, $params));
-#end
