@@ -84,7 +84,7 @@
     #end
 #end ##macro
 
-## Generate the PWM table for a module
+## Generate the Relay table for a module
 #macro( Relay $title $label )
     #table_with_components($title, $label, "Channel (Relay)")
 #end ##macro
