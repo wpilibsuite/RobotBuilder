@@ -3,10 +3,10 @@
 #set($len = $params.size() - 2)
 #set($last = $len + 1)
 #if( $params.size() > 0 )
-	#class($command.name)(#if( $len >= 0 )#foreach($i in [0..$len])#param_declaration_cpp($params.get($i)), #end#end#param_declaration_cpp($params.get($last)));
+	explicit #class($command.name)(#if( $len >= 0 )#foreach($i in [0..$len])#param_declaration_cpp($params.get($i)), #end#end#param_declaration_cpp($params.get($last)));
 #else
-	#class($command.name)();
+	explicit #class($command.name)(#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()}));
 #end
 #if ( $command.getProperty("Run When Disabled").getValue() )
-        setRunWhenDisabled(true);
+        bool runsWhenDisabled() override;
 #end
