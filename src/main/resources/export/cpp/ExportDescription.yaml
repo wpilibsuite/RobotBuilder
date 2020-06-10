@@ -68,12 +68,14 @@ Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWind
 Defaults:
   Component:
     Export: "RobotMap"
-    Declaration: "std::shared_ptr<frc::${ClassName}> #variable($Name);"
+    Declaration: "frc::${ClassName} m_#variable($Name);"
     Import: "\\#include \"frc/${ClassName}.h\""
+    Construction: " "
   CustomComponent:
     Export: "RobotMap"
     Import: "\\#include \"Custom/${ClassName}.h\""
-    Declaration: "std::shared_ptr<${ClassName}> #variable($Name);"
+    Declaration: "${ClassName} m_#variable($Name);"
+    Construction: " "
   None:
     Export: ""
     Import: ""
@@ -86,28 +88,28 @@ Defaults:
     PID: "#variable($Short_Name)->PIDGet()"
     ClassName: ""
   AnalogInput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     PID: "#variable($Short_Name)->GetAverageVoltage()"
   AnalogPotentiometer:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset}));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     PID: "#variable($Short_Name)->Get()"
   DigitalInput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Digital}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Digital}));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   PWMOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_PWM}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Output_Channel_PWM}));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   RelayOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_Relay}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Output_Channel_Relay}));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   AnalogOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_AnalogOutput}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Output_Channel_AnalogOutput}));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   SolenoidOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid}));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   OI:
     Export: "OI"
     Declaration: "std::shared_ptr<frc::${ClassName}> #variable($Name);"
@@ -157,7 +159,7 @@ Instructions:
 
           SmartDashboard::PutData("${Name}", #variable($Name).get());#end
 
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
 
   Robot Drive 2:
     Defaults: "Component,None"
@@ -200,7 +202,7 @@ Instructions:
   Speed Controller Group:
     Defaults: "Component,None"
     ClassName: "SpeedControllerGroup"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     Construction: >-
       #variable($Name) = std::make_shared<frc::${ClassName}>(*#variable($SpeedController1), *#variable($SpeedController2)
       #if(($SpeedController3)), *#variable($SpeedController3)#end #if(($SpeedController4)), *#variable($SpeedController4)#end);
@@ -208,7 +210,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "DifferentialDrive"
     Construction: "#variable($Name).reset(new frc::${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor)));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     Import: "\\#include \"frc/drive/${ClassName}.h\""
     Extra: >
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
@@ -217,7 +219,7 @@ Instructions:
   Mecanum Drive:
     Defaults: "Component,None"
     ClassName: "MecanumDrive"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     Import: "\\#include \"frc/drive/${ClassName}.h\""
     Construction: >-
       #variable($Name).reset(new frc::${ClassName}(*#variable($Left_Front_Motor), *#variable($Left_Rear_Motor),
@@ -229,7 +231,7 @@ Instructions:
   Killough Drive:
     Defaults: "Component,None"
     ClassName: "KilloughDrive"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     Import: "\\#include \"frc/drive/${ClassName}.h\""
     Construction: >-
       #variable($Name).reset(new frc::${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor),
@@ -290,28 +292,29 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "PowerDistributionPanel"
     Construction: "#variable($Name).reset(new frc::${ClassName}($CAN_ID));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
 
   Speed Controller:
     Defaults: "PWMOutput,Component,None"
     ClassName: "SpeedController"
-    Construction: "#variable($Name).reset(new frc::${Type}(${Output_Channel_PWM}));"
-    LiveWindow: "AddChild(\"$Short_Name\", std::static_pointer_cast<frc::${Type}>(#variable($Name)));"
+    Declaration: "frc::${Type} m_#variable($Name);"
+    Construction: " " #"#variable($Name).reset(new frc::${Type}(${Output_Channel_PWM}));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
 #    Import: "\\#include \"frc/${Type}.h\"\\n\\#include \"frc/${ClassName}.h";"
     Import: "\\#include \"frc/${Type}.h\""
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "NidecBrushless"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital}));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
   Digital Output:
     Defaults: "Component,None"
     ClassName: "DigitalOutput"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_Digital}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Output_Channel_Digital}));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   Spike:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
@@ -323,7 +326,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "Compressor"
     Construction: "#variable($Name).reset(new frc::${ClassName}(${PCM_ID}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "Solenoid"
@@ -339,7 +342,7 @@ Instructions:
       #end##
 
       #variable($Name).reset(new frc::${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}));
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
 
   Joystick:
     Defaults: "OI,None"
