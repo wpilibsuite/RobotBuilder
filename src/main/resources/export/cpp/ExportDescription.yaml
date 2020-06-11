@@ -256,14 +256,16 @@ Instructions:
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}));"
+    Declaration: "frc::${Type} m_#variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}};"
+    Construction: "" #"#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}));"
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
           #variable($Name)->SetPIDSourceType(frc::PIDSourceType::${PID_Source});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}));"
+    Declaration: "frc::${Type} m_#variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}};"
+    Construction: "" #"#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}));"
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
           #variable($Name)->SetPIDSourceType(frc::PIDSourceType::${PID_Source});
@@ -271,6 +273,7 @@ Instructions:
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
+    Declaration: "frc::${Type} m_#variable($Name){${Input_Channel_Digital}, ${Direction_Sensitive}};"
     Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive}));"
   Analog Potentiometer:
     Defaults: "AnalogPotentiometer,Component,None"
@@ -287,17 +290,19 @@ Instructions:
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital}));"
+    Declaration: "frc::${Type} m_#variable($Name){${Ping_Channel_Digital}, ${Echo_Channel_Digital}};"
+    Construction: "" #"#variable($Name).reset(new frc::${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital}));"
   PowerDistributionPanel:
     Defaults: "Component,None"
     ClassName: "PowerDistributionPanel"
-    Construction: "#variable($Name).reset(new frc::${ClassName}($CAN_ID));"
+    Declaration: "frc::${Type} m_#variable($Name){${Output_Channel_PWM}, ${CAN_ID}};"
+    Construction: "" #"#variable($Name).reset(new frc::${ClassName}($CAN_ID));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
 
   Speed Controller:
     Defaults: "PWMOutput,Component,None"
     ClassName: "SpeedController"
-    Declaration: "frc::${Type} m_#variable($Name);"
+    Declaration: "frc::${Type} m_#variable($Name){${Output_Channel_PWM}};"
     Construction: " " #"#variable($Name).reset(new frc::${Type}(${Output_Channel_PWM}));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
 #    Import: "\\#include \"frc/${Type}.h\"\\n\\#include \"frc/${ClassName}.h";"
@@ -305,27 +310,33 @@ Instructions:
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "NidecBrushless"
+    Declaration: "frc::${ClassName} m_#variable($Name){${Output_Channel_PWM}, ${Output_Channel_Digital}};"
     Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital}));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
+    Declaration: "frc::${ClassName} m_#variable($Name){${Output_Channel_PWM}};"
   Digital Output:
     Defaults: "Component,None"
     ClassName: "DigitalOutput"
+    Declaration: "frc::${ClassName} m_#variable($Name){${Output_Channel_Digital}};"
     Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Output_Channel_Digital}));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   Spike:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
+    Declaration: "frc::${ClassName} m_#variable($Name){${Output_Channel_Relay}};"
   Analog Output:
     Defaults: "AnalogOutput,Component,None"
     ClassName: "AnalogOutput"
+    Declaration: "frc::${ClassName} m_#variable($Name){${Output_Channel_AnalogOutput}};"
 
   Compressor:
     Defaults: "Component,None"
     ClassName: "Compressor"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${PCM_ID}));"
+    Declaration: "frc::${Type} m_#variable($Name){${PCM_ID}};"
+    Construction: "" # "#variable($Name).reset(new frc::${ClassName}(${PCM_ID}));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
@@ -340,8 +351,9 @@ Instructions:
       #if(${Forward_PCM_Solenoid} != ${Reverse_PCM_Solenoid})Warning, the two modules in robot builder are different!
 
       #end##
+            # #variable($Name).reset(new frc::${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}));
 
-      #variable($Name).reset(new frc::${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}));
+    Declaration: "frc::${Type} m_#variable($Name){${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
 
   Joystick:
