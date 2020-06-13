@@ -1118,9 +1118,3 @@ Palette:
           - !BooleanProperty
             name: Autonomous Selection
             default: false
-          - !BooleanProperty
-            name: Add Timeout
-            default: false
-          - !DoubleProperty
-            name: Timeout
-            default: 0
