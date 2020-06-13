@@ -1092,6 +1092,10 @@ Palette:
         help: A Command that chooses between two Commands
         properties:
           - !TypeSelectionProperty
+            name: Requires
+            type: Subsystem
+            default: None
+          - !TypeSelectionProperty
             name: On True Command
             type: Command
             default: None
