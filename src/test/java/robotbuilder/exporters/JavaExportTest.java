@@ -44,7 +44,6 @@ public class JavaExportTest {
     }
 
     @Test
-    @Ignore("This is dependent upon hardware and the system")
     public void testJavaExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
         tree.getRoot().setName("RobotBuilderTestProject");
@@ -63,15 +62,24 @@ public class JavaExportTest {
 
         System.out.println("====================================================");
         Process p;
-        try {
-            System.out.println("Trying *NIX compile...");
-            p = Runtime.getRuntime().exec(new String[]{"sh", "-c", "ant compile", "2>&1"}, null, new File("test-resources/RobotBuilderTestProject"));
-        } catch (IOException ex) { // Catch for windows
+        boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
+        if (isWindows) {
             System.out.println("Trying Windows compile...");
-            p = Runtime.getRuntime().exec("ant.bat compile", null, new File("test-resources/RobotBuilderTestProject"));
+            p = Runtime.getRuntime().exec("gradlew.bat build", null, new File("test-resources/RobotBuilderTestProject"));
+        } else {
+            System.out.println("Trying *NIX compile...");
+            p = Runtime.getRuntime().exec("sh -c ./gradlew build", null, new File("test-resources/RobotBuilderTestProject"));
         }
+        //print the standard output from the build
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line = reader.readLine();
+        while (line != null) {
+            System.out.println(line);
+            line = reader.readLine();
+        }
+        //print the error stream from the build
+        reader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+        line = reader.readLine();
         while (line != null) {
             System.out.println(line);
             line = reader.readLine();
