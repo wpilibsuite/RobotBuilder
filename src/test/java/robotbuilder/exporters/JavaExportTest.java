@@ -68,11 +68,9 @@ public class JavaExportTest {
         if (isWindows) {
             System.out.println("Trying Windows compile...");
             pb = new ProcessBuilder("gradlew.bat", "build").directory(new File("test-resources/RobotBuilderTestProject"));
-            //p = Runtime.getRuntime().exec("gradlew.bat build 2>&1", null, new File("test-resources/RobotBuilderTestProject"));
         } else {
             System.out.println("Trying *NIX compile...");
             pb = new ProcessBuilder("sh -c", "./gradlew build").directory(new File("test-resources/RobotBuilderTestProject"));
-            //p = Runtime.getRuntime().exec(new String[]{"sh", "-c", "./gradlew build", "2>&1"}, null, new File("test-resources/RobotBuilderTestProject"));
         }
         pb.redirectErrorStream(true);
         p = pb.start();
@@ -83,13 +81,7 @@ public class JavaExportTest {
             System.out.println(line);
             line = reader.readLine();
         }
-        //print the error stream from the build
- //       reader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
- //       line = reader.readLine();
- //       while (line != null) {
- //           System.out.println(line);
- //           line = reader.readLine();
- //       }
+
         System.out.println("====================================================");
         p.waitFor();
         System.out.println(p.exitValue());
