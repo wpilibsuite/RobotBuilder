@@ -65,10 +65,10 @@ public class JavaExportTest {
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
         if (isWindows) {
             System.out.println("Trying Windows compile...");
-            p = Runtime.getRuntime().exec("gradlew.bat build", null, new File("test-resources/RobotBuilderTestProject"));
+            p = Runtime.getRuntime().exec("gradlew.bat build 2>&1", null, new File("test-resources/RobotBuilderTestProject"));
         } else {
             System.out.println("Trying *NIX compile...");
-            p = Runtime.getRuntime().exec("sh -c ./gradlew build", null, new File("test-resources/RobotBuilderTestProject"));
+            p = Runtime.getRuntime().exec(new String[]{"sh", "-c", "./gradlew build", "2>&1"}, null, new File("test-resources/RobotBuilderTestProject"));
         }
         //print the standard output from the build
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
