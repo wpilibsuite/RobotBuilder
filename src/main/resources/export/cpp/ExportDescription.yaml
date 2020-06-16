@@ -335,15 +335,18 @@ Instructions:
   Compressor:
     Defaults: "Component,None"
     ClassName: "Compressor"
-    Declaration: "frc::${Type} m_#variable($Name){${PCM_ID}};"
+    Declaration: "frc::Compressor m_#variable($Name){${PCM_ID}};"
     Construction: "" # "#variable($Name).reset(new frc::${ClassName}(${PCM_ID}));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "Solenoid"
+    Declaration: "frc::Solenoid m_#variable($Name){${Output_PCM_Solenoid}, ${Output_Channel_Solenoid}};"
   Relay Solenoid:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
+    Declaration: "frc::Relay m_#variable($Name){${Output_Channel_Relay}};"
+
   Double Solenoid:
     Defaults: "Solenoid,Component,None"
     ClassName: "DoubleSolenoid"
@@ -353,7 +356,7 @@ Instructions:
       #end##
             # #variable($Name).reset(new frc::${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}));
 
-    Declaration: "frc::${Type} m_#variable($Name){${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}};"
+    Declaration: "frc::DoubleSolenoid m_#variable($Name){${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
 
   Joystick:
