@@ -256,7 +256,7 @@ Instructions:
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Declaration: "frc::${Type} m_#variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}};"
+    Declaration: "frc::Encoder m_#variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}};"
     Construction: "" #"#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}));"
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
@@ -264,7 +264,7 @@ Instructions:
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Declaration: "frc::${Type} m_#variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}};"
+    Declaration: "frc::Encoder m_#variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}};"
     Construction: "" #"#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}));"
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
@@ -273,7 +273,7 @@ Instructions:
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
-    Declaration: "frc::${Type} m_#variable($Name){${Input_Channel_Digital}, ${Direction_Sensitive}};"
+    Declaration: "frc::GearTooth m_#variable($Name){${Input_Channel_Digital}, ${Direction_Sensitive}};"
     Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive}));"
   Analog Potentiometer:
     Defaults: "AnalogPotentiometer,Component,None"
@@ -290,12 +290,12 @@ Instructions:
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
-    Declaration: "frc::${Type} m_#variable($Name){${Ping_Channel_Digital}, ${Echo_Channel_Digital}};"
+    Declaration: "frc::Ultrasonic m_#variable($Name){${Ping_Channel_Digital}, ${Echo_Channel_Digital}};"
     Construction: "" #"#variable($Name).reset(new frc::${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital}));"
   PowerDistributionPanel:
     Defaults: "Component,None"
     ClassName: "PowerDistributionPanel"
-    Declaration: "frc::${Type} m_#variable($Name){${Output_Channel_PWM}, ${CAN_ID}};"
+    Declaration: "frc::PowerDistributionPanel m_#variable($Name){$CAN_ID};"
     Construction: "" #"#variable($Name).reset(new frc::${ClassName}($CAN_ID));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
 
