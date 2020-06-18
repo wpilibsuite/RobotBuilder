@@ -3,5 +3,5 @@
 #set($params = $subsystem.getProperty("Default command parameters").getValue())
 
 #if ($command != "None" && $command != "")
-        setDefaultCommand(#command_instantiation( $command $params ));
+        setDefaultCommand(#new_command_instantiation_nt( $command $params ));
 #end
