@@ -1,8 +1,17 @@
 
 package robotbuilder;
 
+import robotbuilder.data.RobotWalker;
+import robotbuilder.exporters.GenericExporter;
 import robotbuilder.robottree.RobotTree;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import static org.junit.Assert.*;
+
 import robotbuilder.data.RobotComponent;
 
 /**
@@ -121,5 +130,34 @@ public class TestUtils {
             }
         }
         dir.delete();
+    }
+
+    public static int runBuild(String language) throws InterruptedException, IOException {
+        System.out.println("====================================================");
+        Process p;
+        ProcessBuilder pb;
+
+        boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
+        if (isWindows) {
+            System.out.println("Trying Windows compile...");
+            pb = new ProcessBuilder("gradlew.bat", "build").directory(new File("test-resources/RobotBuilderTestProject" + language));
+        } else {
+            System.out.println("Trying *NIX compile...");
+            pb = new ProcessBuilder("sh", "-c", "./gradlew", "build").directory(new File("test-resources/RobotBuilderTestProject"));
+        }
+        pb.redirectErrorStream(true);
+        p = pb.start();
+        //print the standard output from the build
+        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line = reader.readLine();
+        while (line != null) {
+            System.out.println(line);
+            line = reader.readLine();
+        }
+
+        System.out.println("====================================================");
+        p.waitFor();
+        System.out.println(p.exitValue());
+        return p.exitValue();
     }
 }
