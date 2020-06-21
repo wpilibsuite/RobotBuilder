@@ -5,12 +5,14 @@ import org.junit.*;
 import robotbuilder.TestUtils;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
+import robotbuilder.extensions.Extensions;
 import robotbuilder.robottree.RobotTree;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -25,6 +27,7 @@ public class JavaExportTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Extensions.init();
     }
 
     @AfterClass
@@ -70,9 +73,10 @@ public class JavaExportTest {
             pb = new ProcessBuilder("gradlew.bat", "build").directory(new File("test-resources/RobotBuilderTestProject"));
         } else {
             System.out.println("Trying *NIX compile...");
-            pb = new ProcessBuilder("sh -c", "./gradlew build").directory(new File("test-resources/RobotBuilderTestProject"));
+            pb = new ProcessBuilder("sh", "-c", "./gradlew", "build").directory(new File("test-resources/RobotBuilderTestProject"));
         }
         pb.redirectErrorStream(true);
+        System.out.println("Running command: " + Arrays.toString(pb.command().toArray()));
         p = pb.start();
         //print the standard output from the build
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
