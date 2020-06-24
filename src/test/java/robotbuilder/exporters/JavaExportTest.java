@@ -21,6 +21,8 @@ import static org.junit.Assert.*;
  */
 public class JavaExportTest {
 
+    private static final String PROJECT_DIRECTORY = "RobotBuilderTestProjectJava";
+
     public JavaExportTest() {
     }
 
@@ -35,7 +37,7 @@ public class JavaExportTest {
 
     @Before
     public void setUp() {
-        File project = new File("test-resources/RobotBuilderTestProject/");
+        File project = new File("test-resources/" + PROJECT_DIRECTORY);
         TestUtils.delete(project);
         assertFalse(project.exists());
         project.mkdir();
@@ -48,7 +50,7 @@ public class JavaExportTest {
     @Test
     public void testJavaExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
-        tree.getRoot().setName("RobotBuilderTestProjectJava");
+        tree.getRoot().setName(PROJECT_DIRECTORY);
         tree.getRoot().getProperty("Export Directory").setValueAndUpdate(new File("test-resources/").getAbsolutePath());
         tree.getRoot().getProperty("Java Package").setValueAndUpdate("robotcode");
         tree.walk(new RobotWalker() {
@@ -62,6 +64,6 @@ public class JavaExportTest {
         exporter.post_export_action = null;
         exporter.export(tree);
 
-        assertEquals("Exit value should be 0, compilation failed.", 0, TestUtils.runBuild("Java"));
+        assertEquals("Exit value should be 0, compilation failed.", 0, TestUtils.runBuild(PROJECT_DIRECTORY));
     }
 }

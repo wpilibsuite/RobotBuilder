@@ -132,7 +132,7 @@ public class TestUtils {
         dir.delete();
     }
 
-    public static int runBuild(String language) throws InterruptedException, IOException {
+    public static int runBuild(String projectDirectory) throws InterruptedException, IOException {
         System.out.println("====================================================");
         Process p;
         ProcessBuilder pb;
@@ -140,10 +140,10 @@ public class TestUtils {
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
         if (isWindows) {
             System.out.println("Trying Windows compile...");
-            pb = new ProcessBuilder("gradlew.bat", "build").directory(new File("test-resources/RobotBuilderTestProject" + language));
+            pb = new ProcessBuilder("gradlew.bat", "build").directory(new File("test-resources/" + projectDirectory));
         } else {
             System.out.println("Trying *NIX compile...");
-            pb = new ProcessBuilder("sh", "-c", "./gradlew", "build").directory(new File("test-resources/RobotBuilderTestProject"));
+            pb = new ProcessBuilder("sh", "-c", "./gradlew", "build").directory(new File("test-resources/" + projectDirectory));
         }
         pb.redirectErrorStream(true);
         p = pb.start();
