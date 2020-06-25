@@ -21,7 +21,7 @@ stages:
     container: wpilib2020
 
     steps:
-      - script: "Xvfb :99 &"
+      - script: "xvfb :99 &"
       - task: Gradle@2
         inputs:
           workingDirectory: ''
