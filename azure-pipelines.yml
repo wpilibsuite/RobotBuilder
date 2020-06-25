@@ -19,15 +19,15 @@ stages:
       vmImage: 'Ubuntu 16.04'
 
     container: wpilib2020
+    
+    variables:
+      DISPLAY: ':10'
 
     steps:
       - bash: |
           sudo apt-get update
           sudo apt-get install -y xvfb
           Xvfb :10 &
-          export DISPLAY=':10'
-          echo DISPLAY=$DISPLAY
-          ./gradlew check
         displayName: 'Install and start xvfb'
       - task: Gradle@2
         inputs:
