@@ -26,6 +26,8 @@ stages:
           sudo apt-get install -y xvfb
           Xvfb :10 &
           export DISPLAY=':10'
+          echo DISPLAY=$DISPLAY
+          ./gradlew check
         displayName: 'Install and start xvfb'
       - task: Gradle@2
         inputs:
