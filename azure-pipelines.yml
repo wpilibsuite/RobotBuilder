@@ -21,7 +21,12 @@ stages:
     container: wpilib2020
 
     steps:
-      - script: "xvfb :99 &"
+      - bash: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+          Xvfb :10 &
+          export DISPLAY=':10'
+        displayName: 'Install and start xvfb'
       - task: Gradle@2
         inputs:
           workingDirectory: ''
