@@ -2,10 +2,9 @@
 
 #header()
 
-#ifndef #constant($command.name)_H
-\#define #constant($command.name)_H
+#pragma once
 
-
+\#include "frc/commands/PIDCommand.h"
 \#include "frc/commands/Subsystem.h"
 \#include "Robot.h"
 
@@ -37,4 +36,3 @@ private:
 #end
 };
 
-#endif

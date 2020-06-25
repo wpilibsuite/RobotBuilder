@@ -5,6 +5,7 @@ import org.junit.*;
 import robotbuilder.TestUtils;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.RobotWalker;
+import robotbuilder.extensions.Extensions;
 import robotbuilder.robottree.RobotTree;
 
 import java.io.BufferedReader;
@@ -25,6 +26,7 @@ public class JavaExportTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Extensions.init();
     }
 
     @AfterClass
@@ -44,7 +46,6 @@ public class JavaExportTest {
     }
 
     @Test
-    @Ignore("This is dependent upon hardware and the system")
     public void testJavaExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
         tree.getRoot().setName("RobotBuilderTestProject");
@@ -63,19 +64,26 @@ public class JavaExportTest {
 
         System.out.println("====================================================");
         Process p;
-        try {
-            System.out.println("Trying *NIX compile...");
-            p = Runtime.getRuntime().exec(new String[]{"sh", "-c", "ant compile", "2>&1"}, null, new File("test-resources/RobotBuilderTestProject"));
-        } catch (IOException ex) { // Catch for windows
+        ProcessBuilder pb;
+
+        boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
+        if (isWindows) {
             System.out.println("Trying Windows compile...");
-            p = Runtime.getRuntime().exec("ant.bat compile", null, new File("test-resources/RobotBuilderTestProject"));
+            pb = new ProcessBuilder("gradlew.bat", "build").directory(new File("test-resources/RobotBuilderTestProject"));
+        } else {
+            System.out.println("Trying *NIX compile...");
+            pb = new ProcessBuilder("sh", "-c", "./gradlew", "build").directory(new File("test-resources/RobotBuilderTestProject"));
         }
+        pb.redirectErrorStream(true);
+        p = pb.start();
+        //print the standard output from the build
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line = reader.readLine();
         while (line != null) {
             System.out.println(line);
             line = reader.readLine();
         }
+
         System.out.println("====================================================");
         p.waitFor();
         System.out.println(p.exitValue());

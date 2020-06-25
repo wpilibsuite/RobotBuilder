@@ -278,6 +278,7 @@
     declarations: ${exporter_path}Subsystem-declarations.h
     constants: ${exporter_path}Subsystem-constants.h
     cmdpidgetters: ${exporter_path}Subsystem-pidgetters.h
+    includes: ${exporter_path}Subsystem-includes.h
   variables:
     subsystem_name: ${subsystem.name}
 #else
@@ -300,6 +301,7 @@
   modifications:
     declarations: ${exporter_path}Subsystem-declarations.h
     constants: ${exporter_path}Subsystem-constants.h
+    includes: ${exporter_path}Subsystem-includes.h
   variables:
     subsystem_name: ${subsystem.name}
 #end
