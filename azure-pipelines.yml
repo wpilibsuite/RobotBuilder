@@ -26,7 +26,7 @@ stages:
           workingDirectory: ''
           gradleWrapperFile: 'gradlew'
           gradleOptions: '-Xmx3072m'
-          publishJUnitResults: false
+          publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
           tasks: 'check'
           options: '-PbuildServer -x test'
@@ -42,7 +42,7 @@ stages:
           gradleWrapperFile: 'gradlew'
           gradleOptions: '-Xmx3072m'
           jdkVersionOption: '1.11'
-          publishJUnitResults: false
+          publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
           tasks: 'check'
           options: '-PbuildServer'
@@ -69,7 +69,7 @@ stages:
           workingDirectory: ''
           gradleWrapperFile: 'gradlew'
           gradleOptions: '-Xmx1024m'
-          publishJUnitResults: false
+          publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
           tasks: 'check'
 
@@ -87,7 +87,7 @@ stages:
           gradleWrapperFile: 'gradlew'
           gradleOptions: '-Xmx3072m'
           jdkVersionOption: '1.11'
-          publishJUnitResults: false
+          publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
           tasks: 'check'
           options: '-PbuildServer'
