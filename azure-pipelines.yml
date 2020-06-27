@@ -19,8 +19,16 @@ stages:
       vmImage: 'Ubuntu 16.04'
 
     container: wpilib2020
+    
+    variables:
+      DISPLAY: ':10'
 
     steps:
+      - bash: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+          Xvfb :10 &
+        displayName: 'Install and start xvfb'
       - task: Gradle@2
         inputs:
           workingDirectory: ''
@@ -29,7 +37,7 @@ stages:
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
           tasks: 'check'
-          options: '-PbuildServer -x test'
+          options: '-PbuildServer'
 
   - job: Windows_64_Bit
     pool:
