@@ -36,6 +36,7 @@ stages:
           gradleOptions: '-Xmx3072m'
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: Linux
           tasks: 'check'
           options: '-PbuildServer'
 
@@ -52,6 +53,7 @@ stages:
           jdkVersionOption: '1.11'
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: Win64
           tasks: 'check'
           options: '-PbuildServer'
 
@@ -79,6 +81,7 @@ stages:
           gradleOptions: '-Xmx1024m'
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: Win32
           tasks: 'check'
 
   - job: Mac
@@ -97,6 +100,7 @@ stages:
           jdkVersionOption: '1.11'
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: MacOS
           tasks: 'check'
           options: '-PbuildServer'
 
