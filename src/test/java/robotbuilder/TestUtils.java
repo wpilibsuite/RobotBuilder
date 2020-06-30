@@ -140,10 +140,10 @@ public class TestUtils {
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
         if (isWindows) {
             System.out.println("Trying Windows compile...");
-            pb = new ProcessBuilder("gradlew.bat", "build").directory(new File("test-resources/" + projectDirectory));
+            pb = new ProcessBuilder("gradlew.bat", "build", "Ptoolchain-optional-roboRio").directory(new File("test-resources/" + projectDirectory));
         } else {
             System.out.println("Trying *NIX compile...");
-            pb = new ProcessBuilder("sh", "-c", "./gradlew", "build").directory(new File("test-resources/" + projectDirectory));
+            pb = new ProcessBuilder("sh", "-c", "./gradlew", "build", "Ptoolchain-optional-roboRio").directory(new File("test-resources/" + projectDirectory));
         }
         pb.redirectErrorStream(true);
         p = pb.start();
