@@ -41,7 +41,7 @@ deploy {
 def includeSrcInIncludeRoot = false
 
 // Set this to true to enable desktop support.
-def includeDesktopSupport = false
+def includeDesktopSupport = true
 
 // Enable simulation gui support. Must check the box in vscode to enable support
 // upon debugging
@@ -52,7 +52,7 @@ dependencies {
 model {
     components {
         frcUserProgram(NativeExecutableSpec) {
-            targetPlatform wpi.platforms.roborio
+            //targetPlatform wpi.platforms.roborio
             if (includeDesktopSupport) {
                 targetPlatform wpi.platforms.desktop
             }
