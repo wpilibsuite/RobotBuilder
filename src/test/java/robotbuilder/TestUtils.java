@@ -144,8 +144,8 @@ public class TestUtils {
             pb = new ProcessBuilder("gradlew.bat", "build").directory(new File("test-resources/" + projectDirectory));
         } else {
             System.out.println("Trying *NIX compile...");
-            //pb = new ProcessBuilder("sh", "-c", "'./gradlew build'").directory(new File("test-resources/" + projectDirectory));
-			pb = new ProcessBuilder(new String[]{"sh", "-c", "./gradlew build"}).directory(new File("test-resources/" + projectDirectory));
+            //string array necessary to pass build as a parameter to gradle and not sh. https://stackoverflow.com/a/55164823
+            pb = new ProcessBuilder(new String[]{"sh", "-c", "./gradlew build"}).directory(new File("test-resources/" + projectDirectory));
         }
         pb.redirectErrorStream(true);
         System.out.println("Running command: " + Arrays.toString(pb.command().toArray()));
