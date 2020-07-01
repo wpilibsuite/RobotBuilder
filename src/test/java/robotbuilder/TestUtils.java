@@ -144,7 +144,7 @@ public class TestUtils {
             pb = new ProcessBuilder("gradlew.bat", "build").directory(new File("test-resources/" + projectDirectory));
         } else {
             System.out.println("Trying *NIX compile...");
-            pb = new ProcessBuilder("sh", "-c", "'./gradlew build'", "--debug").directory(new File("test-resources/" + projectDirectory));
+            pb = new ProcessBuilder("sh", "-c", "'./gradlew build'").directory(new File("test-resources/" + projectDirectory));
         }
         pb.redirectErrorStream(true);
         System.out.println("Running command: " + Arrays.toString(pb.command().toArray()));
