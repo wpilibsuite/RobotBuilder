@@ -9,7 +9,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
@@ -137,6 +143,17 @@ public class TestUtils {
         System.out.println("====================================================");
         Process p;
         ProcessBuilder pb;
+
+        //enable desktop builds and disable roboRIO builds to allow complile test without toolchain.
+        try {
+            Path path = Paths.get("test-resources", projectDirectory, "build.gradle");
+            Stream<String> lines = Files.lines(path);
+            List<String> replaced = lines.map(line -> line.replaceAll("targetPlatform wpi.platforms.roborio", "//targetPlatform wpi.platforms.roborio")).collect(Collectors.toList());
+            Files.write(path, replaced);
+            lines.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
         if (isWindows) {

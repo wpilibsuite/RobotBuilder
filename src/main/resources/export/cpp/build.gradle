@@ -52,7 +52,7 @@ dependencies {
 model {
     components {
         frcUserProgram(NativeExecutableSpec) {
-            //targetPlatform wpi.platforms.roborio
+            targetPlatform wpi.platforms.roborio
             if (includeDesktopSupport) {
                 targetPlatform wpi.platforms.desktop
             }
