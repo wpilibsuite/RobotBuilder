@@ -148,7 +148,10 @@ public class TestUtils {
         try {
             Path path = Paths.get("test-resources", projectDirectory, "build.gradle");
             Stream<String> lines = Files.lines(path);
-            List<String> replaced = lines.map(line -> line.replaceAll("targetPlatform wpi.platforms.roborio", "//targetPlatform wpi.platforms.roborio")).collect(Collectors.toList());
+            List<String> replaced = lines
+                    .map(line -> line.replaceAll("targetPlatform wpi.platforms.roborio", "//targetPlatform wpi.platforms.roborio"))
+                    .map(line -> line.replaceAll("def includeDesktopSupport = false", "def includeDesktopSupport = true"))
+                    .collect(Collectors.toList());
             Files.write(path, replaced);
             lines.close();
         } catch (IOException e) {
