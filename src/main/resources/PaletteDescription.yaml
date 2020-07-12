@@ -138,7 +138,7 @@
             name: $Name Parameters
           - !ChoicesProperty
             name: $Name When to Run
-            choices: [whenPressed, whenReleased, whileHeld, whenHeld, toggleWhenPressed]
+            choices: [whenPressed, whenReleased, whileHeld, whenHeld, toggleWhenPressed, cancelWhenPressed]
             default: whenPressed
           - !BooleanProperty
             name: Add Timeout
@@ -248,9 +248,6 @@ Palette:
           - !BooleanProperty
             name: Export Commands
             default: true
-          - !StringProperty
-            name: Simulation World File
-            default: "/usr/share/frcsim/worlds/GearsBotDemo.world"
           - !FileProperty
             name: Wiring file location
             folder: true
