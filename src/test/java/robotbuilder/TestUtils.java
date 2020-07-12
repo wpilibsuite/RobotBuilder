@@ -161,11 +161,11 @@ public class TestUtils {
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
         if (isWindows) {
             System.out.println("Trying Windows compile...");
-            pb = new ProcessBuilder("gradlew.bat", "build", "-Ptoolchain-optional").directory(new File("test-resources/" + projectDirectory));
+            pb = new ProcessBuilder("gradlew.bat", "build", "-Ptoolchain-optional-roboRio").directory(new File("test-resources/" + projectDirectory));
         } else {
             System.out.println("Trying *NIX compile...");
             //string array necessary to pass build as a parameter to gradle and not sh. https://stackoverflow.com/a/55164823
-            pb = new ProcessBuilder(new String[]{"sh", "-c", "./gradlew build -Ptoolchain-optional"}).directory(new File("test-resources/" + projectDirectory));
+            pb = new ProcessBuilder(new String[]{"sh", "-c", "./gradlew build -Ptoolchain-optional-roboRio"}).directory(new File("test-resources/" + projectDirectory));
         }
         pb.redirectErrorStream(true);
         System.out.println("Running command: " + Arrays.toString(pb.command().toArray()));
