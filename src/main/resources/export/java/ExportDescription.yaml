@@ -155,14 +155,8 @@ Instructions:
       #if($Continuous)
               #variable($Short_Name).enableContinuousInput(${Minimum_Input}, ${Maximum_Input});
       #end
-              //Find New methods
-              //#variable($Short_Name).setAbsoluteTolerance(${Tolerance});
-      #if($Limit_Input)
-              //Find New methods
-              //#variable($Short_Name).setInputRange(${Minimum_Input}, ${Maximum_Input});#end
-      #if($Limit_Output)
-              //Find New methods
-              //#variable($Short_Name).setOutputRange(${Minimum_Output}, ${Maximum_Output});#end
+              #variable($Short_Name).setTolerance(${Tolerance});
+
       #if($Send_to_SmartDashboard)
 
               SmartDashboard.putData("${Name}", #variable($Short_Name));#end
