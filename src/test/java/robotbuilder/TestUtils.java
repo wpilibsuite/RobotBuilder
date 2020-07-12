@@ -144,12 +144,11 @@ public class TestUtils {
         Process p;
         ProcessBuilder pb;
 
-        //enable desktop builds and disable roboRIO builds to allow complile test without toolchain.
+        //enable desktop builds and disable roboRIO builds to allow compile test with desktop compiler.
         try {
             Path path = Paths.get("test-resources", projectDirectory, "build.gradle");
             Stream<String> lines = Files.lines(path);
             List<String> replaced = lines
-                    //.map(line -> line.replaceAll("targetPlatform wpi.platforms.roborio", "//targetPlatform wpi.platforms.roborio"))
                     .map(line -> line.replaceAll("def includeDesktopSupport = false", "def includeDesktopSupport = true"))
                     .collect(Collectors.toList());
             Files.write(path, replaced);
