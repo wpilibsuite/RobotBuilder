@@ -1,7 +1,7 @@
 ##${Collections.reverse($components)}
 #foreach( $component in $components )
 #if ($helper.exportsTo("OI", $component)
-     && ("#constructor($component)" != "" || "#extra($component)" != ""))
+     && ("#constructor($component)" != "" || "#extra($component)" != "") && "#type($component)" != "Joystick" && "#type($component)" != "JoystickButton")
     #constructor($component)
 
     #extra($component)
@@ -9,7 +9,7 @@
 #end
 #end
 #*
-##${Collections.reverse($components)}
+${Collections.reverse($components)}
     // SmartDashboard Buttons
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "Command"

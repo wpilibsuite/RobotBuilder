@@ -362,16 +362,16 @@ Instructions:
   Joystick:
     Defaults: "OI,None"
     ClassName: "Joystick"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Number}));"
-    Prototype: "std::shared_ptr<frc::${ClassName}> get#class($Name)();"
-    Function: >-
-       std::shared_ptr<frc::${ClassName}> OI::get#class($Name)() {
-          return #variable($Name);
-       }
+    Construction: "frc::${ClassName} m_#variable($Name){${Number}};"
+    # Prototype: "std::shared_ptr<frc::${ClassName}> get#class($Name)();"
+    #Function: >-
+      #  std::shared_ptr<frc::${ClassName}> OI::get#class($Name)() {
+      #     return #variable($Name);
+      #  }
   Joystick Button:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(#variable($Joystick).get(), ${Button}));"
+    Construction: "frc2::${ClassName} m_#variable($Name){&m_#variable($Joystick), ${Button}};"
 
   Command:
     Defaults: "Command,None"
