@@ -75,8 +75,7 @@ public class TestUtils {
         pid.getProperty("P").setValueAndUpdate(2);
         pid.getProperty("I").setValueAndUpdate(1);
         pid.getProperty("D").setValueAndUpdate(-1);
-//        pid.getProperty("Send to SmartDashboard").setValueAndUpdate(true);
-        pid.getProperty("Limit Input").setValueAndUpdate(true);
+        pid.getProperty("Send to SmartDashboard").setValueAndUpdate(true);
         pid.getProperty("Continuous").setValueAndUpdate(true);
         RobotComponent motor = new RobotComponent("Motor", "Speed Controller", tree);
         motor.setProperty("Type", "Jaguar");
@@ -88,7 +87,7 @@ public class TestUtils {
         RobotComponent limit = new RobotComponent("Limit", "Limit Switch", tree);
         arm.add(limit);
 
-        // Create an wrist subsystem
+        // Create a wrist subsystem
         RobotComponent wrist = new RobotComponent("Wrist", "PID Subsystem", tree);
         subsystems.add(wrist);
         wrist.getProperty("P").setValueAndUpdate(2);
