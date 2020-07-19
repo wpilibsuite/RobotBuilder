@@ -388,9 +388,6 @@ Palette:
             name: D
             default: 0
           - !DoubleProperty
-            name: F
-            default: 0
-          - !DoubleProperty
             name: Tolerance
             default: 0.2
           - !DoubleProperty
@@ -399,24 +396,12 @@ Palette:
           - !BooleanProperty
             name: Continuous
             default: false
-          - !BooleanProperty
-            name: Limit Input
-            default: false
           - !DoubleProperty
             name: Minimum Input
             default: 0
           - !DoubleProperty
             name: Maximum Input
             default: 5
-          - !BooleanProperty
-            name: Limit Output
-            default: false
-          - !DoubleProperty
-            name: Minimum Output
-            default: -1
-          - !DoubleProperty
-            name: Maximum Output
-            default: 1
           - !BooleanProperty
             name: Send to SmartDashboard
             default: false
