@@ -57,17 +57,10 @@
   past time, so you take the setpoint difference, divide by the
   time difference and as always multiply by a scaling factor. The
   scaling factor in this case is kD.</p>
-  <h3>The Forcing Term</h3>
-  <p>The forcing control constant of the PID loop is often referred
-  to as F or kF. It is used as the feed forward term and is very
-  useful for velocity PID. TODO: Fill in</p>
   <h2>Properties</h2>
   <dl>
     <dt>Name</dt>
     <dd>The name of this PID Controller.</dd>
-    <dt>Send to SmartDashboard</dt>
-    <dd>Whether or not to send this PID Controller to the
-    SmartDashboard for easy tuning and viewing.</dd>
     <dt>Input</dt>
     <dd>The sensor that tells the PID loop where it is.</dd>
     <dt>Output</dt>
@@ -78,8 +71,6 @@
     <dd>The integral constant for this PID Controller.</dd>
     <dt>D</dt>
     <dd>The derivative constant for this PID Controller.</dd>
-    <dt>F</dt>
-    <dd>The forcing constant for this PID Controller.</dd>
     <dt>Tolerance</dt>
     <dd>How close is close enough for the PID Controller to be
     considered on target, or at the right location.</dd>
@@ -89,28 +80,19 @@
     The default is 20ms.</dd>
     <dt>Continuous</dt>
     <dd>When true, the PID controller to consider the input to be
-    continuous. Rather then using the max and min in as
-    constraints, it considers them to be the same point and
+    continuous. It considers the Min and Max to be the same point and
     automatically calculates the shortest route to the
     setpoint.</dd>
-    <dt>Limit Input</dt>
-    <dd>Whether or not to limit the range of acceptable input
-    values.</dd>
     <dt>Minimum Input</dt>
-    <dd>The minimum input value, any value lower than this will be
-    considered to have this value.</dd>
+    <dd>The minimum input value for use in Continuous Mode.</dd>
     <dt>Maximum Input</dt>
-    <dd>The maximum input value, any value higher than this will be
-    considered to have this value.</dd>
+    <dd>The maximum input value for use in Continuous.</dd>
     <dt>Limit Output</dt>
     <dd>Whether or not to limit the range of acceptable output
     values.</dd>
-    <dt>Minimum Output</dt>
-    <dd>The minimum output value, any output that would have value
-    lower will be output as this value.</dd>
-    <dt>Maximum Output</dt>
-    <dd>The maximum output value, any output that would have value
-    higher will be output as this value.</dd>
+    <dt>Send to SmartDashboard</dt>
+    <dd>Whether or not to send this PID Controller to the
+    SmartDashboard for easy tuning and viewing.</dd>
   </dl>
   <h2>Applications</h2>
   <h3>Elevator Control</h3>
@@ -131,15 +113,15 @@
   <code>my_pid_controller.setSetpoint(2);</code></p>
   <h3>C++</h3>
   <p>Setting the setpoint in C++ is easy, just call
-  <code>my_pid_controller.Setsetpoint(2);</code></p>
+  <code>my_pid_controller.SetSetpoint(2);</code></p>
   <h2>See Also</h2>
   <ul>
     <li><a href=
-    "https://docs.wpilib.org/en/stable/docs/software/old-commandbased/subsystems/pidsubsystems-pid-control.html">
-    PIDSubsystems for built-in PID Control</a></li>
+    "https://docs.wpilib.org/en/stable/docs/software/advanced-control/introduction/introduction-to-pid.html">
+    Introduction to PID Control</a></li>
     <li><a href=
-    "https://docs.wpilib.org/en/stable/docs/software/wpilib-tools/robotbuilder/writing-code/robotbuilder-writing-pidsubsystem-code.html">
-    Writing the Code for a PIDSubsystem</a></li>
+    "https://docs.wpilib.org/en/stable/docs/software/advanced-control/controllers/pidcontroller.html">
+    PID Control in WPILib</a></li>
     <li><a href=
     "https://en.wikipedia.org/wiki/PID_controller">Wikipedia</a></li>
     <li><a href=
