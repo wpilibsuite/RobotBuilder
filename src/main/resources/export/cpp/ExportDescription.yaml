@@ -145,16 +145,17 @@ Instructions:
   PID Controller:
     Defaults: "Component,None"
     ClassName: "PIDController"
+    Declaration: "frc::${ClassName} m_#variable($Name){$P, $I, $D,/* F: $F, */ m_#variable($Input), m_#variable($Output), $Period};"
     Construction: "#variable($Name).reset(new frc::${ClassName}($P, $I, $D,/* F: $F, */ #variable($Input).get(), #variable($Output).get(), $Period));"
     Extra: >
-      #variable($Name)->SetContinuous(${Continuous});
-      #variable($Name)->SetAbsoluteTolerance(${Tolerance});
+      m_#variable($Name).SetContinuous(${Continuous});
+      m_#variable($Name).SetAbsoluteTolerance(${Tolerance});
       #if($Limit_Input)
 
-          #variable($Name)->SetInputRange(${Minimum_Input}, ${Maximum_Input});#end
+          m_#variable($Name).SetInputRange(${Minimum_Input}, ${Maximum_Input});#end
       #if(true)
 
-          #variable($Name)->SetOutputRange(${Minimum_Output}, ${Maximum_Output});#end
+          m_#variable($Name).SetOutputRange(${Minimum_Output}, ${Maximum_Output});#end
       #if($Send_to_SmartDashboard)
 
           SmartDashboard::PutData("${Name}", #variable($Name).get());#end
@@ -261,25 +262,25 @@ Instructions:
     ClassName: "AnalogAccelerometer"
     PID: "#variable($Short_Name)->GetAcceleration()"
     Extra: >-
-      #variable($Name)->SetSensitivity(${Volts_Per_G});
-              #variable($Name)->SetZero(${Zero_G_Volts});
+      m_#variable($Name).SetSensitivity(${Volts_Per_G});
+              m_#variable($Name).SetZero(${Zero_G_Volts});
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
     Declaration: "frc::Encoder m_#variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}};"
     Construction: "" #"#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}));"
     Extra: >-
-      #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
-          #variable($Name)->SetPIDSourceType(frc::PIDSourceType::${PID_Source});
+      m_#variable($Name).SetDistancePerPulse(${Distance_Per_Pulse});
+          m_#variable($Name).SetPIDSourceType(frc::PIDSourceType::${PID_Source});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
     Declaration: "frc::Encoder m_#variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}};"
     Construction: "" #"#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}));"
     Extra: >-
-      #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
-          #variable($Name)->SetPIDSourceType(frc::PIDSourceType::${PID_Source});
-          #variable($Name)->SetIndexSource((unsigned int)${Index_Channel_Digital}, frc::Encoder::IndexingType::${Indexing_Type});
+      m_#variable($Name).SetDistancePerPulse(${Distance_Per_Pulse});
+          m_#variable($Name).SetPIDSourceType(frc::PIDSourceType::${PID_Source});
+          m_#variable($Name).SetIndexSource((unsigned int)${Index_Channel_Digital}, frc::Encoder::IndexingType::${Indexing_Type});
   Gear Tooth Sensor:
     Defaults: "DigitalInput,Component,None"
     ClassName: "GearTooth"
