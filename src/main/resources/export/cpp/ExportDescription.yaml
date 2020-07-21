@@ -85,16 +85,16 @@ Defaults:
     Extra: ""
     Prototype: ""
     Function: ""
-    PID: "#variable($Short_Name)->PIDGet()"
+    PID: "#variable($Short_Name).PIDGet()"
     ClassName: ""
   AnalogInput:
     Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
-    PID: "#variable($Short_Name)->GetAverageVoltage()"
+    PID: "#variable($Short_Name).GetAverageVoltage()"
   AnalogPotentiometer:
     Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset}));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
-    PID: "#variable($Short_Name)->Get()"
+    PID: "#variable($Short_Name).Get()"
   DigitalInput:
     Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Digital}));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
@@ -140,7 +140,7 @@ Instructions:
     Export: "Robot"
     Import: "\\#include \"Subsystems/#class($Short_Name).h\""
     Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
-    Construction: "#variable($Short_Name).reset(new #class($Short_Name)());"
+    Construction: "" ##"#variable($Short_Name).reset(new #class($Short_Name)());"
 
   PID Controller:
     Defaults: "Component,None"
@@ -256,11 +256,11 @@ Instructions:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogGyro"
     Extra: "#variable($Name)->SetSensitivity(${Sensitivity});"
-    PID: "#variable($Short_Name)->PIDGet()"
+    PID: "#variable($Short_Name).PIDGet()"
   AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogAccelerometer"
-    PID: "#variable($Short_Name)->GetAcceleration()"
+    PID: "#variable($Short_Name).GetAcceleration()"
     Extra: >-
       m_#variable($Name).SetSensitivity(${Volts_Per_G});
               m_#variable($Name).SetZero(${Zero_G_Volts});
