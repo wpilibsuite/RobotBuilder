@@ -164,40 +164,43 @@ Instructions:
   Robot Drive 2:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
+    Declaration: "frc::${ClassName} m_#variable($Name){m_#variable($Left_Motor), m_#variable($Right_Motor)};"
     Construction: "#variable($Name).reset(new frc::${ClassName}(#variable($Left_Motor), #variable($Right_Motor)));"
     Extra: >
-      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
-              #variable($Name)->SetSensitivity($Sensitivity);
-              #variable($Name)->SetMaxOutput($Maximum_Output);
+      m_#variable($Name).SetSafetyEnabled($Safety_Enabled);
+              m_#variable($Name).SetExpiration($Safety_Expiration_Time);
+              m_#variable($Name).SetSensitivity($Sensitivity);
+              m_#variable($Name).SetMaxOutput($Maximum_Output);
       #if($Left_Motor_Inverted)
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kRearLeftMotor, true);#end
+              m_#variable($Name).SetInvertedMotor(frc::RobotDrive::kRearLeftMotor, true);#end
       #if($Right_Motor_Inverted)
 
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kRearRightMotor, true);#end
+              m_#variable($Name).SetInvertedMotor(frc::RobotDrive::kRearRightMotor, true);#end
 
   Robot Drive 4:
     Defaults: "Component,None"
     ClassName: "RobotDrive"
+    Declaration: "frc::${ClassName} m_#variable($Name){m_#variable($Left_Front_Motor), m_#variable($Left_Rear_Motor),
+                    m_#variable($Right_Front_Motor), m_#variable($Right_Rear_Motor)};"
     Construction: >-
       #variable($Name).reset(new frc::${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
                     #variable($Right_Front_Motor), #variable($Right_Rear_Motor)));
     Extra: >
-      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
-              #variable($Name)->SetSensitivity($Sensitivity);
-              #variable($Name)->SetMaxOutput($Maximum_Output);
+      m_#variable($Name).SetSafetyEnabled($Safety_Enabled);
+              m_#variable($Name).SetExpiration($Safety_Expiration_Time);
+              m_#variable($Name).SetSensitivity($Sensitivity);
+              m_#variable($Name).SetMaxOutput($Maximum_Output);
       #if($Left_Front_Motor_Inverted)
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kFrontLeftMotor, true);#end
+              m_#variable($Name).SetInvertedMotor(frc::RobotDrive::kFrontLeftMotor, true);#end
       #if($Left_Rear_Motor_Inverted)
 
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kRearLeftMotor, true);#end
+              m_#variable($Name).SetInvertedMotor(frc::RobotDrive::kRearLeftMotor, true);#end
       #if($Right_Front_Motor_Inverted)
 
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kFrontRightMotor, true);#end
+             m_#variable($Name).SetInvertedMotor(frc::RobotDrive::kFrontRightMotor, true);#end
       #if($Right_Rear_Motor_Inverted)
 
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kRearRightMotor, true);#end
+              m_#variable($Name).SetInvertedMotor(frc::RobotDrive::kRearRightMotor, true);#end
 
   Speed Controller Group:
     Defaults: "Component,None"
