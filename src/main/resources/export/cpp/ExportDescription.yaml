@@ -205,6 +205,8 @@ Instructions:
   Speed Controller Group:
     Defaults: "Component,None"
     ClassName: "SpeedControllerGroup"
+    Declaration: "frc::${ClassName} m_#variable($Name){m_#variable($SpeedController1), m_#variable($SpeedController2)
+      #if(($SpeedController3)), m_#variable($SpeedController3)#end #if(($SpeedController4)), m_#variable($SpeedController4)#end};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     Construction: >-
       #variable($Name) = std::make_shared<frc::${ClassName}>(*#variable($SpeedController1), *#variable($SpeedController2)
@@ -212,37 +214,42 @@ Instructions:
   Differential Drive:
     Defaults: "Component,None"
     ClassName: "DifferentialDrive"
+    Declaration: "frc::${ClassName} m_#variable($Name){m_#variable($Left_Motor), m_#variable($Right_Motor)};"
     Construction: "#variable($Name).reset(new frc::${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor)));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     Import: "\\#include \"frc/drive/${ClassName}.h\""
     Extra: >
-      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
-              #variable($Name)->SetMaxOutput($Maximum_Output);
+      m_#variable($Name).SetSafetyEnabled($Safety_Enabled);
+              m_#variable($Name).SetExpiration($Safety_Expiration_Time);
+              m_#variable($Name).SetMaxOutput($Maximum_Output);
   Mecanum Drive:
     Defaults: "Component,None"
     ClassName: "MecanumDrive"
+    Declaration: "frc::${ClassName} m_#variable($Name){m_#variable($Left_Front_Motor), m_#variable($Left_Rear_Motor),
+                    m_#variable($Right_Front_Motor), m_#variable($Right_Rear_Motor)};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     Import: "\\#include \"frc/drive/${ClassName}.h\""
     Construction: >-
       #variable($Name).reset(new frc::${ClassName}(*#variable($Left_Front_Motor), *#variable($Left_Rear_Motor),
                     *#variable($Right_Front_Motor), *#variable($Right_Rear_Motor)));
     Extra: >
-      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
-              #variable($Name)->SetMaxOutput($Maximum_Output);
+      m_#variable($Name).SetSafetyEnabled($Safety_Enabled);
+              m_#variable($Name).SetExpiration($Safety_Expiration_Time);
+              m_#variable($Name).SetMaxOutput($Maximum_Output);
   Killough Drive:
     Defaults: "Component,None"
     ClassName: "KilloughDrive"
+    Declaration: "frc::${ClassName} m_#variable($Name){m_#variable($Left_Motor), m_#variable($Right_Motor),
+                    m_#variable($Back_Motor)};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     Import: "\\#include \"frc/drive/${ClassName}.h\""
     Construction: >-
       #variable($Name).reset(new frc::${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor),
                     *#variable($Back_Motor)));
     Extra: >
-      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
-              #variable($Name)->SetMaxOutput($Maximum_Output);
+      m_#variable($Name).SetSafetyEnabled($Safety_Enabled);
+              m_#variable($Name).SetExpiration($Safety_Expiration_Time);
+              m_#variable($Name).SetMaxOutput($Maximum_Output);
 
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
