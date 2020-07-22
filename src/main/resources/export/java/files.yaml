@@ -188,6 +188,17 @@
     disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
+#elseif ($command.base.name == "Sequential Command Group")
+- !File
+  export: $package_path/commands/#class($command.name).java
+  source: ${exporter_path}SequentialCommandGroup.java
+  update: Modify
+  modifications:
+    imports: ${exporter_path}SequentialCommandGroup-imports.java
+    constructors: ${exporter_path}SequentialCommandGroup-constructors.java
+    disabled: ${exporter_path}Command-disabled.java
+  variables:
+    command_name: ${command.name}
 #else
 - !File
   export: $package_path/commands/#class($command.name).java
