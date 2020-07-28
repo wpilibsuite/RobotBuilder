@@ -96,6 +96,7 @@
     declarations: ${exporter_path}RobotContainer-declarations.java
     constructors: ${exporter_path}RobotContainer-constructors.java
     subsystem_default_Command: ${exporter_path}RobotContainer-subsystem_default_Command.java
+    smartdashboard: ${exporter_path}RobotContainer-smartDashboard.java
     imports: ${exporter_path}RobotContainer-imports.java
     autonomous: ${exporter_path}RobotContainer-autonomous.java
     functions: ${exporter_path}RobotContainer-functions.java
@@ -134,8 +135,10 @@
     requires: ${exporter_path}Command-requires.java
     initialize: ${exporter_path}SetpointCommand-initialize.java
     isFinished: ${exporter_path}SetpointCommand-isFinished.java
-    imports: ${exporter_path}SetpointCommand-imports.java
+    imports: ${exporter_path}Command-imports.java
     constructors: ${exporter_path}SetpointCommand-constructors.java
+    variable_declarations: ${exporter_path}Command-variable-declarations.java
+    variable_setting: ${exporter_path}Command-variable-setting.java
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "Timed Command")
@@ -156,9 +159,9 @@
   source: ${exporter_path}WaitCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}WaitCommand-constructors.java
+    constructors: ${exporter_path}WaitCommand-constructors.java
     requires: ${exporter_path}Command-requires.java
-    imports: ${exporter_path}WaitCommand-imports.java
+    imports: ${exporter_path}Command-imports.java
     variable_declarations: ${exporter_path}Command-variable-declarations.java
     initialize: ${exporter_path}WaitCommand-initialize.java
     end: ${exporter_path}WaitCommand-end.java
@@ -174,6 +177,7 @@
     imports: ${exporter_path}Command-imports.java
     constructors: ${exporter_path}Command-constructors.java
     variable_declarations: ${exporter_path}Command-variable-declarations.java
+    variable_setting: ${exporter_path}Command-variable-setting.java
     requires: ${exporter_path}Command-requires.java
     disabled: ${exporter_path}Command-disabled.java
   variables:
@@ -184,7 +188,9 @@
   source: ${exporter_path}ConditionalCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}ConditionalCommand-constructors.java
+    imports: ${exporter_path}Command-imports.java
+    constructors: ${exporter_path}ConditionalCommand-constructors.java
+    variable_declarations: ${exporter_path}Command-variable-declarations.java
     disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
@@ -197,6 +203,7 @@
     imports: ${exporter_path}Command-imports.java
     constructors: ${exporter_path}Command-constructors.java
     variable_declarations: ${exporter_path}Command-variable-declarations.java
+    variable_setting: ${exporter_path}Command-variable-setting.java
     requires: ${exporter_path}Command-requires.java
     disabled: ${exporter_path}Command-disabled.java
   variables:
@@ -220,7 +227,7 @@
     pid: ${exporter_path}PIDSubsystem-pid.java
     source: ${exporter_path}PIDSubsystem-source.java
     output: ${exporter_path}PIDSubsystem-output.java
-    constants: ${exporter_path}PIDSubsystem-constants.java
+    constants: ${exporter_path}Subsystem-constants.java
     constructors: ${exporter_path}Subsystem-constructors.java
     pidgetters: ${exporter_path}Subsystem-pidgetters.java
   variables:
@@ -235,7 +242,6 @@
     declarations: ${exporter_path}Subsystem-declarations.java
     constants: ${exporter_path}Subsystem-constants.java
     constructors: ${exporter_path}Subsystem-constructors.java
-    pidgetters: ${exporter_path}Subsystem-pidgetters.java
   variables:
     subsystem_name: ${subsystem.name}
 #end
