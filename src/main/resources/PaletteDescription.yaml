@@ -888,13 +888,13 @@ Palette:
         type: Command
         help: A group of commands set to run together in a prescribed way.
         properties:
+          - !TypeSelectionProperty
+            name: Requires
+            type: Subsystem
+            default: None
           - !BooleanProperty
             name: Button on SmartDashboard
             default: true
-          - !ListProperty
-            name: Commands
-            default: []
-            validators: [List]
           - !Parameters
             name: Parameters
             default: []
