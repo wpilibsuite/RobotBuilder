@@ -102,7 +102,7 @@ public class TestUtils {
         tankDrive.getProperty("Requires").setValueAndUpdate("Drive Train");
         RobotComponent armUp = new RobotComponent("Arm Up", "Command", tree);
         commands.add(armUp);
-        RobotComponent auto = new RobotComponent("Autonomous", "Command Group", tree);
+        RobotComponent auto = new RobotComponent("Autonomous", "Sequential Command Group", tree);
         commands.add(auto);
 
         // Deal with odd references
