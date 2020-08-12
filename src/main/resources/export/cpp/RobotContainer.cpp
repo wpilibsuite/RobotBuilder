@@ -20,11 +20,14 @@
 
 RobotContainer::RobotContainer() : m_autonomousCommand(
 #foreach( $component in $components )
+#if($component.getBase().getType() == "Command" && !($component.getProperty("Parameters").getValue().isEmpty()))
+m_setpoint,
+#end
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
         #if( $component.getProperty("Parameter presets").getValue().isEmpty() )
                 #if ($component.getProperty("Requires").getValue() != "None")
-(m_#required_subsystem($component))#if($component.getProperty("Add Timeout").value == true).withTimeout($component.getProperty("Timeout").value)#end){
+m_#required_subsystem($component))#if($component.getProperty("Add Timeout").value == true).withTimeout($component.getProperty("Timeout").value)#end{
                #end
         #end
 #end

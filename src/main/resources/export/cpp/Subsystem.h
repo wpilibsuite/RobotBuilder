@@ -14,7 +14,7 @@
  *
  * @author ExampleAuthor
  */
-class #class($subsystem.name): public #klass($subsystem) {
+class #class($subsystem.name): public frc2::SubsystemBase {
 private:
 	// It's desirable that everything possible is private except
 	// for methods that implement subsystem capabilities

@@ -8,7 +8,7 @@
 #class($command.name)::#class($command.name)(#if( $len >= 0 )#foreach($i in [0..$len])#param_declaration_cpp($params.get($i)), #end#end#if( $last >= 0 )#param_declaration_cpp($params.get($last))#end): #klass($command)() {
 #else
 #class($command.name)::#class($command.name)(#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()}))
-:#parse("${exporter_path}Command-requires.cpp"){
+:m_#variable(${command.getProperty("Requires").getValue().toLowerCase()})(#variable(${command.getProperty("Requires").getValue().toLowerCase()})){
 #end
     #foreach($param in $params)
 m_$param.getName() = $param.getName();
