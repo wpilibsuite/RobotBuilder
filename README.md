@@ -1,5 +1,5 @@
 # Robot Builder Project
-[![Build Status](https://dev.azure.com/wpilib/DesktopTools/_apis/build/status/wpilibsuite.RobotBuilder)](https://dev.azure.com/wpilib/DesktopTools/_build/latest?definitionId=13)
+[![CI](https://github.com/wpilibsuite/RobotBuilder/workflows/CI/badge.svg)
 [![codecov.io](http://codecov.io/github/wpilibsuite/RobotBuilder/coverage.svg?branch=master)](http://codecov.io/github/wpilibsuite/RobotBuilder?branch=master)
 
 Welcome to the WPILib project. This repository contains the Robot Builder project. This program can be used to automatically generate Java and C++ FRC programs.
