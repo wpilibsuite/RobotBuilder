@@ -20,12 +20,11 @@ public:
 #parse("${exporter_path}Command-constructor-header.h")
 #end
 
-	// void Initialize() override;
-	// void Execute() override;
-	// bool IsFinished() override;
-	// void End() override;
-	// void Interrupted() override;
-	//bool runsWhenDisabled() override;
+void Initialize() override;
+void Execute() override;
+bool IsFinished() override;
+void End(bool interrupted) override;
+bool RunsWhenDisabled() const override;
 
 
 private:

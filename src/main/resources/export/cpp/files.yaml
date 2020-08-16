@@ -243,6 +243,7 @@
   modifications:
     constructor: ${exporter_path}Command-constructor-header.h
     variables: ${exporter_path}Command-constructor-variables.h
+    disabled: ${exporter_path}Command-disabled.h
   source: ${exporter_path}Command.h
   update: Modify
   variables:
