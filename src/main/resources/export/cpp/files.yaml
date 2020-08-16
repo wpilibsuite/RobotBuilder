@@ -76,18 +76,11 @@
 - !File
   export: $project/src/main/cpp/Robot.cpp
   source: ${exporter_path}CommandBasedRobot.cpp
-  update: Modify
-  modifications:
-    autonomous: ${exporter_path}CommandBasedRobot-autonomous.cpp
-    constructors: ${exporter_path}CommandBasedRobot-constructors.cpp
-    initialization: ${exporter_path}CommandBasedRobot-initialization.cpp
+  update: None
 - !File
   export: $project/src/main/include/Robot.h
   source: ${exporter_path}CommandBasedRobot.h
-  update: Modify
-  modifications:
-    includes: ${exporter_path}CommandBasedRobot-includes.h
-    declarations: ${exporter_path}CommandBasedRobot-declarations.cpp
+  update: None
 
 - !File
   export: $project/src/main/cpp/RobotContainer.cpp
@@ -243,7 +236,7 @@
   modifications:
     constructor: ${exporter_path}Command-constructor-header.h
     variables: ${exporter_path}Command-constructor-variables.h
-    disabled: ${exporter_path}Command-disabled.h
+    disabled: ${exporter_path}Command-disabled.cpp
   source: ${exporter_path}Command.h
   update: Modify
   variables:
