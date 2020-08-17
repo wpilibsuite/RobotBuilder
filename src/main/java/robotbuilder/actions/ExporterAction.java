@@ -35,8 +35,6 @@ public class ExporterAction extends AbstractAction {
         boolean newProject = false;
         MainFrame.getInstance().setCursor(new Cursor(Cursor.WAIT_CURSOR));
         try {
-            // System.out.println(MainFrame.getInstance());
-            // System.out.println(MainFrame.getInstance().getCurrentRobotTree());
             newProject = exporter.export(MainFrame.getInstance().getCurrentRobotTree());
         } catch (IOException ex) {
             Logger.getLogger(ExporterAction.class.getName()).log(Level.SEVERE, null, ex);
