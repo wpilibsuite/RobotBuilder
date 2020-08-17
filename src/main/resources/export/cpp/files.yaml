@@ -90,6 +90,7 @@
     includes: ${exporter_path}OI-includes.h
     constructors: ${exporter_path}OI-constructors.cpp
     functions: ${exporter_path}OI-functions.cpp
+    default-commands: ${exporter_path}Subsystem-default_command.cpp
 - !File
   export: $project/src/main/include/RobotContainer.h
   source: ${exporter_path}RobotContainer.h
