@@ -68,7 +68,7 @@ Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWind
 Defaults:
   Component:
     Export: "RobotMap"
-    Declaration: "frc::${ClassName} m_#variable($Name);"
+    Declaration: "frc::${ClassName}* m_#variable($Name);"
     Import: "\\#include \"frc/${ClassName}.h\""
     Construction: " "
   CustomComponent:
@@ -89,14 +89,17 @@ Defaults:
     ClassName: ""
   AnalogInput:
     Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}));"
+    Declaration: "frc::${ClassName} m_#variable($Name){${Input_Channel_Analog}};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     PID: "#variable($Short_Name).GetAverageVoltage()"
   AnalogPotentiometer:
     Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset}));"
+    Declaration: "frc::${ClassName} m_#variable($Name){${Input_Channel_Analog}, ${Full_Range}, ${Offset}};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     PID: "#variable($Short_Name).Get()"
   DigitalInput:
     Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Digital}));"
+    Declaration: "frc::${ClassName} m_#variable($Name){${Input_Channel_Digital}};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   PWMOutput:
     Construction: " " #"#variable($Name).reset(new frc::${ClassName}(${Output_Channel_PWM}));"
@@ -254,16 +257,18 @@ Instructions:
 
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
+    Declaration: "frc::${ClassName} m_#variable($Name){${Input_Channel_Analog}};"
     ClassName: "AnalogGyro"
-    Extra: "#variable($Name)->SetSensitivity(${Sensitivity});"
-    PID: "#variable($Short_Name).PIDGet()"
+    Extra: "m_#variable($Name).SetSensitivity(${Sensitivity});"
+    PID: "m_#variable($Short_Name).PIDGet()"
   AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
+    Declaration: "frc::${ClassName} m_#variable($Name){${Input_Channel_Analog}};"
     ClassName: "AnalogAccelerometer"
     PID: "#variable($Short_Name).GetAcceleration()"
     Extra: >-
       m_#variable($Name).SetSensitivity(${Volts_Per_G});
-              m_#variable($Name).SetZero(${Zero_G_Volts});
+      m_#variable($Name).SetZero(${Zero_G_Volts});
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
