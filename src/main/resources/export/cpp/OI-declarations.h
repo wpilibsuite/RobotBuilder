@@ -1,7 +1,7 @@
 // The robot's subsystems
 #foreach ($component in $components)
 #if ("#type($component)" != "" 
-&& ("#type($component)" == "SubsystemBase"
+&& ("#type($component)" == "frc2::SubsystemBase"
      || "#type($component)" == "PIDSubsystem"))
     #class($component.getName())* m_#variable($component.getName());
 #end
