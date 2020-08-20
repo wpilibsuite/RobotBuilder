@@ -27,7 +27,7 @@ m_setpoint,
 #if ($component.getBase().getType() == "Command")
         #if( $component.getProperty("Parameter presets").getValue().isEmpty() )
                 #if ($component.getProperty("Requires").getValue() != "None")
-m_#required_subsystem($component))#if($component.getProperty("Add Timeout").value == true).withTimeout($component.getProperty("Timeout").value)#end{
+&m_#required_subsystem($component))#if($component.getProperty("Add Timeout").value == true).withTimeout($component.getProperty("Timeout").value)#end{
                 #else
 ){
                #end

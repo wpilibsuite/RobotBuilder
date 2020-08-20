@@ -39,7 +39,7 @@ private:
 #*
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "SubsystemBase")
-#class(${component.name})* m_#variable($component.name);
+#class(${component.name}) m_#variable($component.name);
 #end
 #end
 *#
