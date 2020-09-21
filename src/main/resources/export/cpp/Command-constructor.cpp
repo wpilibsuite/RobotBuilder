@@ -4,6 +4,9 @@
 #set($last = $len + 1)
 #macro( klass $cmd )#if( "#type($cmd)" == "" )Command#else#type($cmd)#end#end
 
+\#include "Commands/#class($command.name).h"
+\#include "Robot.h"
+
 #if( $params.size() > 0 )
 #class($command.name)::#class($command.name)(#if( $len >= 0 )#foreach($i in [0..$len])#param_declaration_cpp($params.get($i)), #end#end#if( $last >= 0 )#param_declaration_cpp($params.get($last))#end): #klass($command)() {
 #elseif(${command.getProperty("Requires").getValue()} == "None")

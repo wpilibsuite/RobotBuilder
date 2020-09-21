@@ -88,8 +88,9 @@
   update: Modify
   modifications:
     includes: ${exporter_path}OI-includes.h
-    constructors: ${exporter_path}OI-constructors.cpp
+    constructors: ${exporter_path}RC-constructors.cpp
     functions: ${exporter_path}OI-functions.cpp
+    buttons: ${exporter_path}RC-buttons.cpp
     default-commands: ${exporter_path}Subsystem-default_command.cpp
 - !File
   export: $project/src/main/include/RobotContainer.h
@@ -144,6 +145,7 @@
    update: Modify
    modifications:
      constructor: ${exporter_path}Command-constructor-header.h
+     includes: ${exporter_path}PIDCommand-includes.h
      variables: ${exporter_path}Command-constructor-variables.h
    variables:
      command_name: ${command.name}
@@ -155,6 +157,7 @@
   modifications:
     requires: ${exporter_path}Command-requires.cpp
     constructor: ${exporter_path}Command-constructor.cpp
+    includes: ${exporter_path}Setpointcommand-includes.cpp
     initialize: ${exporter_path}SetpointCommand-initialize.cpp
     isFinished: ${exporter_path}SetpointCommand-isFinished.cpp
   variables:
