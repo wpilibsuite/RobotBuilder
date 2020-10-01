@@ -1,4 +1,4 @@
-# Robot Builder Project
+# Robot Builder Project - an amazing project
 [![Build Status](https://dev.azure.com/wpilib/DesktopTools/_apis/build/status/wpilibsuite.RobotBuilder)](https://dev.azure.com/wpilib/DesktopTools/_build/latest?definitionId=13)
 [![codecov.io](http://codecov.io/github/wpilibsuite/RobotBuilder/coverage.svg?branch=master)](http://codecov.io/github/wpilibsuite/RobotBuilder?branch=master)
 
