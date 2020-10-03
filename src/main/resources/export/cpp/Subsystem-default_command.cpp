@@ -6,7 +6,7 @@
 #set($last = $len + 1)
 
 #if ($command != "None")
-        m_#required_subsystem($command)->SetDefaultCommand(#class($command.name)(m_#required_subsystem($command)));
+        m_#required_subsystem($command).SetDefaultCommand(#class($command.name)(&m_#required_subsystem($command)));
 #end
 #end
 #end

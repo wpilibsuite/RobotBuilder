@@ -87,16 +87,18 @@
   source: ${exporter_path}RobotContainer.cpp
   update: Modify
   modifications:
-    includes: ${exporter_path}OI-includes.h
-    constructors: ${exporter_path}RC-constructors.cpp
+    constructor: ${exporter_path}RC-constructors.cpp
+    oi-constructor: ${exporter_path}OI-constructors.cpp
     functions: ${exporter_path}OI-functions.cpp
     buttons: ${exporter_path}RC-buttons.cpp
     default-commands: ${exporter_path}Subsystem-default_command.cpp
+
 - !File
   export: $project/src/main/include/RobotContainer.h
   source: ${exporter_path}RobotContainer.h
   update: Modify
   modifications:
+    includes: ${exporter_path}OI-includes.h
     declarations: ${exporter_path}OI-declarations.h
     prototypes: ${exporter_path}OI-prototypes.h
 

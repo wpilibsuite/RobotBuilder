@@ -1,8 +1,6 @@
 \#include "frc/Joystick.h"
 \#include "frc2/command/Command.h"
 
-\#include "Commands/#class($command).h"
-
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
