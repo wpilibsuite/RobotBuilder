@@ -8,6 +8,8 @@
 #parse("${exporter_path}InstantCommand-constructor.cpp")
 #end
 
+}
+
 // Called once when this command runs
 void #class($command.name)::Initialize() {
 

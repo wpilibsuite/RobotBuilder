@@ -7,6 +7,8 @@
 #parse("${exporter_path}ConditionalCommand-constructor.cpp")
 #end
 
+}
+
 bool #class($command.name)::Condition(){
 	return false;
 }

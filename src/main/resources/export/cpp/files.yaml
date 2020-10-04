@@ -135,7 +135,6 @@
    update: Modify
    modifications:
      pid: ${exporter_path}PIDCommand-pid.cpp
-     requires: ${exporter_path}Command-requires.cpp
      source: ${exporter_path}PIDCommand-source.cpp
      output: ${exporter_path}PIDCommand-output.cpp
      constructor: ${exporter_path}PIDCommand-constructor.cpp
@@ -157,7 +156,6 @@
   source: ${exporter_path}SetpointCommand.cpp
   update: Modify
   modifications:
-    requires: ${exporter_path}Command-requires.cpp
     constructor: ${exporter_path}Command-constructor.cpp
     includes: ${exporter_path}Setpointcommand-includes.cpp
     initialize: ${exporter_path}SetpointCommand-initialize.cpp
@@ -178,7 +176,6 @@
   source: ${exporter_path}TimedCommand.cpp
   update: Modify
   modifications:
-    requires: ${exporter_path}Command-requires.cpp
     constructor: ${exporter_path}TimedCommand-constructor.cpp
   variables:
     command_name: ${command.name}
@@ -196,7 +193,6 @@
   source: ${exporter_path}InstantCommand.cpp
   update: Modify
   modifications:
-    requires: ${exporter_path}Command-requires.cpp
     constructor: ${exporter_path}InstantCommand-constructor.cpp
   variables:
     command_name: ${command.name}
@@ -234,7 +230,6 @@
   source: ${exporter_path}Command.cpp
   update: Modify
   modifications:
-    requires: ${exporter_path}Command-requires.cpp
     constructor: ${exporter_path}Command-constructor.cpp
     disabled: ${exporter_path}Command-disabled.cpp
   variables:

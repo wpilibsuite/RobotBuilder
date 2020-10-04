@@ -6,6 +6,8 @@
 #parse("${exporter_path}Command-constructor.cpp")
 #end
 
+}
+
 // Called just before this Command runs the first time
 void #class($command.name)::Initialize() {
 
