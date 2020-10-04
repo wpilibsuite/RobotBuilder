@@ -224,6 +224,7 @@
   modifications:
     includes: ${exporter_path}ConditionalCommand-includes.h
     constructor: ${exporter_path}Command-constructor-header.h
+    variables: ${exporter_path}Command-constructor-variables.h
   update: Modify  
   variables:
     command_name: ${command.name}
@@ -235,14 +236,15 @@
   modifications:
     requires: ${exporter_path}Command-requires.cpp
     constructor: ${exporter_path}Command-constructor.cpp
+    disabled: ${exporter_path}Command-disabled.cpp
   variables:
     command_name: ${command.name}
 - !File
   export: $project/src/main/include/Commands/#class($command.name).h
   modifications:
+    includes: ${exporter_path}command-includes.h
     constructor: ${exporter_path}Command-constructor-header.h
     variables: ${exporter_path}Command-constructor-variables.h
-    disabled: ${exporter_path}Command-disabled.cpp
   source: ${exporter_path}Command.h
   update: Modify
   variables:

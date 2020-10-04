@@ -9,6 +9,3 @@
 #else
 	explicit #class($command.name)(#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()}));
 #end
-#if ( $command.getProperty("Run When Disabled").getValue() )
-        bool runsWhenDisabled() override;
-#end
