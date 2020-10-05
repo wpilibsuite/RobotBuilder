@@ -388,9 +388,6 @@ Palette:
             name: D
             default: 0
           - !DoubleProperty
-            name: F
-            default: 0
-          - !DoubleProperty
             name: Tolerance
             default: 0.2
           - !DoubleProperty
@@ -399,24 +396,12 @@ Palette:
           - !BooleanProperty
             name: Continuous
             default: false
-          - !BooleanProperty
-            name: Limit Input
-            default: false
           - !DoubleProperty
             name: Minimum Input
             default: 0
           - !DoubleProperty
             name: Maximum Input
             default: 5
-          - !BooleanProperty
-            name: Limit Output
-            default: false
-          - !DoubleProperty
-            name: Minimum Output
-            default: -1
-          - !DoubleProperty
-            name: Maximum Output
-            default: 1
           - !BooleanProperty
             name: Send to SmartDashboard
             default: false
@@ -874,48 +859,18 @@ Palette:
           - !BooleanProperty
             name: Autonomous Selection
             default: false
-          - !BooleanProperty
-            name: Add Timeout
-            default: false
-          - !DoubleProperty
-            name: Timeout
-            default: 0
-      - !Component
-        name: Command Group
-        type: Command
-        help: A group of commands set to run together in a prescribed way.
-        properties:
-          - !BooleanProperty
-            name: Button on SmartDashboard
-            default: true
-          - !ListProperty
-            name: Commands
-            default: []
-            validators: [List]
-          - !Parameters
-            name: Parameters
-            default: []
-          - !ParameterSet
-            name: Parameter presets
-            default: []
-          - !BooleanProperty
-            name: Run When Disabled
-            default: false
-          - !BooleanProperty
-            name: Autonomous Selection
-            default: false
       - !Component
         name: Sequential Command Group
         type: Command
         help: A group of commands set to run together in a prescribed way.
         properties:
+          - !TypeSelectionProperty
+            name: Requires
+            type: Subsystem
+            default: None
           - !BooleanProperty
             name: Button on SmartDashboard
             default: true
-          - !ListProperty
-            name: Commands
-            default: []
-            validators: [List]
           - !Parameters
             name: Parameters
             default: []
@@ -1043,31 +998,6 @@ Palette:
           - !BooleanProperty
             name: Autonomous Selection
             default: false
-##      - !Component ## Replace with the Command Decorator .withTimeOut
-##        name: Timed Command
-##        type: Command
-##        help: A command specifies an action that the robot can perform and finishes after a timeout.
-##        properties:
-##          - !TypeSelectionProperty
-##            name: Requires
-##            type: Subsystem
-##            default: None
-##          - !BooleanProperty
-##            name: Button on SmartDashboard
-##            default: true
-##          - !Parameters
-##            name: Parameters
-##            value:
-##            - !!robotbuilder.data.properties.ParameterDescriptor {name: timeout, type: double}
-##          - !ParameterSet
-##            name: Parameter presets
-##            default: []
-##          - !BooleanProperty
-##            name: Run When Disabled
-##            default: false
-##          - !BooleanProperty
-##            name: Autonomous Selection
-##            default: false
       - !Component
         name: Instant Command
         type: Command
@@ -1097,6 +1027,10 @@ Palette:
         type: Command
         help: A Command that chooses between two Commands
         properties:
+          - !TypeSelectionProperty
+            name: Requires
+            type: Subsystem
+            default: None
           - !TypeSelectionProperty
             name: On True Command
             type: Command
