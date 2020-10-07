@@ -1,6 +1,7 @@
 #header()
 
 \#include "RobotContainer.h"
+\#include <frc2/command/ParallelRaceGroup.h>
 
 #set($cmd = $robot.getProperty("Autonomous Command").getValue())
 
