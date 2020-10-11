@@ -2,21 +2,23 @@
 #set($params = $command.getProperty("Parameters").getValue())
 #set($len = $params.size() - 2)
 #set($last = $len + 1)
-#macro( klass $cmd )#if( "#type($cmd)" == "" )Command#else#type($cmd)#end#end
 
 \#include "Commands/#class($command.name).h"
 
 #if( $params.size() > 0 )
-#class($command.name)::#class($command.name)(#if( $len >= 0 )#foreach($i in [0..$len])#param_declaration_cpp($params.get($i)), #end#end#if( $last >= 0 )#param_declaration_cpp($params.get($last))#end): #klass($command)() {
+#class($command.name)::#class($command.name)(#if( $len >= 0 )#foreach($i in [0..$len])#param_declaration_cpp($params.get($i)), #end#end#if( $last >= 0 )#param_declaration_cpp($params.get($last))#end#if(${command.getProperty("Requires").getValue()} != "None") ,#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()})#end) :
+#foreach($param in $params)
+    m_$param.getName()($param.getName())
+#end
+#if(${command.getProperty("Requires").getValue()} != "None"),     m_#variable(${command.getProperty("Requires").getValue().toLowerCase()})(#variable(${command.getProperty("Requires").getValue().toLowerCase()}))#end
+{
 #elseif(${command.getProperty("Requires").getValue()} == "None")
 #class($command.name)::#class($command.name)(){
 #else
 #class($command.name)::#class($command.name)(#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()}))
 :m_#variable(${command.getProperty("Requires").getValue().toLowerCase()})(#variable(${command.getProperty("Requires").getValue().toLowerCase()})){
 #end
-    #foreach($param in $params)
-    m_$param.getName() = $param.getName();
-    #end
+
     // Use AddRequirements() here to declare subsystem dependencies
     // eg. AddRequirements(Robot::chassis.get());
     SetName("#class($command.name)");
