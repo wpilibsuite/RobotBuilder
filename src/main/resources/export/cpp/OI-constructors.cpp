@@ -3,25 +3,23 @@
 #if ($helper.exportsTo("OI", $component)
      && ("#constructor($component)" != "" || "#extra($component)" != "") && "#type($component)" != "Joystick" && "#type($component)" != "JoystickButton")
     #constructor($component)
-
     #extra($component)
-
 #end
 #end
 
-#*
+
 ${Collections.reverse($components)}
     // SmartDashboard Buttons
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
 #if( $component.getProperty("Parameter presets").getValue().isEmpty())
-    frc::SmartDashboard::PutData("$component.getName()", new #class($component.getName())());
+    frc::SmartDashboard::PutData("$component.getName()", new #new_command_instantiation( $component, $component, $set.getParameters()));
 #else
 #foreach( $set in $component.getProperty("Parameter presets").getValue() )
-    frc::SmartDashboard::PutData("$component.getName(): $set.getName()", #command_instantiation( $component.getName(), $set.getParameters() ));
+    frc::SmartDashboard::PutData("$component.getName(): $set.getName()", new #new_command_instantiation( $component, $component, $set.getParameters() ));
 #end
 #end
 #end
 #end
-*#
+
