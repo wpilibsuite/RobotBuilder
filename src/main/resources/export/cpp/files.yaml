@@ -262,7 +262,6 @@
     pid: ${exporter_path}PIDSubsystem-pid.cpp
     source: ${exporter_path}PIDSubsystem-source.cpp
     output: ${exporter_path}PIDSubsystem-output.cpp
-    constants: ${exporter_path}Subsystem-constants.cpp
     cmdpidgetters: ${exporter_path}Subsystem-pidgetters.cpp
     includes: ${exporter_path}Subsystem-includes.cpp
   variables:
@@ -286,7 +285,6 @@
   modifications:
     declarations: ${exporter_path}Subsystem-declarations.cpp
     default_command: ${exporter_path}Subsystem-default_command.cpp
-    constants: ${exporter_path}Subsystem-constants.cpp
     cmdpidgetters: ${exporter_path}Subsystem-pidgetters.cpp
     includes: ${exporter_path}Subsystem-includes.cpp
   variables:
