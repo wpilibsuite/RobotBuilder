@@ -69,7 +69,7 @@ Defaults:
   Component:
     Export: "RobotMap"
     Declaration: "frc::${ClassName}* m_#variable($Name);"
-    Import: "\\#include \"frc/${ClassName}.h\""
+    Import: "\\#include <frc/${ClassName}.h>"
     Construction: " "
   CustomComponent:
     Export: "RobotMap"
@@ -221,7 +221,7 @@ Instructions:
     Declaration: "frc::${ClassName} m_#variable($Name){m_#variable($Left_Motor), m_#variable($Right_Motor)};"
     Construction: "#variable($Name).reset(new frc::${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor)));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
-    Import: "\\#include \"frc/drive/${ClassName}.h\""
+    Import: "\\#include <frc/drive/${ClassName}.h>"
     Extra: >
       m_#variable($Name).SetSafetyEnabled($Safety_Enabled);
               m_#variable($Name).SetExpiration($Safety_Expiration_Time);
@@ -232,7 +232,7 @@ Instructions:
     Declaration: "frc::${ClassName} m_#variable($Name){m_#variable($Left_Front_Motor), m_#variable($Left_Rear_Motor),
                     m_#variable($Right_Front_Motor), m_#variable($Right_Rear_Motor)};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
-    Import: "\\#include \"frc/drive/${ClassName}.h\""
+    Import: "\\#include <frc/drive/${ClassName}.h>"
     Construction: >-
       #variable($Name).reset(new frc::${ClassName}(*#variable($Left_Front_Motor), *#variable($Left_Rear_Motor),
                     *#variable($Right_Front_Motor), *#variable($Right_Rear_Motor)));
@@ -246,7 +246,7 @@ Instructions:
     Declaration: "frc::${ClassName} m_#variable($Name){m_#variable($Left_Motor), m_#variable($Right_Motor),
                     m_#variable($Back_Motor)};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
-    Import: "\\#include \"frc/drive/${ClassName}.h\""
+    Import: "\\#include <frc/drive/${ClassName}.h>"
     Construction: >-
       #variable($Name).reset(new frc::${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor),
                     *#variable($Back_Motor)));
@@ -321,8 +321,7 @@ Instructions:
     Declaration: "frc::${Type} m_#variable($Name){${Output_Channel_PWM}};"
     Construction: " " #"#variable($Name).reset(new frc::${Type}(${Output_Channel_PWM}));"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
-#    Import: "\\#include \"frc/${Type}.h\"\\n\\#include \"frc/${ClassName}.h";"
-    Import: "\\#include \"frc/${Type}.h\""
+    Import: "\\#include <frc/${Type}.h>"
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "NidecBrushless"
