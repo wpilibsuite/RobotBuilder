@@ -2,7 +2,7 @@
 
 #set($subsystem = $helper.getByName($subsystem_name, $robot))
 
-\#include "Subsystems/#class($subsystem.name).h"
+\#include "subsystems/#class($subsystem.name).h"
 \#include "frc/SmartDashboard/SmartDashboard.h"
 \#include <frc/controller/PIDController.h>
 \#include "frc/LiveWindow/LiveWindow.h"

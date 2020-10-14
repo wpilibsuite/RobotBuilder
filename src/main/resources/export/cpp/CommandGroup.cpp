@@ -3,9 +3,9 @@
 #set($command = $helper.getByName($command_name, $robot))
 #set($commandDescriptors = $command.getProperty("Commands").getValue())
 
-\#include "Commands/#class($command.name).h"
+\#include "commands/#class($command.name).h"
 #foreach( $cd in $commandDescriptors )
-\#include "Commands/#class($cd.getName()).h"
+\#include "commands/#class($cd.getName()).h"
 #end
 
 

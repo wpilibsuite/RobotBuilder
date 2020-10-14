@@ -7,7 +7,7 @@
      && $component.getProperty("Button on SmartDashboard").getValue())
         #if( $component.getProperty("Parameter presets").getValue().isEmpty() )
                 #if ($component.getProperty("Requires").getValue() != "None")
-\#include "Subsystems/#class(${component.getProperty("Requires").getValue()}).h"
+\#include "subsystems/#class(${component.getProperty("Requires").getValue()}).h"
                #end
         #end
 #end

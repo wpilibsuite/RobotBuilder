@@ -3,5 +3,5 @@
 \#include <frc2/command/CommandBase.h>
 
 #if (${command.getProperty("Requires").getValue()} != "None")
-\#include "Subsystems/#class(${command.getProperty("Requires").getValue()}).h"
+\#include "subsystems/#class(${command.getProperty("Requires").getValue()}).h"
 #end

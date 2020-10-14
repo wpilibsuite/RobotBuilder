@@ -3,7 +3,7 @@
 #set($len = $params.size() - 2)
 #set($last = $len + 1)
 
-\#include "Commands/#class($command.name).h"
+\#include "commands/#class($command.name).h"
 
 #if( $params.size() > 0 )
 #class($command.name)::#class($command.name)(#if( $len >= 0 )#foreach($i in [0..$len])#param_declaration_cpp($params.get($i)), #end#end#if( $last >= 0 )#param_declaration_cpp($params.get($last))#end#if(${command.getProperty("Requires").getValue()} != "None") ,#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()})#end) :
