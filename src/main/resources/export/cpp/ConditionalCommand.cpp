@@ -10,5 +10,5 @@
 }
 
 bool #class($command.name)::Condition(){
-	return false;
+    return false;
 }
