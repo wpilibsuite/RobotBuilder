@@ -1,6 +1,6 @@
 #set($command = $helper.getByName($command_name, $robot))
 #if ( $command.getProperty("Run When Disabled").getValue() )
-        return true;
+    return true;
 #else
-        return false;
+    return false;
 #end
