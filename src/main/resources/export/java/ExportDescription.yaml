@@ -307,7 +307,7 @@ Instructions:
     ClassName: "SpeedController"
     Import: "import edu.wpi.first.wpilibj.${Type};\nimport edu.wpi.first.wpilibj.${ClassName};"
     Declaration: "private ${Type} #variable($Short_Name);"
-    Construction: "${Type} #variable($Short_Name) = new ${Type}(${Output_Channel_PWM});"
+    Construction: "#variable($Short_Name) = new ${Type}(${Output_Channel_PWM});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
       #variable($Short_Name).setInverted(${Inverted});
