@@ -93,7 +93,6 @@ public class TestUtils {
         wrist.getProperty("P").setValueAndUpdate(2);
         wrist.getProperty("I").setValueAndUpdate(1);
         wrist.getProperty("D").setValueAndUpdate(-1);
-        wrist.getProperty("Limit Input").setValueAndUpdate(true);
         wrist.getProperty("Continuous").setValueAndUpdate(true);
         RobotComponent wristMotor = new RobotComponent("Motor", "Speed Controller", tree);
         wristMotor.setProperty("Type", "Jaguar");
