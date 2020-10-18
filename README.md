@@ -20,6 +20,7 @@ Building Robot Builder is very straightforward. WPILib uses Gradle to compile.
 
 ## Requirements
 - [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+- A c++ Compiler (for c++ compile test). Either the [RoboRIO Toolchain](https://github.com/wpilibsuite/roborio-toolchain/releases/) or a Desktop Compiler (Visual Studio 2019, gcc 7+)
 
 ## Running
 
