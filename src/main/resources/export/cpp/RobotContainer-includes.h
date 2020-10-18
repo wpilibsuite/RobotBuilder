@@ -3,13 +3,8 @@
 \#include <frc2/command/button/JoystickButton.h>
 
 #foreach( $component in $components )
-#if ($component.getBase().getType() == "Command"
-     && $component.getProperty("Button on SmartDashboard").getValue())
-        #if( $component.getProperty("Parameter presets").getValue().isEmpty() )
-                #if ($component.getProperty("Requires").getValue() != "None")
-\#include "subsystems/#class(${component.getProperty("Requires").getValue()}).h"
-               #end
-        #end
+#if ($component.getBase().getType() == "Subsystem")
+\#include "subsystems/#class(${component.name}).h"
 #end
 #end
 
