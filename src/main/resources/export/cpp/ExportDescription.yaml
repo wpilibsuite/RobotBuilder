@@ -147,21 +147,17 @@ Instructions:
 
   PID Controller:
     Defaults: "Component,None"
+    Import: "\\#include <frc/controller/PIDController.h>"
     ClassName: "PIDController"
-    Declaration: "frc::${ClassName} m_#variable($Name){$P, $I, $D,/* F: $F, */ m_#variable($Input), m_#variable($Output), $Period};"
-    Construction: "#variable($Name).reset(new frc::${ClassName}($P, $I, $D,/* F: $F, */ #variable($Input).get(), #variable($Output).get(), $Period));"
+    Declaration: "frc2::${ClassName} m_#variable($Name){$P, $I, $D};"
     Extra: >
-      m_#variable($Name).SetContinuous(${Continuous});
-      m_#variable($Name).SetAbsoluteTolerance(${Tolerance});
-      #if($Limit_Input)
-
-          m_#variable($Name).SetInputRange(${Minimum_Input}, ${Maximum_Input});#end
-      #if(true)
-
-          m_#variable($Name).SetOutputRange(${Minimum_Output}, ${Maximum_Output});#end
+      #if($Continuous)
+              m_#variable($Short_Name).EnableContinuousInput(${Minimum_Input}, ${Maximum_Input});
+      #end
+      m_#variable($Name).SetTolerance(${Tolerance});
       #if($Send_to_SmartDashboard)
 
-          SmartDashboard::PutData("${Name}", #variable($Name).get());#end
+          frc::SmartDashboard::PutData("${Name}", &m_#variable($Name));#end
 
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
 
