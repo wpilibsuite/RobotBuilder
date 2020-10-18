@@ -109,22 +109,25 @@
 ## Export Commands as files
 #if ($export_commands)
 #foreach ($command in $commands)
-#if ($command.base.name == "Command Group")
+#if ($command.base.name == "Sequential Command Group")
 - !File
   export: $project/src/main/cpp/commands/#class($command.name).cpp
-  source: ${exporter_path}CommandGroup.cpp
+  source: ${exporter_path}SequentialCommandGroup.cpp
   update: None
   modifications:
     update: Modify
-    constructor: ${exporter_path}CommandGroup-constructor.cpp
+    constructor: ${exporter_path}Command-constructor.cpp
+    disabled: ${exporter_path}Command-disabled.cpp
   variables:
     command_name: ${command.name}
 - !File
   export: $project/src/main/include/commands/#class($command.name).h
-  source: ${exporter_path}CommandGroup.h
+  source: ${exporter_path}SequentialCommandGroup.h
   update: Modify
   modifications:
+    includes: ${exporter_path}command-includes.h
     constructor: ${exporter_path}Command-constructor-header.h
+    variables: ${exporter_path}Command-constructor-variables.h
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "PID Command")

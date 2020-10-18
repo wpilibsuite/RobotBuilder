@@ -387,7 +387,7 @@ Instructions:
   Command:
     Defaults: "Command,None"
     ClassName: "frc2::CommandBase"
-  Command Group:
+  Sequential Command Group:
     Defaults: "Command,None"
   PID Command:
     Defaults: "Command,None"
