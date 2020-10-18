@@ -1,8 +1,24 @@
 
 package robotbuilder;
 
+import robotbuilder.data.RobotWalker;
+import robotbuilder.exporters.GenericExporter;
 import robotbuilder.robottree.RobotTree;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.Assert.*;
+
 import robotbuilder.data.RobotComponent;
 
 /**
@@ -121,5 +137,49 @@ public class TestUtils {
             }
         }
         dir.delete();
+    }
+
+    public static int runBuild(String projectDirectory) throws InterruptedException, IOException {
+        System.out.println("====================================================");
+        Process p;
+        ProcessBuilder pb;
+
+        //enable desktop builds and disable roboRIO builds to allow compile test with desktop compiler.
+        try {
+            Path path = Paths.get("test-resources", projectDirectory, "build.gradle");
+            Stream<String> lines = Files.lines(path);
+            List<String> replaced = lines
+                    .map(line -> line.replaceAll("def includeDesktopSupport = false", "def includeDesktopSupport = true"))
+                    .collect(Collectors.toList());
+            Files.write(path, replaced);
+            lines.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
+        if (isWindows) {
+            System.out.println("Trying Windows compile...");
+            pb = new ProcessBuilder("gradlew.bat", "build", "-Ptoolchain-optional-roboRio").directory(new File("test-resources/" + projectDirectory));
+        } else {
+            System.out.println("Trying *NIX compile...");
+            //string array necessary to pass build as a parameter to gradle and not sh. https://stackoverflow.com/a/55164823
+            pb = new ProcessBuilder(new String[]{"sh", "-c", "./gradlew build -Ptoolchain-optional-roboRio"}).directory(new File("test-resources/" + projectDirectory));
+        }
+        pb.redirectErrorStream(true);
+        System.out.println("Running command: " + Arrays.toString(pb.command().toArray()));
+        p = pb.start();
+        //print the standard output from the build
+        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line = reader.readLine();
+        while (line != null) {
+            System.out.println(line);
+            line = reader.readLine();
+        }
+
+        System.out.println("====================================================");
+        p.waitFor();
+        System.out.println(p.exitValue());
+        return p.exitValue();
     }
 }
