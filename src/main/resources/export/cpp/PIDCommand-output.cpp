@@ -3,6 +3,6 @@
 #set($subsystem = $command.getProperty("Requires").getValue())
 #foreach ($component in $components)
 #if ($component.name == $actuator)
-    Robot::#variable($subsystem)->Get#class($component.name)()->PIDWrite(output);
+    m_#variable($subsystem)->Get#class($component.name)().PIDWrite(output);
 #end
 #end
