@@ -36,12 +36,13 @@ stages:
           gradleOptions: '-Xmx3072m'
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: Linux
           tasks: 'check'
           options: '-PbuildServer'
 
   - job: Windows_64_Bit
     pool:
-      vmImage: 'vs2017-win2016'
+      vmImage: 'windows-2019'
 
     steps:
       - task: Gradle@2
@@ -52,12 +53,13 @@ stages:
           jdkVersionOption: '1.11'
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: Win64
           tasks: 'check'
           options: '-PbuildServer'
 
   - job: Windows_32_Bit
     pool:
-      vmImage: 'vs2017-win2016'
+      vmImage: 'windows-2019'
 
     steps:
       - powershell: |
@@ -79,6 +81,7 @@ stages:
           gradleOptions: '-Xmx1024m'
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: Win32
           tasks: 'check'
 
   - job: Mac
@@ -97,6 +100,7 @@ stages:
           jdkVersionOption: '1.11'
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: MacOS
           tasks: 'check'
           options: '-PbuildServer'
 
