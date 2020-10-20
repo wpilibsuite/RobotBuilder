@@ -37,6 +37,16 @@
 #macro( constant_use $constant )#class( $helper.stringSplit($constant.getValue(), "\.").get(0) ).$helper.stringSplit($constant.getValue(), "\.").get(1)#end
 
 ## Generates 'new MyCommand(arg0, arg1, arg2, ...)'
+#macro( command_instantiation_SmartDashoard_BTN_No_Par $command $component)
+#set($len = $params.size() - 2)
+#set($last = $len + 1)new #class($command)(#if($component.getProperty("Requires").getValue() != "None")m_#variable($component.getProperty("Requires").getValue())#end)#end
+
+## Generates 'new MyCommand(arg0, arg1, arg2, ...)'
+#macro( command_instantiation_SmartDashoard_BTN $command $params $component)
+#set($len = $params.size() - 2)
+#set($last = $len + 1)new #class($command)(#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $params.get($i) ), #end#end#if( $last >= 0 )#param_set($params.get($last))#if($component.getProperty("Requires").getValue() != "None"), #end#end#if($component.getProperty("Requires").getValue() != "None")m_#variable($component.getProperty("Requires").getValue())#end)#end
+
+## Generates 'new MyCommand(arg0, arg1, arg2, ...)'
 #macro( command_instantiation $command $params )
 #set($len = $params.size() - 2)
 #set($last = $len + 1)
