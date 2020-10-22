@@ -11,6 +11,7 @@ save*.yaml
 dependency-reduced-pom.xml
 nbactions.xml
 src/main/resources/export/vendordeps/
+/test/
 
 
 
