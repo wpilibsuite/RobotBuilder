@@ -23,10 +23,10 @@ ${Collections.reverse($components)}
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
 #if( $component.getProperty("Parameter presets").getValue().isEmpty() )
-        SmartDashboard.putData("$component.getName()", #command_instantiation_SmartDashoard_BTN_No_Par($component.getName(), $component));
+        SmartDashboard.putData("$component.getName()", #new_command_instantiation_nt($component, $component.getProperty("Parameter presets").getValue()));
 #else
 #foreach( $set in $component.getProperty("Parameter presets").getValue() )
-        SmartDashboard.putData("$component.getName(): $set.getName()", #command_instantiation_SmartDashoard_BTN($component.getName(), $set.getParameters(), $component));
+        SmartDashboard.putData("$component.getName(): $set.getName()", #new_command_instantiation_nt($component, $set.getParameters()));
 #end
 #end
 #end
