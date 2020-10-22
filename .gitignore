@@ -223,3 +223,4 @@ gradle-app.setting
 
 # VS Code settings file
 .vscode/
+src/main/resources/export/vendordeps/WPILibNewCommands.json
