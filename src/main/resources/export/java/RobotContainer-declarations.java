@@ -11,9 +11,9 @@
 // Joysticks
 #foreach ($component in $components)
 #if ($helper.exportsTo("OI", $component)
-     && "#type($component)" != "" 
-     && "#type($component)" == "Joystick")
-    #constructor($component)
+     && "#type2($component)" != "" 
+     && "#type2($component)" == "Joystick")
+        #constructor($component)
 
 #end
 #end
