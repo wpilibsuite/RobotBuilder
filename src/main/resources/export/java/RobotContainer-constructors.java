@@ -17,4 +17,17 @@
 #end
 #end
 
-
+${Collections.reverse($components)}
+        // SmartDashboard Buttons
+#foreach( $component in $components )
+#if ($component.getBase().getType() == "Command"
+     && $component.getProperty("Button on SmartDashboard").getValue())
+#if( $component.getProperty("Parameter presets").getValue().isEmpty() )
+        SmartDashboard.putData("$component.getName()", #new_command_instantiation_nt($component, $component.getProperty("Parameter presets").getValue()));
+#else
+#foreach( $set in $component.getProperty("Parameter presets").getValue() )
+        SmartDashboard.putData("$component.getName(): $set.getName()", #new_command_instantiation_nt($component, $set.getParameters()));
+#end
+#end
+#end
+#end
