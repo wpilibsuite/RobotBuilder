@@ -35,7 +35,7 @@ public class CppExportTest {
 
     @Before
     public void setUp() {
-        File project = new File("test-resources/" + PROJECT_DIRECTORY);
+        File project = new File("build/test-resources/" + PROJECT_DIRECTORY);
         TestUtils.delete(project);
         assertFalse(project.exists());
         project.mkdir();
@@ -49,7 +49,7 @@ public class CppExportTest {
     public void testCPPExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
         tree.getRoot().setName(PROJECT_DIRECTORY);
-        tree.getRoot().getProperty("Export Directory").setValueAndUpdate(new File("test-resources/").getAbsolutePath());
+        tree.getRoot().getProperty("Export Directory").setValueAndUpdate(new File("build/test-resources/").getAbsolutePath());
         tree.walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) { // Gives us better diagnostics when the robot tree isn't valid.

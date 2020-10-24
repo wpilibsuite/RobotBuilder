@@ -46,8 +46,8 @@ public class SavingAndLoadingTest {
         RobotTree tree = TestUtils.getNewRobotTree();
         tree.isRobotValid();
         RobotComponent before = tree.getRoot();
-        tree.save("test/save.yml");
-        tree.load(new File("test/save.yml"));
+        tree.save(SAVE_FILE);
+        tree.load(new File(SAVE_FILE));
         RobotComponent after = tree.getRoot();
         assertEquals("Loaded file should be identical to the saved file.",
                 before, after);

@@ -5,12 +5,13 @@
 save*.yaml
 *~
 *#
-/test-resources/RobotBuilderTestProject/*
+/test-resources/
 /.svn/*
 *.exec
 dependency-reduced-pom.xml
 nbactions.xml
-
+src/main/resources/export/vendordeps/
+/test/
 
 
 
