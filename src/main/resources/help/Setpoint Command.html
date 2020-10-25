@@ -21,7 +21,7 @@
   setpoint. It finishes when the PID subsystem is within the given
   tolerance of the setpoint.</p>
   <h3>What does it mean for a command to require a subsystem?</h3>
-  <p>Commands can require a subsystem using the requires() method
+  <p>Commands can require a subsystem using the addRequirements() method
   of commands. When a command requires a subsystem, it claims
   exclusive control over that subsystem and will interrupt any
   other command that requires the same subsystem. This only works
