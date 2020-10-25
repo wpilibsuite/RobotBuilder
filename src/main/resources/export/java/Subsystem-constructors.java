@@ -5,7 +5,7 @@
         #livewindow($component)
 
         #extra($component)
-        
-        
+
+
 #end
 #end
