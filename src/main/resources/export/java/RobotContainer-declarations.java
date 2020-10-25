@@ -12,7 +12,7 @@
 #foreach ($component in $components)
 #if ($helper.exportsTo("OI", $component)
      && "#type($component)" != "" 
-     && "#type($component)" == "Joystick")
+     && "#type2($component)" == "Joystick")
     #constructor($component)
 
 #end
