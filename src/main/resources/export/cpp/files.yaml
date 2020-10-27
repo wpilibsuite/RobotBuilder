@@ -87,6 +87,7 @@
   source: ${exporter_path}RobotContainer.cpp
   update: Modify
   modifications:
+    autonomous: ${exporter_path}RobotContainer-autonomous.cpp
     constructor: ${exporter_path}RobotContainer-constructors.cpp
     functions: ${exporter_path}RobotContainer-functions.cpp
     buttons: ${exporter_path}RobotContainer-buttons.cpp
