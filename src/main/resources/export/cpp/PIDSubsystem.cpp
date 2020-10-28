@@ -32,6 +32,7 @@
 
 void #class($subsystem.name)::Periodic() {
     // Put code here to be run every loop
+    PIDSubsystem::Periodic();
 
 }
 
