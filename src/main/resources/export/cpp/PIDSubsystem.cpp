@@ -29,6 +29,17 @@
     // Enable() - Enables the PID controller.
 }
 
+
+void #class($subsystem.name)::Periodic() {
+    // Put code here to be run every loop
+
+}
+
+void #class($subsystem.name)::SimulationPeriodic() {
+    // This method will be called once per scheduler run when in simulation
+
+}
+
 double #class($subsystem.name)::ReturnPIDInput() {
     // Return your input value for the PID loop
     // e.g. a sensor, like a potentiometer:
