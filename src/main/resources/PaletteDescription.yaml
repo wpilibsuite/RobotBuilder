@@ -834,7 +834,7 @@ Palette:
         name: Xbox Controller
         type: Joystick
         supports: {Xbox Button: -1}
-        help: A joystick that drivers can use as input.
+        help: An Xbox Controller that drivers can use as input.
         properties:
           - !ChoicesProperty
             name: Number
