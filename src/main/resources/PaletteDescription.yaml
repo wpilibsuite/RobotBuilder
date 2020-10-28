@@ -844,7 +844,7 @@ Palette:
       - !Component
         name: Xbox Button
         type: Xbox Button
-        help: A joystick button that binds a driver action to a command.
+        help: An Xbox Controller button that binds a driver action to a command.
         properties:
           - !ParentProperty
             name: Joystick
