@@ -16,3 +16,5 @@
 
 #end
 #end
+
+frc::SendableChooser<frc2::Command*> m_chooser;
