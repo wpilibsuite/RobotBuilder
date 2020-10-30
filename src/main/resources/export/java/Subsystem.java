@@ -38,6 +38,13 @@ public class #class($subsystem.name) extends #klass($subsystem) {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        super.periodic();
+
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        // This method will be called once per scheduler run when in simulation
 
     }
 

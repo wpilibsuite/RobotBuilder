@@ -21,6 +21,8 @@ private:
 #end
 public:
     #class($subsystem.name)();
+    void Periodic() override;
+    void SimulationPeriodic() override;
     double ReturnPIDInput();
     void UsePIDOutput(double output);
     void InitDefaultCommand();
