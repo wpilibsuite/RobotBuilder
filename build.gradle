@@ -158,7 +158,7 @@ publishing {
             artifact(shadowJar) {
                 classifier null
             }
-            groupId 'edu.wpi.first.wpilib'
+            groupId 'edu.wpi.first.tools'
             artifactId 'RobotBuilder'
             version wpilibVersioning.version.get()
         }
