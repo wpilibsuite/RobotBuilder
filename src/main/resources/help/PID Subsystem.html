@@ -20,7 +20,7 @@
   <p>A subsystem on a robot is a distinct part of the robot that
   performs a certain function. Within the command based robot
   framework, subsystems are encapsulated (represented) by classes.
-  PID commands include a built-in PID controller. For an
+  PID subsystems include a built-in PID controller. For an
   explanation of PID, see <a href="PID%20Controller.html">PID
   Controller.</a></p>
   <p class="lead">Subsystems can contain the following
@@ -49,7 +49,7 @@
   the default behavior for the subsystem. This is often as simple
   as a do nothing command so that when a command driving the robot
   stops, the drive train of the robot stops as opposed to
-  continuing the last motion it was given. It is also possible to
+  continuing the last motion it was given. It's also possible to
   have more complicated default commands such as a turret that
   continuously tracks a target when not doing anything else.</p>
   <p>Default commands are created just like any other command. The
@@ -59,12 +59,18 @@
   and restarting continuously when no other command is running.</p>
   <h2>Properties</h2>
   <dl>
+    <dt>Name</dt>
+    <dd>The name of the subsystem.</dd>
+    <dt>Constants</dt>
+    <dd>Constants to place in the subsystem.</dd>
     <dt>Default Command</dt>
     <dd>The command that runs when no other command is running on
     this subsystem. This command controls the default behaviour of
     this subsystem.</dd>
+    <dt>Default Command Parameters</dt>
+    <dd>Parameters for the default command.</dd>
     <dt>Send to SmartDashboard</dt>
-    <dd>Whether or not to send this PID Controller to the
+    <dd>Whether or not to send this PID Subsystem to the
     SmartDashboard for easy tuning and viewing.</dd>
     <dt>Input</dt>
     <dd>The sensor that tells the PID loop where it is.</dd>
@@ -77,7 +83,7 @@
     <dt>D</dt>
     <dd>The derivative constant for this PID Controller.</dd>
     <dt>F</dt>
-    <dd>The forcing constant for this PID Controller.</dd>
+    <dd>The feed-forward constant for this PID Controller.</dd>
     <dt>Tolerance</dt>
     <dd>How close is close enough for the PID Controller to be
     considered on target, or at the right location.</dd>
@@ -88,13 +94,13 @@
     automatically calculates the shortest route to the
     setpoint.</dd>
     <dd>*Populate the Minimum and Maximum Input.</dd>
-    <dd>Rather then using the max and min input range as constraints, it considers 
-      them to be the same point and automatically calculates the shortest route 
-      to the setpoint.</dd>
-
+    <dd>Rather then using the max and min input range as
+    constraints, it considers them to be the same point and
+    automatically calculates the shortest route to the
+    setpoint.</dd>
     <dt><strike>Limit Input</strike></dt>
-    <dd><strike>Whether or not to limit the range of acceptable input
-    values.</strike></dd>
+    <dd><strike>Whether or not to limit the range of acceptable
+    input values.</strike></dd>
     <dt>Minimum Input</dt>
     <dd>The minimum input value, any value lower than this will be
     considered to have this value.</dd>
@@ -115,19 +121,18 @@
   <p>Subsystem are primarily used as an organizational concept. In
   object oriented programming, they also are a very good basis for
   dividing up your robot into separate classes that encapsulate the
-  relevant behaviour.</p>
+  relevant behavior.</p>
   <h2>See Also</h2>
   <ul>
     <li><a href=
     "https://www.youtube.com/watch?v=1WLk1_Ye_U8">WPILib PID Tuning
     Video</a></li>
     <li><a href=
-    "https://docs.wpilib.org/en/stable/docs/software/old-commandbased/subsystems/pidsubsystems-pid-control.html">
+    "https://docs.wpilib.org/en/stable/docs/software/commandbased/pid-subsystems-commands.html">
     PIDSubsystems for built-in PID Control</a></li>
     <li><a href=
     "https://docs.wpilib.org/en/stable/docs/software/wpilib-tools/robotbuilder/writing-code/robotbuilder-writing-pidsubsystem-code.html">
     Writing the Code for a PIDSubsystem</a></li>
   </ul>
-  <p>UNFINISHED</p>
 </body>
 </html>
