@@ -36,6 +36,12 @@ public class #class($subsystem.name) extends PIDSubsystem {
 #parse("${exporter_path}Subsystem-constructors.java")
 #end
 
+        // Use these to get going:
+        // setSetpoint() -  Sets where the PID controller should move the system
+        //                  to
+        // enable() - Enables the PID controller.
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
@@ -46,12 +52,6 @@ public class #class($subsystem.name) extends PIDSubsystem {
     public void simulationPeriodic() {
         // This method will be called once per scheduler run when in simulation
 
-    }
-
-        // Use these to get going:
-        // setSetpoint() -  Sets where the PID controller should move the system
-        //                  to
-        // enable() - Enables the PID controller.
     }
 
     @Override
