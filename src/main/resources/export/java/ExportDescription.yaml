@@ -28,7 +28,7 @@
 ##     instruction.
 ##
 ## Instructions: A map of palette components to their defaults and
-##     instruction sets. The defaults are a comma-seperated string
+##     instruction sets. The defaults are a comma-separated string
 ##     with the highest priority default first. The instructions
 ##     themselves vary from language to language, in the java
 ##     exporter:

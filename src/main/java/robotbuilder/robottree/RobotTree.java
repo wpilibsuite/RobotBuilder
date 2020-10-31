@@ -391,7 +391,7 @@ public class RobotTree extends JPanel {
         if (!isVersionCompatible(version)) {
             JOptionPane.showMessageDialog(MainFrame.getInstance(),
                     "File was made with RobotBuilder " + version.replace("V", "v")
-                    + ", which is incompatable with version " + RobotBuilder.VERSION + ".",
+                    + ", which is incompatible with version " + RobotBuilder.VERSION + ".",
                     "Wrong Version", JOptionPane.ERROR_MESSAGE);
             return; // Give up
         }
