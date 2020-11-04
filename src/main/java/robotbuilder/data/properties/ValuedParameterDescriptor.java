@@ -100,10 +100,10 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
     public boolean valueMatchesType() {
         switch (getType()) {
             case "boolean":
-                return value instanceof String
+                return value instanceof Boolean || (value instanceof String
                         && (isReference()
-                        || value.equals(BOOLEAN_TRUE)
-                        || value.equals(BOOLEAN_FALSE));
+                        || ((String)value).matches(BOOLEAN_TRUE)
+                        || ((String)value).matches(BOOLEAN_FALSE)));
             case "byte":
                 return value instanceof String
                         && (isReference()
