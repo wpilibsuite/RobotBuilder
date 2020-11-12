@@ -29,6 +29,8 @@ RobotContainer::RobotContainer() : m_autonomousCommand(
 #parse("${exporter_path}RobotContainer-autonomous.cpp")
 #end
 
+    frc::SmartDashboard::PutData("Auto Mode", &m_chooser);
+
 }
 
 void RobotContainer::ConfigureButtonBindings() {
