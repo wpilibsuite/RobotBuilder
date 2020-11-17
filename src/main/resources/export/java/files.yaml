@@ -94,7 +94,7 @@
   update: Modify
   modifications:
     declarations: ${exporter_path}RobotContainer-declarations.java
-    constructors: ${exporter_path}RobotContainer-constructors.java
+    buttons: ${exporter_path}RobotContainer-buttons.java
     subsystem_default_Command: ${exporter_path}RobotContainer-subsystem_default_Command.java
     smartdashboard: ${exporter_path}RobotContainer-smartDashboard.java
     imports: ${exporter_path}RobotContainer-imports.java

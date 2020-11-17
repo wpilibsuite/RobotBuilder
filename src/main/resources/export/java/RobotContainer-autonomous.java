@@ -5,14 +5,14 @@
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Autonomous Selection").getValue())
 #if( $component.getProperty("Parameter presets").getValue().isEmpty() )
-        m_chooser.addOption("$component.getName()", #new_command_instantiation_nt( $component $params ));
+    m_chooser.addOption("$component.getName()", #new_command_instantiation_nt( $component $params ));
 #else
 #foreach( $set in $component.getProperty("Parameter presets").getValue() )
-        m_chooser.addOption("$component.getName(): $set.getName()", #new_command_instantiation_nt( $component, $set.getParameters() ));
+    m_chooser.addOption("$component.getName(): $set.getName()", #new_command_instantiation_nt( $component, $set.getParameters() ));
 #end
 #end
 #end
 #end
 #if($command != "None")
-        m_chooser.setDefaultOption("$command.getName()", #new_command_instantiation_nt( $command $params ));
+    m_chooser.setDefaultOption("$command.getName()", #new_command_instantiation_nt( $command $params ));
 #end
