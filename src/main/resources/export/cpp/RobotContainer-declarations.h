@@ -2,7 +2,7 @@
 #foreach ($component in $components)
 #if ("#type($component)" != "" 
 && ("#type($component)" == "frc2::SubsystemBase"
-     || "#type($component)" == "PIDSubsystem"))
+     || "#type($component)" == "frc2::PIDSubsystem"))
     #class($component.getName()) m_#variable($component.getName());
 #end
 #end
