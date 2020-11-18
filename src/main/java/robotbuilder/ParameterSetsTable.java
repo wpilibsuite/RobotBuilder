@@ -23,11 +23,7 @@ import javax.swing.text.PlainDocument;
 import lombok.RequiredArgsConstructor;
 
 import robotbuilder.data.RobotComponent;
-import robotbuilder.data.properties.ParameterDescriptor;
-import robotbuilder.data.properties.ParameterSet;
-import robotbuilder.data.properties.ParameterSetProperty;
-import robotbuilder.data.properties.ParametersProperty;
-import robotbuilder.data.properties.ValuedParameterDescriptor;
+import robotbuilder.data.properties.*;
 import robotbuilder.utils.UniqueList;
 
 /**
@@ -204,31 +200,29 @@ class ParameterSetsTable extends JTable {
         if (input.isEmpty()) {
             return false;
         }
-        if (offset == 0 && input.startsWith("$")) {
+        if (isReference (existing)) {
             return true;
         }
-        if (existing.startsWith("$")) {
+        if (isReference(input)) {
             return true;
         }
         switch (type) {
             case "String":
                 return !input.contains("\"") && !input.contains("\\");
             case "double":
-                if (".".equals(input) && existing.contains(".")) {
-                    // only allow one dot in a double
-                    return false;
-                }
-                if (offset == 0 && input.startsWith("-")) {
-                    return input.length() == 1 || input.substring(1).matches("[0-9]*\\.?[0-9]*");
-                }
-                return input.matches("[0-9]*\\.?[0-9]*");
+                return Utils.doesNotError(() -> Double.parseDouble((String) input));
             case "int":
+                return Utils.doesNotError(() -> Integer.parseInt((String) input));
             case "byte":
+                return (Utils.doesNotError(() -> Integer.parseInt((String) input))
+                        // use Integer.parseInt instead of Byte.parseByte because C++ maximum value is > Java's maximum value
+                        // and we have no way of knowing which language will be exported to
+                        && Integer.parseInt((String) input) >= -128 // -128 is minimum value in Java (C++: 0)
+                        && Integer.parseInt((String) input) < 256); // 255 is maximum value in C++ (Java: 127)
             case "long":
-                if (offset == 0 && input.startsWith("-")) {
-                    return input.length() == 1 || input.substring(1).matches("[0-9]+");
-                }
-                return input.matches("[0-9]+");
+                return Utils.doesNotError(() -> Long.parseLong((String) input));
+            case "boolean":
+                return input.matches("false") || input.matches("true");
             default:
                 return false;
         }
@@ -307,6 +301,50 @@ class ParameterSetsTable extends JTable {
             return super.getDataVector();
         }
 
+    }
+
+    /**
+     * Checks if this parameter references a constant, a variable, or
+     * expression.
+     *
+     * @return
+     */
+    public boolean isReference(String value) {
+            if (value.startsWith("$")) {
+                // Literal escape
+                return true;
+            } else if (isSubsystemConstant(value)) {
+                return true;
+            }
+        return false;
+    }
+
+    /**
+     * Checks if this parameter is a reference to a subsystem constant (e.g.
+     * "Arm.UP").
+     *
+     * @return
+     */
+    public boolean isSubsystemConstant(String value) {
+            if (value.contains(".")) {
+                String[] split = value.split("\\.");
+                if (split.length != 2) {
+                    return false;
+                }
+                RobotComponent subsystem = MainFrame.getInstance().getCurrentRobotTree().getComponentByName(split[0]);
+                if (subsystem == null) {
+                    return false;
+                }
+                ConstantsProperty cp = (ConstantsProperty) subsystem.getProperty("Constants");
+                if (cp == null) {
+                    return false;
+                }
+                List<ValuedParameterDescriptor> constants = cp.getValue();
+                return constants.stream()
+                        .map(ValuedParameterDescriptor::getName)
+                        .anyMatch(split[1]::equals);
+            }
+        return false;
     }
 
 }
