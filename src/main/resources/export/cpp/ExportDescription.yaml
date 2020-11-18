@@ -133,17 +133,18 @@ Instructions:
     Defaults: "None"
   Subsystem:
     Defaults: "None"
-    Export: "Robot"
+    Export: "RobotContainer"
     Import: "\\#include \"subsystems/#class($Short_Name).h\""
     Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
     Construction: "#variable($Short_Name).reset(new #class($Short_Name)());"
     ClassName: "frc2::SubsystemBase"
   PID Subsystem:
     Defaults: "None"
-    Export: "Robot"
+    Export: "RobotContainer"
     Import: "\\#include \"subsystems/#class($Short_Name).h\""
     Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
     Construction: "" ##"#variable($Short_Name).reset(new #class($Short_Name)());"
+    ClassName: "frc2::PIDSubsystem"
 
   PID Controller:
     Defaults: "Component,None"
@@ -374,11 +375,11 @@ Instructions:
     Defaults: "OI,None"
     ClassName: "Joystick"
     Construction: "frc::${ClassName} m_#variable($Name){${Number}};"
-    # Prototype: "std::shared_ptr<frc::${ClassName}> get#class($Name)();"
-    #Function: >-
-      #  std::shared_ptr<frc::${ClassName}> OI::get#class($Name)() {
-      #     return #variable($Name);
-      #  }
+    Prototype: "frc::${ClassName}* get#class($Name)();"
+    Function: >-
+        frc::${ClassName}* RobotContainer::get#class($Name)() {
+           return &m_#variable($Name);
+        }
   Joystick Button:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"

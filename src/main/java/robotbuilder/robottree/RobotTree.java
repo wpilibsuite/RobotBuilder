@@ -309,6 +309,7 @@ public class RobotTree extends JPanel {
     }
 
     public void save() {
+        fileChooser.setSelectedFile(new File(treeModel.getRoot().toString()));
         if (getFilePath() == null) {
             int result = fileChooser.showSaveDialog(MainFrame.getInstance());
             if (result == JFileChooser.CANCEL_OPTION) {

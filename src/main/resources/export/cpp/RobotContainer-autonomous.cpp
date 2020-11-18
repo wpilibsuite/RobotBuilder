@@ -14,4 +14,4 @@
 #end
 #end
 
-    m_chooser.AddDefault("$command.getName()", new #new_command_instantiation( $command, $command, $params ));
+    m_chooser.SetDefaultOption("$command.getName()", new #new_command_instantiation( $command, $command, $params ));
