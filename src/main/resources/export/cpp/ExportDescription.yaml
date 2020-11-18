@@ -107,7 +107,6 @@ Defaults:
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
   OI:
     Export: "OI"
-    Declaration: "std::shared_ptr<frc::${ClassName}> #variable($Name);"
   Button:
     Extra:  "#if(\"$Command\" != \"None\")#variable($Name)->${When_to_Run.substring(0,1).toUpperCase()}${When_to_Run.substring(1)}(#command_instantiation($Command $Parameters));#end"
   Command:
@@ -127,14 +126,11 @@ Instructions:
     Defaults: "None"
     Export: "RobotContainer"
     Import: "\\#include \"subsystems/#class($Short_Name).h\""
-    Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
-    Construction: ""
     ClassName: "frc2::SubsystemBase"
   PID Subsystem:
     Defaults: "None"
     Export: "RobotContainer"
     Import: "\\#include \"subsystems/#class($Short_Name).h\""
-    Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
     ClassName: "frc2::PIDSubsystem"
 
   PID Controller:
