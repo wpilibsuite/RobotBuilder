@@ -286,11 +286,15 @@ Instructions:
     Declaration: "frc::${Type} m_#variable($Name){${Output_Channel_PWM}};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
     Import: "\\#include <frc/${Type}.h>"
+    Extra: >-
+      m_#variable($Short_Name).SetInverted(${Inverted});
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "NidecBrushless"
     Declaration: "frc::${ClassName} m_#variable($Name){${Output_Channel_PWM}, ${Output_Channel_Digital}};"
     LiveWindow: "AddChild(\"$Short_Name\", &m_#variable($Name));"
+    Extra: >-
+      m_#variable($Short_Name).SetInverted(${Inverted});
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
