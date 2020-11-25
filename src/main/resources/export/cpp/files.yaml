@@ -274,7 +274,7 @@
   update: Modify
   modifications:
     declarations: ${exporter_path}Subsystem-declarations.h
-    constants: ${exporter_path}Subsystem-constants.h
+    constants: ${exporter_path}PIDSubsystem-constants.h
     cmdpidgetters: ${exporter_path}Subsystem-pidgetters.h
     includes: ${exporter_path}Subsystem-includes.h
   variables:
