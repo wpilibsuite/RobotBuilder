@@ -169,6 +169,7 @@
   export: $project/src/main/include/commands/#class($command.name).h
   source: ${exporter_path}SetpointCommand.h
   modifications:
+    includes: ${exporter_path}command-includes.h
     constructor: ${exporter_path}Command-constructor-header.h
   update: Modify
   variables:
