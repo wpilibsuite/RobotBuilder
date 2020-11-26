@@ -120,6 +120,12 @@ public class TestUtils {
         RobotComponent auto = new RobotComponent("Autonomous", "Sequential Command Group", tree);
         commands.add(auto);
 
+        // Create setpoint command
+        RobotComponent setpointCommand = new RobotComponent("Wrist Setpoint", "Setpoint Command", tree);
+        commands.add(setpointCommand);
+        setpointCommand.getProperty("Requires").setValueAndUpdate("Wrist");
+        setpointCommand.getProperty("Button on SmartDashboard").setValueAndUpdate(false);
+
         // Deal with odd references
         driveTrain.getProperty("Default Command").setValueAndUpdate("Tank Drive");
         armUpButton.getProperty("Command").setValueAndUpdate("Arm Up");
