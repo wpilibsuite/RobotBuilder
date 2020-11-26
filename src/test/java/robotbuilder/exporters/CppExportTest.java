@@ -62,5 +62,10 @@ public class CppExportTest {
         exporter.export(tree);
 
         assertEquals("Exit value should be 0, compilation failed.", 0, TestUtils.runBuild(PROJECT_DIRECTORY));
+
+        //export and build a second time
+        exporter.export(tree);
+
+        assertEquals("Exit value should be 0, compilation failed.", 0, TestUtils.runBuild(PROJECT_DIRECTORY));
     }
 }
