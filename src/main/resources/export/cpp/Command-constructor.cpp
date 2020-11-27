@@ -6,11 +6,14 @@
 \#include "commands/#class($command.name).h"
 
 #if( $params.size() > 0 )
-#class($command.name)::#class($command.name)(#if( $len >= 0 )#foreach($i in [0..$len])#param_declaration_cpp($params.get($i)), #end#end#if( $last >= 0 )#param_declaration_cpp($params.get($last))#end#if(${command.getProperty("Requires").getValue()} != "None") ,#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()})#end) :
-#foreach($param in $params)
-    m_$param.getName()($param.getName())
+#class($command.name)::#class($command.name)(#if( $len >= 0 )#foreach($i in [0..$len])#param_declaration_cpp($params.get($i)), #end#end#if( $last >= 0 )#param_declaration_cpp($params.get($last))#end#if(${command.getProperty("Requires").getValue()} != "None"), #class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()})#end) :
+#if( $len >= 0 )#foreach($i in [0..$len])
+    m_$params.get($i).getName()($params.get($i).getName()),
 #end
-#if(${command.getProperty("Requires").getValue()} != "None"),     m_#variable(${command.getProperty("Requires").getValue().toLowerCase()})(#variable(${command.getProperty("Requires").getValue().toLowerCase()}))#end
+#end
+#if( $last >= 0 )
+    m_$params.get($last).getName()($params.get($last).getName())#end#if(${command.getProperty("Requires").getValue()} != "None"),
+    m_#variable(${command.getProperty("Requires").getValue().toLowerCase()})(#variable(${command.getProperty("Requires").getValue().toLowerCase()}))#end
 {
 #elseif(${command.getProperty("Requires").getValue()} == "None")
 #class($command.name)::#class($command.name)(){
