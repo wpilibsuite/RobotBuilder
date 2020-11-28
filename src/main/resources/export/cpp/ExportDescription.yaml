@@ -297,13 +297,16 @@ Instructions:
     ClassName: "SpeedController"
     Construction: "#variable($Name).reset(new frc::${Type}(${Output_Channel_PWM}));"
     LiveWindow: "AddChild(\"$Short_Name\", std::static_pointer_cast<frc::${Type}>(#variable($Name)));"
-#    Import: "\\#include \"frc/${Type}.h\"\\n\\#include \"frc/${ClassName}.h";"
     Import: "\\#include \"frc/${Type}.h\""
+    Extra: >-
+      #variable($Short_Name)->SetInverted(${Inverted});
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "NidecBrushless"
     Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital}));"
     LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Extra: >-
+      #variable($Short_Name)->SetInverted(${Inverted});
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
