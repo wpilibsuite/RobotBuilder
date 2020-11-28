@@ -160,7 +160,7 @@
   source: ${exporter_path}SetpointCommand.cpp
   update: Modify
   modifications:
-    constructor: ${exporter_path}SetpointCommand-constructor.cpp
+    constructor: ${exporter_path}Command-constructor.cpp
     initialize: ${exporter_path}SetpointCommand-initialize.cpp
     isFinished: ${exporter_path}SetpointCommand-isFinished.cpp
   variables:

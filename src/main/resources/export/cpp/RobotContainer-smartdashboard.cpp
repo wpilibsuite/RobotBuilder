@@ -13,7 +13,7 @@ ${Collections.reverse($components)}
 #if ($component.getBase().getType() == "Command"
      && $component.getProperty("Button on SmartDashboard").getValue())
 #if( $component.getProperty("Parameter presets").getValue().isEmpty())
-    frc::SmartDashboard::PutData("$component.getName()", new #new_command_instantiation( $component, $component, $set.getParameters()));
+    frc::SmartDashboard::PutData("$component.getName()", new #new_command_instantiation( $component, $component, $component.getProperty("Parameter presets").getValue()));
 #else
 #foreach( $set in $component.getProperty("Parameter presets").getValue() )
     frc::SmartDashboard::PutData("$component.getName(): $set.getName()", new #new_command_instantiation( $component, $component, $set.getParameters() ));
