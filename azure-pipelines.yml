@@ -16,7 +16,7 @@ stages:
   jobs:
   - job: Linux
     pool:
-      vmImage: 'Ubuntu 16.04'
+      vmImage: 'Ubuntu 18.04'
 
     container: wpilib2020
     
@@ -86,7 +86,7 @@ stages:
 
   - job: Mac
     pool:
-      vmImage: 'macOS-10.14'
+      vmImage: 'macOS-10.15'
     steps:
       - script: |
           mkdir build
@@ -108,7 +108,7 @@ stages:
   jobs:
   - job: PublishJob
     pool:
-      vmImage: 'vs2017-win2016'
+      vmImage: 'ubuntu-18.04'
 
     steps:
 # PR Builds
