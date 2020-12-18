@@ -3,6 +3,7 @@ package robotbuilder.data;
 
 import org.junit.*;
 import static org.junit.Assert.*;
+import robotbuilder.extensions.Extensions;
 import robotbuilder.MainFrame;
 import robotbuilder.robottree.RobotTree;
 import robotbuilder.TestUtils;
@@ -18,6 +19,7 @@ public class ExistsValidatorTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Extensions.init();
         MainFrame.getInstance();
     }
 
