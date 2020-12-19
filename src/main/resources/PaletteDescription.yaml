@@ -851,27 +851,8 @@ Palette:
           - !ChoicesProperty
             name: Button
             choices: ["A","B","X","Y","Back","Start","BumperLeft","BumperRight","StickLeft","StickRight"]
-            default: "kA"
-          - !TypeSelectionProperty
-            name: Command
-            type: Command
-            validators: [TypeDropdownSelected]
-            default: None
-          - !Parameters
-            name: Parameters
-          - !ChoicesProperty
-            name: When to Run
-            choices: [whenPressed, whenReleased, whileHeld, whenHeld, toggleWhenPressed]
-            default: whenPressed
-          - !BooleanProperty
-            name: Add Timeout
-            default: false
-          - !DoubleProperty
-            name: Timeout
-            default: 0
-          - !BooleanProperty
-            name: Interruptible
-            default: true
+            default: "A"
+          #Button("")
 
   - Commands:
       - !Component
