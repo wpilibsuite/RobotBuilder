@@ -1,7 +1,7 @@
 // Create some buttons
 #foreach( $component in $components )
 #if ($helper.exportsTo("OI", $component)
-    && "#type($component)" != "Joystick" 
+    && "#base_type($component)" != "Joystick" 
     && ("#constructor($component)" != "" || "#extra($component)" != ""))
         #constructor($component)
         ${Collections.reverse($commands)}
