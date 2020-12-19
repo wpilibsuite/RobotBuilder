@@ -27,7 +27,7 @@ private:
 #end
 
 #class($command) m_autonomousCommand;
-    static RobotContainer* m_RobotContainer;
+    static RobotContainer* m_robotContainer;
 
     void ConfigureButtonBindings();
 };
