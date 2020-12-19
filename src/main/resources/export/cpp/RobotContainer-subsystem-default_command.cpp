@@ -4,7 +4,7 @@
 #if($command.name == $component.getProperty("Default Command").value)
 #set($params = $component.getProperty("Default command parameters").getValue())
 #if ($command != "None")
-        m_#required_subsystem($command).SetDefaultCommand(#new_command_instantiation($component, $command, $params));
+        #required_subsystem($command).SetDefaultCommand(#new_command_instantiation($component, $command, $params));
 #end
 #end
 #end

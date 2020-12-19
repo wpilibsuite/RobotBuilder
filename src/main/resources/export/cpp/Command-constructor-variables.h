@@ -14,11 +14,11 @@
 #set($first = 1)
 #if ($command.getProperty("Requires").getValue() != "None")
     #if($first)
-#class(${command.getProperty("Requires").getValue()})* m_#variable(${command.getProperty("Requires").getValue().toLowerCase()});
+#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()});
         #set($first = 0)
     #else
         ## AddRequirements(Robot::#variable(${command.getProperty("Requires").getValue()}));
-,#class(${command.getProperty("Requires").getValue()})* m_#variable(${command.getProperty("Requires").getValue().toLowerCase()});
+,#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()});
 #end
 #end
 
