@@ -16,6 +16,7 @@
 #end
 
 
+
 double #class($command.name)::ReturnPIDInput() {
     // Return your input value for the PID loop
     // e.g. a sensor, like a potentiometer:
