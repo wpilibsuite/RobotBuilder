@@ -1,2 +1,2 @@
 #set($command = $helper.getByName($command_name, $robot))
-    return m_#variable(${command.getProperty("Requires").getValue().toLowerCase()})->ReturnPIDInput() >= m_setpoint;
+    return m_#variable(${command.getProperty("Requires").getValue().toLowerCase()})->GetController().AtSetpoint();

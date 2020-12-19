@@ -92,6 +92,7 @@
     functions: ${exporter_path}RobotContainer-functions.cpp
     buttons: ${exporter_path}RobotContainer-buttons.cpp
     default-commands: ${exporter_path}RobotContainer-subsystem-default_command.cpp
+    smartdashboard: ${exporter_path}RobotContainer-smartdashboard.cpp
 
 - !File
   export: $project/src/main/include/RobotContainer.h
@@ -160,7 +161,6 @@
   update: Modify
   modifications:
     constructor: ${exporter_path}Command-constructor.cpp
-    includes: ${exporter_path}Setpointcommand-includes.cpp
     initialize: ${exporter_path}SetpointCommand-initialize.cpp
     isFinished: ${exporter_path}SetpointCommand-isFinished.cpp
   variables:
@@ -169,6 +169,7 @@
   export: $project/src/main/include/commands/#class($command.name).h
   source: ${exporter_path}SetpointCommand.h
   modifications:
+    includes: ${exporter_path}command-includes.h
     constructor: ${exporter_path}Command-constructor-header.h
   update: Modify
   variables:
@@ -261,7 +262,6 @@
   update: Modify
   modifications:
     declarations: ${exporter_path}Subsystem-declarations.cpp
-    default_command: ${exporter_path}Subsystem-default_command.cpp
     pid: ${exporter_path}PIDSubsystem-pid.cpp
     source: ${exporter_path}PIDSubsystem-source.cpp
     output: ${exporter_path}PIDSubsystem-output.cpp
@@ -275,7 +275,7 @@
   update: Modify
   modifications:
     declarations: ${exporter_path}Subsystem-declarations.h
-    constants: ${exporter_path}Subsystem-constants.h
+    constants: ${exporter_path}PIDSubsystem-constants.h
     cmdpidgetters: ${exporter_path}Subsystem-pidgetters.h
     includes: ${exporter_path}Subsystem-includes.h
   variables:

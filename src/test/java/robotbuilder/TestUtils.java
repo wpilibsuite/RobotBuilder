@@ -88,17 +88,17 @@ public class TestUtils {
         arm.add(limit);
 
         // Create a wrist subsystem
-//        RobotComponent wrist = new RobotComponent("Wrist", "PID Subsystem", tree);
-//        subsystems.add(wrist);
-//        wrist.getProperty("P").setValueAndUpdate(2);
-//        wrist.getProperty("I").setValueAndUpdate(1);
-//        wrist.getProperty("D").setValueAndUpdate(-1);
-//        wrist.getProperty("Continuous").setValueAndUpdate(true);
-//        RobotComponent wristMotor = new RobotComponent("Motor", "Speed Controller", tree);
-//        wristMotor.setProperty("Type", "Jaguar");
-//        wrist.add(wristMotor);
-//        RobotComponent pot = new RobotComponent("Pot", "Analog Potentiometer", tree);
-//        wrist.add(pot);
+        RobotComponent wrist = new RobotComponent("Wrist", "PID Subsystem", tree);
+        subsystems.add(wrist);
+        wrist.getProperty("P").setValueAndUpdate(2);
+        wrist.getProperty("I").setValueAndUpdate(1);
+        wrist.getProperty("D").setValueAndUpdate(-1);
+        wrist.getProperty("Continuous").setValueAndUpdate(true);
+        RobotComponent wristMotor = new RobotComponent("Motor", "Speed Controller", tree);
+        wristMotor.setProperty("Type", "Jaguar");
+        wrist.add(wristMotor);
+        RobotComponent pot = new RobotComponent("Pot", "Analog Potentiometer", tree);
+        wrist.add(pot);
 
         // Create a simple OI
         RobotComponent leftstick = new RobotComponent("Left Joystick", "Joystick", tree);
@@ -119,6 +119,12 @@ public class TestUtils {
         commands.add(armUp);
         RobotComponent auto = new RobotComponent("Autonomous", "Sequential Command Group", tree);
         commands.add(auto);
+
+        // Create setpoint command
+        RobotComponent setpointCommand = new RobotComponent("Wrist Setpoint", "Setpoint Command", tree);
+        commands.add(setpointCommand);
+        setpointCommand.getProperty("Requires").setValueAndUpdate("Wrist");
+        setpointCommand.getProperty("Button on SmartDashboard").setValueAndUpdate(false);
 
         // Deal with odd references
         driveTrain.getProperty("Default Command").setValueAndUpdate("Tank Drive");

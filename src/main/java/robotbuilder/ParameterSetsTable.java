@@ -23,11 +23,7 @@ import javax.swing.text.PlainDocument;
 import lombok.RequiredArgsConstructor;
 
 import robotbuilder.data.RobotComponent;
-import robotbuilder.data.properties.ParameterDescriptor;
-import robotbuilder.data.properties.ParameterSet;
-import robotbuilder.data.properties.ParameterSetProperty;
-import robotbuilder.data.properties.ParametersProperty;
-import robotbuilder.data.properties.ValuedParameterDescriptor;
+import robotbuilder.data.properties.*;
 import robotbuilder.utils.UniqueList;
 
 /**
@@ -204,10 +200,10 @@ class ParameterSetsTable extends JTable {
         if (input.isEmpty()) {
             return false;
         }
-        if (offset == 0 && input.startsWith("$")) {
+        if (isReference (existing)) {
             return true;
         }
-        if (existing.startsWith("$")) {
+        if (isReference(input)) {
             return true;
         }
         switch (type) {
@@ -229,6 +225,8 @@ class ParameterSetsTable extends JTable {
                     return input.length() == 1 || input.substring(1).matches("[0-9]+");
                 }
                 return input.matches("[0-9]+");
+            case "boolean":
+                return input.matches("false") || input.matches("true");
             default:
                 return false;
         }
@@ -307,6 +305,50 @@ class ParameterSetsTable extends JTable {
             return super.getDataVector();
         }
 
+    }
+
+    /**
+     * Checks if this parameter references a constant, a variable, or
+     * expression.
+     *
+     * @return
+     */
+    public boolean isReference(String value) {
+            if (value.startsWith("$")) {
+                // Literal escape
+                return true;
+            } else if (isSubsystemConstant(value)) {
+                return true;
+            }
+        return false;
+    }
+
+    /**
+     * Checks if this parameter is a reference to a subsystem constant (e.g.
+     * "Arm.UP").
+     *
+     * @return
+     */
+    public boolean isSubsystemConstant(String value) {
+            if (value.contains(".")) {
+                String[] split = value.split("\\.");
+                if (split.length != 2) {
+                    return false;
+                }
+                RobotComponent subsystem = MainFrame.getInstance().getCurrentRobotTree().getComponentByName(split[0]);
+                if (subsystem == null) {
+                    return false;
+                }
+                ConstantsProperty cp = (ConstantsProperty) subsystem.getProperty("Constants");
+                if (cp == null) {
+                    return false;
+                }
+                List<ValuedParameterDescriptor> constants = cp.getValue();
+                return constants.stream()
+                        .map(ValuedParameterDescriptor::getName)
+                        .anyMatch(split[1]::equals);
+            }
+        return false;
     }
 
 }
