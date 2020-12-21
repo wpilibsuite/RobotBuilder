@@ -18,6 +18,8 @@ import static org.junit.Assert.assertTrue;
  */
 public class SavingAndLoadingTest {
 
+    private static final String SAVE_FILE = "build/test-resources/save.yaml";
+
     public SavingAndLoadingTest() {
     }
 
@@ -56,8 +58,10 @@ public class SavingAndLoadingTest {
         RobotTree tree = TestUtils.generateTestTree();
         tree.isRobotValid();
         RobotComponent before = tree.getRoot();
-        tree.save("test/save.yml");
-        tree.load(new File("test/save.yml"));
+        tree.save(SAVE_FILE);
+        tree.save("build/test-resources/savefull.yaml");
+        tree.load(new File(SAVE_FILE));
+        tree.save("build/test-resources/savefull2.yaml");
         RobotComponent after = tree.getRoot();
         assertEquals("Loaded file should be identical to the saved file.",
                 before, after);
@@ -69,7 +73,7 @@ public class SavingAndLoadingTest {
         tree.newFile();
         tree.isRobotValid();
         RobotComponent before = tree.getRoot();
-        File tmpFile = File.createTempFile("robotbuilder-test-save", "-" + Long.toString(System.nanoTime()) + ".yml");
+        File tmpFile = File.createTempFile("robotbuilder-test-save", "-" + Long.toString(System.nanoTime()) + ".yaml");
         tree.save(tmpFile.getAbsolutePath());
         assertTrue("Didn't save in the correct location.", tmpFile.exists());
         tree.load(tmpFile);
