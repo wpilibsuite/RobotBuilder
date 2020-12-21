@@ -84,7 +84,9 @@ public class PropertiesDisplay extends JPanel {
         remove(currentDisplay);
         currentDisplay = new JScrollPane(propTable);
         add(currentDisplay, BorderLayout.CENTER);
-        ((JSplitPane) getParent()).setDividerLocation(0.5);
+        if (getParent() != null) {
+            ((JSplitPane) getParent()).setDividerLocation(0.5);
+        }
         update();
     }
 
