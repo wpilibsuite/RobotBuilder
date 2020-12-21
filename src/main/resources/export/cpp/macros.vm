@@ -1,5 +1,5 @@
 ## Generate Java style variable names from a component name
-#macro( variable $name )${name.substring(0,1).toLowerCase()}${name.substring(1).replace(' ', '')}#end
+#macro( variable $name )m_${name.substring(0,1).toLowerCase()}${name.substring(1).replace(' ', '')}#end
 
 ## Generate Java style class names from a component name
 #macro( class $name )${name.replace(' ', '')}#end
@@ -51,7 +51,7 @@ new #class($command)(#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $param
 ## Generates 'new MyCommand(arg0, arg1, arg2, ..., &m_subsystem)'
 #macro( new_command_instantiation $component $command $params )
 #set($len = $params.size() - 1)
-#class($command.name)(#if($command.getProperty("Requires").getValue() != "None")#if($len >= 0)#command_params($params), &m_#required_subsystem($command)#else &m_#required_subsystem($command) #end#else#if($len >= 0)#command_params($params)#end#end)#end
+#class($command.name)(#if($command.getProperty("Requires").getValue() != "None")#if($len >= 0)#command_params($params), &#required_subsystem($command)#else &#required_subsystem($command) #end#else#if($len >= 0)#command_params($params)#end#end)#end
 
 
 ## Generates 'new command_params(arg0, arg1, arg2, ...)'

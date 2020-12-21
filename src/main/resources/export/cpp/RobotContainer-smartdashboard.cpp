@@ -2,7 +2,7 @@
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotContainer", $component))
 #if ($component.getProperty("Send to SmartDashboard").getValue())
-    frc::SmartDashboard::PutData(&m_#variable($component.name));
+    frc::SmartDashboard::PutData(&#variable($component.name));
 #end
 #end
 #end

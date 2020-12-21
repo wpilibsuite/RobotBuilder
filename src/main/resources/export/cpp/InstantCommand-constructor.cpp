@@ -15,5 +15,5 @@ m_$param.getName() = $param.getName();
     // eg. AddRequirements(Robot::chassis.get());
     SetName("#class($command.name)");
     #if  (${command.getProperty("Requires").getValue()} != "None")
-    AddRequirements(m_#variable(${command.getProperty("Requires").getValue().toLowerCase()}));
+    AddRequirements(#variable(${command.getProperty("Requires").getValue().toLowerCase()}));
     #end
