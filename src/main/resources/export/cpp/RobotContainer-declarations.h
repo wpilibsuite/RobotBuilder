@@ -3,7 +3,7 @@
 #if ("#type($component)" != "" 
 && ("#type($component)" == "frc2::SubsystemBase"
      || "#type($component)" == "frc2::PIDSubsystem"))
-    #class($component.getName()) m_#variable($component.getName());
+    #class($component.getName()) #variable($component.getName());
 #end
 #end
 

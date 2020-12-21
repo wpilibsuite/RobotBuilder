@@ -13,18 +13,18 @@
 #end
 #if( $last >= 0 )
     m_$params.get($last).getName()($params.get($last).getName())#end#if(${command.getProperty("Requires").getValue()} != "None"),
-    m_#variable(${command.getProperty("Requires").getValue().toLowerCase()})(#variable(${command.getProperty("Requires").getValue().toLowerCase()}))#end
+    #variable(${command.getProperty("Requires").getValue().toLowerCase()})(#variable(${command.getProperty("Requires").getValue().toLowerCase()}))#end
 {
 #elseif(${command.getProperty("Requires").getValue()} == "None")
 #class($command.name)::#class($command.name)(){
 #else
 #class($command.name)::#class($command.name)(#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()}))
-:m_#variable(${command.getProperty("Requires").getValue().toLowerCase()})(#variable(${command.getProperty("Requires").getValue().toLowerCase()})){
+:#variable(${command.getProperty("Requires").getValue().toLowerCase()})(#variable(${command.getProperty("Requires").getValue().toLowerCase()})){
 #end
 
     // Use AddRequirements() here to declare subsystem dependencies
     // eg. AddRequirements(Robot::chassis.get());
     SetName("#class($command.name)");
     #if  (${command.getProperty("Requires").getValue()} != "None")
-    AddRequirements(m_#variable(${command.getProperty("Requires").getValue().toLowerCase()}));
+    AddRequirements(#variable(${command.getProperty("Requires").getValue().toLowerCase()}));
     #end
