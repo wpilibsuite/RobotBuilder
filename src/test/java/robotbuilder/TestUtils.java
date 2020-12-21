@@ -45,8 +45,8 @@ public class TestUtils {
         RobotTree tree = getNewRobotTree();
         RobotComponent robot = tree.getRoot();
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
-        RobotComponent oi = (RobotComponent) robot.getChildren().elementAt(0);
-        RobotComponent commands = (RobotComponent) robot.getChildren().elementAt(0);
+        RobotComponent oi = (RobotComponent) robot.getChildren().elementAt(1);
+        RobotComponent commands = (RobotComponent) robot.getChildren().elementAt(2);
 
         // Create a drive train subsystem
         RobotComponent driveTrain = new RobotComponent("Drive Train", "Subsystem", tree);
@@ -88,7 +88,7 @@ public class TestUtils {
         RobotComponent limit = new RobotComponent("Limit", "Limit Switch", tree);
         arm.add(limit);
 
-        // Create an wrist subsystem
+        // Create a wrist subsystem
         RobotComponent wrist = new RobotComponent("Wrist", "PID Subsystem", tree);
         subsystems.add(wrist);
         wrist.getProperty("P").setValueAndUpdate(2);
@@ -101,6 +101,67 @@ public class TestUtils {
         wrist.add(wristMotor);
         RobotComponent pot = new RobotComponent("Pot", "Analog Potentiometer", tree);
         wrist.add(pot);
+
+        // Create a misc subsystem
+        RobotComponent misc = new RobotComponent("Misc", "Subsystem", tree);
+        subsystems.add(misc);
+        //Speed Controller Group causes save and load file test false failures
+        //RobotComponent scg1 = new RobotComponent("SCG1", "Speed Controller", tree);
+        //scg1.setProperty("Type", "PWMVictorSPX");
+        //RobotComponent scg2 = new RobotComponent("SCG2", "Speed Controller", tree);
+        //scg2.setProperty("Type", "Spark");
+        //RobotComponent scg3 = new RobotComponent("SCG3", "Speed Controller", tree);
+        //scg3.setProperty("Type", "SD540");
+        //RobotComponent scg4 = new RobotComponent("SCG4", "Speed Controller", tree);
+        //scg4.setProperty("Type", "PWMVenom");
+        //RobotComponent scg = new RobotComponent("SCG", "Speed Controller Group", tree);
+        //scg.add(scg1);
+        //scg.add(scg2);
+        //scg.add(scg3);
+        //scg.add(scg4);
+        //scg.getProperty("SpeedController3").setValueAndUpdate(scg3);
+        //scg.getProperty("SpeedController4").setValueAndUpdate(scg4);
+        //misc.add(scg);
+        RobotComponent dd1 = new RobotComponent("DD1", "Speed Controller", tree);
+        dd1.setProperty("Type", "VictorSP");
+        RobotComponent dd2 = new RobotComponent("DD2", "Speed Controller", tree);
+        dd2.setProperty("Type", "VictorSP");
+        RobotComponent diffDrive = new RobotComponent("Diff Drive", "Differential Drive", tree);
+        diffDrive.add(dd1);
+        diffDrive.add(dd2);
+        diffDrive.getProperty("Left Motor").setValueAndUpdate(dd1);
+        diffDrive.getProperty("Right Motor").setValueAndUpdate(dd2);
+        misc.add(diffDrive);
+        RobotComponent indexEncoder = new RobotComponent("Indexed Encoder", "Indexed Encoder", tree);
+        misc.add(indexEncoder);
+        RobotComponent analogAccel = new RobotComponent("Analog Accelerometer", "AnalogAccelerometer", tree);
+        misc.add(analogAccel);
+        RobotComponent gearTooth = new RobotComponent("Gear Tooth", "Gear Tooth Sensor", tree);
+        misc.add(gearTooth);
+        RobotComponent dI = new RobotComponent("DI", "Digital Input", tree);
+        misc.add(dI);
+        RobotComponent ultrasonic = new RobotComponent("Ultrasonic", "Ultrasonic", tree);
+        misc.add(ultrasonic);
+        RobotComponent PDP = new RobotComponent("Power Distribution Panel", "PowerDistributionPanel", tree);
+        misc.add(PDP);
+        RobotComponent nidec = new RobotComponent("Nidec", "Nidec Brushless", tree);
+        misc.add(nidec);
+        RobotComponent servo = new RobotComponent("Servo", "Servo", tree);
+        misc.add(servo);
+        RobotComponent dO = new RobotComponent("DO", "Digital Output", tree);
+        misc.add(dO);
+        RobotComponent relay = new RobotComponent("Relay", "Spike", tree);
+        misc.add(relay);
+        RobotComponent aO = new RobotComponent("Analog Output", "Analog Output", tree);
+        misc.add(aO);
+        RobotComponent compressor = new RobotComponent("Compressor", "Compressor", tree);
+        misc.add(compressor);
+        RobotComponent solenoid = new RobotComponent("Solenoid", "Solenoid", tree);
+        misc.add(solenoid);
+        RobotComponent relaySolenoid = new RobotComponent("Relay Solenoid", "Relay Solenoid", tree);
+        misc.add(relaySolenoid);
+        RobotComponent doubleSolenoid = new RobotComponent("Double Solenoid", "Double Solenoid", tree);
+        misc.add(relaySolenoid);
 
         // Create a simple OI
         RobotComponent leftstick = new RobotComponent("Left Joystick", "Joystick", tree);
@@ -146,7 +207,7 @@ public class TestUtils {
 
         //enable desktop builds and disable roboRIO builds to allow compile test with desktop compiler.
         try {
-            Path path = Paths.get("test-resources", projectDirectory, "build.gradle");
+            Path path = Paths.get("build/test-resources", projectDirectory, "build.gradle");
             Stream<String> lines = Files.lines(path);
             List<String> replaced = lines
                     .map(line -> line.replaceAll("def includeDesktopSupport = false", "def includeDesktopSupport = true"))
@@ -160,11 +221,11 @@ public class TestUtils {
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
         if (isWindows) {
             System.out.println("Trying Windows compile...");
-            pb = new ProcessBuilder("gradlew.bat", "build", "-Ptoolchain-optional-roboRio").directory(new File("test-resources/" + projectDirectory));
+            pb = new ProcessBuilder("gradlew.bat", "build", "-Ptoolchain-optional-roboRio").directory(new File("build/test-resources/" + projectDirectory));
         } else {
             System.out.println("Trying *NIX compile...");
             //string array necessary to pass build as a parameter to gradle and not sh. https://stackoverflow.com/a/55164823
-            pb = new ProcessBuilder(new String[]{"sh", "-c", "./gradlew build -Ptoolchain-optional-roboRio"}).directory(new File("test-resources/" + projectDirectory));
+            pb = new ProcessBuilder(new String[]{"sh", "-c", "./gradlew build -Ptoolchain-optional-roboRio"}).directory(new File("build/test-resources/" + projectDirectory));
         }
         pb.redirectErrorStream(true);
         System.out.println("Running command: " + Arrays.toString(pb.command().toArray()));
