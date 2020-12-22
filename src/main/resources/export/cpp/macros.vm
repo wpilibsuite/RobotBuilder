@@ -7,8 +7,11 @@
 ## Generate Java style consant names from a component name
 #macro( constant $name )${name.replace(' ', '_').toUpperCase()}#end
 
-## Get the type of a robot component
+## Get the type (ie class) of a robot component
 #macro( type $component )${helper.getInstruction($component, "ClassName")}#end
+
+## Get the base type of a robot component
+#macro( base_type $component )$component.getBase().getType()#end
 
 ## Get the declaration instruction of a robot component
 #macro( declaration $component )${helper.getInstruction($component, "Declaration")}#end

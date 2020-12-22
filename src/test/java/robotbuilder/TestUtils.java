@@ -171,6 +171,11 @@ public class TestUtils {
         RobotComponent autoButton = new RobotComponent("Autonomous Button", "Joystick Button", tree);
         rightstick.add(autoButton);
         autoButton.getProperty("When to Run").setValueAndUpdate("whenPressed");
+        RobotComponent xbox = new RobotComponent("Xbox", "Xbox Controller", tree);
+        oi.add(xbox);
+        RobotComponent xboxButton = new RobotComponent("Arm Up Xbox Button", "Xbox Button", tree);
+        xbox.add(armUpButton);
+        autoButton.getProperty("When to Run").setValueAndUpdate("whenPressed");
 
         // Create some commands
         RobotComponent tankDrive = new RobotComponent("Tank Drive", "Command", tree);

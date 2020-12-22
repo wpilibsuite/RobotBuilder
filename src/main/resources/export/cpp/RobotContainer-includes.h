@@ -1,7 +1,5 @@
-\#include <frc/Joystick.h>
 \#include <frc/smartdashboard/SendableChooser.h>
 \#include <frc2/command/Command.h>
-\#include <frc2/command/button/JoystickButton.h>
 
 #foreach( $component in $components )
 #if ($component.getBase().getType() == "Subsystem")
