@@ -187,7 +187,9 @@
   export: $project/src/main/include/commands/#class($command.name).h
   source: ${exporter_path}WaitCommand.h
   modifications:
+    includes: ${exporter_path}command-includes.h
     constructor: ${exporter_path}WaitCommand-constructor-header.h
+    variables: ${exporter_path}Command-constructor-variables.h
   update: Modify
   variables:
     command_name: ${command.name}

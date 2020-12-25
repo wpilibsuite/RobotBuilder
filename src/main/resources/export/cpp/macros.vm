@@ -33,7 +33,7 @@
 
 ## Gets the C++ type of the parameter
 #macro( param_type $param )
-#if( $param.getType() == "String")char*#elseif( $param.getType() == "boolean" )bool#elseif( $param.getType() == "byte" )uint8_t#else$param.getType()#end
+#if( $param.getType() == "String")char*#elseif( $param.getType() == "boolean" )bool#elseif( $param.getType() == "byte" )uint8_t#elseif( $param.getName() == "timeout" )units::second_t#else$param.getType()#end
 #end
 
 ## Generate command parameter declaration for C++
