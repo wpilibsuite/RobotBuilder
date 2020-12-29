@@ -9,3 +9,4 @@
     public #class($command.name)(double timeout) {
         super(timeout);
 #end
+        m_timeout = timeout;

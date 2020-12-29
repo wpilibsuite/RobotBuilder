@@ -174,20 +174,22 @@
   update: Modify
   variables:
     command_name: ${command.name}
-#elseif($command.base.name == "Timed Command")
+#elseif($command.base.name == "Wait Command")
 - !File
   export: $project/src/main/cpp/commands/#class($command.name).cpp
-  source: ${exporter_path}TimedCommand.cpp
+  source: ${exporter_path}WaitCommand.cpp
   update: Modify
   modifications:
-    constructor: ${exporter_path}TimedCommand-constructor.cpp
+    constructor: ${exporter_path}WaitCommand-constructor.cpp
   variables:
     command_name: ${command.name}
 - !File
   export: $project/src/main/include/commands/#class($command.name).h
-  source: ${exporter_path}TimedCommand.h
+  source: ${exporter_path}WaitCommand.h
   modifications:
-    constructor: ${exporter_path}TimedCommand-constructor-header.h
+    includes: ${exporter_path}command-includes.h
+    constructor: ${exporter_path}WaitCommand-constructor-header.h
+    variables: ${exporter_path}Command-constructor-variables.h
   update: Modify
   variables:
     command_name: ${command.name}

@@ -33,14 +33,14 @@
 
 ## Gets the C++ type of the parameter
 #macro( param_type $param )
-#if( $param.getType() == "String")char*#elseif( $param.getType() == "boolean" )bool#elseif( $param.getType() == "byte" )uint8_t#else$param.getType()#end
+#if( $param.getType() == "String")char*#elseif( $param.getType() == "boolean" )bool#elseif( $param.getType() == "byte" )uint8_t#elseif( $param.getName() == "timeout" )units::second_t#else$param.getType()#end
 #end
 
 ## Generate command parameter declaration for C++
 #macro( param_declaration_cpp $param )#param_type( $param ) $param.getName()#end
 
 ## Generate parameter use
-#macro( param_set $param )#if( $param.isSubsystemConstant() )#cppify( $param )#elseif( $param.isReference() )$param.getValue().substring(1)#else#if( $param.getType() == "String" )"$param.getValue()"#else#if( $param.getType() == "byte" )(byte) #end$param.getValue()#if( $param.getType() == "long" )L#end#end#end#end
+#macro( param_set $param )#if( $param.isSubsystemConstant() )#cppify( $param )#elseif( $param.isReference() )$param.getValue().substring(1)#else#if( $param.getType() == "String" )"$param.getValue()"#else#if( $param.getType() == "byte" )(byte) #end$param.getValue()#if( $param.getType() == "long" )L#end#if( $param.getName() == "timeout")_s#end#end#end#end#
 
 ## Generates 'new MyCommand(arg0, arg1, arg2, ...)'
 #macro( command_instantiation $command $params )

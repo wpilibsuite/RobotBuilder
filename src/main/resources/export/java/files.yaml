@@ -140,8 +140,6 @@
     requires: ${exporter_path}Command-requires.java
     imports: ${exporter_path}Command-imports.java
     variable_declarations: ${exporter_path}Command-variable-declarations.java
-    initialize: ${exporter_path}WaitCommand-initialize.java
-    end: ${exporter_path}WaitCommand-end.java
     disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
