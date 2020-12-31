@@ -5,7 +5,7 @@ plugins {
     id 'application'
     id 'maven-publish'
     id "com.jfrog.artifactory" version "4.9.8"
-    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '4.0.1'
+    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '4.1.0'
     id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.1'
     id 'io.franzbecker.gradle-lombok' version '3.1.0'
     id "com.github.johnrengelman.shadow" version "5.1.0"
@@ -13,13 +13,8 @@ plugins {
     id 'org.aim42.htmlSanityCheck' version '1.1.3'
 }
 
-if (project.hasProperty('buildServer')) {
-    wpilibVersioning.buildServerMode = true
-}
-
-if (project.hasProperty('releaseMode')) {
-    wpilibVersioning.releaseMode = true
-}
+wpilibVersioning.buildServerMode = project.hasProperty('buildServer')
+wpilibVersioning.releaseMode = project.hasProperty('releaseMode')
 
 repositories {
     mavenCentral()
