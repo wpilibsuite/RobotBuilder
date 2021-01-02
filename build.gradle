@@ -52,6 +52,12 @@ mainClassName = "robotbuilder.RobotBuilder"
 
 wpilibVersioning.version.finalizeValue()
 
+version = wpilibVersioning.version.get()
+
+if (project.hasProperty("publishVersion")) {
+    version = project.publishVersion
+}
+
 jacoco {
     toolVersion = "0.8.4"
 }
@@ -120,7 +126,7 @@ jar {
 
     manifest {
         attributes('Implementation-Title': 'RobotBuilder',
-                    'Implementation-Version': wpilibVersioning.version.get(),
+                    'Implementation-Version': version,
                     'Built-By': System.getProperty('user.name'),
                     'Built-Date': new Date(),
                     'Built-JDK': System.getProperty('java.version'))
@@ -154,8 +160,8 @@ publishing {
                 classifier null
             }
             groupId 'edu.wpi.first.tools'
-            artifactId 'RobotBuilder'
-            version wpilibVersioning.version.get()
+            artifactId 'RobotBuilder-Old'
+            version version
         }
     }
 }
