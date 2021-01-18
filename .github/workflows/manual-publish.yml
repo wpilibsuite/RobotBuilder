@@ -19,8 +19,14 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Publish
+      - name: Publish Development
         run: ./gradlew publish -PbuildServer -PpublishVersion=${{ github.event.inputs.publish_version }}
+        env:
+          RUN_AZURE_ARTIFACTORY_RELEASE: "TRUE"
+          ARTIFACTORY_PUBLISH_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PUBLISH_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+      - name: Publish Release
+        run: ./gradlew publish -PbuildServer -PreleaseMode -PpublishVersion=${{ github.event.inputs.publish_version }}
         env:
           RUN_AZURE_ARTIFACTORY_RELEASE: "TRUE"
           ARTIFACTORY_PUBLISH_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
