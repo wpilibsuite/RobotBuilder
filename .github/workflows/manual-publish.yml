@@ -2,9 +2,11 @@ name: Manual Publish
 
 on: 
   workflow_dispatch:
-    publish_version:
-      description: 'Version to publish. This should be in the form of vYEAR.M.m'
-      required: true
+    inputs:
+      publish_version:
+        description: 'Version to publish. This should be in the form of vYEAR.M.m'
+        default: 'vYEAR.M.m'
+        required: true
 
 jobs:
   publish:
