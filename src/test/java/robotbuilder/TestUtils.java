@@ -204,6 +204,15 @@ public class TestUtils {
         setpointCommand.getProperty("Requires").setValueAndUpdate("Wrist");
         setpointCommand.getProperty("Button on SmartDashboard").setValueAndUpdate(false);
 
+        // Create instant command
+        RobotComponent instantCommand = new RobotComponent("Instant Command 1", "Instant Command", tree);
+        commands.add(instantCommand);
+
+        // Create instant command with requires
+        RobotComponent instantCommand2 = new RobotComponent("Instant Command 2", "Instant Command", tree);
+        commands.add(instantCommand2);
+        instantCommand2.getProperty("Requires").setValueAndUpdate("Wrist");
+
         // Deal with odd references
         driveTrain.getProperty("Default Command").setValueAndUpdate("Tank Drive");
         armUpButton.getProperty("Command").setValueAndUpdate("Arm Up");
