@@ -360,7 +360,7 @@ Instructions:
   Xbox Button:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"
-    Construction: "frc2::${ClassName} #variable($Name){&#variable($Joystick), ${Button}};"
+    Construction: "frc2::${ClassName} #variable($Name){&#variable($Joystick), (int)frc::XboxController::Button::${Button}};"
     Import: "\\#include <frc2/command/button/${ClassName}.h>"
 
   Command:
