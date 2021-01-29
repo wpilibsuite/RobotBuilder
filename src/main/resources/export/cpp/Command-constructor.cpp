@@ -23,7 +23,7 @@
 #end
 
     // Use AddRequirements() here to declare subsystem dependencies
-    // eg. AddRequirements(Robot::chassis.get());
+    // eg. AddRequirements(m_Subsystem);
     SetName("#class($command.name)");
     #if  (${command.getProperty("Requires").getValue()} != "None")
     AddRequirements(#variable(${command.getProperty("Requires").getValue().toLowerCase()}));

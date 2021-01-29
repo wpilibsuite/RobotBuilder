@@ -199,7 +199,7 @@
   source: ${exporter_path}InstantCommand.cpp
   update: Modify
   modifications:
-    constructor: ${exporter_path}InstantCommand-constructor.cpp
+    constructor: ${exporter_path}Command-constructor.cpp
   variables:
     command_name: ${command.name}
 - !File
