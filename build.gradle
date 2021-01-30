@@ -64,7 +64,7 @@ jacocoTestReport {
 }
 
 def downloadNewCommands = tasks.register('downloadNewCommands', Download) {
-  src 'https://raw.githubusercontent.com/wpilibsuite/allwpilib/master/wpilibNewCommands/WPILibNewCommands.json'
+  src 'https://raw.githubusercontent.com/wpilibsuite/allwpilib/main/wpilibNewCommands/WPILibNewCommands.json'
   dest 'build/resources/main/export/vendordeps/WPILibNewCommands.json'
   overwrite true
 }
