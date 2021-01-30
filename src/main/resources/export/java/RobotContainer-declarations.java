@@ -4,7 +4,7 @@
 && "#type($component)" != "" 
 && ("#type($component)" == "SubsystemBase"
      || "#type($component)" == "PIDSubsystem"))
-    private final #class($component.getName()) m_#variable($component.getName()) = new #class($component.getName())();
+    public final #class($component.getName()) m_#variable($component.getName()) = new #class($component.getName())();
 #end
 #end
 
