@@ -122,7 +122,7 @@ stages:
         options: '-PbuildServer'
       condition: and(succeeded(), and(ne(variables['Build.SourceBranch'], 'refs/heads/main'), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))))
 
-# Master Builds
+# Main Builds
     - task: Gradle@2
       inputs:
         workingDirectory: ''
