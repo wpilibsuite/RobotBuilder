@@ -23,13 +23,24 @@
   <p>The conditions under which to run the selected commands can be
   one of the three following options:</p>
   <dl>
-    <dt>While Held</dt>
-    <dd>Repeatedly run the command while the button is held then
-    interrupt it when the user releases the button.</dd>
     <dt>When Pressed</dt>
-    <dd>Start running the command when the button is pressed.</dd>
+    <dd>Start running the command when the button is initially
+    pressed.</dd>
     <dt>When Released</dt>
     <dd>Start running the command when the button is released.</dd>
+    <dt>While Held</dt>
+    <dd>Repeatedly run the command while the button is held then
+    cancels it when the user releases the button.</dd>
+    <dt>When Held</dt>
+    <dd>Run the command when the button is pressed then cancels it
+    when the user releases the button. Unlike While Held, the
+    command is not re-run while the button is held if it finishes
+    early.</dd>
+    <dt>Toggle When Pressed</dt>
+    <dd>Run the command when the button is pressed if it isn't
+    running or cancels it when tit isn't running</dd>
+    <dt>Cancel When Pressed</dt>
+    <dd>Cancel command when the button is pressed.</dd>
   </dl>
   <h2>Properties</h2>
   <dl>
@@ -39,8 +50,16 @@
     <dd>The button number on the joystick.</dd>
     <dt>Command</dt>
     <dd>The command to run.</dd>
+    <dt>Parameters</dt>
+    <dd>Parameters for the command.</dd>
     <dt>When to Run</dt>
     <dd>The conditions of when to run the command</dd>
+    <dt>Add Timeout</dt>
+    <dd>Whether to add a timeout for the command</dd>
+    <dt>Timeout</dt>
+    <dd>The timeout for the command</dd>
+    <dt>Interruptible</dt>
+    <dd>Whether or not the command should be interruptible.</dd>
   </dl>
   <h2>See Also</h2>
   <ul>
