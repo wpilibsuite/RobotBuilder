@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       publish_version:
-        description: 'Version to publish. This should be in the form of vYEAR.M.m'
-        default: 'vYEAR.M.m'
+        description: 'Version to publish. This should be in the form of YEAR.M.m'
+        default: 'YEAR.M.m'
         required: true
 
 jobs:
