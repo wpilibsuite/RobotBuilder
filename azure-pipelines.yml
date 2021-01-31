@@ -120,9 +120,9 @@ stages:
         jdkVersionOption: '1.11'
         tasks: 'publish'
         options: '-PbuildServer'
-      condition: and(succeeded(), and(ne(variables['Build.SourceBranch'], 'refs/heads/master'), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))))
+      condition: and(succeeded(), and(ne(variables['Build.SourceBranch'], 'refs/heads/main'), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))))
 
-# Master Builds
+# Main Builds
     - task: Gradle@2
       inputs:
         workingDirectory: ''
@@ -131,7 +131,7 @@ stages:
         jdkVersionOption: '1.11'
         tasks: 'publish'
         options: '-PbuildServer'
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
       env:
         RUN_AZURE_ARTIFACTORY_RELEASE: 'TRUE'
         ARTIFACTORY_PUBLISH_USERNAME: $(PublishUserName)

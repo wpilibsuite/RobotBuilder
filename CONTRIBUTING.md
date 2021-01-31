@@ -45,7 +45,7 @@ While the library should be fully formatted according to the styles, additional 
 
 ### Pull Request Format
 
-Changes should be submitted as a Pull Request against the master branch of WPILib. For most changes, we ask that you squash your changes down to a single commit. For particularly large changes, multiple commits are ok, but assume one commit unless asked otherwise. No change will be merged unless it is up to date with the current master. We will also not merge any changes with merge commits in them; please rebase off of master before submitting a pull request. We do this to make sure that the git history isn't too cluttered.
+Changes should be submitted as a Pull Request against the main branch of WPILib. For most changes, we ask that you squash your changes down to a single commit. For particularly large changes, multiple commits are ok, but assume one commit unless asked otherwise. No change will be merged unless it is up to date with the current main. We will also not merge any changes with merge commits in them; please rebase off of main before submitting a pull request. We do this to make sure that the git history isn't too cluttered.
 
 ### Merge Process
 
