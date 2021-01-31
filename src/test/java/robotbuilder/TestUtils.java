@@ -174,9 +174,11 @@ public class TestUtils {
         RobotComponent xbox = new RobotComponent("Xbox", "Xbox Controller", tree);
         oi.add(xbox);
         RobotComponent xboxButton = new RobotComponent("Arm Up Xbox Button", "Xbox Button", tree);
-        xbox.add(armUpButton);
         xboxButton.getProperty("When to Run").setValueAndUpdate("whenPressed");
         xboxButton.getProperty("Button").setValueAndUpdate("A");
+        xbox.add(xboxButton);
+
+
 
         // Create some commands
         RobotComponent tankDrive = new RobotComponent("Tank Drive", "Command", tree);
@@ -218,6 +220,7 @@ public class TestUtils {
         driveTrain.getProperty("Default Command").setValueAndUpdate("Tank Drive");
         armUpButton.getProperty("Command").setValueAndUpdate("Arm Up");
         autoButton.getProperty("Command").setValueAndUpdate("Autonomous");
+        xboxButton.getProperty("Command").setValueAndUpdate("Instant Command 1");
 
         return tree;
     }
