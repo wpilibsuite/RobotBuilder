@@ -45,7 +45,6 @@ public class CppExportTest {
     public void tearDown() {
     }
 
-    @Ignore("Disabling compile test until GradleRIO 2021 version released")
     @Test
     public void testCPPExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
