@@ -867,6 +867,22 @@ Palette:
           - !BooleanProperty
             name: Button on SmartDashboard
             default: true
+          - !TypeSelectionProperty
+            name: DoubleSupplier 1
+            type: Joystick
+            default: None
+          - !ChoicesProperty
+            name: DoubleSupplier 1 Axis
+            choices: ["0", "1", "2", "3", "4", "5"]
+            default: 1
+          - !TypeSelectionProperty
+            name: DoubleSupplier 2
+            type: Joystick
+            default: None
+          - !ChoicesProperty
+            name: DoubleSupplier 2 Axis
+            choices: ["0", "1", "2", "3", "4", "5"]
+            default: 1
           - !Parameters
             name: Parameters
             default: []
