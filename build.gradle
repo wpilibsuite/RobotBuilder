@@ -70,7 +70,7 @@ jacocoTestReport {
 }
 
 def downloadOldCommands = tasks.register('downloadOldCommands', Download) {
-  src 'https://raw.githubusercontent.com/wpilibsuite/allwpilib/master/wpilibOldCommands/WPILibOldCommands.json'
+  src 'https://raw.githubusercontent.com/wpilibsuite/allwpilib/main/wpilibOldCommands/WPILibOldCommands.json'
   dest 'build/resources/main/export/vendordeps/WPILibOldCommands.json'
   overwrite true
 }
