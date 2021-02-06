@@ -205,7 +205,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "SpeedControllerGroup"
     Construction: >-
-      ${ClassName} #variable($Short_Name) = new ${ClassName}(#variable($SpeedController1), #variable($SpeedController2)
+      #variable($Short_Name) = new ${ClassName}(#variable($SpeedController1), #variable($SpeedController2)
       #if(($SpeedController3)), #variable($SpeedController3)#end #if(($SpeedController4)), #variable($SpeedController4)#end);
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   Differential Drive:
