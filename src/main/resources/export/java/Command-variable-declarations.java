@@ -6,3 +6,6 @@
 #foreach($param in $params)
     private $param.getType() m_$param.getName();
 #end ## variable declaration
+
+#if($command.getProperty("DoubleSupplier 1").getValue() != "None")private DoubleSupplier m_doublesupplier1;#end
+#if($command.getProperty("DoubleSupplier 2").getValue() != "None")private DoubleSupplier m_doublesupplier2;#end
