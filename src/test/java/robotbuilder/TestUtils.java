@@ -231,7 +231,15 @@ public class TestUtils {
                 delete(f);
             }
         }
-        dir.delete();
+        System.out.println(dir.getAbsolutePath() + " exists: " + dir.exists() + " canWrite: " + dir.canWrite() + " directory: " + dir.isDirectory() + " files: " + Arrays.toString(dir.list()));
+        try {
+            if (dir.isDirectory())
+                Thread.sleep(5000);
+            Files.delete(dir.toPath());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(dir.getAbsolutePath() + " exists: " + dir.exists() + " canWrite: " + dir.canWrite() + " directory: " + dir.isDirectory() + " files: " + Arrays.toString(dir.list()));
     }
 
     public static int runBuild(String projectDirectory) throws InterruptedException, IOException {
