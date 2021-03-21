@@ -87,6 +87,8 @@ public class CppExportTest {
         exporter.post_export_action = null;
         exporter.export(tree);
 
+        //TODO fix type detection so each one is uniquely detected
+
         //Command
         assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "include/commands/ArmDown.h")));
         assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/commands/ArmDown.cpp")));
@@ -100,8 +102,8 @@ public class CppExportTest {
         assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/commands/WristSetpoint.cpp")));
 
         //Sequential Command Group
-        assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "include/commands/WristSetpoint.h")));
-        assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/commands/WristSetpoint.cpp")));
+        assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "include/commands/Autonomous.h")));
+        assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/commands/Autonomous.cpp")));
 
         //Subsystem
         assertEquals("SubsystemBase", CodeFileUtils.getSavedSuperclass(new File(path + "include/subsystems/Arm.h")));
