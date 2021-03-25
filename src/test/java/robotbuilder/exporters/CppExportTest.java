@@ -36,6 +36,7 @@ public class CppExportTest {
 
     @Before
     public void setUp() {
+        System.gc();
         File project = new File("build/test-resources/" + PROJECT_DIRECTORY);
         System.err.println("Before Delete File: " + project.getAbsolutePath() + " canRead: " + project.canRead() + " exists: " + project.exists());
         TestUtils.delete(project);
