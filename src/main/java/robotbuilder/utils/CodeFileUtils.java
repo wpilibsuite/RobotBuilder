@@ -137,13 +137,11 @@ public class CodeFileUtils {
     public static String getSavedSuperclass(File file) {
         String fileType = Utils.getFileExtension(file);
         if (fileType.equalsIgnoreCase("cpp")) {
-            System.out.println("getSuperClassCpp");
             return getSuperClassCpp(file);
         }
         if (!fileParserMap.containsKey(fileType)) {
             return ""; // not a supported file type
         }
-        System.out.println("Supported File Type");
         return fileParserMap.get(fileType).apply(file);
     }
 

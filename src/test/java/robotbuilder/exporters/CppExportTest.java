@@ -38,9 +38,7 @@ public class CppExportTest {
     public void setUp() {
         System.gc();
         File project = new File("build/test-resources/" + PROJECT_DIRECTORY);
-        System.err.println("Before Delete File: " + project.getAbsolutePath() + " canRead: " + project.canRead() + " exists: " + project.exists());
         TestUtils.delete(project);
-        System.err.println("After Delete File: " + project.getAbsolutePath() + " canRead: " + project.canRead() + " exists: " + project.exists());
         boolean exists = project.exists();
         assertFalse(exists);
         project.mkdir();
