@@ -38,6 +38,7 @@ public class JavaExportTest {
 
     @Before
     public void setUp() {
+        System.gc();
         File project = new File("build/test-resources/" + PROJECT_DIRECTORY);
         TestUtils.delete(project);
         assertFalse(project.exists());
