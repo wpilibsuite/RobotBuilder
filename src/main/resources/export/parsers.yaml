@@ -91,7 +91,7 @@ parsers:
   # screw this up
   - !Parser
     fileType: h
-    regex: class\w+:(public)?(\w+)\{
+    regex: class\w+:(public)?frc2::(\w+)[ <{]
     groupNumber: 2
     textFilters:
       # Remove block comments > line comments > whitespace

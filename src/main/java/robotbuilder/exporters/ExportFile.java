@@ -47,7 +47,7 @@ public class ExportFile {
 
         boolean isBinaryFile = export.getName().endsWith(".jar") || export.getName().endsWith(".notjar");
         String oldType = CodeFileUtils.getSavedSuperclass(export);
-        String newType = isBinaryFile ? oldType : CodeFileUtils.getSavedSuperclass(exporter.evalResource(source, fileContext));
+        String newType = isBinaryFile ? oldType : CodeFileUtils.getSavedSuperclass(exporter.evalResource(source.replace(".cpp", ".h"), fileContext));
         System.out.println("Saved type: " + oldType);
         System.out.println("  New type: " + newType);
         // Export
