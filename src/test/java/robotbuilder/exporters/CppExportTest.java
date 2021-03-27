@@ -39,8 +39,7 @@ public class CppExportTest {
         System.gc();
         File project = new File("build/test-resources/" + PROJECT_DIRECTORY);
         TestUtils.delete(project);
-        boolean exists = project.exists();
-        assertFalse(exists);
+        assertFalse(project.exists());
         project.mkdir();
     }
 
