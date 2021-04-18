@@ -255,10 +255,6 @@ Instructions:
       #variable($Name).SetDistancePerPulse(${Distance_Per_Pulse});
           #variable($Name).SetPIDSourceType(frc::PIDSourceType::${PID_Source});
           #variable($Name).SetIndexSource((unsigned int)${Index_Channel_Digital}, frc::Encoder::IndexingType::${Indexing_Type});
-  Gear Tooth Sensor:
-    Defaults: "DigitalInput,Component,None"
-    ClassName: "GearTooth"
-    Declaration: "frc::GearTooth #variable($Name){${Input_Channel_Digital}, ${Direction_Sensitive}};"
   Analog Potentiometer:
     Defaults: "AnalogPotentiometer,Component,None"
     ClassName: "AnalogPotentiometer"

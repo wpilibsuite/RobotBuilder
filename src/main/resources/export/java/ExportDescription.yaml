@@ -276,10 +276,6 @@ Instructions:
       #variable($Short_Name).setDistancePerPulse(${Distance_Per_Pulse});
               #variable($Short_Name).setPIDSourceType(PIDSourceType.${PID_Source});
               #variable($Short_Name).setIndexSource(${Index_Channel_Digital}, IndexingType.${Indexing_Type});
-  Gear Tooth Sensor:
-    Defaults: "DigitalInput,Component,None"
-    ClassName: "GearTooth"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive});"
   Analog Potentiometer:
     Defaults: "AnalogPotentiometer,Component,None"
     ClassName: "AnalogPotentiometer"

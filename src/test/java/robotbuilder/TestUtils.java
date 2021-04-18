@@ -134,8 +134,6 @@ public class TestUtils {
         misc.add(indexEncoder);
         RobotComponent analogAccel = new RobotComponent("Analog Accelerometer", "AnalogAccelerometer", tree);
         misc.add(analogAccel);
-        RobotComponent gearTooth = new RobotComponent("Gear Tooth", "Gear Tooth Sensor", tree);
-        misc.add(gearTooth);
         RobotComponent dI = new RobotComponent("DI", "Digital Input", tree);
         misc.add(dI);
         RobotComponent ultrasonic = new RobotComponent("Ultrasonic", "Ultrasonic", tree);
