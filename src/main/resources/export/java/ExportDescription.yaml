@@ -163,44 +163,6 @@ Instructions:
 
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
 
-  Robot Drive 2:
-    Defaults: "Component,None"
-    ClassName: "RobotDrive"
-    Construction: "#variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
-    Extra: >
-      #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
-              #variable($Short_Name).setExpiration($Safety_Expiration_Time);
-              #variable($Short_Name).setSensitivity($Sensitivity);
-              #variable($Short_Name).setMaxOutput($Maximum_Output);
-      #if($Left_Motor_Inverted)
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);#end
-      #if($Right_Motor_Inverted)
-
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kRearRight, true);#end
-
-  Robot Drive 4:
-    Defaults: "Component,None"
-    ClassName: "RobotDrive"
-    Construction: >-
-      ${ClassName} #variable($Short_Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
-                    #variable($Right_Front_Motor), #variable($Right_Rear_Motor));
-    Extra: >
-      #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
-              #variable($Short_Name).setExpiration($Safety_Expiration_Time);
-              #variable($Short_Name).setSensitivity($Sensitivity);
-              #variable($Short_Name).setMaxOutput($Maximum_Output);
-      #if($Left_Front_Motor_Inverted)
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);#end
-      #if($Left_Rear_Motor_Inverted)
-
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);#end
-      #if($Right_Front_Motor_Inverted)
-
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);#end
-      #if($Right_Rear_Motor_Inverted)
-
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kRearRight, true);#end
-
   Speed Controller Group:
     Defaults: "Component,None"
     ClassName: "SpeedControllerGroup"
