@@ -587,15 +587,6 @@ Palette:
             choices: [ResetWhileHigh, kResetWhileLow, kResetOnFallingEdge, kResetOnRisingEdge]
             default: "kResetOnRisingEdge"
       - !Component
-        name: Gear Tooth Sensor
-        type: Sensor
-        help: A sensor that counts the number of gear teeth that go by.
-        properties:
-          #DigitalChannel("Input")
-          - !BooleanProperty
-            name: Direction Sensitive
-            default: false
-      - !Component
         name: Analog Potentiometer
         type: PIDSource
         help: An rotational analog sensor that can be used to determine the position of an axle.
