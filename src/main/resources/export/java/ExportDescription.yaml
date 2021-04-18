@@ -304,8 +304,8 @@ Instructions:
 
   Speed Controller:
     Defaults: "PWMOutput,Component,None"
-    ClassName: "SpeedController"
-    Import: "import edu.wpi.first.wpilibj.${Type};\nimport edu.wpi.first.wpilibj.${ClassName};"
+    ClassName: "MotorController"
+    Import: "import edu.wpi.first.wpilibj.motorcontrol.${Type};\nimport edu.wpi.first.wpilibj.motorcontrol.${ClassName};"
     Declaration: "private ${Type} #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new ${Type}(${Output_Channel_PWM});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
@@ -314,6 +314,7 @@ Instructions:
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "NidecBrushless"
+    Import: "import edu.wpi.first.wpilibj.motorcontrol.NidecBrushless;"
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
