@@ -79,12 +79,12 @@ public class FilePropertyTest {
         fp.relative = false;
         fp.value = null;
         assertNull(((JFileChooser) fp.getDisplayValue()).getSelectedFile());
-        MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File("test.yml").getAbsolutePath());
+        MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File("test.yaml").getAbsolutePath());
         fp.value = "file.test";
         assertEquals(new File(new File(".").getCanonicalPath(), "file.test").getCanonicalPath(),
                 ((JFileChooser) fp.getDisplayValue()).getSelectedFile().getCanonicalPath());
 
-        MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File("test.yml").getAbsolutePath());
+        MainFrame.getInstance().getCurrentRobotTree().setFilePath(new File("test.yaml").getAbsolutePath());
         fp.value = "file";
         assertEquals(new File(new File(".").getCanonicalPath(), "file").getCanonicalPath(),
                 ((JFileChooser) fp.getDisplayValue()).getSelectedFile().getCanonicalPath());

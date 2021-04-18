@@ -36,7 +36,7 @@
 #        - *id1
 #        - *idN
 # Where:
-#   + fileType is the extension of the file to be parsed ("java", "h", "py", ect.)
+#   + fileType is the extension of the file to be parsed ("java", "h", "py", etc.)
 #   + regex is the regular expression matching the desired information
 #   + groupNumber is the number of the group in the regex that matches the information
 #   + textFilters is a list of pre-processing text filters described above
@@ -91,7 +91,7 @@ parsers:
   # screw this up
   - !Parser
     fileType: h
-    regex: class\w+:(public)?(\w+)\{
+    regex: class\w+:(public)?frc2::(\w+)[ <{]
     groupNumber: 2
     textFilters:
       # Remove block comments > line comments > whitespace

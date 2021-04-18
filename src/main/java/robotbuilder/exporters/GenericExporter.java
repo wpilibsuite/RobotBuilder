@@ -158,7 +158,7 @@ public class GenericExporter {
             }
         }
         if(wpilibRelease == null) {
-            wpilibRelease = "2020.3.2"; // this shouldn't need to be relied upon,
+            wpilibRelease = "2021.2.2"; // this shouldn't need to be relied upon,
                                         // but its better than generating nothing.
         }
 
@@ -259,11 +259,15 @@ public class GenericExporter {
     }
 
     String evalResource(String resource, Context context) {
-        InputStreamReader in;
-        in = new InputStreamReader(Utils.getResourceAsStream(resource));
-        StringWriter w = new StringWriter();
-        ve.evaluate(context, w, name + " Exporter: " + resource, in);
-        return w.toString();
+        try {
+            InputStreamReader in;
+            in = new InputStreamReader(Utils.getResourceAsStream(resource));
+            StringWriter w = new StringWriter();
+            ve.evaluate(context, w, name + " Exporter: " + resource, in);
+            return w.toString();
+        } catch (Exception ex) {
+            return new String();
+        }
     }
 
     String evalResource(String resource) {

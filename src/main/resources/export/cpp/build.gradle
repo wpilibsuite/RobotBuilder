@@ -54,6 +54,12 @@ dependencies {
     // simulation wpi.deps.sim.ws_client(wpi.platforms.desktop, false)
 }
 
+// Simulation configuration (e.g. environment variables).
+sim {
+    // Sets the websocket client remote host.
+    // envVar "HALSIMWS_HOST", "10.0.0.2"
+}
+
 model {
     components {
         frcUserProgram(NativeExecutableSpec) {
@@ -76,8 +82,8 @@ model {
             }
 
             // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
-            wpi.deps.wpilib(it)
             wpi.deps.vendor.cpp(it)
+            wpi.deps.wpilib(it)
         }
     }
     testSuites {
@@ -91,9 +97,9 @@ model {
                 }
             }
 
+            wpi.deps.vendor.cpp(it)
             wpi.deps.wpilib(it)
             wpi.deps.googleTest(it)
-            wpi.deps.vendor.cpp(it)
         }
     }
 }

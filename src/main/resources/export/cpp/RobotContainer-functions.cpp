@@ -4,6 +4,5 @@ ${Collections.reverse($components)}
      && "#function($component)" != "")
 #function($component)
 
-
 #end
 #end

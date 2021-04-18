@@ -138,7 +138,7 @@
             name: $Name Parameters
           - !ChoicesProperty
             name: $Name When to Run
-            choices: [whenPressed, whenReleased, whileHeld, whenHeld, toggleWhenPressed]
+            choices: [whenPressed, whenReleased, whileHeld, whenHeld, toggleWhenPressed, cancelWhenPressed]
             default: whenPressed
           - !BooleanProperty
             name: Add Timeout
@@ -248,9 +248,6 @@ Palette:
           - !BooleanProperty
             name: Export Commands
             default: true
-          - !StringProperty
-            name: Simulation World File
-            default: "/usr/share/frcsim/worlds/GearsBotDemo.world"
           - !FileProperty
             name: Wiring file location
             folder: true
@@ -748,6 +745,29 @@ Palette:
             name: Button
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32"]
             default: "1"
+          #Button("")
+      - !Component
+        name: Xbox Controller
+        type: Joystick
+        supports: {Xbox Button: -1}
+        help: An Xbox Controller that drivers can use as input.
+        properties:
+          - !ChoicesProperty
+            name: Number
+            choices: ["0", "1", "2", "3", "4", "5"]
+            validators: [Joystick]
+            default: 1
+      - !Component
+        name: Xbox Button
+        type: Xbox Button
+        help: An Xbox Controller button that binds a driver action to a command.
+        properties:
+          - !ParentProperty
+            name: Joystick
+          - !ChoicesProperty
+            name: Button
+            choices: ["A","B","X","Y","Back","Start","BumperLeft","BumperRight","StickLeft","StickRight"]
+            default: "A"
           #Button("")
 
   - Commands:

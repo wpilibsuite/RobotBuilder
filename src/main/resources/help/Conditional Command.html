@@ -18,22 +18,30 @@
   </center>
   <h2>What is it?</h2>
   <p>A conditional command runs one of two commands. The command to
-  run is chosen at run time by the condition() method.</p>
+  run is chosen during initialization of the conditional command
+  based on the condition parameter.</p>
   <h2>Properties</h2>
   <dl>
+    <dt>Requires</dt>
+    <dd>The subsystem that this command requires.</dd>
     <dt>OnTrue Command</dt>
-    <dd>Command to run when condition() returns true</dd>
+    <dd>Command to run when condition is true</dd>
     <dt>OnFalse Command</dt>
-    <dd>Command to run when condition() returns false</dd>
-    <dt>Button on SmartDashboard</dt>
-    <dd>Whether or not to automatically place a button on the
-    SmartDashboard.</dd>
+    <dd>Command to run when condition is false</dd>
     <dt>Parameters</dt>
     <dd>Variables to be passed into the command. Data can be of
     types boolean, byte, int, long, double, or string.</dd>
+    <dt>Parameter presets</dt>
+    <dd>Preset values for command parameters that can be used when
+    a command is invoked</dd>
+    <dt>Button on SmartDashboard</dt>
+    <dd>Whether or not to automatically place a button on the
+    SmartDashboard.</dd>
     <dt>Run When Disabled</dt>
     <dd>Sets whether or not this Command should run when the robot
     is disabled.</dd>
+    <dd>Sets whether or not this Command should be added to
+    Autonomous Chooser.</dd>
   </dl>
 </body>
 </html>

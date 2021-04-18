@@ -21,12 +21,12 @@
   setpoint. It finishes when the PID subsystem is within the given
   tolerance of the setpoint.</p>
   <h3>What does it mean for a command to require a subsystem?</h3>
-  <p>Commands can require a subsystem using the requires() method
-  of commands. When a command requires a subsystem, it claims
-  exclusive control over that subsystem and will interrupt any
-  other command that requires the same subsystem. This only works
-  if all your commands properly require the subsystems that they
-  use.</p>
+  <p>Commands can require a subsystem using the addRequirements()
+  method of commands. When a command requires a subsystem, it
+  claims exclusive control over that subsystem and will interrupt
+  any other command that requires the same subsystem. This only
+  works if all your commands properly require the subsystems that
+  they use.</p>
   <h3>What are parameters and how are they used in a command?</h3>
   <p>Parameters are variables that are passed into a command to be
   used later. By adding parameters to your command, the parameters
@@ -42,9 +42,9 @@
     SmartDashboard.</dd>
     <dt>Setpoint</dt>
     <dd>The setpoint to move the required subsystem to.</dd>
-    <dt>Parameters</dt>
-    <dd>Variables to be passed into the command. Data can be of
-    types boolean, byte, int, long, double, or string.</dd>
+    <dt>Parameter presets</dt>
+    <dd>Preset values for the setpoint that can be used when a
+    command is invoked</dd>
   </dl>
 </body>
 </html>

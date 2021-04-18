@@ -26,10 +26,10 @@
 #else
 #class($command.name)::#class($command.name)(#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()})): frc2::CommandHelper<frc2::PIDCommand, #class($command.name)>(
 frc2::PIDController(double(${command.getProperty("P").getValue()}), double(${command.getProperty("I").getValue()}), double(${command.getProperty("D").getValue()})),
-[this](){return m_#variable(${command.getProperty("Requires").getValue().toLowerCase()})-> Get#class($Input)().PIDGet();},
-0, [this](double output){m_#variable(${command.getProperty("Requires").getValue().toLowerCase()})-> Get#class($Output)().PIDWrite(output);},
+[this](){return #variable(${command.getProperty("Requires").getValue().toLowerCase()})-> Get#class($Input)().PIDGet();},
+0, [this](double output){#variable(${command.getProperty("Requires").getValue().toLowerCase()})-> Get#class($Output)().PIDWrite(output);},
 {#variable(${command.getProperty("Requires").getValue().toLowerCase()})}),
-m_#variable(${command.getProperty("Requires").getValue().toLowerCase()}) (#variable(${command.getProperty("Requires").getValue().toLowerCase()})){
+#variable(${command.getProperty("Requires").getValue().toLowerCase()}) (#variable(${command.getProperty("Requires").getValue().toLowerCase()})){
 m_controller.SetTolerance(${command.getProperty("Tolerance").getValue()});
 #end
     #foreach($param in $params)
@@ -39,5 +39,5 @@ m_controller.SetTolerance(${command.getProperty("Tolerance").getValue()});
     // eg. AddRequirements(Robot::chassis.get());
     SetName("#class($command.name)");
     #if  (${command.getProperty("Requires").getValue()} != "None")
-    AddRequirements(m_#variable(${command.getProperty("Requires").getValue().toLowerCase()}));
+    AddRequirements(#variable(${command.getProperty("Requires").getValue().toLowerCase()}));
     #end

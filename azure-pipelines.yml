@@ -16,7 +16,7 @@ stages:
   jobs:
   - job: Linux
     pool:
-      vmImage: 'Ubuntu 16.04'
+      vmImage: 'Ubuntu 18.04'
 
     container: wpilib2020
     
@@ -86,7 +86,7 @@ stages:
 
   - job: Mac
     pool:
-      vmImage: 'macOS-10.14'
+      vmImage: 'macOS-10.15'
     steps:
       - script: |
           mkdir build
@@ -108,7 +108,7 @@ stages:
   jobs:
   - job: PublishJob
     pool:
-      vmImage: 'vs2017-win2016'
+      vmImage: 'ubuntu-18.04'
 
     steps:
 # PR Builds
@@ -120,9 +120,9 @@ stages:
         jdkVersionOption: '1.11'
         tasks: 'publish'
         options: '-PbuildServer'
-      condition: and(succeeded(), and(ne(variables['Build.SourceBranch'], 'refs/heads/master'), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))))
+      condition: and(succeeded(), and(ne(variables['Build.SourceBranch'], 'refs/heads/main'), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))))
 
-# Master Builds
+# Main Builds
     - task: Gradle@2
       inputs:
         workingDirectory: ''
@@ -131,7 +131,7 @@ stages:
         jdkVersionOption: '1.11'
         tasks: 'publish'
         options: '-PbuildServer'
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
       env:
         RUN_AZURE_ARTIFACTORY_RELEASE: 'TRUE'
         ARTIFACTORY_PUBLISH_USERNAME: $(PublishUserName)

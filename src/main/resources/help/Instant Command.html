@@ -21,12 +21,12 @@
   usually require at least one subsystem which they act with.</p>
   <p>An <b>Instant Command</b> executes once and finishes.</p>
   <h3>What does it mean for a command to require a subsystem?</h3>
-  <p>Commands can require a subsystem using the requires() method
-  of commands. When a command requires a subsystem, it claims
-  exclusive control over that subsystem and will interrupt any
-  other command that requires the same subsystem. This only works
-  if all your commands properly require the subsystems that they
-  use.</p>
+  <p>Commands can require a subsystem using the addRequirements()
+  method of commands. When a command requires a subsystem, it
+  claims exclusive control over that subsystem and will interrupt
+  any other command that requires the same subsystem. This only
+  works if all your commands properly require the subsystems that
+  they use.</p>
   <h3>What are parameters and how are they used in a command?</h3>
   <p>Parameters are variables that are passed into a command to be
   used later. By adding parameters to your command, the parameters
@@ -43,6 +43,15 @@
     <dt>Parameters</dt>
     <dd>Variables to be passed into the command. Data can be of
     types boolean, byte, int, long, double, or string.</dd>
+    <dt>Parameter presets</dt>
+    <dd>Preset values for command parameters that can be used when
+    a command is invoked</dd>
+    <dt>Run When Disabled</dt>
+    <dd>Sets whether or not this Command should run when the robot
+    is disabled.</dd>
+    <dt>Autonomous Selection</dt>
+    <dd>Sets whether or not this Command should be added to
+    Autonomous Chooser.</dd>
   </dl>
 </body>
 </html>

@@ -28,7 +28,7 @@
 ##     instruction.
 ##
 ## Instructions: A map of palette components to their defaults and
-##     instruction sets. The defaults are a comma-seperated string
+##     instruction sets. The defaults are a comma-separated string
 ##     with the highest priority default first. The instructions
 ##     themselves vary from language to language, in the java
 ##     exporter:
@@ -167,7 +167,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "SpeedControllerGroup"
     Construction: >-
-      ${ClassName} #variable($Short_Name) = new ${ClassName}(#variable($SpeedController1), #variable($SpeedController2)
+      #variable($Short_Name) = new ${ClassName}(#variable($SpeedController1), #variable($SpeedController2)
       #if(($SpeedController3)), #variable($SpeedController3)#end #if(($SpeedController4)), #variable($SpeedController4)#end);
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   Differential Drive:
@@ -329,6 +329,18 @@ Instructions:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"
     Construction: "final ${ClassName} #variable($Name) = new ${ClassName}(#variable($Joystick), ${Button});"
+  Xbox Controller:
+    Defaults: "OI,None"
+    ClassName: "XboxController"
+    Construction: "private final ${ClassName} #variable($Name) = new ${ClassName}(${Number});"
+    Function: >-
+      public ${ClassName} get#class($Name)() {
+            return #variable($Name);
+          }
+  Xbox Button:
+    Defaults: "Button,OI,None"
+    ClassName: "JoystickButton"
+    Construction: "final ${ClassName} #variable($Name) = new ${ClassName}(#variable($Joystick), XboxController.Button.k${Button}.value);"
 
   Command:
     Defaults: "Command,None"
