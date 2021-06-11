@@ -1,8 +1,12 @@
 plugins {
     id "cpp"
     id "google-test-test-suite"
-    id "edu.wpi.first.GradleRIO" version "${wpilib_version}"
+    id "edu.wpi.first.GradleRIO" version "2022.0.0"
 }
+
+wpi.maven.useDevelopment = true
+wpi.wpilibVersion = '2022.+'
+wpi.wpimathVersion = '2022.+'
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
