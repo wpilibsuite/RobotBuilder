@@ -187,7 +187,7 @@ Instructions:
     Import: "import edu.wpi.first.wpilibj.drive.MecanumDrive;"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Construction: >-
-      ${ClassName} #variable($Short_Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
+      #variable($Short_Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
                     #variable($Right_Front_Motor), #variable($Right_Rear_Motor));
     Extra: >
       #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
@@ -199,7 +199,7 @@ Instructions:
     Import: "import edu.wpi.first.wpilibj.drive.KilloughDrive;"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Construction: >-
-      ${ClassName} #variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor),
+      #variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor),
                      #variable($Back_Motor));
     Extra: >
       #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
