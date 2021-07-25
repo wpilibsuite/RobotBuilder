@@ -26,5 +26,5 @@
     // eg. AddRequirements(m_Subsystem);
     SetName("#class($command.name)");
     #if  (${command.getProperty("Requires").getValue()} != "None")
-    AddRequirements(#variable(${command.getProperty("Requires").getValue().toLowerCase()}));
+    AddRequirements({#variable(${command.getProperty("Requires").getValue().toLowerCase()})});
     #end
