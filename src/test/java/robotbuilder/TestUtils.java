@@ -155,7 +155,7 @@ public class TestUtils {
         RobotComponent relaySolenoid = new RobotComponent("Relay Solenoid", "Relay Solenoid", tree);
         misc.add(relaySolenoid);
         RobotComponent doubleSolenoid = new RobotComponent("Double Solenoid", "Double Solenoid", tree);
-        misc.add(relaySolenoid);
+        misc.add(doubleSolenoid);
 
         // Create a simple OI
         RobotComponent leftstick = new RobotComponent("Left Joystick", "Joystick", tree);

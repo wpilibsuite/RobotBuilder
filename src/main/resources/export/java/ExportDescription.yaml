@@ -91,27 +91,28 @@ Defaults:
     ClassName: ""
   AnalogInput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
     PID: "#variable($Short_Name).getAverageVoltage()"
   AnalogPotentiometer:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
     PID: "#variable($Short_Name).get()"
   DigitalInput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Digital});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
   PWMOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_PWM});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
   RelayOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_Relay});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
   SolenoidOutput:
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Module_Solenoid}, PneumaticsModuleType.${Output_Module_Type_Solenoid}, ${Output_Channel_Solenoid});"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
+    Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport edu.wpi.first.wpilibj.PneumaticsModuleType;"
   AnalogOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_AnalogOutput});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
   OI:
     Export: "OI"
     Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport ${package}.subsystems.*;"
@@ -149,7 +150,7 @@ Instructions:
   PID Controller:
     Defaults: "Component,None"
     ClassName: "PIDController"
-    Import: "import edu.wpi.first.wpilibj.smartdashboard.*;\nimport edu.wpi.first.wpilibj.controller.PIDController;"
+    Import: "import edu.wpi.first.wpilibj.smartdashboard.*;\nimport edu.wpi.first.math.controller.PIDController;"
     Construction: "#variable($Short_Name) = new ${ClassName}($P, $I, $D, $Period);"
     Extra: >
       #if($Continuous)
@@ -293,8 +294,9 @@ Instructions:
   Compressor:
     Defaults: "Component,None"
     ClassName: "Compressor"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${PCM_ID});"
+    Construction: "#variable($Short_Name) = new ${ClassName}(${Module_ID}, PneumaticsModuleType.${Module_Type});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport edu.wpi.first.wpilibj.PneumaticsModuleType;"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "Solenoid"
@@ -304,13 +306,8 @@ Instructions:
   Double Solenoid:
     Defaults: "Solenoid,Component,None"
     ClassName: "DoubleSolenoid"
-    Construction: >-
-      #if(${Forward_PCM_Solenoid} != ${Reverse_PCM_Solenoid})Warning, the two modules in robot builder are different!
-
-      #end##
-
-      ${ClassName} #variable($Short_Name) = new ${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    Construction: "#variable($Short_Name) = new ${ClassName}(${Forward_Module_Solenoid}, PneumaticsModuleType.${Forward_Module_Type_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
 
   Joystick:
     Defaults: "OI,None"
