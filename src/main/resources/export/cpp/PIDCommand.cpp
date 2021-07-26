@@ -1,6 +1,7 @@
 #set($command = $helper.getByName($command_name, $robot))
 #set($params = $command.getProperty("Parameters").getValue())
 #header()
+// ROBOTBUILDER TYPE: PIDCommand.
 
 \#include "commands/#class($command.name).h"
 \#include "frc/controller/PIDController.h"

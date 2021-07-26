@@ -121,24 +121,12 @@ public class CodeFileUtils {
     }
 
     /**
-     * Gets the superclass of a C++ class. Special case because .cpp files don't
-     * contain information about their class hierarchy.
-     */
-    private static String getSuperClassCpp(File file) {
-        File headerFile = new File(file.getAbsolutePath().replace(".cpp", ".h").replace("cpp", "include"));
-        return fileParserMap.get("h").apply(headerFile);
-    }
-
-    /**
      * Gets the superclass of class contained in the given file. This is used by
      * the Velocity engine to check if the type of the current save file is
      * different than what's going to be written to it. (fix for artf3715)
      */
     public static String getSavedSuperclass(File file) {
         String fileType = Utils.getFileExtension(file);
-        if (fileType.equalsIgnoreCase("cpp")) {
-            return getSuperClassCpp(file);
-        }
         if (!fileParserMap.containsKey(fileType)) {
             return ""; // not a supported file type
         }

@@ -1,6 +1,7 @@
 #set($command = $helper.getByName($command_name, $robot))
 #macro( klass $cmd ) frc2::CommandHelper<#type($cmd), $cmd.name>#end
 #header()
+// ROBOTBUILDER TYPE: Command.
 
 #pragma once
 
