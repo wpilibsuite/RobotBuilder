@@ -26,7 +26,9 @@
 - !File
   export: $project/build.gradle
   source: ${exporter_path}build.gradle
-  update: None
+  update: Modify
+  modifications:
+    desktop: ${exporter_path}build-desktop.gradle
 
 - !File
   export: $project/settings.gradle

@@ -47,6 +47,7 @@ public class TestUtils {
         RobotComponent subsystems = (RobotComponent) robot.getChildren().elementAt(0);
         RobotComponent oi = (RobotComponent) robot.getChildren().elementAt(1);
         RobotComponent commands = (RobotComponent) robot.getChildren().elementAt(2);
+        robot.getProperty("Desktop Support").setValueAndUpdate(true);
 
         // Create a drive train subsystem
         RobotComponent driveTrain = new RobotComponent("Drive Train", "Subsystem", tree);
@@ -239,19 +240,7 @@ public class TestUtils {
         Process p;
         ProcessBuilder pb;
 
-        //enable desktop builds and disable roboRIO builds to allow compile test with desktop compiler.
-        try {
-            Path path = Paths.get("build/test-resources", projectDirectory, "build.gradle");
-            Stream<String> lines = Files.lines(path);
-            List<String> replaced = lines
-                    .map(line -> line.replaceAll("def includeDesktopSupport = false", "def includeDesktopSupport = true"))
-                    .collect(Collectors.toList());
-            Files.write(path, replaced);
-            lines.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        //disable roboRIO builds to allow compile test with desktop compiler.
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
         if (isWindows) {
             System.out.println("Trying Windows compile...");
