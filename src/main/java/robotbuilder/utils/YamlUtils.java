@@ -24,6 +24,7 @@ import robotbuilder.data.properties.ListProperty;
 import robotbuilder.data.properties.ParameterSetProperty;
 import robotbuilder.data.properties.ParametersProperty;
 import robotbuilder.data.properties.ParentProperty;
+import robotbuilder.data.properties.PositiveDoubleProperty;
 import robotbuilder.data.properties.StringProperty;
 import robotbuilder.data.properties.TypeSelectionProperty;
 
@@ -41,6 +42,7 @@ public class YamlUtils {
         constructor.addTypeDescription(new TypeDescription(BooleanProperty.class, "!BooleanProperty"));
         constructor.addTypeDescription(new TypeDescription(IntegerProperty.class, "!IntegerProperty"));
         constructor.addTypeDescription(new TypeDescription(DoubleProperty.class, "!DoubleProperty"));
+        constructor.addTypeDescription(new TypeDescription(PositiveDoubleProperty.class, "!PositiveDoubleProperty"));
         constructor.addTypeDescription(new TypeDescription(FileProperty.class, "!FileProperty"));
         constructor.addTypeDescription(new TypeDescription(ChoicesProperty.class, "!ChoicesProperty"));
         constructor.addTypeDescription(new TypeDescription(ChildSelectionProperty.class, "!ChildSelectionProperty"));
