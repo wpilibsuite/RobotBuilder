@@ -3,7 +3,7 @@ plugins {
     id 'jacoco'
     id 'application'
     id 'maven-publish'
-    id "com.jfrog.artifactory" version "4.9.8"
+    id "com.jfrog.artifactory" version "4.24.14"
     id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '4.1.0'
     id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.2'
     id 'io.franzbecker.gradle-lombok' version '4.0.0'
@@ -57,8 +57,8 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        xml.enabled = true
-        html.enabled = true
+        xml.required = true
+        html.required = true
     }
 }
 
