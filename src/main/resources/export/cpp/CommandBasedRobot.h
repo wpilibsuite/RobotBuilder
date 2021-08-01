@@ -1,4 +1,5 @@
 #header()
+// ROBOTBUILDER TYPE: Robot.
 #pragma once
 
 \#include <frc/TimedRobot.h>

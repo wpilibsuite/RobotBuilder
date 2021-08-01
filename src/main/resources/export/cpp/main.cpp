@@ -1,4 +1,5 @@
 #header()
+// ROBOTBUILDER TYPE: Main.
 
 \#include <hal/HAL.h>
 

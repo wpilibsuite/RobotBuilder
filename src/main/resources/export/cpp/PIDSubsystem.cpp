@@ -1,4 +1,5 @@
 #header()
+// ROBOTBUILDER TYPE: PIDSubsystem.
 
 #set($subsystem = $helper.getByName($subsystem_name, $robot))
 

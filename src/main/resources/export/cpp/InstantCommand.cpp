@@ -1,6 +1,7 @@
 #set($command = $helper.getByName($command_name, $robot))
 #set($params = $command.getProperty("Parameters").getValue())
 #header()
+// ROBOTBUILDER TYPE: InstantCommand.
 
 \#include "commands/#class($command.name).h"
 

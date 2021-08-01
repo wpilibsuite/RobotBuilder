@@ -88,27 +88,25 @@ public class CppExportTest {
         exporter.post_export_action = null;
         exporter.export(tree);
 
-        //TODO fix type detection so each one is uniquely detected
-
         //Command
-        assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "include/commands/ArmDown.h")));
-        assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/commands/ArmDown.cpp")));
+        assertEquals("Command", CodeFileUtils.getSavedSuperclass(new File(path + "include/commands/ArmDown.h")));
+        assertEquals("Command", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/commands/ArmDown.cpp")));
 
         //Instant Command
         assertEquals("InstantCommand", CodeFileUtils.getSavedSuperclass(new File(path + "include/commands/InstantCommand1.h")));
         assertEquals("InstantCommand", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/commands/InstantCommand1.cpp")));
 
         //Setpoint Command
-        assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "include/commands/WristSetpoint.h")));
-        assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/commands/WristSetpoint.cpp")));
+        assertEquals("SetpointCommand", CodeFileUtils.getSavedSuperclass(new File(path + "include/commands/WristSetpoint.h")));
+        assertEquals("SetpointCommand", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/commands/WristSetpoint.cpp")));
 
         //Sequential Command Group
-        assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "include/commands/Autonomous.h")));
-        assertEquals("CommandHelper", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/commands/Autonomous.cpp")));
+        assertEquals("SequentialCommandGroup", CodeFileUtils.getSavedSuperclass(new File(path + "include/commands/Autonomous.h")));
+        assertEquals("SequentialCommandGroup", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/commands/Autonomous.cpp")));
 
         //Subsystem
-        assertEquals("SubsystemBase", CodeFileUtils.getSavedSuperclass(new File(path + "include/subsystems/Arm.h")));
-        assertEquals("SubsystemBase", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/subsystems/Arm.cpp")));
+        assertEquals("Subsystem", CodeFileUtils.getSavedSuperclass(new File(path + "include/subsystems/Arm.h")));
+        assertEquals("Subsystem", CodeFileUtils.getSavedSuperclass(new File(path + "cpp/subsystems/Arm.cpp")));
 
         //PID Subsystem
         assertEquals("PIDSubsystem", CodeFileUtils.getSavedSuperclass(new File(path + "include/subsystems/Wrist.h")));
