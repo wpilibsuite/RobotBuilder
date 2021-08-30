@@ -177,6 +177,7 @@ public class GenericExporter {
         rootContext.put("export_commands", robot.getProperty("Export Commands").getValue());
         rootContext.put("commands", robotTree.getCommands());
         rootContext.put("wpilib_version", wpilibRelease);
+        rootContext.put("desktop_support", robot.getProperty("Desktop Support").getValue());
         for (String key : varKeys) {
             rootContext.put(key, eval(vars.get(key)));
         }
