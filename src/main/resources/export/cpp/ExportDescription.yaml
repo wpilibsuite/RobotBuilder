@@ -234,8 +234,8 @@ Instructions:
     Declaration: "frc::Ultrasonic #variable($Name){${Ping_Channel_Digital}, ${Echo_Channel_Digital}};"
   PowerDistributionPanel:
     Defaults: "Component,None"
-    ClassName: "PowerDistributionPanel"
-    Declaration: "frc::PowerDistributionPanel #variable($Name){$CAN_ID};"
+    ClassName: "PowerDistribution"
+    Declaration: "frc::PowerDistribution #variable($Name){$CAN_ID};"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
 
   Speed Controller:
