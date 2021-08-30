@@ -252,6 +252,9 @@ Palette:
             name: Wiring file location
             folder: true
             default: "${home}"
+          - !BooleanProperty
+            name: Desktop Support
+            default: false
       - !Component
         name: Subsystems
         type: Subsystems
