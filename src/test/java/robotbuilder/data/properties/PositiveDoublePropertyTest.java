@@ -2,20 +2,23 @@
 package robotbuilder.data.properties;
 
 import org.junit.*;
-import static org.junit.Assert.*;
 import robotbuilder.MainFrame;
+import robotbuilder.extensions.Extensions;
+
+import static org.junit.Assert.*;
 
 /**
  *
  * @author alex
  */
-public class DoublePropertyTest {
+public class PositiveDoublePropertyTest {
 
-    public DoublePropertyTest() {
+    public PositiveDoublePropertyTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Extensions.init();
     }
 
     @AfterClass
@@ -32,10 +35,10 @@ public class DoublePropertyTest {
 
     @Test
     public void testCopy() {
-        DoubleProperty dp = new DoubleProperty("Test", 0, new String[0],
+        PositiveDoubleProperty dp = new PositiveDoubleProperty("Test", 0, new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "3.14159");
-        DoubleProperty copy = (DoubleProperty) dp.copy();
-        DoubleProperty copy2 = (DoubleProperty) copy.copy();
+        PositiveDoubleProperty copy = (PositiveDoubleProperty) dp.copy();
+        PositiveDoubleProperty copy2 = (PositiveDoubleProperty) copy.copy();
         assertEquals("Copy should have the same name.", dp.name, copy.name);
         assertEquals("Copy should have the same default.", dp.defaultValue, copy.defaultValue);
         assertEquals("Copy should have the same value.", dp.value, copy.value);
@@ -51,7 +54,7 @@ public class DoublePropertyTest {
 
     @Test
     public void testGetValue() {
-        DoubleProperty dp = new DoubleProperty("Test", 0.0, new String[0],
+        PositiveDoubleProperty dp = new PositiveDoubleProperty("Test", 0.0, new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "3.14159");
         dp.value = null;
         assertEquals("Value should be the default value.", dp.getValue(), dp.defaultValue);
@@ -62,12 +65,12 @@ public class DoublePropertyTest {
         dp.value = "3.14159";
         assertEquals("Value should be 3.14159", (Double) dp.getValue(), 3.14159, .00002);
         dp.value = "-1";
-        assertEquals("Value should be -1", (Double) dp.getValue(), -1.0, .00002);
+        assertEquals("Value should be -1.", (Double) dp.getValue(), -1.0, .00002);
     }
 
     @Test
     public void testGetDisplayValue() {
-        DoubleProperty dp = new DoubleProperty("Test", 0.0, new String[0],
+        PositiveDoubleProperty dp = new PositiveDoubleProperty("Test", 0.0, new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "3.14159");
         dp.value = null;
         assertEquals("Display Value should be the default value.", dp.getDisplayValue(), dp.defaultValue.toString());
@@ -78,12 +81,12 @@ public class DoublePropertyTest {
         dp.value = "3.14159";
         assertEquals("Display Value should be 3.14159", dp.getDisplayValue(), "3.14159");
         dp.value = "-1.0";
-        assertEquals("Display Value should be -1.0", dp.getDisplayValue(), "-1.0");
+        assertEquals("Display Value should be -1.", dp.getDisplayValue(), "-1.0");
     }
 
     @Test
     public void testSetValue() {
-        DoubleProperty dp = new DoubleProperty("Test", 0.0, new String[0],
+        PositiveDoubleProperty dp = new PositiveDoubleProperty("Test", 0.0, new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "3.14159");
         dp.setValueAndUpdate("1");
         assertEquals("Display Value should be 1.", dp.value, "1");
@@ -96,12 +99,12 @@ public class DoublePropertyTest {
         dp.setValueAndUpdate(3.14159);
         assertEquals("Display Value should be 3.14159.", dp.value, "3.14159");
         dp.setValueAndUpdate("-1.0");
-        assertEquals("Display Value should be -1.0.", dp.value, "-1.0");
+        assertEquals("Display Value should be 1.", dp.value, "-1.0");
     }
 
     @Test
     public void testIsValid() {
-        DoubleProperty dp = new DoubleProperty("Test", 0.0, new String[0],
+        PositiveDoubleProperty dp = new PositiveDoubleProperty("Test", 0.0, new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "1");
         dp.setValueAndUpdate("1");
         assertTrue(dp.isValid());
@@ -114,11 +117,11 @@ public class DoublePropertyTest {
         dp.setValueAndUpdate(2);
         assertTrue(dp.isValid());
         dp.setValueAndUpdate(-1.0);
-        assertTrue(dp.isValid());
+        assertFalse(dp.isValid());
         dp.setValueAndUpdate(Double.MAX_EXPONENT);
         assertTrue(dp.isValid());
         dp.setValueAndUpdate(Double.MIN_EXPONENT);
-        assertTrue(dp.isValid());
+        assertFalse(dp.isValid());
         dp.setValueAndUpdate(Double.MAX_VALUE);
         assertTrue(dp.isValid());
         dp.setValueAndUpdate(Double.MIN_VALUE);
@@ -127,7 +130,7 @@ public class DoublePropertyTest {
 
     @Test
     public void testGetError() {
-        DoubleProperty dp = new DoubleProperty("Test", 0.0, new String[0],
+        PositiveDoubleProperty dp = new PositiveDoubleProperty("Test", 0.0, new String[0],
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "1");
         dp.setValueAndUpdate("1");
         assertNull(dp.getErrorMessage());
@@ -140,18 +143,18 @@ public class DoublePropertyTest {
         dp.setValueAndUpdate(2);
         assertNull(dp.getErrorMessage());
         dp.setValueAndUpdate(-1.0);
-        assertNull(dp.getErrorMessage());
+        assertNotNull(dp.getErrorMessage());
         dp.setValueAndUpdate(Double.MAX_EXPONENT);
         assertNull(dp.getErrorMessage());
         dp.setValueAndUpdate(Double.MIN_EXPONENT);
-        assertNull(dp.getErrorMessage());
+        assertNotNull(dp.getErrorMessage());
         dp.setValueAndUpdate(Double.MAX_VALUE);
         assertNull(dp.getErrorMessage());
         dp.setValueAndUpdate(Double.MIN_VALUE);
         assertNull(dp.getErrorMessage());
 
         String[] validators = {"DropdownSelected"};
-        DoubleProperty dp2 = new DoubleProperty("Test", 0, validators,
+        PositiveDoubleProperty dp2 = new PositiveDoubleProperty("Test", 0, validators,
                 MainFrame.getInstance().getCurrentRobotTree().getRoot(), "null");
         assertNotNull(dp2.getErrorMessage());
     }
