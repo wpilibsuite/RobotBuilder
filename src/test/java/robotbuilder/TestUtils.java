@@ -196,11 +196,10 @@ public class TestUtils {
         //RobotComponent wait = new RobotComponent("Wait", "Wait Command", tree);
         //commands.add(wait);
 
-        //Conditional Command is broken on C++
-        //RobotComponent conditionalCommand = new RobotComponent("CC", "Conditional Command", tree);
-        //conditionalCommand.getProperty("On True Command").setValueAndUpdate(armUp);
-        //conditionalCommand.getProperty("On False Command").setValueAndUpdate(armDown);
-        //commands.add(conditionalCommand);
+        RobotComponent conditionalCommand = new RobotComponent("CC", "Conditional Command", tree);
+        conditionalCommand.getProperty("On True Command").setValueAndUpdate(armUp);
+        conditionalCommand.getProperty("On False Command").setValueAndUpdate(armDown);
+        commands.add(conditionalCommand);
 
         // Create setpoint command
         RobotComponent setpointCommand = new RobotComponent("Wrist Setpoint", "Setpoint Command", tree);
