@@ -232,10 +232,10 @@ Instructions:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
     Declaration: "frc::Ultrasonic #variable($Name){${Ping_Channel_Digital}, ${Echo_Channel_Digital}};"
-  PowerDistributionPanel:
+  PowerDistribution:
     Defaults: "Component,None"
     ClassName: "PowerDistribution"
-    Declaration: "frc::PowerDistribution #variable($Name){$CAN_ID};"
+    Declaration: "frc::PowerDistribution #variable($Name){$CAN_ID, frc::PowerDistribution::ModuleType::k$Module_Type};"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
 
   Speed Controller:

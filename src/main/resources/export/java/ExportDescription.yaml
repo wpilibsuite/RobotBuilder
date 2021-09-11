@@ -253,10 +253,11 @@ Instructions:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
     Construction: "#variable($Short_Name) = new ${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital});"
-  PowerDistributionPanel:
+  PowerDistribution:
     Defaults: "Component,None"
     ClassName: "PowerDistribution"
-    Construction: "#variable($Short_Name) = new ${ClassName}($CAN_ID);"
+    Import: "import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;\nimport edu.wpi.first.wpilibj.PowerDistribution;"
+    Construction: "#variable($Short_Name) = new ${ClassName}($CAN_ID, ModuleType.k$Module_Type);"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
 
   Speed Controller:

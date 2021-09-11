@@ -136,7 +136,7 @@ public class TestUtils {
         misc.add(dI);
         RobotComponent ultrasonic = new RobotComponent("Ultrasonic", "Ultrasonic", tree);
         misc.add(ultrasonic);
-        RobotComponent PDP = new RobotComponent("Power Distribution Panel", "PowerDistributionPanel", tree);
+        RobotComponent PDP = new RobotComponent("Power Distribution Panel", "PowerDistribution", tree);
         misc.add(PDP);
         RobotComponent nidec = new RobotComponent("Nidec", "Nidec Brushless", tree);
         misc.add(nidec);
