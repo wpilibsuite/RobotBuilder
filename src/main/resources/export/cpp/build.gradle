@@ -17,6 +17,7 @@ deploy {
             }
 
             // TODO add static file artifact
+        }
     }
 }
 
