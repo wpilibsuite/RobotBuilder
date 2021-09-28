@@ -143,7 +143,7 @@
 #end
 #macro( Solenoid $Name )
           - !ChoicesProperty
-              name: $Name PCM (Solenoid)
+              name: $Name Module (Solenoid)
               validators: [Solenoid]
               choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
               default: "0"
@@ -152,6 +152,10 @@
             validators: [Solenoid]
             choices: ["0", "1", "2", "3", "4", "5", "6", "7"]
             default: "0"
+          - !ChoicesProperty
+            name: $Name Module Type (Solenoid)
+            choices: ["CTREPCM", "REVPH"]
+            default: "CTREPCM"
 #end
 
 Validators:
@@ -195,10 +199,10 @@ Validators:
     fields: [Channel (Relay)]
   - !UniqueValidator
     name: Solenoid
-    fields: [Channel (Solenoid), PCM (Solenoid)]
+    fields: [Channel (Solenoid), Module (Solenoid)]
   - !UniqueValidator
-    name: PCMCompID
-    fields: [PCM ID]
+    name: CompID
+    fields: [Module ID]
   - !ListValidator
     name: List
   - !UniqueValidator
@@ -415,90 +419,6 @@ Palette:
             name: Send to SmartDashboard
             default: false
       - !Component
-        name: Robot Drive 2
-        type: Controller
-        supports: {PIDOutput: 2}
-        help: RobotDrive handles tank, arcade, holonomic and mecanum drive.
-        properties:
-          - !ChildSelectionProperty
-            name: Left Motor
-            type: PIDOutput
-            validators: [RobotDrive2, ChildDropdownSelected]
-            default: 0
-          - !BooleanProperty
-            name: Left Motor Inverted
-            default: false
-          - !ChildSelectionProperty
-            name: Right Motor
-            type: PIDOutput
-            validators: [RobotDrive2, ChildDropdownSelected]
-            default: 1
-          - !BooleanProperty
-            name: Right Motor Inverted
-            default: false
-          - !DoubleProperty
-            name: Sensitivity
-            default: 0.5
-          - !DoubleProperty
-            name: Maximum Output
-            default: 1
-          - !BooleanProperty
-            name: Safety Enabled
-            default: true
-          - !DoubleProperty
-            name: Safety Expiration Time
-            default: .1
-      - !Component
-        name: Robot Drive 4
-        type: Controller
-        supports: {PIDOutput: 4}
-        help: RobotDrive handles tank, arcade, holonomic and mecanum drive.
-        properties:
-          - !ChildSelectionProperty
-            name: Left Front Motor
-            type: PIDOutput
-            validators: [RobotDrive4, ChildDropdownSelected]
-            default: 0
-          - !BooleanProperty
-            name: Left Front Motor Inverted
-            default: false
-          - !ChildSelectionProperty
-            name: Left Rear Motor
-            type: PIDOutput
-            validators: [RobotDrive4, ChildDropdownSelected]
-            default: 1
-          - !BooleanProperty
-            name: Left Rear Motor Inverted
-            default: false
-          - !ChildSelectionProperty
-            name: Right Front Motor
-            type: PIDOutput
-            validators: [RobotDrive4, ChildDropdownSelected]
-            default: 2
-          - !BooleanProperty
-            name: Right Front Motor Inverted
-            default: false
-          - !ChildSelectionProperty
-            name: Right Rear Motor
-            type: PIDOutput
-            validators: [RobotDrive4, ChildDropdownSelected]
-            default: 3
-          - !BooleanProperty
-            name: Right Rear Motor Inverted
-            default: false
-          - !DoubleProperty
-            name: Sensitivity
-            default: 0.5
-          - !DoubleProperty
-            name: Maximum Output
-            default: 1
-          - !BooleanProperty
-            name: Safety Enabled
-            default: true
-          - !DoubleProperty
-            name: Safety Expiration Time
-            default: .1
-      - !Component
         name: Speed Controller Group
         type: PIDOutput
         supports: {PIDOutput: 4}
@@ -683,15 +603,6 @@ Palette:
             choices: [ResetWhileHigh, kResetWhileLow, kResetOnFallingEdge, kResetOnRisingEdge]
             default: "kResetOnRisingEdge"
       - !Component
-        name: Gear Tooth Sensor
-        type: Sensor
-        help: A sensor that counts the number of gear teeth that go by.
-        properties:
-          #DigitalChannel("Input")
-          - !BooleanProperty
-            name: Direction Sensitive
-            default: false
-      - !Component
         name: Analog Potentiometer
         type: PIDSource
         help: An rotational analog sensor that can be used to determine the position of an axle.
@@ -729,14 +640,18 @@ Palette:
           #DigitalChannel("Ping")
           #DigitalChannel("Echo")
       - !Component
-        name: PowerDistributionPanel
+        name: PowerDistribution
         type: Sensor
-        help: Measure the current and voltage from the CTRE Power Distribution Panel.
+        help: Measure the current and voltage from a Power Distribution Module.
         properties:
           - !ChoicesProperty
             name: CAN ID
             choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
             default: "0"
+          - !ChoicesProperty
+            name: Module Type
+            choices: ["Automatic", "CTRE", "Rev"]
+            default: "Automatic"
 
   - Actuators:
       - !Component
@@ -791,17 +706,21 @@ Palette:
       - !Component
         name: Compressor
         type: Actuator
-        help: A pneumatic compressor on your robot, connected to a PCM.
+        help: A pneumatic compressor on your robot, connected to a Pneumatics Module.
         properties:
           - !ChoicesProperty
-            name: PCM ID
-            validators: [PCMCompID]
+            name: Module ID
+            validators: [CompID]
             choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
             default: "0"
+          - !ChoicesProperty
+            name: Module Type
+            choices: ["CTREPCM", "REVPH"]
+            default: "CTREPCM"
       - !Component
         name: Solenoid
         type: Actuator
-        help: A linear actuator used to open and close valves that runs off of the PCM.
+        help: A linear actuator used to open and close valves that runs off of a Pneumatics Module.
         properties:
           #Solenoid("Output")
       - !Component
@@ -813,10 +732,13 @@ Palette:
       - !Component
         name: Double Solenoid
         type: Actuator
-        help: A double-action linear actuator used to open and close valves that runs off of the PCM.
+        help: A double-action linear actuator used to open and close valves that runs off of a pneumatics module.
         properties:
           #Solenoid("Forward")
-          #Solenoid("Reverse")
+          - !ChoicesProperty
+            name: Reverse Channel (Solenoid)
+            choices: ["0", "1", "2", "3", "4", "5", "6", "7"]
+            default: "0"
 
   - OI:
       - !Component
