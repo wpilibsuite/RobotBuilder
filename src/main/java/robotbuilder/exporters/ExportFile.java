@@ -45,7 +45,7 @@ public class ExportFile {
             newProject = mkdir(export.getParentFile());
         }
 
-        boolean isBinaryFile = export.getName().endsWith(".jar") || export.getName().endsWith(".notjar");
+        boolean isBinaryFile = export.getName().endsWith(".jar") || export.getName().endsWith(".notjar") || export.getName().contains("gradlew");
         String oldType = CodeFileUtils.getSavedSuperclass(export);
         String newType = isBinaryFile ? oldType : CodeFileUtils.getSavedSuperclass(exporter.evalResource(source.replace(".cpp", ".h"), fileContext));
         System.out.println("Saved type: " + oldType);
