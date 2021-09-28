@@ -3,7 +3,7 @@
 
 package ${package}.commands;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import ${package}.Robot;
 

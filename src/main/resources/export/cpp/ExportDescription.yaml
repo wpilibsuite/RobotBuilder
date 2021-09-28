@@ -150,43 +150,6 @@ Instructions:
 
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
 
-  Robot Drive 2:
-    Defaults: "Component,None"
-    ClassName: "RobotDrive"
-    Declaration: "frc::${ClassName} #variable($Name){#variable($Left_Motor), #variable($Right_Motor)};"
-    Extra: >
-      #variable($Name).SetSafetyEnabled($Safety_Enabled);
-              #variable($Name).SetExpiration($Safety_Expiration_Time);
-              #variable($Name).SetSensitivity($Sensitivity);
-              #variable($Name).SetMaxOutput($Maximum_Output);
-      #if($Left_Motor_Inverted)
-              #variable($Name).SetInvertedMotor(frc::RobotDrive::kRearLeftMotor, true);#end
-      #if($Right_Motor_Inverted)
-
-              #variable($Name).SetInvertedMotor(frc::RobotDrive::kRearRightMotor, true);#end
-
-  Robot Drive 4:
-    Defaults: "Component,None"
-    ClassName: "RobotDrive"
-    Declaration: "frc::${ClassName} #variable($Name){#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
-                    #variable($Right_Front_Motor), #variable($Right_Rear_Motor)};"
-    Extra: >
-      #variable($Name).SetSafetyEnabled($Safety_Enabled);
-              #variable($Name).SetExpiration($Safety_Expiration_Time);
-              #variable($Name).SetSensitivity($Sensitivity);
-              #variable($Name).SetMaxOutput($Maximum_Output);
-      #if($Left_Front_Motor_Inverted)
-              #variable($Name).SetInvertedMotor(frc::RobotDrive::kFrontLeftMotor, true);#end
-      #if($Left_Rear_Motor_Inverted)
-
-              #variable($Name).SetInvertedMotor(frc::RobotDrive::kRearLeftMotor, true);#end
-      #if($Right_Front_Motor_Inverted)
-
-             #variable($Name).SetInvertedMotor(frc::RobotDrive::kFrontRightMotor, true);#end
-      #if($Right_Rear_Motor_Inverted)
-
-              #variable($Name).SetInvertedMotor(frc::RobotDrive::kRearRightMotor, true);#end
-
   Speed Controller Group:
     Defaults: "Component,None"
     ClassName: "SpeedControllerGroup"
@@ -201,7 +164,7 @@ Instructions:
     Import: "\\#include <frc/drive/${ClassName}.h>"
     Extra: >
       #variable($Name).SetSafetyEnabled($Safety_Enabled);
-              #variable($Name).SetExpiration($Safety_Expiration_Time);
+              #variable($Name).SetExpiration(${Safety_Expiration_Time}_s);
               #variable($Name).SetMaxOutput($Maximum_Output);
   Mecanum Drive:
     Defaults: "Component,None"
@@ -212,7 +175,7 @@ Instructions:
     Import: "\\#include <frc/drive/${ClassName}.h>"
     Extra: >
       #variable($Name).SetSafetyEnabled($Safety_Enabled);
-              #variable($Name).SetExpiration($Safety_Expiration_Time);
+              #variable($Name).SetExpiration(${Safety_Expiration_Time}_s);
               #variable($Name).SetMaxOutput($Maximum_Output);
   Killough Drive:
     Defaults: "Component,None"
@@ -223,7 +186,7 @@ Instructions:
     Import: "\\#include <frc/drive/${ClassName}.h>"
     Extra: >
       #variable($Name).SetSafetyEnabled($Safety_Enabled);
-              #variable($Name).SetExpiration($Safety_Expiration_Time);
+              #variable($Name).SetExpiration(${Safety_Expiration_Time}_s);
               #variable($Name).SetMaxOutput($Maximum_Output);
 
   AnalogGyro:
@@ -246,19 +209,13 @@ Instructions:
     Declaration: "frc::Encoder #variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}};"
     Extra: >-
       #variable($Name).SetDistancePerPulse(${Distance_Per_Pulse});
-          #variable($Name).SetPIDSourceType(frc::PIDSourceType::${PID_Source});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
     Declaration: "frc::Encoder #variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}};"
     Extra: >-
       #variable($Name).SetDistancePerPulse(${Distance_Per_Pulse});
-          #variable($Name).SetPIDSourceType(frc::PIDSourceType::${PID_Source});
           #variable($Name).SetIndexSource((unsigned int)${Index_Channel_Digital}, frc::Encoder::IndexingType::${Indexing_Type});
-  Gear Tooth Sensor:
-    Defaults: "DigitalInput,Component,None"
-    ClassName: "GearTooth"
-    Declaration: "frc::GearTooth #variable($Name){${Input_Channel_Digital}, ${Direction_Sensitive}};"
   Analog Potentiometer:
     Defaults: "AnalogPotentiometer,Component,None"
     ClassName: "AnalogPotentiometer"
@@ -275,10 +232,10 @@ Instructions:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
     Declaration: "frc::Ultrasonic #variable($Name){${Ping_Channel_Digital}, ${Echo_Channel_Digital}};"
-  PowerDistributionPanel:
+  PowerDistribution:
     Defaults: "Component,None"
-    ClassName: "PowerDistributionPanel"
-    Declaration: "frc::PowerDistributionPanel #variable($Name){$CAN_ID};"
+    ClassName: "PowerDistribution"
+    Declaration: "frc::PowerDistribution #variable($Name){$CAN_ID, frc::PowerDistribution::ModuleType::k$Module_Type};"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
 
   Speed Controller:
@@ -286,7 +243,7 @@ Instructions:
     ClassName: "SpeedController"
     Declaration: "frc::${Type} #variable($Name){${Output_Channel_PWM}};"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
-    Import: "\\#include <frc/${Type}.h>"
+    Import: "\\#include <frc/motorcontrol/${Type}.h>"
     Extra: >-
       #variable($Short_Name).SetInverted(${Inverted});
   Nidec Brushless:
@@ -294,6 +251,7 @@ Instructions:
     ClassName: "NidecBrushless"
     Declaration: "frc::${ClassName} #variable($Name){${Output_Channel_PWM}, ${Output_Channel_Digital}};"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
+    Import: "\\#include <frc/motorcontrol/${ClassName}.h>"
     Extra: >-
       #variable($Short_Name).SetInverted(${Inverted});
   Servo:
@@ -317,12 +275,14 @@ Instructions:
   Compressor:
     Defaults: "Component,None"
     ClassName: "Compressor"
-    Declaration: "frc::Compressor #variable($Name){${PCM_ID}};"
+    Declaration: "frc::${ClassName} #variable($Name){${Module_ID}, frc::PneumaticsModuleType::${Module_Type}};"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
+    Import: "\\#include <frc/${ClassName}.h>\n\\#include <frc/PneumaticsModuleType.h>"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "Solenoid"
-    Declaration: "frc::Solenoid #variable($Name){${Output_PCM_Solenoid}, ${Output_Channel_Solenoid}};"
+    Declaration: "frc::Solenoid #variable($Name){${Output_Module_Solenoid}, frc::PneumaticsModuleType::${Output_Module_Type_Solenoid}, ${Output_Channel_Solenoid}};"
+    Import: "\\#include <frc/${ClassName}.h>\n\\#include <frc/PneumaticsModuleType.h>"
   Relay Solenoid:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
@@ -331,8 +291,9 @@ Instructions:
   Double Solenoid:
     Defaults: "Solenoid,Component,None"
     ClassName: "DoubleSolenoid"
-    Declaration: "frc::DoubleSolenoid #variable($Name){${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}};"
+    Declaration: "frc::DoubleSolenoid #variable($Name){${Forward_Module_Solenoid}, frc::PneumaticsModuleType::${Forward_Module_Type_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}};"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
+    Import: "\\#include <frc/${ClassName}.h>\n\\#include <frc/PneumaticsModuleType.h>"
 
   Joystick:
     Defaults: "OI,None"

@@ -52,10 +52,8 @@ public class TestUtils {
         // Create a drive train subsystem
         RobotComponent driveTrain = new RobotComponent("Drive Train", "Subsystem", tree);
         subsystems.add(driveTrain);
-        RobotComponent robotDrive = new RobotComponent("Robot Drive", "Robot Drive 2", tree);
-        robotDrive.getProperty("Left Motor Inverted").setValueAndUpdate(true);
+        RobotComponent robotDrive = new RobotComponent("Robot Drive", "Differential Drive", tree);
         robotDrive.getProperty("Safety Enabled").setValueAndUpdate(false);
-        robotDrive.getProperty("Sensitivity").setValueAndUpdate(0.25);
         driveTrain.add(robotDrive);
         RobotComponent leftVictor = new RobotComponent("Left Victor", "Speed Controller", tree);
         leftVictor.setProperty("Type", "Victor");
@@ -135,13 +133,11 @@ public class TestUtils {
         misc.add(indexEncoder);
         RobotComponent analogAccel = new RobotComponent("Analog Accelerometer", "AnalogAccelerometer", tree);
         misc.add(analogAccel);
-        RobotComponent gearTooth = new RobotComponent("Gear Tooth", "Gear Tooth Sensor", tree);
-        misc.add(gearTooth);
         RobotComponent dI = new RobotComponent("DI", "Digital Input", tree);
         misc.add(dI);
         RobotComponent ultrasonic = new RobotComponent("Ultrasonic", "Ultrasonic", tree);
         misc.add(ultrasonic);
-        RobotComponent PDP = new RobotComponent("Power Distribution Panel", "PowerDistributionPanel", tree);
+        RobotComponent PDP = new RobotComponent("Power Distribution Panel", "PowerDistribution", tree);
         misc.add(PDP);
         RobotComponent nidec = new RobotComponent("Nidec", "Nidec Brushless", tree);
         misc.add(nidec);
@@ -160,7 +156,7 @@ public class TestUtils {
         RobotComponent relaySolenoid = new RobotComponent("Relay Solenoid", "Relay Solenoid", tree);
         misc.add(relaySolenoid);
         RobotComponent doubleSolenoid = new RobotComponent("Double Solenoid", "Double Solenoid", tree);
-        misc.add(relaySolenoid);
+        misc.add(doubleSolenoid);
 
         // Create a simple OI
         RobotComponent leftstick = new RobotComponent("Left Joystick", "Joystick", tree);
