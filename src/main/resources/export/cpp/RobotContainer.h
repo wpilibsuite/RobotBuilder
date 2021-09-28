@@ -1,5 +1,6 @@
 #set($command = $robot.getProperty("Autonomous Command").getValue())
 #header()
+// ROBOTBUILDER TYPE: RobotContainer.
 
 #pragma once
 

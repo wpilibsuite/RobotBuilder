@@ -1,4 +1,5 @@
 #header()
+// ROBOTBUILDER TYPE: WaitCommand.
 
 #set($command = $helper.getByName($command_name, $robot))
 

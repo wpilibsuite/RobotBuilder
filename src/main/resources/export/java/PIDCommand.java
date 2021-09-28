@@ -1,4 +1,5 @@
 #header()
+// ROBOTBUILDER TYPE: PIDCommand.
 
 package ${package}.commands;
 

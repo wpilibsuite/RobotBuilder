@@ -93,19 +93,19 @@ public class JavaExportTest {
         exporter.export(tree);
 
         //Command
-        assertEquals("CommandBase", CodeFileUtils.getSavedSuperclass(new File(path + "commands/ArmDown.java")));
+        assertEquals("Command", CodeFileUtils.getSavedSuperclass(new File(path + "commands/ArmDown.java")));
 
         //Instant Command
         assertEquals("InstantCommand", CodeFileUtils.getSavedSuperclass(new File(path + "commands/InstantCommand1.java")));
 
         //Setpoint Command
-        assertEquals("CommandBase", CodeFileUtils.getSavedSuperclass(new File(path + "commands/WristSetpoint.java")));
+        assertEquals("SetpointCommand", CodeFileUtils.getSavedSuperclass(new File(path + "commands/WristSetpoint.java")));
 
         //Sequential Command Group
         assertEquals("SequentialCommandGroup", CodeFileUtils.getSavedSuperclass(new File(path + "commands/Autonomous.java")));
 
         //Subsystem
-        assertEquals("SubsystemBase", CodeFileUtils.getSavedSuperclass(new File(path + "subsystems/Arm.java")));
+        assertEquals("Subsystem", CodeFileUtils.getSavedSuperclass(new File(path + "subsystems/Arm.java")));
 
         //PID Subsystem
         assertEquals("PIDSubsystem", CodeFileUtils.getSavedSuperclass(new File(path + "subsystems/Wrist.java")));

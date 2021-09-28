@@ -1,4 +1,5 @@
 #header()
+// ROBOTBUILDER TYPE: RobotContainer.
 
 package ${package};
 

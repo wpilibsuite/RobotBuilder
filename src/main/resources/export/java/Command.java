@@ -1,4 +1,5 @@
 #header()
+// ROBOTBUILDER TYPE: Command.
 
 package ${package}.commands;
 #set($command = $helper.getByName($command_name, $robot))

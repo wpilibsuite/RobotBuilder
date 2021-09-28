@@ -1,4 +1,5 @@
 #header()
+// ROBOTBUILDER TYPE: Robot.
 
 package $package;
 

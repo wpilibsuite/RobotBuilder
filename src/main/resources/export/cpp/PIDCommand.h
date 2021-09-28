@@ -1,6 +1,7 @@
 #set($command = $helper.getByName($command_name, $robot))
 
 #header()
+// ROBOTBUILDER TYPE: PIDCommand.
 
 #pragma once
 
