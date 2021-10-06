@@ -19,7 +19,7 @@ The WPILib Mission is to enable FIRST teams to focus on writing game-specific so
 Building RobotBuilder is very straightforward. WPILib uses Gradle to compile.
 
 ## Requirements
-- [JDK 11](https://adoptopenjdk.net/)
+- [JDK 11](https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot)
 - A c++ Compiler (for c++ compile test). Any one of:
     - On Linux, install GCC 7+
     - On Windows, install [Visual Studio Community 2019](https://visualstudio.microsoft.com/vs/community/) and select the C++ programming language during installation
