@@ -45,6 +45,9 @@ public class JavaExportTest {
 
     @After
     public void tearDown() {
+        System.gc();
+        File project = new File("build/test-resources/" + PROJECT_DIRECTORY);
+        TestUtils.delete(project);
     }
 
     @Test
