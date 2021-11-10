@@ -7,6 +7,11 @@ plugins {
 
 }
 
+wpi.maven.useLocal = false
+wpi.maven.useFrcMavenLocalDevelopment = true
+wpi.versions.wpilibVersion = '2022.424242.+'
+wpi.versions.wpimathVersion = '2022.424242.+'
+
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project DeployTools.
 deploy {

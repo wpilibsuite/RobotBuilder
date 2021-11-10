@@ -158,6 +158,8 @@ public class TestUtils {
         RobotComponent relaySolenoid = new RobotComponent("Relay Solenoid", "Relay Solenoid", tree);
         misc.add(relaySolenoid);
         RobotComponent doubleSolenoid = new RobotComponent("Double Solenoid", "Double Solenoid", tree);
+        //Needed until #422 is fixed
+        doubleSolenoid.getProperty("Reverse Channel (Solenoid)").setValueAndUpdate("2");
         misc.add(doubleSolenoid);
 
         // Create a simple OI

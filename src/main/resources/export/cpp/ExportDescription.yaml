@@ -106,7 +106,7 @@ Defaults:
     Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_AnalogOutput}));"
     LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
   SolenoidOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid}));"
+    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Module_Solenoid}, ${Output_Channel_Solenoid}));"
     LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
   OI:
     Export: "OI"
@@ -145,14 +145,15 @@ Instructions:
     ClassName: "PIDController"
     Construction: "#variable($Name).reset(new frc::${ClassName}($P, $I, $D,/* F: $F, */ #variable($Input).get(), #variable($Output).get(), $Period));"
     Extra: >
-      #variable($Name)->SetContinuous(${Continuous});
-      #variable($Name)->SetAbsoluteTolerance(${Tolerance});
+
       #if($Limit_Input)
 
           #variable($Name)->SetInputRange(${Minimum_Input}, ${Maximum_Input});#end
       #if(true)
 
           #variable($Name)->SetOutputRange(${Minimum_Output}, ${Maximum_Output});#end
+      #variable($Name)->SetContinuous(${Continuous});
+      #variable($Name)->SetAbsoluteTolerance(${Tolerance});
       #if($Send_to_SmartDashboard)
 
           SmartDashboard::PutData("${Name}", #variable($Name).get());#end
@@ -161,7 +162,7 @@ Instructions:
 
   Speed Controller Group:
     Defaults: "Component,None"
-    ClassName: "SpeedControllerGroup"
+    ClassName: "MotorControllerGroup"
     LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
     Construction: >-
       #variable($Name) = std::make_shared<frc::${ClassName}>(*#variable($SpeedController1), *#variable($SpeedController2)
@@ -174,7 +175,7 @@ Instructions:
     Import: "\\#include \"frc/drive/${ClassName}.h\""
     Extra: >
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
+              #variable($Name)->SetExpiration(${Safety_Expiration_Time}_s);
               #variable($Name)->SetMaxOutput($Maximum_Output);
   Mecanum Drive:
     Defaults: "Component,None"
@@ -186,7 +187,7 @@ Instructions:
                     *#variable($Right_Front_Motor), *#variable($Right_Rear_Motor)));
     Extra: >
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
+              #variable($Name)->SetExpiration(${Safety_Expiration_Time}_s);
               #variable($Name)->SetMaxOutput($Maximum_Output);
   Killough Drive:
     Defaults: "Component,None"
@@ -198,42 +199,48 @@ Instructions:
                     *#variable($Back_Motor)));
     Extra: >
       #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
+              #variable($Name)->SetExpiration(${Safety_Expiration_Time}_s);
               #variable($Name)->SetMaxOutput($Maximum_Output);
 
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
-    ClassName: "AnalogGyro"
+    ClassName: "PIDAnalogGyro"
     Extra: "#variable($Name)->SetSensitivity(${Sensitivity});"
     PID: "#variable($Short_Name)->PIDGet()"
+    Import: "\\#include \"frc/pidwrappers/${ClassName}.h\""
   AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
-    ClassName: "AnalogAccelerometer"
+    ClassName: "PIDAnalogAccelerometer"
     PID: "#variable($Short_Name)->GetAcceleration()"
+    Import: "\\#include \"frc/pidwrappers/${ClassName}.h\""
     Extra: >-
       #variable($Name)->SetSensitivity(${Volts_Per_G});
               #variable($Name)->SetZero(${Zero_G_Volts});
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
-    ClassName: "Encoder"
+    ClassName: "PIDEncoder"
     Construction: "#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}));"
+    Import: "\\#include \"frc/pidwrappers/${ClassName}.h\""
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
           #variable($Name)->SetPIDSourceType(frc::PIDSourceType::${PID_Source});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
-    ClassName: "Encoder"
+    ClassName: "PIDEncoder"
     Construction: "#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}));"
+    Import: "\\#include \"frc/pidwrappers/${ClassName}.h\""
     Extra: >-
       #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
           #variable($Name)->SetPIDSourceType(frc::PIDSourceType::${PID_Source});
           #variable($Name)->SetIndexSource((unsigned int)${Index_Channel_Digital}, frc::Encoder::IndexingType::${Indexing_Type});
   Analog Potentiometer:
     Defaults: "AnalogPotentiometer,Component,None"
-    ClassName: "AnalogPotentiometer"
+    ClassName: "PIDAnalogPotentiometer"
+    Import: "\\#include \"frc/pidwrappers/${ClassName}.h\""
   Analog Input:
     Defaults: "AnalogInput,Component,None"
-    ClassName: "AnalogInput"
+    ClassName: "PIDAnalogInput"
+    Import: "\\#include \"frc/pidwrappers/${ClassName}.h\""
   Limit Switch:
     Defaults: "DigitalInput,Component,None"
     ClassName: "DigitalInput"
@@ -242,20 +249,21 @@ Instructions:
     ClassName: "DigitalInput"
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
-    ClassName: "Ultrasonic"
+    ClassName: "PIDUltrasonic"
     Construction: "#variable($Name).reset(new frc::${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital}));"
+    Import: "\\#include \"frc/pidwrappers/${ClassName}.h\""
   PowerDistribution:
     Defaults: "Component,None"
     ClassName: "PowerDistribution"
-    Construction: "#variable($Name).reset(new frc::${ClassName}($CAN_ID), frc::PowerDistribution::ModuleType::k$Module_Type);"
+    Construction: "#variable($Name).reset(new frc::${ClassName} #if(($Module_Type) == \"Automatic\") ()); #else ($CAN_ID, frc::PowerDistribution::ModuleType::k$Module_Type));#end"
     LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
 
   Speed Controller:
     Defaults: "PWMOutput,Component,None"
-    ClassName: "SpeedController"
-    Construction: "#variable($Name).reset(new frc::${Type}(${Output_Channel_PWM}));"
-    LiveWindow: "AddChild(\"$Short_Name\", std::static_pointer_cast<frc::${Type}>(#variable($Name)));"
-    Import: "\\#include \"frc/motorcontrol/${Type}.h\""
+    ClassName: "PIDMotorController"
+    Construction: "frc::${Type} #variable($Name)Temp = frc::${Type}{${Output_Channel_PWM}};\n#variable($Name).reset(new frc::PIDMotorController(#variable($Name)Temp));"
+    LiveWindow: "AddChild(\"$Short_Name\", std::static_pointer_cast<frc::PIDMotorController>(#variable($Name)));"
+    Import: "\\#include \"frc/motorcontrol/${Type}.h\"\n\\#include \"frc/pidwrappers/PIDMotorController.h\""
     Extra: >-
       #variable($Short_Name)->SetInverted(${Inverted});
   Nidec Brushless:
@@ -290,7 +298,7 @@ Instructions:
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "Solenoid"
-    Declaration: "frc::Solenoid #variable($Name){${Output_Module_Solenoid}, frc::PneumaticsModuleType::${Output_Module_Type_Solenoid}, ${Output_Channel_Solenoid}};"
+    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Module_Solenoid}, frc::PneumaticsModuleType::${Output_Module_Type_Solenoid}, ${Output_Channel_Solenoid}));"
     Import: "\\#include <frc/${ClassName}.h>\n\\#include <frc/PneumaticsModuleType.h>"
   Relay Solenoid:
     Defaults: "RelayOutput,Component,None"
