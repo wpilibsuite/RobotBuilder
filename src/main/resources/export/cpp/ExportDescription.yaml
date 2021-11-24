@@ -235,7 +235,7 @@ Instructions:
   PowerDistribution:
     Defaults: "Component,None"
     ClassName: "PowerDistribution"
-    Declaration: "frc::PowerDistribution #variable($Name){$CAN_ID, frc::PowerDistribution::ModuleType::k$Module_Type};"
+    Declaration: "frc::PowerDistribution #variable($Name)#if(($Module_Type) == \"Automatic\"){};#else{$CAN_ID, frc::PowerDistribution::ModuleType::k$Module_Type};#end"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
 
   Speed Controller:
