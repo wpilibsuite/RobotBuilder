@@ -257,7 +257,7 @@ Instructions:
     Defaults: "Component,None"
     ClassName: "PowerDistribution"
     Import: "import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;\nimport edu.wpi.first.wpilibj.PowerDistribution;"
-    Construction: "#variable($Short_Name) = new ${ClassName}($CAN_ID, ModuleType.k$Module_Type);"
+    Construction: "#if(($Module_Type) == \"Automatic\") #variable($Short_Name) = new ${ClassName}();#else #variable($Short_Name) = new ${ClassName}($CAN_ID, ModuleType.k$Module_Type);#end"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
 
   Speed Controller:
