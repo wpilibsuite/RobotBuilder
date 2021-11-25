@@ -261,7 +261,8 @@ Instructions:
   Speed Controller:
     Defaults: "PWMOutput,Component,None"
     ClassName: "PIDMotorController"
-    Construction: "frc::${Type} #variable($Name)Temp = frc::${Type}{${Output_Channel_PWM}};\n#variable($Name).reset(new frc::PIDMotorController(#variable($Name)Temp));"
+    Construction: "#variable($Name).reset(new frc::PIDMotorController(#variable($Name)Temp));"
+    Declaration: "frc::${Type} #variable($Name)Temp = frc::${Type}{${Output_Channel_PWM}};\nstd::shared_ptr<frc::${ClassName}> #variable($Name);"
     LiveWindow: "AddChild(\"$Short_Name\", std::static_pointer_cast<frc::PIDMotorController>(#variable($Name)));"
     Import: "\\#include \"frc/motorcontrol/${Type}.h\"\n\\#include \"frc/pidwrappers/PIDMotorController.h\""
     Extra: >-
