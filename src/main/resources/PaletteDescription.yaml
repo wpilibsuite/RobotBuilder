@@ -775,7 +775,7 @@ Palette:
             name: Joystick
           - !ChoicesProperty
             name: Button
-            choices: ["A","B","X","Y","Back","Start","BumperLeft","BumperRight","StickLeft","StickRight"]
+            choices: ["A","B","X","Y","Back","Start","LeftBumper","RightBumper","LeftStick","RightStick"]
             default: "A"
           #Button("")
 
