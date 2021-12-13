@@ -118,7 +118,7 @@ test {
 jar {
     manifest {
         attributes('Implementation-Title': 'RobotBuilder',
-                    'Implementation-Version': version,
+                    'Implementation-Version': archiveVersion,
                     'Built-By': System.getProperty('user.name'),
                     'Built-Date': new Date(),
                     'Built-JDK': System.getProperty('java.version'))
