@@ -167,6 +167,7 @@ Instructions:
   Motor Controller Group:
     Defaults: "Component,None"
     ClassName: "MotorControllerGroup"
+    Import: "import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;"
     Construction: >-
       #variable($Short_Name) = new ${ClassName}(#variable($MotorController1), #variable($MotorController2)
       #if(($MotorController3)), #variable($MotorController3)#end #if(($MotorController4)), #variable($MotorController4)#end);
