@@ -51,6 +51,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import lombok.Getter;
 
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 
 import robotbuilder.MainFrame;
@@ -386,7 +387,9 @@ public class RobotTree extends JPanel {
     public void load(Reader in) {
         resetTree();
 
-        Iterator docs = new Yaml().loadAll(in).iterator();
+        LoaderOptions loaderOptions = new LoaderOptions();
+        loaderOptions.setMaxAliasesForCollections(100);
+        Iterator docs = new Yaml(loaderOptions).loadAll(in).iterator();
 
         String version = (String) docs.next();
         if (!isVersionCompatible(version, RobotBuilder.VERSION)) {
