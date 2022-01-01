@@ -50,9 +50,9 @@ public class DistinctValidatorTest {
         subsystems.add(driveTrain);
         RobotComponent robotDrive = new RobotComponent("Robot Drive", "Differential Drive", tree);
         driveTrain.add(robotDrive);
-        RobotComponent leftVictor = new RobotComponent("Left Victor", "Speed Controller", tree);
+        RobotComponent leftVictor = new RobotComponent("Left Victor", "Motor Controller", tree);
         robotDrive.add(leftVictor);
-        RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
+        RobotComponent rightVictor = new RobotComponent("Right Victor", "Motor Controller", tree);
         robotDrive.add(rightVictor);
 
         robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getName());
@@ -73,9 +73,9 @@ public class DistinctValidatorTest {
         subsystems.add(driveTrain);
         RobotComponent robotDrive = new RobotComponent("Robot Drive", "Differential Drive", tree);
         driveTrain.add(robotDrive);
-        RobotComponent leftVictor = new RobotComponent("Left Victor", "Speed Controller", tree);
+        RobotComponent leftVictor = new RobotComponent("Left Victor", "Motor Controller", tree);
         robotDrive.add(leftVictor);
-        RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
+        RobotComponent rightVictor = new RobotComponent("Right Victor", "Motor Controller", tree);
         robotDrive.add(rightVictor);
 
         robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getName());
@@ -96,9 +96,9 @@ public class DistinctValidatorTest {
         subsystems.add(driveTrain);
         RobotComponent robotDrive = new RobotComponent("Robot Drive", "Differential Drive", tree);
         driveTrain.add(robotDrive);
-        RobotComponent leftVictor = new RobotComponent("Left Victor", "Speed Controller", tree);
+        RobotComponent leftVictor = new RobotComponent("Left Victor", "Motor Controller", tree);
         robotDrive.add(leftVictor);
-        RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
+        RobotComponent rightVictor = new RobotComponent("Right Victor", "Motor Controller", tree);
         robotDrive.add(rightVictor);
 
         robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getName());

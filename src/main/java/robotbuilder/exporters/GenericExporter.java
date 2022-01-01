@@ -362,7 +362,7 @@ public class GenericExporter {
             for (String property : component.getPropertyKeys()) {
                 if (property.endsWith(propertyName)) {
                     // show speed controller type
-                    if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Speed Controller")) {
+                    if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Motor Controller")) {
                         String type1 = component.getProperty("Type").getValue().toString();
                         mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + type1);
                     } else if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Servo")) {
