@@ -153,6 +153,7 @@ Instructions:
   Motor Controller Group:
     Defaults: "Component,None"
     ClassName: "MotorControllerGroup"
+    Import: "\\#include <frc/motorcontrol/MotorControllerGroup.h>"
     Declaration: "frc::${ClassName} #variable($Name){#variable($MotorController1), #variable($MotorController2)
       #if(($MotorController3)), #variable($MotorController3)#end #if(($MotorController4)), #variable($MotorController4)#end};"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
