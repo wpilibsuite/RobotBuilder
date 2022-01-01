@@ -55,10 +55,10 @@ public class TestUtils {
         RobotComponent robotDrive = new RobotComponent("Robot Drive", "Differential Drive", tree);
         robotDrive.getProperty("Safety Enabled").setValueAndUpdate(false);
         driveTrain.add(robotDrive);
-        RobotComponent leftVictor = new RobotComponent("Left Victor", "Speed Controller", tree);
+        RobotComponent leftVictor = new RobotComponent("Left Victor", "Motor Controller", tree);
         leftVictor.setProperty("Type", "Victor");
         robotDrive.add(leftVictor);
-        RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
+        RobotComponent rightVictor = new RobotComponent("Right Victor", "Motor Controller", tree);
         rightVictor.setProperty("Type", "Victor");
         robotDrive.add(rightVictor);
         robotDrive.getProperty("Right Motor").setValueAndUpdate(rightVictor);
@@ -76,7 +76,7 @@ public class TestUtils {
         pid.getProperty("D").setValueAndUpdate(-1);
         pid.getProperty("Send to SmartDashboard").setValueAndUpdate(true);
         pid.getProperty("Continuous").setValueAndUpdate(true);
-        RobotComponent motor = new RobotComponent("Motor", "Speed Controller", tree);
+        RobotComponent motor = new RobotComponent("Motor", "Motor Controller", tree);
         motor.setProperty("Type", "Jaguar");
         pid.add(motor);
         RobotComponent encoder = new RobotComponent("Encoder", "Quadrature Encoder", tree);
@@ -93,7 +93,7 @@ public class TestUtils {
         wrist.getProperty("I").setValueAndUpdate(1);
         wrist.getProperty("D").setValueAndUpdate(-1);
         wrist.getProperty("Continuous").setValueAndUpdate(true);
-        RobotComponent wristMotor = new RobotComponent("Motor", "Speed Controller", tree);
+        RobotComponent wristMotor = new RobotComponent("Motor", "Motor Controller", tree);
         wristMotor.setProperty("Type", "Jaguar");
         wrist.add(wristMotor);
         RobotComponent pot = new RobotComponent("Pot", "Analog Potentiometer", tree);
@@ -102,26 +102,26 @@ public class TestUtils {
         // Create a misc subsystem
         RobotComponent misc = new RobotComponent("Misc", "Subsystem", tree);
         subsystems.add(misc);
-        //Speed Controller Group causes save and load file test false failures
-        //RobotComponent scg1 = new RobotComponent("SCG1", "Speed Controller", tree);
+        //Motor Controller Group causes save and load file test false failures
+        //RobotComponent scg1 = new RobotComponent("SCG1", "Motor Controller", tree);
         //scg1.setProperty("Type", "PWMVictorSPX");
-        //RobotComponent scg2 = new RobotComponent("SCG2", "Speed Controller", tree);
+        //RobotComponent scg2 = new RobotComponent("SCG2", "Motor Controller", tree);
         //scg2.setProperty("Type", "Spark");
-        //RobotComponent scg3 = new RobotComponent("SCG3", "Speed Controller", tree);
+        //RobotComponent scg3 = new RobotComponent("SCG3", "Motor Controller", tree);
         //scg3.setProperty("Type", "SD540");
-        //RobotComponent scg4 = new RobotComponent("SCG4", "Speed Controller", tree);
+        //RobotComponent scg4 = new RobotComponent("SCG4", "Motor Controller", tree);
         //scg4.setProperty("Type", "PWMVenom");
-        //RobotComponent scg = new RobotComponent("SCG", "Speed Controller Group", tree);
+        //RobotComponent scg = new RobotComponent("SCG", "Motor Controller Group", tree);
         //scg.add(scg1);
         //scg.add(scg2);
         //scg.add(scg3);
         //scg.add(scg4);
-        //scg.getProperty("SpeedController3").setValueAndUpdate(scg3);
-        //scg.getProperty("SpeedController4").setValueAndUpdate(scg4);
+        //scg.getProperty("MotorController3").setValueAndUpdate(scg3);
+        //scg.getProperty("MotorController4").setValueAndUpdate(scg4);
         //misc.add(scg);
-        RobotComponent dd1 = new RobotComponent("DD1", "Speed Controller", tree);
+        RobotComponent dd1 = new RobotComponent("DD1", "Motor Controller", tree);
         dd1.setProperty("Type", "VictorSP");
-        RobotComponent dd2 = new RobotComponent("DD2", "Speed Controller", tree);
+        RobotComponent dd2 = new RobotComponent("DD2", "Motor Controller", tree);
         dd2.setProperty("Type", "VictorSP");
         RobotComponent diffDrive = new RobotComponent("Diff Drive", "Differential Drive", tree);
         diffDrive.add(dd1);

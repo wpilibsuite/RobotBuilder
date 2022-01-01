@@ -150,11 +150,11 @@ Instructions:
 
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
 
-  Speed Controller Group:
+  Motor Controller Group:
     Defaults: "Component,None"
-    ClassName: "SpeedControllerGroup"
-    Declaration: "frc::${ClassName} #variable($Name){#variable($SpeedController1), #variable($SpeedController2)
-      #if(($SpeedController3)), #variable($SpeedController3)#end #if(($SpeedController4)), #variable($SpeedController4)#end};"
+    ClassName: "MotorControllerGroup"
+    Declaration: "frc::${ClassName} #variable($Name){#variable($MotorController1), #variable($MotorController2)
+      #if(($MotorController3)), #variable($MotorController3)#end #if(($MotorController4)), #variable($MotorController4)#end};"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
   Differential Drive:
     Defaults: "Component,None"
@@ -238,9 +238,9 @@ Instructions:
     Declaration: "frc::PowerDistribution #variable($Name)#if(($Module_Type) == \"Automatic\"){};#else{$CAN_ID, frc::PowerDistribution::ModuleType::k$Module_Type};#end"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
 
-  Speed Controller:
+  Motor Controller:
     Defaults: "PWMOutput,Component,None"
-    ClassName: "SpeedController"
+    ClassName: "MotorController"
     Declaration: "frc::${Type} #variable($Name){${Output_Channel_PWM}};"
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
     Import: "\\#include <frc/motorcontrol/${Type}.h>"

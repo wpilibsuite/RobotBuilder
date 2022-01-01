@@ -164,12 +164,12 @@ Instructions:
 
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
 
-  Speed Controller Group:
+  Motor Controller Group:
     Defaults: "Component,None"
-    ClassName: "SpeedControllerGroup"
+    ClassName: "MotorControllerGroup"
     Construction: >-
-      #variable($Short_Name) = new ${ClassName}(#variable($SpeedController1), #variable($SpeedController2)
-      #if(($SpeedController3)), #variable($SpeedController3)#end #if(($SpeedController4)), #variable($SpeedController4)#end);
+      #variable($Short_Name) = new ${ClassName}(#variable($MotorController1), #variable($MotorController2)
+      #if(($MotorController3)), #variable($MotorController3)#end #if(($MotorController4)), #variable($MotorController4)#end);
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   Differential Drive:
     Defaults: "Component,None"
@@ -260,7 +260,7 @@ Instructions:
     Construction: "#if(($Module_Type) == \"Automatic\") #variable($Short_Name) = new ${ClassName}();#else #variable($Short_Name) = new ${ClassName}($CAN_ID, ModuleType.k$Module_Type);#end"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
 
-  Speed Controller:
+  Motor Controller:
     Defaults: "PWMOutput,Component,None"
     ClassName: "MotorController"
     Import: "import edu.wpi.first.wpilibj.motorcontrol.${Type};\nimport edu.wpi.first.wpilibj.motorcontrol.${ClassName};"

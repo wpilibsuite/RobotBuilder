@@ -175,8 +175,8 @@ Validators:
     name: RobotDrive4
     fields: ["Left Front Motor", "Left Rear Motor", "Right Front Motor", "Right Rear Motor"]
   - !DistinctValidator
-    name: SpeedControllerGroup
-    fields: ["SpeedController1", "SpeedController2", "SpeedController3", "SpeedController4"]
+    name: MotorControllerGroup
+    fields: ["MotorController1", "MotorController2", "MotorController3", "MotorController4"]
   - !DistinctValidator
     name: KilloughDrive
     fields: ["Left Motor", "Right Motor", "Back Motor"]
@@ -410,27 +410,27 @@ Palette:
             name: Send to SmartDashboard
             default: false
       - !Component
-        name: Speed Controller Group
+        name: Motor Controller Group
         type: PIDOutput
         supports: {PIDOutput: 4}
-        help: Speed Controller Group handles multiple speed controllers as one
+        help: Motor Controller Group handles multiple motor controllers as one
         properties:
           - !ChildSelectionProperty
-            name: SpeedController1
+            name: MotorController1
             type: PIDOutput
-            validators: [SpeedControllerGroup, ChildDropdownSelected]
+            validators: [MotorControllerGroup, ChildDropdownSelected]
             default: 0
           - !ChildSelectionProperty
-            name: SpeedController2
+            name: MotorController2
             type: PIDOutput
-            validators: [SpeedControllerGroup, ChildDropdownSelected]
+            validators: [MotorControllerGroup, ChildDropdownSelected]
             default: 1
           - !ChildSelectionProperty
-            name: SpeedController3
+            name: MotorController3
             type: PIDOutput
             default: null
           - !ChildSelectionProperty
-            name: SpeedController4
+            name: MotorController4
             type: PIDOutput
             default: null
       - !Component
@@ -646,9 +646,9 @@ Palette:
 
   - Actuators:
       - !Component
-        name: Speed Controller
+        name: Motor Controller
         type: PIDOutput
-        help: A PWM speed controller that allows you to set the speed of a motor.
+        help: A PWM motor controller that allows you to set the speed of a motor.
         properties:
           - !ChoicesProperty
             name: Type
