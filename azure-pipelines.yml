@@ -37,6 +37,7 @@ stages:
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
           testRunTitle: Linux
+          failTaskOnFailedTests: true
           tasks: 'check'
           options: '-PbuildServer'
 
@@ -54,6 +55,7 @@ stages:
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
           testRunTitle: Win64
+          failTaskOnFailedTests: true
           tasks: 'check'
           options: '-PbuildServer'
 
@@ -82,6 +84,7 @@ stages:
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
           testRunTitle: Win32
+          failTaskOnFailedTests: true
           tasks: 'check'
 
   - job: Mac
@@ -101,6 +104,7 @@ stages:
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
           testRunTitle: MacOS
+          failTaskOnFailedTests: true
           tasks: 'check'
           options: '-PbuildServer'
 
