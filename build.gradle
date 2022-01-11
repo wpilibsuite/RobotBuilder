@@ -128,7 +128,7 @@ htmlSanityCheck {
     checkingResultsDir = new File( "$buildDir/reports/htmlchecks" )
 
     // fail build on errors?
-    failOnErrors = false
+    failOnErrors = true
 
     checkerClasses = [BrokenCrossReferencesChecker,
              BrokenHttpLinksChecker,
