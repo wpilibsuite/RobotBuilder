@@ -306,7 +306,7 @@ Instructions:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
   Double Solenoid:
-    Defaults: "Solenoid,Component,None"
+    Defaults: "SolenoidOutput,Component,None"
     ClassName: "DoubleSolenoid"
     Construction: "#variable($Short_Name) = new ${ClassName}(${Forward_Module_Solenoid}, PneumaticsModuleType.${Forward_Module_Type_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});"
     LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"

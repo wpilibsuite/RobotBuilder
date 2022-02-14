@@ -160,6 +160,14 @@ public class TestUtils {
         doubleSolenoid.getProperty("Reverse Channel (Solenoid)").setValueAndUpdate("2");
         misc.add(doubleSolenoid);
 
+        // Create a Double Solenoid subsystem
+        RobotComponent dblSol = new RobotComponent("DoubleSol", "Subsystem", tree);
+        subsystems.add(dblSol);
+        RobotComponent doubleSolenoid2 = new RobotComponent("Double Solenoid", "Double Solenoid", tree);
+        //Needed until #422 is fixed
+        doubleSolenoid2.getProperty("Reverse Channel (Solenoid)").setValueAndUpdate("2");
+        dblSol.add(doubleSolenoid2);
+
         // Create a simple OI
         RobotComponent leftstick = new RobotComponent("Left Joystick", "Joystick", tree);
         oi.add(leftstick);
