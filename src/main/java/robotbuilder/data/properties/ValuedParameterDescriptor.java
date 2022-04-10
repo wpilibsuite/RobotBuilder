@@ -53,6 +53,9 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
      */
     public void setValueToDefault() {
         switch (getType()) {
+            case "DoubleSupplier":
+                this.value = "() -> 0";
+                break;
             case "boolean":
                 this.value = BOOLEAN_FALSE;
                 break;
@@ -99,6 +102,8 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
      */
     public boolean valueMatchesType() {
         switch (getType()) {
+            case "DoubleSupplier":
+                return true;
             case "boolean":
                 return value instanceof Boolean || (value instanceof String
                         && (isReference()
