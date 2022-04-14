@@ -103,7 +103,9 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
     public boolean valueMatchesType() {
         switch (getType()) {
             case "DoubleSupplier":
-                return true;
+                return value instanceof String
+                && isValidStringValue()
+                && isNotEmpty();
             case "boolean":
                 return value instanceof Boolean || (value instanceof String
                         && (isReference()
@@ -189,6 +191,11 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
     private boolean isValidStringValue() {
         String s = (String) value;
         return !s.contains("\\") && !s.contains("\""); // disallow backslashes and quotes
+    }
+
+    private boolean isNotEmpty() {
+        String s = (String) value;
+        return !s.isEmpty(); 
     }
 
     @Override
