@@ -57,33 +57,6 @@ stages:
           tasks: 'check'
           options: '-PbuildServer'
 
-  - job: Windows_32_Bit
-    pool:
-      vmImage: 'windows-2019'
-
-    steps:
-      - powershell: |
-          mkdir build
-          $ProgressPreference = 'SilentlyContinue'
-          wget "https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.12%2B7/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.12_7.zip" -O "build\jdk.zip"
-        displayName: 'Download JDK'
-      - task: JavaToolInstaller@0
-        inputs:
-          jdkSourceOption: localDirectory
-          jdkFile: 'build/jdk.zip'
-          jdkDestinationDirectory: 'build/jdkinst'
-          jdkArchitectureOption: x86
-      - task: Gradle@2
-        inputs:
-          options: '-PbuildServer'
-          workingDirectory: ''
-          gradleWrapperFile: 'gradlew'
-          gradleOptions: '-Xmx1024m'
-          publishJUnitResults: true
-          testResultsFiles: '**/TEST-*.xml'
-          testRunTitle: Win32
-          tasks: 'check'
-
   - job: Mac
     pool:
       vmImage: 'macOS-10.15'
