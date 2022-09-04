@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.function.DoubleSupplier;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -100,6 +101,8 @@ class ParameterSetsTable extends JTable {
     private Class<?> getClassForParameter(ParameterDescriptor param) {
         String type = param.getType();
         switch (type) {
+            case "DoubleSupplier":
+                return DoubleSupplier.class;
             case "String":
                 return String.class;
             case "double":
@@ -207,6 +210,8 @@ class ParameterSetsTable extends JTable {
             return true;
         }
         switch (type) {
+            case "DoubleSupplier":
+            case "std::function<double()>":
             case "String":
                 return !input.contains("\"") && !input.contains("\\");
             case "double":

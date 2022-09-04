@@ -4,6 +4,7 @@ package robotbuilder.data.properties;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.DoubleSupplier;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class ParameterDescriptor implements Validatable, Serializable {
 
     public static final String[] SUPPORTED_TYPES
-            = new String[]{"String", "int", "double", "boolean", "byte", "long"};
+            = new String[]{"DoubleSupplier", "std::function<double()>", "String", "int", "double", "boolean", "byte", "long"};
 
     /**
      * List of reserved keywords.
@@ -31,7 +32,7 @@ public class ParameterDescriptor implements Validatable, Serializable {
                     "String", "void", "class", "interface", "public", "protected", "private",
                     "static", "final", "const", "import", "package", "volatile", "transient", "synchronized",
                     "this", "super", "extends", "implements", "goto", "for", "while", "do", "instanceof",
-                    "enum", "struct", "union", "typedef");
+                    "enum", "struct", "union", "typedef", "DoubleSupplier", "std::function<double()>");
 
     private static final String DEFAULT_NAME = "[change me]";
     private static final String DEFAULT_TYPE = "double";
