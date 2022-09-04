@@ -5,8 +5,8 @@
 
 resources:
   containers:
-  - container: wpilib2020
-    image: wpilib/roborio-cross-ubuntu:2020-18.04
+  - container: wpilib2022
+    image: wpilib/roborio-cross-ubuntu:2022-20.04
 
 variables:
 - group: Artifactory-Package-Publish
@@ -16,9 +16,9 @@ stages:
   jobs:
   - job: Linux
     pool:
-      vmImage: 'Ubuntu 18.04'
+      vmImage: 'Ubuntu 20.04'
 
-    container: wpilib2020
+    container: wpilib2022
     
     variables:
       DISPLAY: ':10'
@@ -81,7 +81,7 @@ stages:
   jobs:
   - job: PublishJob
     pool:
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-20.04'
 
     steps:
 # PR Builds
