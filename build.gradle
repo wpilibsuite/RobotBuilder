@@ -6,11 +6,14 @@ plugins {
     id "com.jfrog.artifactory" version "4.24.14"
     id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '4.1.0'
     id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.2'
-    id 'io.franzbecker.gradle-lombok' version '4.0.0'
-    id "com.github.johnrengelman.shadow" version "7.1.1"
-    id "de.undercouch.download" version "4.1.1"
+    id 'io.franzbecker.gradle-lombok' version '5.0.0'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "de.undercouch.download" version "5.1.0"
     id 'org.aim42.htmlSanityCheck' version '1.1.6'
 }
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 wpilibVersioning.buildServerMode = project.hasProperty('buildServer')
 wpilibVersioning.releaseMode = project.hasProperty('releaseMode')
@@ -52,7 +55,7 @@ mainClassName = "robotbuilder.RobotBuilder"
 wpilibVersioning.version.finalizeValue()
 
 jacoco {
-    toolVersion = "0.8.4"
+    toolVersion = "0.8.7"
 }
 
 jacocoTestReport {
@@ -72,7 +75,7 @@ check.dependsOn jacocoTestReport
 check.dependsOn htmlSanityCheck
 
 lombok {
-    version = "1.18.20"
+    version = "1.18.24"
     sha256 = ""
 }
 
@@ -98,8 +101,8 @@ dependencies {
     implementation 'org.slf4j:slf4j-jdk14:1.7.32'
     implementation 'com.sun.activation:javax.activation:1.2.0'
     testImplementation 'junit:junit:4.13.2'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
-    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
 }
 
 test {

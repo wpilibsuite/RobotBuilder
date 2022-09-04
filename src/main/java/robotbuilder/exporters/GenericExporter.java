@@ -158,8 +158,8 @@ public class GenericExporter {
             }
         }
         if(wpilibRelease == null) {
-            wpilibRelease = "2022.4.1"; // this shouldn't need to be relied upon,
-                                        // but its better than generating nothing.
+            wpilibRelease = "2023.0.0-alpha-1"; // this shouldn't need to be relied upon,
+                                                // but its better than generating nothing.
         }
 
         // Prepare the main context
