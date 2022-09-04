@@ -211,6 +211,7 @@ class ParameterSetsTable extends JTable {
         }
         switch (type) {
             case "DoubleSupplier":
+            case "std::function<double()>":
             case "String":
                 return !input.contains("\"") && !input.contains("\\");
             case "double":

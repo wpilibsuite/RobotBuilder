@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class ParameterDescriptor implements Validatable, Serializable {
 
     public static final String[] SUPPORTED_TYPES
-            = new String[]{"DoubleSupplier", "String", "int", "double", "boolean", "byte", "long"};
+            = new String[]{"DoubleSupplier", "std::function<double()>", "String", "int", "double", "boolean", "byte", "long"};
 
     /**
      * List of reserved keywords.
@@ -32,7 +32,7 @@ public class ParameterDescriptor implements Validatable, Serializable {
                     "String", "void", "class", "interface", "public", "protected", "private",
                     "static", "final", "const", "import", "package", "volatile", "transient", "synchronized",
                     "this", "super", "extends", "implements", "goto", "for", "while", "do", "instanceof",
-                    "enum", "struct", "union", "typedef", "DoubleSupplier");
+                    "enum", "struct", "union", "typedef", "DoubleSupplier", "std::function<double()>");
 
     private static final String DEFAULT_NAME = "[change me]";
     private static final String DEFAULT_TYPE = "double";

@@ -56,6 +56,9 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
             case "DoubleSupplier":
                 this.value = "() -> 0";
                 break;
+            case "std::function<double()>":
+                this.value = "[this] {return 0;}";
+                break;
             case "boolean":
                 this.value = BOOLEAN_FALSE;
                 break;
@@ -103,6 +106,7 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
     public boolean valueMatchesType() {
         switch (getType()) {
             case "DoubleSupplier":
+            case "std::function<double()>":
                 return value instanceof String
                 && isValidStringValue()
                 && isNotEmpty();
