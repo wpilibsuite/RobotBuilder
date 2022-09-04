@@ -199,7 +199,7 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
 
     private boolean isNotEmpty() {
         String s = (String) value;
-        return !s.isEmpty(); 
+        return !s.isEmpty();
     }
 
     @Override
