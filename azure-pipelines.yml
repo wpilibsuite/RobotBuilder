@@ -16,7 +16,7 @@ stages:
   jobs:
   - job: Linux
     pool:
-      vmImage: 'Ubuntu 22.04'
+      vmImage: 'ubuntu-22.04'
 
     container: wpilib2023
     
