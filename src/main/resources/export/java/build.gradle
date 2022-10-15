@@ -5,6 +5,9 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "${wpilib_version}"
 }
 
+wpi.versions.wpilibVersion = '2023.+'
+wpi.versions.wpimathVersion = '2023.+'
+
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 

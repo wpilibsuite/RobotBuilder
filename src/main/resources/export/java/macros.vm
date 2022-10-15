@@ -48,7 +48,7 @@ new #class($command)(#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $param
 ## Generates 'new MyCommand(arg0, arg1, arg2, ..., subsystem).withTimeout(x)'
 #macro( new_command_instantiation $component $command $params )
 #set($len = $params.size() - 1)
-new #class($command.name)(#if($command.getProperty("Requires").getValue() != "None")#if($len >= 0)#command_params($params), m_#required_subsystem($command)#else m_#required_subsystem($command) #end#else#if($len >= 0)#command_params($params)#end#end)#if($component.getProperty("Add Timeout").value == true).withTimeout($component.getProperty("Timeout").value)#end #end
+new #class($command.name)(#if($command.getProperty("Requires").getValue() != "None")#if($len >= 0)#command_params($params), m_#required_subsystem($command)#else m_#required_subsystem($command) #end#else#if($len >= 0)#command_params($params)#end#end)#if($component.getProperty("Add Timeout").value == true).withTimeout($component.getProperty("Timeout").value)#end#end
 
 ## Generates 'new MyCommand(arg0, arg1, arg2, ..., subsystem)'
 #macro( new_command_instantiation_nt $command $params )

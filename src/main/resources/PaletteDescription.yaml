@@ -146,9 +146,10 @@
           - !PositiveDoubleProperty
             name: Timeout
             default: 0
-          - !BooleanProperty
+          - !ChoicesProperty
             name: Interruptible
-            default: true
+            choices: [CancelSelf, CancelIncoming]
+            default: CancelSelf
 #end
 #macro( Solenoid $Name )
           - !ChoicesProperty
