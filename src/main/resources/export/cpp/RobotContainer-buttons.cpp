@@ -15,7 +15,7 @@
 #foreach ($command in $commands)
 #if($command.name == $component.getProperty("Command").value)
 #set($params = $component.getProperty("Parameters").getValue())
-#variable($component.name).$component.getProperty("When to Run").getValue().substring(0,1).toUpperCase()$component.getProperty("When to Run").getValue().substring(1)(#new_command_instantiation($component, $command, $params)#if($component.getProperty("Add Timeout").value == true).WithTimeout($component.getProperty("Timeout").getValue()_s)#end, $component.getProperty("Interruptible").getValue());
+#variable($component.name).$component.getProperty("When to Run").getValue().substring(0,1).toUpperCase()$component.getProperty("When to Run").getValue().substring(1)(#new_command_instantiation($component, $command, $params)#if($component.getProperty("Add Timeout").value == true).WithTimeout($component.getProperty("Timeout").getValue()_s)#end.WithInterruptBehavior(frc2::Command::InterruptionBehavior::k$component.getProperty("Interruptible").getValue()));
 #if ($component.getProperty("Send to SmartDashboard").getValue())
     frc::SmartDashboard::PutData("#variable($component.name)", new #new_command_instantiation($component, $command, $params)#if($component.getProperty("Add Timeout").value == true).WithTimeout($component.getProperty("Timeout").getValue()_s)#end);
 #end

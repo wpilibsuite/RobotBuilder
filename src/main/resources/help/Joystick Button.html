@@ -59,7 +59,12 @@
     <dt>Timeout</dt>
     <dd>The timeout for the command</dd>
     <dt>Interruptible</dt>
-    <dd>Whether or not the command should be interruptible.</dd>
+    <dl>
+        <dt>CancelSelf</dt>
+        <dd>Cancel this command if another command requiring the same subsystem is scheduled
+        <dt>CancelIncoming</dt>
+        <dd>Cancel the new command if another command requiring the same subsystem is scheduled, keeping this command running (e.g. uninterruptible)</dd>
+    </dl>
   </dl>
   <h2>See Also</h2>
   <ul>
