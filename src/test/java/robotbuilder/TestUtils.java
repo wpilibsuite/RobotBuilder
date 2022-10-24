@@ -177,11 +177,11 @@ public class TestUtils {
         leftstick.add(armUpButton);
         RobotComponent autoButton = new RobotComponent("Autonomous Button", "Joystick Button", tree);
         rightstick.add(autoButton);
-        autoButton.getProperty("When to Run").setValueAndUpdate("whenPressed");
+        autoButton.getProperty("When to Run").setValueAndUpdate("onTrue");
         RobotComponent xbox = new RobotComponent("Xbox", "Xbox Controller", tree);
         oi.add(xbox);
         RobotComponent xboxButton = new RobotComponent("Arm Up Xbox Button", "Xbox Button", tree);
-        xboxButton.getProperty("When to Run").setValueAndUpdate("whenPressed");
+        xboxButton.getProperty("When to Run").setValueAndUpdate("whileTrue");
         xboxButton.getProperty("Button").setValueAndUpdate("A");
         xbox.add(xboxButton);
 
