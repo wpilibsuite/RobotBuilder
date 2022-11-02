@@ -138,8 +138,8 @@
             name: $Name Parameters
           - !ChoicesProperty
             name: $Name When to Run
-            choices: [whenPressed, whenReleased, whileHeld, whenHeld, toggleWhenPressed, cancelWhenPressed]
-            default: whenPressed
+            choices: [onTrue, onFalse, whileTrue, whileFalse, toggleOnTrue, toggleOnFalse]
+            default: onTrue
           - !BooleanProperty
             name: Add Timeout
             default: false
