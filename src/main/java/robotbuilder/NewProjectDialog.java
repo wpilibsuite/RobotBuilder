@@ -4,11 +4,9 @@ package robotbuilder;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.Objects;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
@@ -96,8 +94,15 @@ public class NewProjectDialog extends CenteredDialog {
 
         createButton = new JButton("Create Project");
         createButton.addActionListener(event -> {
-            MainFrame.getInstance().getCurrentRobotTree().newFile(nameField.getText(), teamField.getText());
-            setVisible(false);
+            if (!Objects.equals(teamField.getText(), "0")) {
+                MainFrame.getInstance().getCurrentRobotTree().newFile(nameField.getText(), teamField.getText());
+                setVisible(false);
+                System.out.println(teamField.getText().getClass());
+            } else {
+                JOptionPane.showMessageDialog(frame, "If you don't set a team number you will not be able to connect to your robot",
+                        "Swing Tester", JOptionPane.WARNING_MESSAGE);
+            }
+
         });
         c.gridx = 1;
         c.gridy = 3;
