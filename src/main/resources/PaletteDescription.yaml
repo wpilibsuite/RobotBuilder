@@ -233,7 +233,7 @@ Palette:
             default: None
           - !Parameters
             name: Autonomous command parameters
-          - !IntegerProperty
+          - !TeamNumberProperty
             name: Team Number
             default: 0
           - !BooleanProperty

@@ -55,6 +55,7 @@ public class CppExportTest {
         RobotTree tree = TestUtils.generateTestTree();
         tree.getRoot().setName(PROJECT_DIRECTORY);
         tree.getRoot().getProperty("Export Directory").setValueAndUpdate(new File("build/test-resources/").getAbsolutePath());
+        tree.getRoot().getProperty("Team Number").setValueAndUpdate("330");
         tree.walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) { // Gives us better diagnostics when the robot tree isn't valid.
@@ -80,6 +81,7 @@ public class CppExportTest {
         RobotTree tree = TestUtils.generateTestTree();
         tree.getRoot().setName(PROJECT_DIRECTORY);
         tree.getRoot().getProperty("Export Directory").setValueAndUpdate(new File("build/test-resources/").getAbsolutePath());
+        tree.getRoot().getProperty("Team Number").setValueAndUpdate("330");
         tree.walk(new RobotWalker() {
             @Override
             public void handleRobotComponent(RobotComponent self) { // Gives us better diagnostics when the robot tree isn't valid.
