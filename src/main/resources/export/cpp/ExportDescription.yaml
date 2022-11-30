@@ -195,7 +195,7 @@ Instructions:
     Declaration: "frc::${ClassName} #variable($Name){${Input_Channel_Analog}};"
     ClassName: "AnalogGyro"
     Extra: "#variable($Name).SetSensitivity(${Sensitivity});"
-    PID: "#variable($Short_Name).PIDGet()"
+    PID: "#variable($Short_Name).GetAngle()"
   AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
     Declaration: "frc::${ClassName} #variable($Name){${Input_Channel_Analog}};"
@@ -208,12 +208,14 @@ Instructions:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
     Declaration: "frc::Encoder #variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}};"
+    PID: "#if(($PID_Source) == \"kDisplacement\") #variable($Short_Name).GetDistance()#else #variable($Short_Name).GetRate()#end"
     Extra: >-
       #variable($Name).SetDistancePerPulse(${Distance_Per_Pulse});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
     Declaration: "frc::Encoder #variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}};"
+    PID: "#if(($PID_Source) == \"kDisplacement\") #variable($Short_Name).GetDistance()#else #variable($Short_Name).GetRate()#end"
     Extra: >-
       #variable($Name).SetDistancePerPulse(${Distance_Per_Pulse});
           #variable($Name).SetIndexSource((unsigned int)${Index_Channel_Digital}, frc::Encoder::IndexingType::${Indexing_Type});
