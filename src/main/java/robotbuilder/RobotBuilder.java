@@ -20,8 +20,8 @@ import robotbuilder.extensions.Extensions;
  */
 public class RobotBuilder {
 
-    public static final int VERSION_MAJOR = 4;
-    public static final int VERSION_MINOR = 4;
+    public static final int VERSION_MAJOR = 5;
+    public static final int VERSION_MINOR = 0;
 
     public static final String VERSION = VERSION_MAJOR + "." + VERSION_MINOR;
 

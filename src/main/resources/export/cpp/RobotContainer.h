@@ -27,7 +27,6 @@ private:
 #parse("${exporter_path}RobotContainer-declarations.h")
 #end
 
-#class($command) m_autonomousCommand;
     static RobotContainer* m_robotContainer;
 
     void ConfigureButtonBindings();
