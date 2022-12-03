@@ -211,7 +211,7 @@ Instructions:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogGyro"
     Extra: "#variable($Short_Name).setSensitivity(${Sensitivity});"
-    PID: "#variable($Short_Name).pidGet()"
+    PID: "#variable($Short_Name).getAngle()"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
@@ -226,6 +226,7 @@ Instructions:
     ClassName: "Encoder"
     Import: "import edu.wpi.first.wpilibj.Encoder;\nimport edu.wpi.first.wpilibj.CounterBase.EncodingType;"
     Construction: "#variable($Short_Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, EncodingType.${Encoding_Type});"
+    PID: "#if(($PID_Source) == \"kDisplacement\") #variable($Short_Name).getDistance()#else #variable($Short_Name).getRate()#end"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
       #variable($Short_Name).setDistancePerPulse(${Distance_Per_Pulse});
@@ -234,6 +235,7 @@ Instructions:
     ClassName: "Encoder"
     Import: "import edu.wpi.first.wpilibj.Encoder;\nimport edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.Encoder.IndexingType;"
     Construction: "#variable($Short_Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction});"
+    PID: "#if(($PID_Source) == \"kDisplacement\") #variable($Short_Name).getDistance()#else #variable($Short_Name).getRate()#end"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
       #variable($Short_Name).setDistancePerPulse(${Distance_Per_Pulse});
