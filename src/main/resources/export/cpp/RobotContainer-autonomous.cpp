@@ -13,5 +13,6 @@
 #end
 #end
 #end
-
+#if($robot.getProperty("Autonomous Command").getValue() != "None")
     m_chooser.SetDefaultOption("$command.getName()", new #new_command_instantiation( $command, $command, $params ));
+#end
