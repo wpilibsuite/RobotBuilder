@@ -326,6 +326,20 @@ Instructions:
     ClassName: "JoystickButton"
     Construction: "frc2::${ClassName} #variable($Name){&#variable($Joystick), (int)frc::XboxController::Button::k${Button}};"
     Import: "\\#include <frc2/command/button/${ClassName}.h>"
+  PS4 Controller:
+    Defaults: "OI,None"
+    ClassName: "PS4Controller"
+    Construction: "frc::${ClassName} #variable($Name){${Number}};"
+    Prototype: "frc::${ClassName}* get#class($Name)();"
+    Function: >-
+        frc::${ClassName}* RobotContainer::get#class($Name)() {
+           return &#variable($Name);
+        }
+  PS4 Button:
+    Defaults: "Button,OI,None"
+    ClassName: "JoystickButton"
+    Construction: "frc2::${ClassName} #variable($Name){&#variable($Joystick), (int)frc::PS4Controller::Button::k${Button}};"
+    Import: "\\#include <frc2/command/button/${ClassName}.h>"
 
   Command:
     Defaults: "Command,None"

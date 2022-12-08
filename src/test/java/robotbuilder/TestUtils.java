@@ -184,7 +184,12 @@ public class TestUtils {
         xboxButton.getProperty("When to Run").setValueAndUpdate("whileTrue");
         xboxButton.getProperty("Button").setValueAndUpdate("A");
         xbox.add(xboxButton);
-
+        RobotComponent ps4 = new RobotComponent("PS4", "PS4 Controller", tree);
+        oi.add(ps4);
+        RobotComponent ps4Button = new RobotComponent("Arm Up PS4 Button", "PS4 Button", tree);
+        ps4Button.getProperty("When to Run").setValueAndUpdate("whileTrue");
+        ps4Button.getProperty("Button").setValueAndUpdate("Square");
+        ps4.add(ps4Button);
 
 
         // Create some commands
@@ -227,6 +232,7 @@ public class TestUtils {
         armUpButton.getProperty("Command").setValueAndUpdate("Arm Up");
         autoButton.getProperty("Command").setValueAndUpdate("Autonomous");
         xboxButton.getProperty("Command").setValueAndUpdate("Instant Command 1");
+        ps4Button.getProperty("Command").setValueAndUpdate("Instant Command 2");
 
         return tree;
     }

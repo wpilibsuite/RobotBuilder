@@ -786,8 +786,33 @@ Palette:
           - !BooleanProperty
             name: Send to SmartDashboard
             default: false
+      - !Component
+        name: PS4 Controller
+        type: Joystick
+        supports: {PS4 Button: -1}
+        help: A PS4 Controller that drivers can use as input.
+        properties:
+          - !ChoicesProperty
+            name: Number
+            choices: ["0", "1", "2", "3", "4", "5"]
+            validators: [Joystick]
+            default: 1
+      - !Component
+        name: PS4 Button
+        type: PS4 Button
+        help: A PS4 Controller button that binds a driver action to a command.
+        properties:
+          - !ParentProperty
+            name: Joystick
+          - !ChoicesProperty
+            name: Button
+            choices: ["Square", "Cross", "Circle", "Triangle", "L1", "R1", "L2", "R2", "Share", "Options", "L3", "R3", "PS", "Touchpad"]
+            default: "Square"
+          #Button("")
+          - !BooleanProperty
+            name: Send to SmartDashboard
+            default: false
           
-
   - Commands:
       - !Component
         name: Command
