@@ -337,6 +337,18 @@ Instructions:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"
     Construction: "final ${ClassName} #variable($Name) = new ${ClassName}(#variable($Joystick), XboxController.Button.k${Button}.value);"
+  PS4 Controller:
+    Defaults: "OI,None"
+    ClassName: "PS4Controller"
+    Construction: "private final ${ClassName} #variable($Name) = new ${ClassName}(${Number});"
+    Function: >-
+      public ${ClassName} get#class($Name)() {
+            return #variable($Name);
+          }
+  PS4 Button:
+    Defaults: "Button,OI,None"
+    ClassName: "JoystickButton"
+    Construction: "final ${ClassName} #variable($Name) = new ${ClassName}(#variable($Joystick), PS4Controller.Button.k${Button}.value);"
 
   Command:
     Defaults: "Command,None"
