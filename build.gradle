@@ -134,7 +134,7 @@ htmlSanityCheck {
     failOnErrors = true
 
     checkerClasses = [BrokenCrossReferencesChecker,
-             BrokenHttpLinksChecker,
+             // BrokenHttpLinksChecker, //Disable link checker due to hanging on Vex links
              DuplicateIdChecker,
              ImageMapChecker,
              MissingAltInImageTagsChecker,
