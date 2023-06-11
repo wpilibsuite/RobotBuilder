@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import robotbuilder.data.RobotComponent;
+import robotbuilder.Utils;
 
 /**
  *
@@ -25,7 +26,7 @@ public class ConstantsProperty extends ListProperty<ValuedParameterDescriptor> {
     @Override
     public ConstantsProperty copy() {
         ConstantsProperty cp = new ConstantsProperty(name, defaultValue, validators, component);
-        cp.setValue(getValue());
+        cp.setValue(Utils.deepCopy(getValue()));
         return cp;
     }
 
