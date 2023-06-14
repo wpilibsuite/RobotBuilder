@@ -7,8 +7,8 @@ plugins {
     id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '4.1.0'
     id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.2'
     id 'io.franzbecker.gradle-lombok' version '5.0.0'
-    id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "de.undercouch.download" version "5.1.0"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id "de.undercouch.download" version "5.4.0"
     id 'org.aim42.htmlSanityCheck' version '1.1.6'
 }
 
@@ -55,7 +55,7 @@ mainClassName = "robotbuilder.RobotBuilder"
 wpilibVersioning.version.finalizeValue()
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "0.8.10"
 }
 
 jacocoTestReport {
@@ -75,7 +75,7 @@ check.dependsOn jacocoTestReport
 check.dependsOn htmlSanityCheck
 
 lombok {
-    version = "1.18.24"
+    version = "1.18.28"
     sha256 = ""
 }
 
@@ -94,15 +94,15 @@ repositories {
 
 dependencies {
     implementation 'org.apache.velocity:velocity-engine-core:2.3'
-    implementation 'org.yaml:snakeyaml:1.29'
-    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'org.yaml:snakeyaml:1.33'
+    implementation 'commons-io:commons-io:2.13.0'
     implementation 'org.apache.commons:commons-lang3:3.12.0'
-    implementation 'org.slf4j:slf4j-api:1.7.32'
-    implementation 'org.slf4j:slf4j-jdk14:1.7.32'
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+    implementation 'org.slf4j:slf4j-jdk14:2.0.7'
     implementation 'com.sun.activation:javax.activation:1.2.0'
     testImplementation 'junit:junit:4.13.2'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
-    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    compileOnly 'org.projectlombok:lombok:1.18.28'
 }
 
 test {
