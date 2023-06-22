@@ -4,7 +4,7 @@ plugins {
     id 'application'
     id 'maven-publish'
     id "com.jfrog.artifactory" version "4.24.14"
-    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '4.1.0'
+    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '2023.0.1'
     id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.2'
     id 'io.franzbecker.gradle-lombok' version '5.0.0'
     id "com.github.johnrengelman.shadow" version "8.1.1"
