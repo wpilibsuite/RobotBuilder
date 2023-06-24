@@ -127,7 +127,7 @@ Instructions:
     Defaults: "None"
     Export: "RobotContainer"
     Import: "\\#include \"subsystems/#class($Short_Name).h\""
-    ClassName: "frc2::SubsystemBase"
+    ClassName: "frc2::Subsystem"
   PID Subsystem:
     Defaults: "None"
     Export: "RobotContainer"
@@ -343,7 +343,7 @@ Instructions:
 
   Command:
     Defaults: "Command,None"
-    ClassName: "frc2::CommandBase"
+    ClassName: "frc2::Command"
   Sequential Command Group:
     Defaults: "Command,None"
   PID Command:

@@ -1,5 +1,5 @@
 #set($subsystem = $helper.getByName($subsystem_name, $robot))
-#macro( klass $cmd )#if( "#type($cmd)" == "" )SendableSubsystemBase#elsefrc::#type($cmd)#end#end
+#macro( klass $cmd )#if( "#type($cmd)" == "" )Subsystem#elsefrc::#type($cmd)#end#end
 #header()
 // ROBOTBUILDER TYPE: Subsystem.
 
