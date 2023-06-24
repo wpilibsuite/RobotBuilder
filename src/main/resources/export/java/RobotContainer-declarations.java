@@ -2,7 +2,7 @@
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotContainer", $component)
 && "#type($component)" != "" 
-&& ("#type($component)" == "SubsystemBase"
+&& ("#type($component)" == "Subsystem"
      || "#type($component)" == "PIDSubsystem"))
     public final #class($component.getName()) m_#variable($component.getName()) = new #class($component.getName())();
 #end
