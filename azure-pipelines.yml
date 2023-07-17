@@ -22,6 +22,7 @@ stages:
     
     variables:
       DISPLAY: ':10'
+      MACOSX_DEPLOYMENT_TARGET: 11
 
     steps:
       - bash: |
@@ -59,7 +60,7 @@ stages:
 
   - job: Mac
     pool:
-      vmImage: 'macOS-11'
+      vmImage: 'macOS-12'
     steps:
       - script: |
           mkdir build
