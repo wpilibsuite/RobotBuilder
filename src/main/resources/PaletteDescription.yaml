@@ -736,7 +736,7 @@ Palette:
       - !Component
         name: Joystick
         type: Joystick
-        supports: {Joystick Button: -1}
+        supports: {Joystick Button: -1, POV Button: -1}
         help: A joystick that drivers can use as input.
         properties:
           - !ChoicesProperty
@@ -812,7 +812,25 @@ Palette:
           - !BooleanProperty
             name: Send to SmartDashboard
             default: false
-          
+      - !Component
+        name: POV Button
+        type: POV Button
+        help: A POV button that binds a driver action to a command.
+        properties:
+          - !ParentProperty
+            name: Joystick
+          - !ChoicesProperty
+            name: POVNumber
+            choices: ["0", "1", "2", "3", "4", "5"]
+            default: 0
+          - !ChoicesProperty
+            name: Angle
+            choices: ["0", "45", "90", "135", "180", "225", "270", "315"]
+            default: "0"
+          #Button("")
+          - !BooleanProperty
+            name: Send to SmartDashboard
+            default: false
   - Commands:
       - !Component
         name: Command

@@ -118,7 +118,7 @@ Defaults:
     Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport ${package}.subsystems.*;"
     Declaration: "public ${ClassName} #variable($Name);"
   Button:
-    Import: "import edu.wpi.first.wpilibj2.command.button.JoystickButton;"
+    Import: "import edu.wpi.first.wpilibj2.command.button.${ClassName};"
     Extra:  "#if(\"$Command\" != \"None\")#variable($Name).${When_to_Run}(#new_command_instantiation_nt(${Command} ${Parameters}));#end"
   Command:
     Export: ""
@@ -349,6 +349,10 @@ Instructions:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"
     Construction: "final ${ClassName} #variable($Name) = new ${ClassName}(#variable($Joystick), PS4Controller.Button.k${Button}.value);"
+  POV Button:
+    Defaults: "Button,OI,None"
+    ClassName: "POVButton"
+    Construction: "final ${ClassName} #variable($Name) = new ${ClassName}(#variable($Joystick), ${Angle}, ${POVNumber});"
 
   Command:
     Defaults: "Command,None"

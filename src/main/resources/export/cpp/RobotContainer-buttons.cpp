@@ -1,6 +1,6 @@
 
 #foreach( $component in $components )
-#if ($helper.exportsTo("OI", $component) && ("#type($component)" == "JoystickButton") && ("#constructor($component)" != "" || "#extra($component)" != ""))
+#if ($helper.exportsTo("OI", $component) && (("#type($component)" == "JoystickButton") || ("#type($component)" == "POVButton")) && ("#constructor($component)" != "" || "#extra($component)" != ""))
 #foreach ($command in $commands)
 #if($command.name == $component.getProperty("Command").value)
 #constructor($component)
