@@ -763,7 +763,7 @@ Palette:
       - !Component
         name: Xbox Controller
         type: Joystick
-        supports: {Xbox Button: -1}
+        supports: {Xbox Button: -1, POV Button: -1}
         help: An Xbox Controller that drivers can use as input.
         properties:
           - !ChoicesProperty
@@ -789,7 +789,7 @@ Palette:
       - !Component
         name: PS4 Controller
         type: Joystick
-        supports: {PS4 Button: -1}
+        supports: {PS4 Button: -1, POV Button: -1}
         help: A PS4 Controller that drivers can use as input.
         properties:
           - !ChoicesProperty
