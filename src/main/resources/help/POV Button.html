@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+<head>
+  <link rel="stylesheet"
+        href="styles.css"
+        type="text/css"
+        media="screen" />
+  <title>POV Button</title>
+</head>
+<body>
+  <h1>POV Button</h1>
+  <center>
+    <img src="../icons/POV%20Button.png"
+            alt="POV Controller Button" />
+  </center>
+  <h2>What is it?</h2>
+  <p>A POV button is used to trigger a command when a POV is pressed in a certain angle.</p>
+  <h3>Conditions to run a command</h3>
+  <p>The conditions under which to run the selected commands can be
+  one of the three following options:</p>
+  <dl>
+    <dt>On True</dt>
+    <dd>Start running the command when the button is initially
+    pressed.</dd>
+    <dt>On False</dt>
+    <dd>Start running the command when the button is released.</dd>
+    <dt>While True</dt>
+    <dd>Run the command when the button is pressed then cancels it
+    when the user releases the button.</dd>
+    <dt>While False</dt>
+    <dd>Run the command when the button is not pressed then cancels it
+    when the user presses the button.</dd>
+    <dt>Toggle On True</dt>
+    <dd>Run the command when the button is pressed if it isn't
+    running or cancels it when it is running</dd>
+    <dt>Toggle On False</dt>
+    <dd>Run the command when the button is released if it isn't
+    running or cancels it when it is running</dd>
+  </dl>
+  <h2>Properties</h2>
+  <dl>
+    <dt>Joystick</dt>
+    <dd>The Joystick that this POV belongs to.</dd>
+    <dt>POVNumber</dt>
+    <dd>the POV number of this joystick.</dd>
+    <dt>Angle</dt>
+    <dd>The angle the POV should be at to trigger the commend</dd>
+    <dt>Command</dt>
+    <dd>The command to run.</dd>
+    <dt>Parameters</dt>
+    <dd>Parameters for the command.</dd>
+    <dt>When to Run</dt>
+    <dd>The conditions of when to run the command</dd>
+    <dt>Add Timeout</dt>
+    <dd>Whether to add a timeout for the command</dd>
+    <dt>Timeout</dt>
+    <dd>The timeout for the command</dd>
+    <dt>Interruptible</dt>
+    <dl>
+        <dt>CancelSelf</dt>
+        <dd>Cancel this command if another command requiring the same subsystem is scheduled
+        <dt>CancelIncoming</dt>
+        <dd>Cancel the new command if another command requiring the same subsystem is scheduled, keeping this command running (e.g. uninterruptible)</dd>
+    </dl>
+  </dl>
+  <h2>See Also</h2>
+  <ul>
+    <li><a href="Joystick.html">Joystick</a></li>
+  </ul>
+</body>
+</html>

@@ -340,6 +340,11 @@ Instructions:
     ClassName: "JoystickButton"
     Construction: "frc2::${ClassName} #variable($Name){&#variable($Joystick), (int)frc::PS4Controller::Button::k${Button}};"
     Import: "\\#include <frc2/command/button/${ClassName}.h>"
+  POV Button:
+    Defaults: "Button,OI,None"
+    ClassName: "POVButton"
+    Construction: "frc2::${ClassName} #variable($Name){&#variable($Joystick), ${Angle}, ${POVNumber}};"
+    Import: "\\#include <frc2/command/button/${ClassName}.h>"
 
   Command:
     Defaults: "Command,None"
