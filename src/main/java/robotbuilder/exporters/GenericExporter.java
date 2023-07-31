@@ -372,6 +372,9 @@ public class GenericExporter {
                     } else if (propertyName.equals("CAN ID")) {
                         String type1 = component.getBase().toString();
                         mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + type1);
+                    } else if (component.getBaseType().equals("Compressor")) {
+                        String type1 = component.getProperty("Module Type").getValue().toString();
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + type1);
                     } else {
                         mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName());
                     }
