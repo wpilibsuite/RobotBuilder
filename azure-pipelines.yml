@@ -51,7 +51,7 @@ stages:
           workingDirectory: ''
           gradleWrapperFile: 'gradlew'
           gradleOptions: '-Xmx3072m'
-          jdkVersionOption: '1.11'
+          jdkVersionOption: '1.17'
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
           testRunTitle: Win64
@@ -64,14 +64,14 @@ stages:
     steps:
       - script: |
           mkdir build
-          export JAVA_HOME=`/usr/libexec/java_home -v 11`
+          export JAVA_HOME=`/usr/libexec/java_home -v 17`
         displayName: 'Setup JDK'
       - task: Gradle@2
         inputs:
           workingDirectory: ''
           gradleWrapperFile: 'gradlew'
           gradleOptions: '-Xmx3072m'
-          jdkVersionOption: '1.11'
+          jdkVersionOption: '1.17'
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
           testRunTitle: MacOS
@@ -91,7 +91,7 @@ stages:
         workingDirectory: ''
         gradleWrapperFile: 'gradlew'
         gradleOptions: '-Xmx3072m'
-        jdkVersionOption: '1.11'
+        jdkVersionOption: '1.17'
         tasks: 'publish'
         options: '-PbuildServer'
       condition: and(succeeded(), and(ne(variables['Build.SourceBranch'], 'refs/heads/main'), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))))
@@ -102,7 +102,7 @@ stages:
         workingDirectory: ''
         gradleWrapperFile: 'gradlew'
         gradleOptions: '-Xmx3072m'
-        jdkVersionOption: '1.11'
+        jdkVersionOption: '1.17'
         tasks: 'publish'
         options: '-PbuildServer'
       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
@@ -116,7 +116,7 @@ stages:
       inputs:
         workingDirectory: ''
         gradleWrapperFile: 'gradlew'
-        jdkVersionOption: '1.11'
+        jdkVersionOption: '1.17'
         gradleOptions: '-Xmx3072m'
         tasks: 'publish '
         options: '-PreleaseMode -PbuildServer'
