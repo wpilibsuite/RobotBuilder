@@ -1,5 +1,5 @@
 #set($subsystem = $helper.getByName($subsystem_name, $robot))
-#class($subsystem.name)::#class($subsystem.name)() : frc2::PIDSubsystem(frc2::PIDController{kP, kI, kD}) {
+#class($subsystem.name)::#class($subsystem.name)() : frc2::PIDSubsystem(frc::PIDController{kP, kI, kD}) {
     m_controller.SetTolerance(${subsystem.getProperty("Tolerance").getValue()});
     SetName("$subsystem_name");
     SetSubsystem("$subsystem.name");

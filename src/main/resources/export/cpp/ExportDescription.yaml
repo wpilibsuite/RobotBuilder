@@ -138,7 +138,7 @@ Instructions:
     Defaults: "Component,None"
     Import: "\\#include <frc/controller/PIDController.h>"
     ClassName: "PIDController"
-    Declaration: "frc2::${ClassName} #variable($Name){$P, $I, $D};"
+    Declaration: "frc::${ClassName} #variable($Name){$P, $I, $D};"
     Extra: >
       #if($Continuous)
               #variable($Short_Name).EnableContinuousInput(${Minimum_Input}, ${Maximum_Input});
