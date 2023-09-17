@@ -127,7 +127,7 @@ Instructions:
     Defaults: "None"
     Export: "RobotContainer"
     Import: "\\#include \"subsystems/#class($Short_Name).h\""
-    ClassName: "frc2::Subsystem"
+    ClassName: "frc2::SubsystemBase"
   PID Subsystem:
     Defaults: "None"
     Export: "RobotContainer"
