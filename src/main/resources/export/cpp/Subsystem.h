@@ -1,5 +1,5 @@
 #set($subsystem = $helper.getByName($subsystem_name, $robot))
-#macro( klass $cmd )#if( "#type($cmd)" == "" ) frc::Subsystem #else frc::#type($cmd) #end#end
+#macro( klass $cmd )#if( "#type($cmd)" == "" ) frc::SubsystemBase #else frc::#type($cmd) #end#end
 #header()
 // ROBOTBUILDER TYPE: Subsystem.
 #pragma once
@@ -13,7 +13,7 @@
  *
  * @author ExampleAuthor
  */
-class #class($subsystem.name): public frc2::Subsystem {
+class #class($subsystem.name): public frc2::SubsystemBase {
 private:
     // It's desirable that everything possible is private except
     // for methods that implement subsystem capabilities

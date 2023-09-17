@@ -139,7 +139,7 @@ Instructions:
     Import: "import ${package}.subsystems.*;"
     Declaration: "private #class($Short_Name) #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new #class($Short_Name)();"
-    ClassName: "Subsystem"
+    ClassName: "SubsystemBase"
   PID Subsystem:
     Defaults: "None"
     Export: "RobotContainer"

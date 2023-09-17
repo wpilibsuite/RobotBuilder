@@ -1,7 +1,7 @@
 #foreach ($component in $components)
 #if ($helper.exportsTo("RobotContainer", $component)
 && "#type($component)" != "" 
-&& ("#type($component)" == "Subsystem"
+&& ("#type($component)" == "SubsystemBase"
      || "#type($component)" == "PIDSubsystem"))
 #foreach ($command in $commands)
 #if($command.name == $component.getProperty("Default Command").value)
