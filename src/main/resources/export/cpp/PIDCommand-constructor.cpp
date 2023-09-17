@@ -25,7 +25,7 @@
 #class($command.name)::#class($command.name)(#if( $len >= 0 )#foreach($i in [0..$len])#param_declaration_cpp($params.get($i)), #end#end#if( $last >= 0 )#param_declaration_cpp($params.get($last))#end): #klass($command)() {
 #else
 #class($command.name)::#class($command.name)(#class(${command.getProperty("Requires").getValue()})* #variable(${command.getProperty("Requires").getValue().toLowerCase()})): frc2::CommandHelper<frc2::PIDCommand, #class($command.name)>(
-frc2::PIDController(double(${command.getProperty("P").getValue()}), double(${command.getProperty("I").getValue()}), double(${command.getProperty("D").getValue()})),
+frc::PIDController(double(${command.getProperty("P").getValue()}), double(${command.getProperty("I").getValue()}), double(${command.getProperty("D").getValue()})),
 [this](){return #variable(${command.getProperty("Requires").getValue().toLowerCase()})-> Get#class($Input)().PIDGet();},
 0, [this](double output){#variable(${command.getProperty("Requires").getValue().toLowerCase()})-> Get#class($Output)().PIDWrite(output);},
 {#variable(${command.getProperty("Requires").getValue().toLowerCase()})}),
