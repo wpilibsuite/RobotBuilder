@@ -50,7 +50,6 @@ public class CppExportTest {
         TestUtils.delete(project);
     }
 
-    @Ignore("Disabling compile test until GradleRIO 2024 version released")
     @Test
     public void testCPPExport() throws IOException, InterruptedException {
         RobotTree tree = TestUtils.generateTestTree();
