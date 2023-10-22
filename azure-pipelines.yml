@@ -5,8 +5,8 @@
 
 resources:
   containers:
-  - container: wpilib2023
-    image: wpilib/roborio-cross-ubuntu:2023-22.04
+  - container: wpilib2024
+    image: wpilib/roborio-cross-ubuntu:2024-22.04
 
 variables:
 - group: Artifactory-Package-Publish
@@ -18,7 +18,7 @@ stages:
     pool:
       vmImage: 'ubuntu-22.04'
 
-    container: wpilib2023
+    container: wpilib2024
     
     variables:
       DISPLAY: ':10'
@@ -43,7 +43,7 @@ stages:
 
   - job: Windows_64_Bit
     pool:
-      vmImage: 'windows-2019'
+      vmImage: 'windows-2022'
 
     steps:
       - task: Gradle@2
