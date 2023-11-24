@@ -3,11 +3,15 @@
 
 \#include "Robot.h"
 
+\#include <hal/FRCUsageReporting.h>
+
 \#include <frc/smartdashboard/SmartDashboard.h>
 \#include <frc2/command/CommandScheduler.h>
 
 void Robot::RobotInit() {
   EnableLiveWindowInTest(true);
+  HAL_Report(HALUsageReporting::kResourceType_Framework,
+             HALUsageReporting::kFramework_RobotBuilder);
 }
 
 /**
