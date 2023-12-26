@@ -194,18 +194,6 @@ Instructions:
       #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
               #variable($Short_Name).setExpiration($Safety_Expiration_Time);
               #variable($Short_Name).setMaxOutput($Maximum_Output);
-  Killough Drive:
-    Defaults: "Component,None"
-    ClassName: "KilloughDrive"
-    Import: "import edu.wpi.first.wpilibj.drive.KilloughDrive;"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
-    Construction: >-
-      #variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor),
-                     #variable($Back_Motor));
-    Extra: >
-      #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
-              #variable($Short_Name).setExpiration($Safety_Expiration_Time);
-              #variable($Short_Name).setMaxOutput($Maximum_Output);
 
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
