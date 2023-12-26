@@ -164,14 +164,6 @@ Instructions:
 
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
 
-  Motor Controller Group:
-    Defaults: "Component,None"
-    ClassName: "MotorControllerGroup"
-    Import: "import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;"
-    Construction: >-
-      #variable($Short_Name) = new ${ClassName}(#variable($MotorController1), #variable($MotorController2)
-      #if(($MotorController3)), #variable($MotorController3)#end #if(($MotorController4)), #variable($MotorController4)#end);
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   Differential Drive:
     Defaults: "Component,None"
     ClassName: "DifferentialDrive"
@@ -266,12 +258,16 @@ Instructions:
   Motor Controller:
     Defaults: "PWMOutput,Component,None"
     ClassName: "MotorController"
-    Import: "import edu.wpi.first.wpilibj.motorcontrol.${Type};\nimport edu.wpi.first.wpilibj.motorcontrol.${ClassName};"
+    Import: "import edu.wpi.first.wpilibj.motorcontrol.${Type};"
     Declaration: "private ${Type} #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new ${Type}(${Output_Channel_PWM});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
-      #variable($Short_Name).setInverted(${Inverted});
+      #if(($Follow) != "None")
+          #variable($Follow).addFollower(#variable($Short_Name));
+      #end
+        #variable($Short_Name).setInverted(${Inverted});
+
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "NidecBrushless"

@@ -150,13 +150,6 @@ Instructions:
 
     LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
 
-  Motor Controller Group:
-    Defaults: "Component,None"
-    ClassName: "MotorControllerGroup"
-    Import: "\\#include <frc/motorcontrol/MotorControllerGroup.h>"
-    Declaration: "frc::${ClassName} #variable($Name){#variable($MotorController1), #variable($MotorController2)
-      #if(($MotorController3)), #variable($MotorController3)#end #if(($MotorController4)), #variable($MotorController4)#end};"
-    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
   Differential Drive:
     Defaults: "Component,None"
     ClassName: "DifferentialDrive"
@@ -249,6 +242,7 @@ Instructions:
     Import: "\\#include <frc/motorcontrol/${Type}.h>"
     Extra: >-
       #variable($Short_Name).SetInverted(${Inverted});
+          #if(($Follow) != "None") #variable($Follow).AddFollower(#variable($Short_Name));#end
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "NidecBrushless"

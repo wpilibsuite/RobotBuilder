@@ -102,22 +102,16 @@ public class TestUtils {
         // Create a misc subsystem
         RobotComponent misc = new RobotComponent("Misc", "Subsystem", tree);
         subsystems.add(misc);
-        //Motor Controller Group causes save and load file test false failures
-        //RobotComponent scg1 = new RobotComponent("SCG1", "Motor Controller", tree);
-        //scg1.setProperty("Type", "PWMVictorSPX");
-        //RobotComponent scg2 = new RobotComponent("SCG2", "Motor Controller", tree);
-        //scg2.setProperty("Type", "Spark");
-        //RobotComponent scg3 = new RobotComponent("SCG3", "Motor Controller", tree);
-        //scg3.setProperty("Type", "SD540");
-        //RobotComponent scg4 = new RobotComponent("SCG4", "Motor Controller", tree);
-        //scg4.setProperty("Type", "PWMVenom");
-        //RobotComponent scg = new RobotComponent("SCG", "Motor Controller Group", tree);
-        //scg.add(scg1);
-        //scg.add(scg2);
-        //scg.add(scg3);
-        //scg.add(scg4);
-        //scg.getProperty("MotorController3").setValueAndUpdate(scg3);
-        //scg.getProperty("MotorController4").setValueAndUpdate(scg4);
+        RobotComponent scg1 = new RobotComponent("SCG1", "Motor Controller", tree);
+        scg1.setProperty("Type", "PWMVictorSPX");
+        RobotComponent scg2 = new RobotComponent("SCG2", "Motor Controller", tree);
+        scg2.setProperty("Type", "Spark");
+        RobotComponent scg3 = new RobotComponent("SCG3", "Motor Controller", tree);
+        scg3.setProperty("Type", "SD540");
+        RobotComponent scg4 = new RobotComponent("SCG4", "Motor Controller", tree);
+        scg4.setProperty("Type", "PWMVenom");
+        scg2.getProperty("Follow").setValueAndUpdate(scg1);
+        scg4.getProperty("Follow").setValueAndUpdate(scg3);
         //misc.add(scg);
         RobotComponent dd1 = new RobotComponent("DD1", "Motor Controller", tree);
         dd1.setProperty("Type", "VictorSP");

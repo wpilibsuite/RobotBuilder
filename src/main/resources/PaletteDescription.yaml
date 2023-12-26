@@ -113,6 +113,11 @@
             validators: [PWMOutput]
             choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]
             default: "0"
+          - !TypeSelectionProperty
+              name: Follow
+              type: PIDOutput
+              validators: [TypeDropdownSelectedNoneOk]
+              default: None
 #end
 #macro( RelayOutput $Name )
           - !ChoicesProperty
@@ -188,6 +193,10 @@ Validators:
   - !ExistsValidator
     name: TypeDropdownSelected
     ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
+    "error": "You must select a component of the valid type. If no options exist, create a new component of the right type."
+  - !ExistsValidator
+    name: TypeDropdownSelectedNoneOk
+    ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available"]
     "error": "You must select a component of the valid type. If no options exist, create a new component of the right type."
   - !UniqueValidator
     name: AnalogInput
@@ -410,30 +419,6 @@ Palette:
           - !BooleanProperty
             name: Send to SmartDashboard
             default: false
-      - !Component
-        name: Motor Controller Group
-        type: PIDOutput
-        supports: {PIDOutput: 4}
-        help: Motor Controller Group handles multiple motor controllers as one
-        properties:
-          - !ChildSelectionProperty
-            name: MotorController1
-            type: PIDOutput
-            validators: [MotorControllerGroup, ChildDropdownSelected]
-            default: 0
-          - !ChildSelectionProperty
-            name: MotorController2
-            type: PIDOutput
-            validators: [MotorControllerGroup, ChildDropdownSelected]
-            default: 1
-          - !ChildSelectionProperty
-            name: MotorController3
-            type: PIDOutput
-            default: null
-          - !ChildSelectionProperty
-            name: MotorController4
-            type: PIDOutput
-            default: null
       - !Component
         name: Differential Drive
         type: Controller
