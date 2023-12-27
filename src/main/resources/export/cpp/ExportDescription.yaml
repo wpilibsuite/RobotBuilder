@@ -178,17 +178,6 @@ Instructions:
       #variable($Name).SetSafetyEnabled($Safety_Enabled);
               #variable($Name).SetExpiration(${Safety_Expiration_Time}_s);
               #variable($Name).SetMaxOutput($Maximum_Output);
-  Killough Drive:
-    Defaults: "Component,None"
-    ClassName: "KilloughDrive"
-    Declaration: "frc::${ClassName} #variable($Name){#variable($Left_Motor), #variable($Right_Motor),
-                    #variable($Back_Motor)};"
-    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
-    Import: "\\#include <frc/drive/${ClassName}.h>"
-    Extra: >
-      #variable($Name).SetSafetyEnabled($Safety_Enabled);
-              #variable($Name).SetExpiration(${Safety_Expiration_Time}_s);
-              #variable($Name).SetMaxOutput($Maximum_Output);
 
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
