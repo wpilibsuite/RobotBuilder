@@ -113,11 +113,6 @@
             validators: [PWMOutput]
             choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]
             default: "0"
-          - !TypeSelectionProperty
-              name: Follow
-              type: PIDOutput
-              validators: [TypeDropdownSelectedNoneOk]
-              default: None
 #end
 #macro( RelayOutput $Name )
           - !ChoicesProperty
@@ -644,6 +639,11 @@ Palette:
           - !BooleanProperty
             name: Inverted
             default: false
+          - !TypeSelectionProperty
+            name: Follow
+            type: PIDOutput
+            validators: [TypeDropdownSelectedNoneOk]
+            default: None
       - !Component
         name: Nidec Brushless
         type: PIDOutput
