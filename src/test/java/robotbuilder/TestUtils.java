@@ -73,7 +73,7 @@ public class TestUtils {
         arm.add(pid);
         pid.getProperty("P").setValueAndUpdate(2);
         pid.getProperty("I").setValueAndUpdate(1);
-        pid.getProperty("D").setValueAndUpdate(-1);
+        pid.getProperty("D").setValueAndUpdate(0);
         pid.getProperty("Send to SmartDashboard").setValueAndUpdate(true);
         pid.getProperty("Continuous").setValueAndUpdate(true);
         RobotComponent motor = new RobotComponent("Motor", "Motor Controller", tree);
@@ -165,7 +165,8 @@ public class TestUtils {
         subsystems.add(dblSol);
         RobotComponent doubleSolenoid2 = new RobotComponent("Double Solenoid", "Double Solenoid", tree);
         //Needed until #422 is fixed
-        doubleSolenoid2.getProperty("Reverse Channel (Solenoid)").setValueAndUpdate("2");
+        doubleSolenoid2.getProperty("Forward Channel (Solenoid)").setValueAndUpdate("3");
+        doubleSolenoid2.getProperty("Reverse Channel (Solenoid)").setValueAndUpdate("4");
         dblSol.add(doubleSolenoid2);
 
         // Create a simple OI
