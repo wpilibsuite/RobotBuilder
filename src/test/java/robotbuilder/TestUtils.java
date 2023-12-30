@@ -143,6 +143,8 @@ public class TestUtils {
         RobotComponent servo = new RobotComponent("Servo", "Servo", tree);
         misc.add(servo);
         RobotComponent dO = new RobotComponent("DO", "Digital Output", tree);
+        // needed until #583 is fixed
+        dO.getProperty("Output Channel (Digital)").setValueAndUpdate("12");
         misc.add(dO);
         RobotComponent relay = new RobotComponent("Relay", "Spike", tree);
         misc.add(relay);
