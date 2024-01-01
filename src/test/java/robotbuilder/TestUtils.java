@@ -91,7 +91,7 @@ public class TestUtils {
         subsystems.add(wrist);
         wrist.getProperty("P").setValueAndUpdate(2);
         wrist.getProperty("I").setValueAndUpdate(1);
-        wrist.getProperty("D").setValueAndUpdate(-1);
+        wrist.getProperty("D").setValueAndUpdate(0.5);
         wrist.getProperty("Continuous").setValueAndUpdate(true);
         RobotComponent wristMotor = new RobotComponent("Motor", "Motor Controller", tree);
         wristMotor.setProperty("Type", "Jaguar");
