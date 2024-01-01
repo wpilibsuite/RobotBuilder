@@ -323,13 +323,13 @@ Palette:
             type: PIDOutput
             validators: [ChildDropdownSelected]
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: P
             default: 1
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: I
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: D
             default: 0
           - !DoubleProperty
@@ -380,13 +380,13 @@ Palette:
             type: PIDOutput
             validators: [ChildDropdownSelected]
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: P
             default: 1
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: I
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: D
             default: 0
           - !DoubleProperty
@@ -875,13 +875,13 @@ Palette:
             type: PIDOutput
             validators: [TypeDropdownSelected]
             default: "None"
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: P
             default: 1
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: I
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: D
             default: 0
           - !DoubleProperty
