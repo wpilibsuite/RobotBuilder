@@ -178,9 +178,6 @@ Validators:
   - !DistinctValidator
     name: MotorControllerGroup
     fields: ["MotorController1", "MotorController2", "MotorController3", "MotorController4"]
-  - !DistinctValidator
-    name: KilloughDrive
-    fields: ["Left Motor", "Right Motor", "Back Motor"]
   - !ExistsValidator
     name: ChildDropdownSelected
     ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
@@ -330,13 +327,13 @@ Palette:
             type: PIDOutput
             validators: [ChildDropdownSelected]
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: P
             default: 1
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: I
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: D
             default: 0
           - !DoubleProperty
@@ -387,13 +384,13 @@ Palette:
             type: PIDOutput
             validators: [ChildDropdownSelected]
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: P
             default: 1
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: I
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: D
             default: 0
           - !DoubleProperty
@@ -465,36 +462,6 @@ Palette:
             type: PIDOutput
             validators: [RobotDrive4, ChildDropdownSelected]
             default: 3
-          - !DoubleProperty
-            name: Maximum Output
-            default: 1
-          - !BooleanProperty
-            name: Safety Enabled
-            default: true
-          - !DoubleProperty
-            name: Safety Expiration Time
-            default: .1
-      - !Component
-        name: Killough Drive
-        type: Controller
-        supports: {PIDOutput: 3}
-        help: RobotDrive handles tank and arcade drives
-        properties:
-          - !ChildSelectionProperty
-            name: Left Motor
-            type: PIDOutput
-            validators: [KilloughDrive, ChildDropdownSelected]
-            default: 0
-          - !ChildSelectionProperty
-            name: Right Motor
-            type: PIDOutput
-            validators: [KilloughDrive, ChildDropdownSelected]
-            default: 1
-          - !ChildSelectionProperty
-            name: Back Motor
-            type: PIDOutput
-            validators: [KilloughDrive, ChildDropdownSelected]
-            default: 2
           - !DoubleProperty
             name: Maximum Output
             default: 1
@@ -893,13 +860,13 @@ Palette:
             type: PIDOutput
             validators: [TypeDropdownSelected]
             default: "None"
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: P
             default: 1
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: I
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: D
             default: 0
           - !DoubleProperty
