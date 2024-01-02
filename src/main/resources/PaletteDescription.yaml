@@ -186,6 +186,10 @@ Validators:
     name: TypeDropdownSelected
     ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
     "error": "You must select a component of the valid type. If no options exist, create a new component of the right type."
+  - !ExistsValidator
+    name: TypeDropdownSelectedNoneOk
+    ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available"]
+    "error": "You must select a component of the valid type. If no options exist, create a new component of the right type."
   - !UniqueValidator
     name: AnalogInput
     fields: [Channel (Analog)]
@@ -408,30 +412,6 @@ Palette:
             name: Send to SmartDashboard
             default: false
       - !Component
-        name: Motor Controller Group
-        type: PIDOutput
-        supports: {PIDOutput: 4}
-        help: Motor Controller Group handles multiple motor controllers as one
-        properties:
-          - !ChildSelectionProperty
-            name: MotorController1
-            type: PIDOutput
-            validators: [MotorControllerGroup, ChildDropdownSelected]
-            default: 0
-          - !ChildSelectionProperty
-            name: MotorController2
-            type: PIDOutput
-            validators: [MotorControllerGroup, ChildDropdownSelected]
-            default: 1
-          - !ChildSelectionProperty
-            name: MotorController3
-            type: PIDOutput
-            default: null
-          - !ChildSelectionProperty
-            name: MotorController4
-            type: PIDOutput
-            default: null
-      - !Component
         name: Differential Drive
         type: Controller
         supports: {PIDOutput: 2}
@@ -626,6 +606,11 @@ Palette:
           - !BooleanProperty
             name: Inverted
             default: false
+          - !TypeSelectionProperty
+            name: Follow
+            type: PIDOutput
+            validators: [TypeDropdownSelectedNoneOk]
+            default: None
       - !Component
         name: Nidec Brushless
         type: PIDOutput
