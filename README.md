@@ -19,13 +19,13 @@ The WPILib Mission is to enable FIRST teams to focus on writing game-specific so
 Building RobotBuilder is very straightforward. WPILib uses Gradle to compile.
 
 ## Requirements
-- [JDK 17](https://adoptium.net/temurin/releases/?variant=openjdk11&jvmVariant=hotspot&version=17)
+- [JDK 17](https://adoptium.net/temurin/releases/?variant=openjdk17&jvmVariant=hotspot)
 - A c++ Compiler (for c++ compile test). Any one of:
-    - On Linux, install GCC 7+
+    - On Linux, install GCC 11+
     - On Windows, install [Visual Studio Community 2022](https://visualstudio.microsoft.com/vs/community/) and select the C++ programming language during installation
     - On macOS, install the Xcode command-line build tools via `xcode-select --install`
     - ARM compiler toolchain
-        - Run `./gradlew installRoboRioToolchain` after cloning this repository
+        - Run `./gradlew installRoboRioToolchain` from a robot project
         - If the WPILib installer was used, this toolchain is already installed
 
 ## Running
