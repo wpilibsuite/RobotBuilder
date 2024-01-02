@@ -102,7 +102,6 @@ public class TestUtils {
         // Create a misc subsystem
         RobotComponent misc = new RobotComponent("Misc", "Subsystem", tree);
         subsystems.add(misc);
-
         RobotComponent scg1 = new RobotComponent("SCG1", "Motor Controller", tree);
         scg1.setProperty("Type", "PWMVictorSPX");
         RobotComponent scg2 = new RobotComponent("SCG2", "Motor Controller", tree);
@@ -118,15 +117,9 @@ public class TestUtils {
         misc.add(scg3);
         misc.add(scg4);
         misc.add(scg5);
-        //Motor Controller Group causes save and load file test false failures
-        //RobotComponent scg = new RobotComponent("SCG", "Motor Controller Group", tree);
-        //scg.add(scg1);
-        //scg.add(scg2);
-        //scg.add(scg3);
-        //scg.add(scg4);
-        //scg.getProperty("MotorController3").setValueAndUpdate(scg3);
-        //scg.getProperty("MotorController4").setValueAndUpdate(scg4);
-        //misc.add(scg);
+        scg2.setProperty("Follow", "SCG1");
+        scg4.setProperty("Follow", "SCG3");
+
         RobotComponent dd1 = new RobotComponent("DD1", "Motor Controller", tree);
         dd1.setProperty("Type", "VictorSP");
         RobotComponent dd2 = new RobotComponent("DD2", "Motor Controller", tree);
@@ -152,6 +145,8 @@ public class TestUtils {
         RobotComponent servo = new RobotComponent("Servo", "Servo", tree);
         misc.add(servo);
         RobotComponent dO = new RobotComponent("DO", "Digital Output", tree);
+        // needed until #583 is fixed
+        dO.getProperty("Output Channel (Digital)").setValueAndUpdate("12");
         misc.add(dO);
         RobotComponent relay = new RobotComponent("Relay", "Spike", tree);
         misc.add(relay);
