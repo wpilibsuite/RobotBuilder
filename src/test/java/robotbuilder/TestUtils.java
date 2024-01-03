@@ -110,11 +110,13 @@ public class TestUtils {
         scg3.setProperty("Type", "SD540");
         RobotComponent scg4 = new RobotComponent("SCG4", "Motor Controller", tree);
         scg4.setProperty("Type", "PWMVenom");
+        RobotComponent scg5 = new RobotComponent("SCG5", "Motor Controller", tree);
+        scg5.setProperty("Type", "PWMSparkFlex");
         misc.add(scg1);
         misc.add(scg2);
         misc.add(scg3);
         misc.add(scg4);
-        scg2.add(scg1);
+        misc.add(scg5);
         scg2.setProperty("Follow", "SCG1");
         scg4.setProperty("Follow", "SCG3");
 
