@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: TestResults
+          name: ${{ matrix.artifact-name }}TestReport
           path: |
             build/reports/
 
@@ -78,7 +78,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: TestResults
+          name: ${{ matrix.artifact-name }}TestReport
           path: |
             build/reports/
 
