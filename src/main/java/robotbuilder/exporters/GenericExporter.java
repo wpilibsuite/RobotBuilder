@@ -158,7 +158,7 @@ public class GenericExporter {
             }
         }
         if(wpilibRelease == null) {
-            wpilibRelease = "2020.3.2"; // this shouldn't need to be relied upon,
+            wpilibRelease = "2024.3.2"; // this shouldn't need to be relied upon,
                                         // but its better than generating nothing.
         }
 
@@ -177,6 +177,7 @@ public class GenericExporter {
         rootContext.put("export_commands", robot.getProperty("Export Commands").getValue());
         rootContext.put("commands", robotTree.getCommands());
         rootContext.put("wpilib_version", wpilibRelease);
+        rootContext.put("desktop_support", robot.getProperty("Desktop Support").getValue());
         for (String key : varKeys) {
             rootContext.put(key, eval(vars.get(key)));
         }
@@ -259,11 +260,15 @@ public class GenericExporter {
     }
 
     String evalResource(String resource, Context context) {
-        InputStreamReader in;
-        in = new InputStreamReader(Utils.getResourceAsStream(resource));
-        StringWriter w = new StringWriter();
-        ve.evaluate(context, w, name + " Exporter: " + resource, in);
-        return w.toString();
+        try {
+            InputStreamReader in;
+            in = new InputStreamReader(Utils.getResourceAsStream(resource));
+            StringWriter w = new StringWriter();
+            ve.evaluate(context, w, name + " Exporter: " + resource, in);
+            return w.toString();
+        } catch (Exception ex) {
+            return new String();
+        }
     }
 
     String evalResource(String resource) {
@@ -357,7 +362,7 @@ public class GenericExporter {
             for (String property : component.getPropertyKeys()) {
                 if (property.endsWith(propertyName)) {
                     // show speed controller type
-                    if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Speed Controller")) {
+                    if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Motor Controller")) {
                         String type1 = component.getProperty("Type").getValue().toString();
                         mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + type1);
                     } else if (propertyName.equals("Channel (PWM)") && component.getBaseType().equals("Servo")) {
@@ -366,6 +371,9 @@ public class GenericExporter {
                         mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + "Nidec Brushless");
                     } else if (propertyName.equals("CAN ID")) {
                         String type1 = component.getBase().toString();
+                        mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + type1);
+                    } else if (component.getBaseType().equals("Compressor")) {
+                        String type1 = component.getProperty("Module Type").getValue().toString();
                         mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName() + delimiter2 + type1);
                     } else {
                         mapping.put(component.getProperty(property).getValue().toString(), component.getSubsystem() + delimiter + component.getName());

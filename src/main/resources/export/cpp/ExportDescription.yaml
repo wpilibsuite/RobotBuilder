@@ -38,8 +38,9 @@
 ##     - Import: The C++ include so that this component is properly
 ##           included in the generated C++ file
 ##     - Declaration: The declaration to declare a variable
-##           representing this component.
-##     - Construction: The constructor to create this component.
+##           representing this component in the header.
+##     - Construction: The constructor to create this component in the cpp
+##           file.
 ##     - LiveWindow: Put this component on the livewindow properly.
 ##     - Extra: Extra configuration for after the constructor is done.
 ##     - ClassName: The C++ class name of this object.
@@ -68,8 +69,8 @@ Instruction Names: ["Export", "Import", "Declaration", "Construction", "LiveWind
 Defaults:
   Component:
     Export: "RobotMap"
-    Declaration: "std::shared_ptr<frc::${ClassName}> #variable($Name);"
-    Import: "\\#include \"frc/${ClassName}.h\""
+    Declaration: "frc::${ClassName}* #variable($Name);"
+    Import: "\\#include <frc/${ClassName}.h>"
   CustomComponent:
     Export: "RobotMap"
     Import: "\\#include \"Custom/${ClassName}.h\""
@@ -83,39 +84,35 @@ Defaults:
     Extra: ""
     Prototype: ""
     Function: ""
-    PID: "#variable($Short_Name)->PIDGet()"
+    PID: "#variable($Short_Name).PIDGet()"
     ClassName: ""
   AnalogInput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
-    PID: "#variable($Short_Name)->GetAverageVoltage()"
+    Declaration: "frc::${ClassName} #variable($Name){${Input_Channel_Analog}};"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
+    PID: "#variable($Short_Name).GetAverageVoltage()"
   AnalogPotentiometer:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
-    PID: "#variable($Short_Name)->Get()"
+    Declaration: "frc::${ClassName} #variable($Name){${Input_Channel_Analog}, ${Full_Range}, ${Offset}};"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
+    PID: "#variable($Short_Name).Get()"
   DigitalInput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Digital}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Declaration: "frc::${ClassName} #variable($Name){${Input_Channel_Digital}};"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
   PWMOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_PWM}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
   RelayOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_Relay}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
   AnalogOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_AnalogOutput}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
   SolenoidOutput:
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
   OI:
     Export: "OI"
-    Declaration: "std::shared_ptr<frc::${ClassName}> #variable($Name);"
+    Import: "\\#include <frc/${ClassName}.h>"
   Button:
     Extra:  "#if(\"$Command\" != \"None\")#variable($Name)->${When_to_Run.substring(0,1).toUpperCase()}${When_to_Run.substring(1)}(#command_instantiation($Command $Parameters));#end"
   Command:
     Export: "OI"
-    Import: "\\#include \"Commands/#class($Short_Name).h\""
+    Import: "\\#include \"commands/#class($Short_Name).h\""
 
 Instructions:
   Robot:
@@ -128,148 +125,82 @@ Instructions:
     Defaults: "None"
   Subsystem:
     Defaults: "None"
-    Export: "Robot"
-    Import: "\\#include \"Subsystems/#class($Short_Name).h\""
-    Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
-    Construction: "#variable($Short_Name).reset(new #class($Short_Name)());"
-    ClassName: "frc::Subsystem"
+    Export: "RobotContainer"
+    Import: "\\#include \"subsystems/#class($Short_Name).h\""
+    ClassName: "frc2::SubsystemBase"
   PID Subsystem:
     Defaults: "None"
-    Export: "Robot"
-    Import: "\\#include \"Subsystems/#class($Short_Name).h\""
-    Declaration: "static std::shared_ptr<#class($Short_Name)> #variable($Short_Name);"
-    Construction: "#variable($Short_Name).reset(new #class($Short_Name)());"
+    Export: "RobotContainer"
+    Import: "\\#include \"subsystems/#class($Short_Name).h\""
+    ClassName: "frc2::PIDSubsystem"
 
   PID Controller:
     Defaults: "Component,None"
+    Import: "\\#include <frc/controller/PIDController.h>"
     ClassName: "PIDController"
-    Construction: "#variable($Name).reset(new frc::${ClassName}($P, $I, $D,/* F: $F, */ #variable($Input).get(), #variable($Output).get(), $Period));"
+    Declaration: "frc::${ClassName} #variable($Name){$P, $I, $D};"
     Extra: >
-      #variable($Name)->SetContinuous(${Continuous});
-      #variable($Name)->SetAbsoluteTolerance(${Tolerance});
-      #if($Limit_Input)
-
-          #variable($Name)->SetInputRange(${Minimum_Input}, ${Maximum_Input});#end
-      #if(true)
-
-          #variable($Name)->SetOutputRange(${Minimum_Output}, ${Maximum_Output});#end
+      #if($Continuous)
+              #variable($Short_Name).EnableContinuousInput(${Minimum_Input}, ${Maximum_Input});
+      #end
+      #variable($Name).SetTolerance(${Tolerance});
       #if($Send_to_SmartDashboard)
 
-          SmartDashboard::PutData("${Name}", #variable($Name).get());#end
+          frc::SmartDashboard::PutData("${Name}", &#variable($Name));#end
 
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
 
-  Robot Drive 2:
-    Defaults: "Component,None"
-    ClassName: "RobotDrive"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(#variable($Left_Motor), #variable($Right_Motor)));"
-    Extra: >
-      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
-              #variable($Name)->SetSensitivity($Sensitivity);
-              #variable($Name)->SetMaxOutput($Maximum_Output);
-      #if($Left_Motor_Inverted)
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kRearLeftMotor, true);#end
-      #if($Right_Motor_Inverted)
-
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kRearRightMotor, true);#end
-
-  Robot Drive 4:
-    Defaults: "Component,None"
-    ClassName: "RobotDrive"
-    Construction: >-
-      #variable($Name).reset(new frc::${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
-                    #variable($Right_Front_Motor), #variable($Right_Rear_Motor)));
-    Extra: >
-      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
-              #variable($Name)->SetSensitivity($Sensitivity);
-              #variable($Name)->SetMaxOutput($Maximum_Output);
-      #if($Left_Front_Motor_Inverted)
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kFrontLeftMotor, true);#end
-      #if($Left_Rear_Motor_Inverted)
-
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kRearLeftMotor, true);#end
-      #if($Right_Front_Motor_Inverted)
-
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kFrontRightMotor, true);#end
-      #if($Right_Rear_Motor_Inverted)
-
-              #variable($Name)->SetInvertedMotor(frc::RobotDrive::kRearRightMotor, true);#end
-
-  Speed Controller Group:
-    Defaults: "Component,None"
-    ClassName: "SpeedControllerGroup"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
-    Construction: >-
-      #variable($Name) = std::make_shared<frc::${ClassName}>(*#variable($SpeedController1), *#variable($SpeedController2)
-      #if(($SpeedController3)), *#variable($SpeedController3)#end #if(($SpeedController4)), *#variable($SpeedController4)#end);
   Differential Drive:
     Defaults: "Component,None"
     ClassName: "DifferentialDrive"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor)));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
-    Import: "\\#include \"frc/drive/${ClassName}.h\""
+    Declaration: "frc::${ClassName} #variable($Name){#variable($Left_Motor), #variable($Right_Motor)};"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
+    Import: "\\#include <frc/drive/${ClassName}.h>"
     Extra: >
-      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
-              #variable($Name)->SetMaxOutput($Maximum_Output);
+      #variable($Name).SetSafetyEnabled($Safety_Enabled);
+              #variable($Name).SetExpiration(${Safety_Expiration_Time}_s);
+              #variable($Name).SetMaxOutput($Maximum_Output);
   Mecanum Drive:
     Defaults: "Component,None"
     ClassName: "MecanumDrive"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
-    Import: "\\#include \"frc/drive/${ClassName}.h\""
-    Construction: >-
-      #variable($Name).reset(new frc::${ClassName}(*#variable($Left_Front_Motor), *#variable($Left_Rear_Motor),
-                    *#variable($Right_Front_Motor), *#variable($Right_Rear_Motor)));
+    Declaration: "frc::${ClassName} #variable($Name){#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
+                    #variable($Right_Front_Motor), #variable($Right_Rear_Motor)};"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
+    Import: "\\#include <frc/drive/${ClassName}.h>"
     Extra: >
-      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
-              #variable($Name)->SetMaxOutput($Maximum_Output);
-  Killough Drive:
-    Defaults: "Component,None"
-    ClassName: "KilloughDrive"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
-    Import: "\\#include \"frc/drive/${ClassName}.h\""
-    Construction: >-
-      #variable($Name).reset(new frc::${ClassName}(*#variable($Left_Motor), *#variable($Right_Motor),
-                    *#variable($Back_Motor)));
-    Extra: >
-      #variable($Name)->SetSafetyEnabled($Safety_Enabled);
-              #variable($Name)->SetExpiration($Safety_Expiration_Time);
-              #variable($Name)->SetMaxOutput($Maximum_Output);
+      #variable($Name).SetSafetyEnabled($Safety_Enabled);
+              #variable($Name).SetExpiration(${Safety_Expiration_Time}_s);
+              #variable($Name).SetMaxOutput($Maximum_Output);
 
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
+    Declaration: "frc::${ClassName} #variable($Name){${Input_Channel_Analog}};"
     ClassName: "AnalogGyro"
-    Extra: "#variable($Name)->SetSensitivity(${Sensitivity});"
-    PID: "#variable($Short_Name)->PIDGet()"
+    Extra: "#variable($Name).SetSensitivity(${Sensitivity});"
+    PID: "#variable($Short_Name).GetAngle()"
   AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
+    Declaration: "frc::${ClassName} #variable($Name){${Input_Channel_Analog}};"
     ClassName: "AnalogAccelerometer"
-    PID: "#variable($Short_Name)->GetAcceleration()"
+    PID: "#variable($Short_Name).GetAcceleration()"
     Extra: >-
-      #variable($Name)->SetSensitivity(${Volts_Per_G});
-              #variable($Name)->SetZero(${Zero_G_Volts});
+      #variable($Name).SetSensitivity(${Volts_Per_G});
+      #variable($Name).SetZero(${Zero_G_Volts});
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}));"
+    Declaration: "frc::Encoder #variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, frc::Encoder::${Encoding_Type}};"
+    PID: "#if(($PID_Source) == \"kDisplacement\") #variable($Short_Name).GetDistance()#else #variable($Short_Name).GetRate()#end"
     Extra: >-
-      #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
-          #variable($Name)->SetPIDSourceType(frc::PIDSourceType::${PID_Source});
+      #variable($Name).SetDistancePerPulse(${Distance_Per_Pulse});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}));"
+    Declaration: "frc::Encoder #variable($Name){${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}};"
+    PID: "#if(($PID_Source) == \"kDisplacement\") #variable($Short_Name).GetDistance()#else #variable($Short_Name).GetRate()#end"
     Extra: >-
-      #variable($Name)->SetDistancePerPulse(${Distance_Per_Pulse});
-          #variable($Name)->SetPIDSourceType(frc::PIDSourceType::${PID_Source});
-          #variable($Name)->SetIndexSource((unsigned int)${Index_Channel_Digital}, frc::Encoder::IndexingType::${Indexing_Type});
-  Gear Tooth Sensor:
-    Defaults: "DigitalInput,Component,None"
-    ClassName: "GearTooth"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive}));"
+      #variable($Name).SetDistancePerPulse(${Distance_Per_Pulse});
+          #variable($Name).SetIndexSource((unsigned int)${Index_Channel_Digital}, frc::Encoder::IndexingType::${Indexing_Type});
   Analog Potentiometer:
     Defaults: "AnalogPotentiometer,Component,None"
     ClassName: "AnalogPotentiometer"
@@ -285,80 +216,123 @@ Instructions:
   Ultrasonic:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital}));"
-  PowerDistributionPanel:
+    Declaration: "frc::Ultrasonic #variable($Name){${Ping_Channel_Digital}, ${Echo_Channel_Digital}};"
+  PowerDistribution:
     Defaults: "Component,None"
-    ClassName: "PowerDistributionPanel"
-    Construction: "#variable($Name).reset(new frc::${ClassName}($CAN_ID));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    ClassName: "PowerDistribution"
+    Declaration: "frc::PowerDistribution #variable($Name)#if(($Module_Type) == \"Automatic\"){};#else{$CAN_ID, frc::PowerDistribution::ModuleType::k$Module_Type};#end"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
 
-  Speed Controller:
+  Motor Controller:
     Defaults: "PWMOutput,Component,None"
-    ClassName: "SpeedController"
-    Construction: "#variable($Name).reset(new frc::${Type}(${Output_Channel_PWM}));"
-    LiveWindow: "AddChild(\"$Short_Name\", std::static_pointer_cast<frc::${Type}>(#variable($Name)));"
-#    Import: "\\#include \"frc/${Type}.h\"\\n\\#include \"frc/${ClassName}.h";"
-    Import: "\\#include \"frc/${Type}.h\""
+    ClassName: "MotorController"
+    Declaration: "frc::${Type} #variable($Name){${Output_Channel_PWM}};"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
+    Import: "\\#include <frc/motorcontrol/${Type}.h>"
+    Extra: >-
+      #variable($Short_Name).SetInverted(${Inverted});
+          #if(($Follow) != "None") #variable($Follow).AddFollower(#variable($Short_Name));#end
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "NidecBrushless"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Declaration: "frc::${ClassName} #variable($Name){${Output_Channel_PWM}, ${Output_Channel_Digital}};"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
+    Import: "\\#include <frc/motorcontrol/${ClassName}.h>"
+    Extra: >-
+      #variable($Short_Name).SetInverted(${Inverted});
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"
+    Declaration: "frc::${ClassName} #variable($Name){${Output_Channel_PWM}};"
   Digital Output:
     Defaults: "Component,None"
     ClassName: "DigitalOutput"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Output_Channel_Digital}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Declaration: "frc::${ClassName} #variable($Name){${Output_Channel_Digital}};"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
   Spike:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
+    Declaration: "frc::${ClassName} #variable($Name){${Output_Channel_Relay}};"
   Analog Output:
     Defaults: "AnalogOutput,Component,None"
     ClassName: "AnalogOutput"
+    Declaration: "frc::${ClassName} #variable($Name){${Output_Channel_AnalogOutput}};"
 
   Compressor:
     Defaults: "Component,None"
     ClassName: "Compressor"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${PCM_ID}));"
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Declaration: "frc::${ClassName} #variable($Name){${Module_ID}, frc::PneumaticsModuleType::${Module_Type}};"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
+    Import: "\\#include <frc/${ClassName}.h>\n\\#include <frc/PneumaticsModuleType.h>"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "Solenoid"
+    Declaration: "frc::Solenoid #variable($Name){${Output_Module_Solenoid}, frc::PneumaticsModuleType::${Output_Module_Type_Solenoid}, ${Output_Channel_Solenoid}};"
+    Import: "\\#include <frc/${ClassName}.h>\n\\#include <frc/PneumaticsModuleType.h>"
   Relay Solenoid:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
+    Declaration: "frc::Relay #variable($Name){${Output_Channel_Relay}};"
+
   Double Solenoid:
     Defaults: "Solenoid,Component,None"
     ClassName: "DoubleSolenoid"
-    Construction: >-
-      #if(${Forward_PCM_Solenoid} != ${Reverse_PCM_Solenoid})Warning, the two modules in robot builder are different!
-
-      #end##
-
-      #variable($Name).reset(new frc::${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}));
-    LiveWindow: "AddChild(\"$Short_Name\", #variable($Name));"
+    Declaration: "frc::DoubleSolenoid #variable($Name){${Forward_Module_Solenoid}, frc::PneumaticsModuleType::${Forward_Module_Type_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid}};"
+    LiveWindow: "AddChild(\"$Short_Name\", &#variable($Name));"
+    Import: "\\#include <frc/${ClassName}.h>\n\\#include <frc/PneumaticsModuleType.h>"
 
   Joystick:
     Defaults: "OI,None"
     ClassName: "Joystick"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(${Number}));"
-    Prototype: "std::shared_ptr<frc::${ClassName}> get#class($Name)();"
+    Construction: "frc::${ClassName} #variable($Name){${Number}};"
+    Prototype: "frc::${ClassName}* get#class($Name)();"
     Function: >-
-       std::shared_ptr<frc::${ClassName}> OI::get#class($Name)() {
-          return #variable($Name);
-       }
+        frc::${ClassName}* RobotContainer::get#class($Name)() {
+           return &#variable($Name);
+        }
   Joystick Button:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"
-    Construction: "#variable($Name).reset(new frc::${ClassName}(#variable($Joystick).get(), ${Button}));"
+    Construction: "frc2::${ClassName} #variable($Name){&#variable($Joystick), ${Button}};"
+    Import: "\\#include <frc2/command/button/${ClassName}.h>"
+  Xbox Controller:
+    Defaults: "OI,None"
+    ClassName: "XboxController"
+    Construction: "frc::${ClassName} #variable($Name){${Number}};"
+    Prototype: "frc::${ClassName}* get#class($Name)();"
+    Function: >-
+        frc::${ClassName}* RobotContainer::get#class($Name)() {
+           return &#variable($Name);
+        }
+  Xbox Button:
+    Defaults: "Button,OI,None"
+    ClassName: "JoystickButton"
+    Construction: "frc2::${ClassName} #variable($Name){&#variable($Joystick), (int)frc::XboxController::Button::k${Button}};"
+    Import: "\\#include <frc2/command/button/${ClassName}.h>"
+  PS4 Controller:
+    Defaults: "OI,None"
+    ClassName: "PS4Controller"
+    Construction: "frc::${ClassName} #variable($Name){${Number}};"
+    Prototype: "frc::${ClassName}* get#class($Name)();"
+    Function: >-
+        frc::${ClassName}* RobotContainer::get#class($Name)() {
+           return &#variable($Name);
+        }
+  PS4 Button:
+    Defaults: "Button,OI,None"
+    ClassName: "JoystickButton"
+    Construction: "frc2::${ClassName} #variable($Name){&#variable($Joystick), (int)frc::PS4Controller::Button::k${Button}};"
+    Import: "\\#include <frc2/command/button/${ClassName}.h>"
+  POV Button:
+    Defaults: "Button,OI,None"
+    ClassName: "POVButton"
+    Construction: "frc2::${ClassName} #variable($Name){&#variable($Joystick), ${Angle}, ${POVNumber}};"
+    Import: "\\#include <frc2/command/button/${ClassName}.h>"
 
   Command:
     Defaults: "Command,None"
-    ClassName: "frc::Command"
-  Command Group:
+    ClassName: "frc2::Command"
+  Sequential Command Group:
     Defaults: "Command,None"
   PID Command:
     Defaults: "Command,None"
@@ -366,7 +340,7 @@ Instructions:
     Defaults: "Command,None"
   Instant Command:
     Defaults: "Command,None"
-  Timed Command:
+  Wait Command:
     Defaults: "Command,None"
   Conditional Command:
     Defaults: "Command,None"

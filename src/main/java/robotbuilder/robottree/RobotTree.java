@@ -51,6 +51,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import lombok.Getter;
 
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 
 import robotbuilder.MainFrame;
@@ -309,6 +310,7 @@ public class RobotTree extends JPanel {
     }
 
     public void save() {
+        fileChooser.setSelectedFile(new File(treeModel.getRoot().toString()));
         if (getFilePath() == null) {
             int result = fileChooser.showSaveDialog(MainFrame.getInstance());
             if (result == JFileChooser.CANCEL_OPTION) {
@@ -385,13 +387,15 @@ public class RobotTree extends JPanel {
     public void load(Reader in) {
         resetTree();
 
-        Iterator docs = new Yaml().loadAll(in).iterator();
+        LoaderOptions loaderOptions = new LoaderOptions();
+        loaderOptions.setMaxAliasesForCollections(100);
+        Iterator docs = new Yaml(loaderOptions).loadAll(in).iterator();
 
         String version = (String) docs.next();
-        if (!isVersionCompatible(version)) {
+        if (!isVersionCompatible(version, RobotBuilder.VERSION)) {
             JOptionPane.showMessageDialog(MainFrame.getInstance(),
                     "File was made with RobotBuilder " + version.replace("V", "v")
-                    + ", which is incompatable with version " + RobotBuilder.VERSION + ".",
+                    + ", which is incompatible with version " + RobotBuilder.VERSION + ".",
                     "Wrong Version", JOptionPane.ERROR_MESSAGE);
             return; // Give up
         }
@@ -451,29 +455,32 @@ public class RobotTree extends JPanel {
         }
     }
 
-    private boolean isVersionCompatible(String fileVersion) {
+    public boolean isVersionCompatible(String fileVersion, String robotBuilderVersion) {
         fileVersion = fileVersion.replaceAll("[^0-9.]", ""); // strip down to "1.5", "0.4", etc.
         if (fileVersion.isEmpty()) {
             return false;
         }
-        if (fileVersion.equals(RobotBuilder.VERSION)) { // shortcut
+        if (fileVersion.equals(robotBuilderVersion)) { // shortcut
             return true;
         }
-        Integer[] majorMinor
+        Integer[] fileMajorMinor
                 = Arrays.stream(fileVersion.split("\\."))
                 .map(Integer::parseInt)
                 .toArray(Integer[]::new);
-        if (majorMinor.length < 2) {
+        Integer[] robotBuilderMajorMinor
+                = Arrays.stream(robotBuilderVersion.split("\\."))
+                .map(Integer::parseInt)
+                .toArray(Integer[]::new);
+        if (fileMajorMinor.length < 2) {
             // Need at least a major and a minor version
             return false;
         }
-        if (majorMinor[0] > RobotBuilder.VERSION_MAJOR) {
-            // Major version is too high
+        if (fileMajorMinor[0] != robotBuilderMajorMinor[0]) {
+            // Major version does not match
             return false;
         }
-        // Major version is good, but minor version is too high
-        return majorMinor[0] != RobotBuilder.VERSION_MAJOR
-                || majorMinor[1] <= RobotBuilder.VERSION_MINOR;
+        // Major version is good, and minor version is lower
+        return fileMajorMinor[1] <= robotBuilderMajorMinor[1];
     }
 
     public void load() {

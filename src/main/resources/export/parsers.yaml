@@ -36,7 +36,7 @@
 #        - *id1
 #        - *idN
 # Where:
-#   + fileType is the extension of the file to be parsed ("java", "h", "py", ect.)
+#   + fileType is the extension of the file to be parsed ("java", "h", "py", etc.)
 #   + regex is the regular expression matching the desired information
 #   + groupNumber is the number of the group in the regex that matches the information
 #   + textFilters is a list of pre-processing text filters described above
@@ -72,43 +72,37 @@ filters:
 parsers:
 
   # Java superclass parser that matches:
-  #   class Foo extends X {
+  #   ROBOTBUILDER TYPE: X.
   # Assumes that the syntax of the file is valid and nobody's trying to
   # screw this up
   - !Parser
     fileType: java
-    regex: class\w+extends(\w+?)(implements\w+)?\{
+    regex: ROBOTBUILDERTYPE:(\w+).
     groupNumber: 1
     textFilters:
-      # Remove block comments > line comments > whitespace
-      - *id001
-      - *id002
+      # Remove whitespace
       - *id003
 
   # C++ superclass parser (for header files) that matches:
-  #   class Foo : public X {
+  #   ROBOTBUILDER TYPE: X.
   # Assumes that the syntax of the file is valid and nobody's trying to
   # screw this up
   - !Parser
     fileType: h
-    regex: class\w+:(public)?(\w+)\{
-    groupNumber: 2
+    regex: ROBOTBUILDERTYPE:(\w+).
+    groupNumber: 1
     textFilters:
-      # Remove block comments > line comments > whitespace
-      - *id001
-      - *id002
+      # Remove whitespace
       - *id003
 
   # C++ superclass parser (for implementation files) that matches:
-  #   Foo::Foo() : Bar() {
+  #   ROBOTBUILDER TYPE: X.
   # Assumes that the syntax of the file is valid, and that the constructor calls
   # the constructor of its superclass
   - !Parser
     fileType: cpp
-    regex: (\w+)::\1\(\w*\):(\w+)(.*?)\{
-    groupNumber: 2
+    regex: ROBOTBUILDERTYPE:(\w+).
+    groupNumber: 1
     textFilters:
-      # Remove block comments > line comments > whitespace
-      - *id001
-      - *id002
+      # Remove whitespace
       - *id003

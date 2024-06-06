@@ -28,7 +28,7 @@
 ##     instruction.
 ##
 ## Instructions: A map of palette components to their defaults and
-##     instruction sets. The defaults are a comma-seperated string
+##     instruction sets. The defaults are a comma-separated string
 ##     with the highest priority default first. The instructions
 ##     themselves vary from language to language, in the java
 ##     exporter:
@@ -91,34 +91,35 @@ Defaults:
     ClassName: ""
   AnalogInput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
     PID: "#variable($Short_Name).getAverageVoltage()"
   AnalogPotentiometer:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Analog}, ${Full_Range}, ${Offset});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
     PID: "#variable($Short_Name).get()"
   DigitalInput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Digital});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
   PWMOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_PWM});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
   RelayOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_Relay});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
   SolenoidOutput:
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Output_PCM_Solenoid}, ${Output_Channel_Solenoid});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Module_Solenoid}, PneumaticsModuleType.${Output_Module_Type_Solenoid}, ${Output_Channel_Solenoid});"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
+    Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport edu.wpi.first.wpilibj.PneumaticsModuleType;"
   AnalogOutput:
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_AnalogOutput});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
   OI:
     Export: "OI"
     Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport ${package}.subsystems.*;"
     Declaration: "public ${ClassName} #variable($Name);"
   Button:
-    Import: "import edu.wpi.first.wpilibj.buttons.*;"
-    Extra:  "#if(\"$Command\" != \"None\")#variable($Name).${When_to_Run}(#command_instantiation(${Command} ${Parameters}));#end"
+    Import: "import edu.wpi.first.wpilibj2.command.button.${ClassName};"
+    Extra:  "#if(\"$Command\" != \"None\")#variable($Name).${When_to_Run}(#new_command_instantiation_nt(${Command} ${Parameters}));#end"
   Command:
     Export: ""
     Import: "import ${package}.commands.*;"
@@ -134,83 +135,35 @@ Instructions:
     Defaults: "None"
   Subsystem:
     Defaults: "None"
-    Export: "Robot"
+    Export: "RobotContainer"
     Import: "import ${package}.subsystems.*;"
-    Declaration: "public static #class($Short_Name) #variable($Short_Name);"
+    Declaration: "private #class($Short_Name) #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new #class($Short_Name)();"
-    ClassName: "Subsystem"
+    ClassName: "SubsystemBase"
   PID Subsystem:
     Defaults: "None"
-    Export: "Robot"
+    Export: "RobotContainer"
     Import: "import ${package}.subsystems.*;"
-    Declaration: "public static #class($Short_Name) #variable($Short_Name);"
+    Declaration: "private #class($Short_Name) #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new #class($Short_Name)();"
-
+    ClassName: "PIDSubsystem"
   PID Controller:
     Defaults: "Component,None"
     ClassName: "PIDController"
-    Import: "import edu.wpi.first.wpilibj.smartdashboard.*;\nimport edu.wpi.first.wpilibj.PIDController;"
-    Construction: "#variable($Short_Name) = new ${ClassName}($P, $I, $D, $F, #variable($Input), #variable($Output), $Period);"
+    Import: "import edu.wpi.first.wpilibj.smartdashboard.*;\nimport edu.wpi.first.math.controller.PIDController;"
+    Construction: "#variable($Short_Name) = new ${ClassName}($P, $I, $D, $Period);"
     Extra: >
-      #variable($Short_Name).setContinuous(${Continuous});
-              #variable($Short_Name).setAbsoluteTolerance(${Tolerance});
-      #if($Limit_Input)
+      #if($Continuous)
+              #variable($Short_Name).enableContinuousInput(${Minimum_Input}, ${Maximum_Input});
+      #end
+              #variable($Short_Name).setTolerance(${Tolerance});
 
-              #variable($Short_Name).setInputRange(${Minimum_Input}, ${Maximum_Input});#end
-      #if(true)
-
-              #variable($Short_Name).setOutputRange(${Minimum_Output}, ${Maximum_Output});#end
       #if($Send_to_SmartDashboard)
 
               SmartDashboard.putData("${Name}", #variable($Short_Name));#end
 
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
 
-  Robot Drive 2:
-    Defaults: "Component,None"
-    ClassName: "RobotDrive"
-    Construction: "#variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
-    Extra: >
-      #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
-              #variable($Short_Name).setExpiration($Safety_Expiration_Time);
-              #variable($Short_Name).setSensitivity($Sensitivity);
-              #variable($Short_Name).setMaxOutput($Maximum_Output);
-      #if($Left_Motor_Inverted)
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);#end
-      #if($Right_Motor_Inverted)
-
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kRearRight, true);#end
-
-  Robot Drive 4:
-    Defaults: "Component,None"
-    ClassName: "RobotDrive"
-    Construction: >-
-      #variable($Short_Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
-                    #variable($Right_Front_Motor), #variable($Right_Rear_Motor));
-    Extra: >
-      #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
-              #variable($Short_Name).setExpiration($Safety_Expiration_Time);
-              #variable($Short_Name).setSensitivity($Sensitivity);
-              #variable($Short_Name).setMaxOutput($Maximum_Output);
-      #if($Left_Front_Motor_Inverted)
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);#end
-      #if($Left_Rear_Motor_Inverted)
-
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);#end
-      #if($Right_Front_Motor_Inverted)
-
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);#end
-      #if($Right_Rear_Motor_Inverted)
-
-              #variable($Short_Name).setInvertedMotor(RobotDrive.MotorType.kRearRight, true);#end
-
-  Speed Controller Group:
-    Defaults: "Component,None"
-    ClassName: "SpeedControllerGroup"
-    Construction: >-
-      #variable($Short_Name) = new ${ClassName}(#variable($SpeedController1), #variable($SpeedController2)
-      #if(($SpeedController3)), #variable($SpeedController3)#end #if(($SpeedController4)), #variable($SpeedController4)#end);
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   Differential Drive:
     Defaults: "Component,None"
     ClassName: "DifferentialDrive"
@@ -233,24 +186,12 @@ Instructions:
       #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
               #variable($Short_Name).setExpiration($Safety_Expiration_Time);
               #variable($Short_Name).setMaxOutput($Maximum_Output);
-  Killough Drive:
-    Defaults: "Component,None"
-    ClassName: "KilloughDrive"
-    Import: "import edu.wpi.first.wpilibj.drive.KilloughDrive;"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
-    Construction: >-
-      #variable($Short_Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor),
-                     #variable($Back_Motor));
-    Extra: >
-      #variable($Short_Name).setSafetyEnabled($Safety_Enabled);
-              #variable($Short_Name).setExpiration($Safety_Expiration_Time);
-              #variable($Short_Name).setMaxOutput($Maximum_Output);
 
   AnalogGyro:
     Defaults: "AnalogInput,Component,None"
     ClassName: "AnalogGyro"
     Extra: "#variable($Short_Name).setSensitivity(${Sensitivity});"
-    PID: "#variable($Short_Name).pidGet()"
+    PID: "#variable($Short_Name).getAngle()"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
   AnalogAccelerometer:
     Defaults: "AnalogInput,Component,None"
@@ -263,26 +204,22 @@ Instructions:
   Quadrature Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Import: "import edu.wpi.first.wpilibj.Encoder;\nimport edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.PIDSourceType;"
+    Import: "import edu.wpi.first.wpilibj.Encoder;\nimport edu.wpi.first.wpilibj.CounterBase.EncodingType;"
     Construction: "#variable($Short_Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction}, EncodingType.${Encoding_Type});"
+    PID: "#if(($PID_Source) == \"kDisplacement\") #variable($Short_Name).getDistance()#else #variable($Short_Name).getRate()#end"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
       #variable($Short_Name).setDistancePerPulse(${Distance_Per_Pulse});
-              #variable($Short_Name).setPIDSourceType(PIDSourceType.${PID_Source});
   Indexed Encoder:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Encoder"
-    Import: "import edu.wpi.first.wpilibj.Encoder;\nimport edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.PIDSourceType;\nimport edu.wpi.first.wpilibj.Encoder.IndexingType;"
+    Import: "import edu.wpi.first.wpilibj.Encoder;\nimport edu.wpi.first.wpilibj.CounterBase.EncodingType;\nimport edu.wpi.first.wpilibj.Encoder.IndexingType;"
     Construction: "#variable($Short_Name) = new ${ClassName}(${Channel_A_Channel_Digital}, ${Channel_B_Channel_Digital}, ${Reverse_Direction});"
+    PID: "#if(($PID_Source) == \"kDisplacement\") #variable($Short_Name).getDistance()#else #variable($Short_Name).getRate()#end"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
       #variable($Short_Name).setDistancePerPulse(${Distance_Per_Pulse});
-              #variable($Short_Name).setPIDSourceType(PIDSourceType.${PID_Source});
               #variable($Short_Name).setIndexSource(${Index_Channel_Digital}, IndexingType.${Indexing_Type});
-  Gear Tooth Sensor:
-    Defaults: "DigitalInput,Component,None"
-    ClassName: "GearTooth"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Input_Channel_Digital}, ${Direction_Sensitive});"
   Analog Potentiometer:
     Defaults: "AnalogPotentiometer,Component,None"
     ClassName: "AnalogPotentiometer"
@@ -299,24 +236,30 @@ Instructions:
     Defaults: "DigitalInput,Component,None"
     ClassName: "Ultrasonic"
     Construction: "#variable($Short_Name) = new ${ClassName}(${Ping_Channel_Digital}, ${Echo_Channel_Digital});"
-  PowerDistributionPanel:
+  PowerDistribution:
     Defaults: "Component,None"
-    ClassName: "PowerDistributionPanel"
-    Construction: "#variable($Short_Name) = new ${ClassName}($CAN_ID);"
+    ClassName: "PowerDistribution"
+    Import: "import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;\nimport edu.wpi.first.wpilibj.PowerDistribution;"
+    Construction: "#if(($Module_Type) == \"Automatic\") #variable($Short_Name) = new ${ClassName}();#else #variable($Short_Name) = new ${ClassName}($CAN_ID, ModuleType.k$Module_Type);#end"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
 
-  Speed Controller:
+  Motor Controller:
     Defaults: "PWMOutput,Component,None"
-    ClassName: "SpeedController"
-    Import: "import edu.wpi.first.wpilibj.${Type};\nimport edu.wpi.first.wpilibj.${ClassName};"
+    ClassName: "MotorController"
+    Import: "import edu.wpi.first.wpilibj.motorcontrol.${Type};"
     Declaration: "private ${Type} #variable($Short_Name);"
     Construction: "#variable($Short_Name) = new ${Type}(${Output_Channel_PWM});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
-      #variable($Short_Name).setInverted(${Inverted});
+      #if(($Follow) != "None")
+          #variable($Follow).addFollower(#variable($Short_Name));
+      #end
+        #variable($Short_Name).setInverted(${Inverted});
+
   Nidec Brushless:
     Defaults: "Component,None"
     ClassName: "NidecBrushless"
+    Import: "import edu.wpi.first.wpilibj.motorcontrol.NidecBrushless;"
     Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
     Extra: >-
@@ -339,8 +282,9 @@ Instructions:
   Compressor:
     Defaults: "Component,None"
     ClassName: "Compressor"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${PCM_ID});"
+    Construction: "#variable($Short_Name) = new ${ClassName}(${Module_ID}, PneumaticsModuleType.${Module_Type});"
     LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    Import: "import edu.wpi.first.wpilibj.${ClassName};\nimport edu.wpi.first.wpilibj.PneumaticsModuleType;"
   Solenoid:
     Defaults: "SolenoidOutput,Component,None"
     ClassName: "Solenoid"
@@ -348,20 +292,15 @@ Instructions:
     Defaults: "RelayOutput,Component,None"
     ClassName: "Relay"
   Double Solenoid:
-    Defaults: "Solenoid,Component,None"
+    Defaults: "SolenoidOutput,Component,None"
     ClassName: "DoubleSolenoid"
-    Construction: >-
-      #if(${Forward_PCM_Solenoid} != ${Reverse_PCM_Solenoid})Warning, the two modules in robot builder are different!
-
-      #end##
-
-      #variable($Short_Name) = new ${ClassName}(${Forward_PCM_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
+    Construction: "#variable($Short_Name) = new ${ClassName}(${Forward_Module_Solenoid}, PneumaticsModuleType.${Forward_Module_Type_Solenoid}, ${Forward_Channel_Solenoid}, ${Reverse_Channel_Solenoid});"
+    LiveWindow: "addChild(\"$Short_Name\", #variable($Short_Name));"
 
   Joystick:
     Defaults: "OI,None"
     ClassName: "Joystick"
-    Construction: "#variable($Name) = new ${ClassName}(${Number});"
+    Construction: "private final ${ClassName} #variable($Name) = new ${ClassName}(${Number});"
     Function: >-
       public ${ClassName} get#class($Name)() {
               return #variable($Name);
@@ -369,18 +308,50 @@ Instructions:
   Joystick Button:
     Defaults: "Button,OI,None"
     ClassName: "JoystickButton"
-    Construction: "#variable($Name) = new ${ClassName}(#variable($Joystick), ${Button});"
+    Construction: "final ${ClassName} #variable($Name) = new ${ClassName}(#variable($Joystick), ${Button});"
+  Xbox Controller:
+    Defaults: "OI,None"
+    ClassName: "XboxController"
+    Construction: "private final ${ClassName} #variable($Name) = new ${ClassName}(${Number});"
+    Function: >-
+      public ${ClassName} get#class($Name)() {
+            return #variable($Name);
+          }
+  Xbox Button:
+    Defaults: "Button,OI,None"
+    ClassName: "JoystickButton"
+    Construction: "final ${ClassName} #variable($Name) = new ${ClassName}(#variable($Joystick), XboxController.Button.k${Button}.value);"
+  PS4 Controller:
+    Defaults: "OI,None"
+    ClassName: "PS4Controller"
+    Construction: "private final ${ClassName} #variable($Name) = new ${ClassName}(${Number});"
+    Function: >-
+      public ${ClassName} get#class($Name)() {
+            return #variable($Name);
+          }
+  PS4 Button:
+    Defaults: "Button,OI,None"
+    ClassName: "JoystickButton"
+    Construction: "final ${ClassName} #variable($Name) = new ${ClassName}(#variable($Joystick), PS4Controller.Button.k${Button}.value);"
+  POV Button:
+    Defaults: "Button,OI,None"
+    ClassName: "POVButton"
+    Construction: "final ${ClassName} #variable($Name) = new ${ClassName}(#variable($Joystick), ${Angle}, ${POVNumber});"
 
   Command:
     Defaults: "Command,None"
   Command Group:
     Defaults: "Command,None"
+  Sequential Command Group:
+    Defaults: "Command,None"
   PID Command:
     Defaults: "Command,None"
   Setpoint Command:
     Defaults: "Command,None"
-  Timed Command:
+  Wait Command:
     Defaults: "Command,None"
+  ##Timed Command:
+  ##  Defaults: "Command,None"
   Instant Command:
     Defaults: "Command,None"
   Conditional Command:

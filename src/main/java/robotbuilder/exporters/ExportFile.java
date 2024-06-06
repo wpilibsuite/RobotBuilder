@@ -4,6 +4,7 @@ package robotbuilder.exporters;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -45,9 +46,9 @@ public class ExportFile {
             newProject = mkdir(export.getParentFile());
         }
 
-        boolean isBinaryFile = export.getName().endsWith(".jar") || export.getName().endsWith(".notjar");
+        boolean isBinaryFile = export.getName().endsWith(".jar") || export.getName().endsWith(".notjar") || export.getName().contains("gradlew");
         String oldType = CodeFileUtils.getSavedSuperclass(export);
-        String newType = isBinaryFile ? oldType : CodeFileUtils.getSavedSuperclass(exporter.evalResource(source, fileContext));
+        String newType = isBinaryFile ? oldType : CodeFileUtils.getSavedSuperclass(exporter.evalResource(source.replace(".cpp", ".h"), fileContext));
         System.out.println("Saved type: " + oldType);
         System.out.println("  New type: " + newType);
         // Export
@@ -55,10 +56,13 @@ public class ExportFile {
             System.out.println("Overwriting " + export);
             if (isBinaryFile) {
                 // Don't attempt to parse binary files - they get corrupted if run through Velocity
-                IOUtils.copy(Utils.getResourceAsStream(source), Files.newOutputStream(export.toPath()));
+                OutputStream exportStream = Files.newOutputStream(export.toPath());
+                IOUtils.copy(Utils.getResourceAsStream(source), exportStream);
+                exportStream.close();
             } else {
                 try (FileWriter out = new FileWriter(export)) {
                     out.write(exporter.evalResource(source, fileContext));
+                    out.close();
                 }
             }
         } else if (update.equals("Modify")) {
@@ -75,6 +79,7 @@ public class ExportFile {
             try (FileWriter out = new FileWriter(export)) {
                 file = file.replaceAll("\r\n?|\n", "\r\n");
                 out.write(file);
+                out.close();
             }
         }
         if (executable) {
@@ -87,6 +92,7 @@ public class ExportFile {
         File backup = new File(export.getAbsoluteFile() + "~");
         try (FileWriter out = new FileWriter(backup)) {
             out.write(exporter.openFile(export.getAbsolutePath()));
+            out.close();
         }
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Vector;
 
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 import lombok.NonNull;
 
@@ -22,7 +22,7 @@ import robotbuilder.utils.UniqueList;
  *
  * @author Sam Carlberg
  */
-public class ParameterSetsEditorDialog extends JDialog {
+public class ParameterSetsEditorDialog extends CenteredDialog {
 
     private RobotComponent command;
     private ParameterSetProperty prop;
@@ -32,8 +32,8 @@ public class ParameterSetsEditorDialog extends JDialog {
     /**
      * Creates new form ParameterSetsEditorDialog
      */
-    public ParameterSetsEditorDialog(@NonNull RobotComponent command, Frame parent, boolean modal) {
-        super(parent, modal);
+    public ParameterSetsEditorDialog(@NonNull RobotComponent command, JFrame parent, boolean modal) {
+        super(parent, "Edit Parameter Presets");
         this.command = command;
         this.paramProp = (ParametersProperty) command.getProperty("Parameters");
         this.prop = (ParameterSetProperty) command.getProperty("Parameter presets");

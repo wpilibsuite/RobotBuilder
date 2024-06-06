@@ -1,3 +1,3 @@
 #set($command = $helper.getByName($command_name, $robot))
-    Robot::#variable(${command.getProperty("Requires").getValue()})->Enable();
-    Robot::#variable(${command.getProperty("Requires").getValue()})->SetSetpoint(m_setpoint);
+    #variable(${command.getProperty("Requires").getValue().toLowerCase()})->Enable();
+    #variable(${command.getProperty("Requires").getValue().toLowerCase()})->SetSetpoint(m_setpoint);

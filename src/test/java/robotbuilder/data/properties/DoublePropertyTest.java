@@ -56,11 +56,13 @@ public class DoublePropertyTest {
         dp.value = null;
         assertEquals("Value should be the default value.", dp.getValue(), dp.defaultValue);
         dp.value = "1";
-        assertEquals("Value should be 1.", (Double) dp.getValue(), 1.0, .02);
+        assertEquals("Value should be 1.", (Double) dp.getValue(), 1.0, .00002);
         dp.value = "";
         assertEquals("Value should be \"\".", dp.getValue(), "");
         dp.value = "3.14159";
-        assertEquals("Value should be 1.", (Double) dp.getValue(), 3.14159, .00002);
+        assertEquals("Value should be 3.14159", (Double) dp.getValue(), 3.14159, .00002);
+        dp.value = "-1";
+        assertEquals("Value should be -1", (Double) dp.getValue(), -1.0, .00002);
     }
 
     @Test
@@ -74,7 +76,9 @@ public class DoublePropertyTest {
         dp.value = "";
         assertEquals("Display Value should be \"\".", dp.getDisplayValue(), "");
         dp.value = "3.14159";
-        assertEquals("Display Value should be 1.", dp.getDisplayValue(), "3.14159");
+        assertEquals("Display Value should be 3.14159", dp.getDisplayValue(), "3.14159");
+        dp.value = "-1.0";
+        assertEquals("Display Value should be -1.0", dp.getDisplayValue(), "-1.0");
     }
 
     @Test
@@ -86,11 +90,13 @@ public class DoublePropertyTest {
         dp.setValueAndUpdate("");
         assertEquals("Display Value should be \"\".", dp.value, "");
         dp.setValueAndUpdate("3.14159");
-        assertEquals("Display Value should be 1.", dp.value, "3.14159");
+        assertEquals("Display Value should be 3.14159.", dp.value, "3.14159");
         dp.setValueAndUpdate(1.);
         assertEquals("Display Value should be 1.", dp.value, "1.0");
         dp.setValueAndUpdate(3.14159);
-        assertEquals("Display Value should be 1.", dp.value, "3.14159");
+        assertEquals("Display Value should be 3.14159.", dp.value, "3.14159");
+        dp.setValueAndUpdate("-1.0");
+        assertEquals("Display Value should be -1.0.", dp.value, "-1.0");
     }
 
     @Test
@@ -106,6 +112,8 @@ public class DoublePropertyTest {
         dp.setValueAndUpdate(3.14159);
         assertTrue(dp.isValid());
         dp.setValueAndUpdate(2);
+        assertTrue(dp.isValid());
+        dp.setValueAndUpdate(-1.0);
         assertTrue(dp.isValid());
         dp.setValueAndUpdate(Double.MAX_EXPONENT);
         assertTrue(dp.isValid());
@@ -130,6 +138,8 @@ public class DoublePropertyTest {
         dp.setValueAndUpdate(3.14159);
         assertNull(dp.getErrorMessage());
         dp.setValueAndUpdate(2);
+        assertNull(dp.getErrorMessage());
+        dp.setValueAndUpdate(-1.0);
         assertNull(dp.getErrorMessage());
         dp.setValueAndUpdate(Double.MAX_EXPONENT);
         assertNull(dp.getErrorMessage());

@@ -138,12 +138,22 @@
             name: $Name Parameters
           - !ChoicesProperty
             name: $Name When to Run
-            choices: [whileHeld, whenPressed, whenReleased]
-            default: whileHeld
+            choices: [onTrue, onFalse, whileTrue, whileFalse, toggleOnTrue, toggleOnFalse]
+            default: onTrue
+          - !BooleanProperty
+            name: Add Timeout
+            default: false
+          - !PositiveDoubleProperty
+            name: Timeout
+            default: 0
+          - !ChoicesProperty
+            name: Interruptible
+            choices: [CancelSelf, CancelIncoming]
+            default: CancelSelf
 #end
 #macro( Solenoid $Name )
           - !ChoicesProperty
-              name: $Name PCM (Solenoid)
+              name: $Name Module (Solenoid)
               validators: [Solenoid]
               choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
               default: "0"
@@ -152,6 +162,10 @@
             validators: [Solenoid]
             choices: ["0", "1", "2", "3", "4", "5", "6", "7"]
             default: "0"
+          - !ChoicesProperty
+            name: $Name Module Type (Solenoid)
+            choices: ["CTREPCM", "REVPH"]
+            default: "CTREPCM"
 #end
 
 Validators:
@@ -162,11 +176,8 @@ Validators:
     name: RobotDrive4
     fields: ["Left Front Motor", "Left Rear Motor", "Right Front Motor", "Right Rear Motor"]
   - !DistinctValidator
-    name: SpeedControllerGroup
-    fields: ["SpeedController1", "SpeedController2", "SpeedController3", "SpeedController4"]
-  - !DistinctValidator
-    name: KilloughDrive
-    fields: ["Left Motor", "Right Motor", "Back Motor"]
+    name: MotorControllerGroup
+    fields: ["MotorController1", "MotorController2", "MotorController3", "MotorController4"]
   - !ExistsValidator
     name: ChildDropdownSelected
     ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
@@ -174,6 +185,10 @@ Validators:
   - !ExistsValidator
     name: TypeDropdownSelected
     ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available", "None"]
+    "error": "You must select a component of the valid type. If no options exist, create a new component of the right type."
+  - !ExistsValidator
+    name: TypeDropdownSelectedNoneOk
+    ignore: [null, "null", "", 0, 1, 2, 3, "No Choices Available"]
     "error": "You must select a component of the valid type. If no options exist, create a new component of the right type."
   - !UniqueValidator
     name: AnalogInput
@@ -195,10 +210,10 @@ Validators:
     fields: [Channel (Relay)]
   - !UniqueValidator
     name: Solenoid
-    fields: [Channel (Solenoid), PCM (Solenoid)]
+    fields: [Channel (Solenoid), Module (Solenoid)]
   - !UniqueValidator
-    name: PCMCompID
-    fields: [PCM ID]
+    name: CompID
+    fields: [Module ID]
   - !ListValidator
     name: List
   - !UniqueValidator
@@ -219,7 +234,7 @@ Palette:
             default: None
           - !Parameters
             name: Autonomous command parameters
-          - !IntegerProperty
+          - !TeamNumberProperty
             name: Team Number
             default: 0
           - !BooleanProperty
@@ -239,13 +254,13 @@ Palette:
           - !BooleanProperty
             name: Export Commands
             default: true
-          - !StringProperty
-            name: Simulation World File
-            default: "/usr/share/frcsim/worlds/GearsBotDemo.world"
           - !FileProperty
             name: Wiring file location
             folder: true
             default: "${home}"
+          - !BooleanProperty
+            name: Desktop Support
+            default: false
       - !Component
         name: Subsystems
         type: Subsystems
@@ -312,13 +327,13 @@ Palette:
             type: PIDOutput
             validators: [ChildDropdownSelected]
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: P
             default: 1
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: I
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: D
             default: 0
           - !DoubleProperty
@@ -369,17 +384,14 @@ Palette:
             type: PIDOutput
             validators: [ChildDropdownSelected]
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: P
             default: 1
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: I
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: D
-            default: 0
-          - !DoubleProperty
-            name: F
             default: 0
           - !DoubleProperty
             name: Tolerance
@@ -390,9 +402,6 @@ Palette:
           - !BooleanProperty
             name: Continuous
             default: false
-          - !BooleanProperty
-            name: Limit Input
-            default: false
           - !DoubleProperty
             name: Minimum Input
             default: 0
@@ -400,125 +409,8 @@ Palette:
             name: Maximum Input
             default: 5
           - !BooleanProperty
-            name: Limit Output
-            default: false
-          - !DoubleProperty
-            name: Minimum Output
-            default: -1
-          - !DoubleProperty
-            name: Maximum Output
-            default: 1
-          - !BooleanProperty
             name: Send to SmartDashboard
             default: false
-      - !Component
-        name: Robot Drive 2
-        type: Controller
-        supports: {PIDOutput: 2}
-        help: RobotDrive handles tank, arcade, holonomic and mecanum drive.
-        properties:
-          - !ChildSelectionProperty
-            name: Left Motor
-            type: PIDOutput
-            validators: [RobotDrive2, ChildDropdownSelected]
-            default: 0
-          - !BooleanProperty
-            name: Left Motor Inverted
-            default: false
-          - !ChildSelectionProperty
-            name: Right Motor
-            type: PIDOutput
-            validators: [RobotDrive2, ChildDropdownSelected]
-            default: 1
-          - !BooleanProperty
-            name: Right Motor Inverted
-            default: false
-          - !DoubleProperty
-            name: Sensitivity
-            default: 0.5
-          - !DoubleProperty
-            name: Maximum Output
-            default: 1
-          - !BooleanProperty
-            name: Safety Enabled
-            default: true
-          - !DoubleProperty
-            name: Safety Expiration Time
-            default: .1
-      - !Component
-        name: Robot Drive 4
-        type: Controller
-        supports: {PIDOutput: 4}
-        help: RobotDrive handles tank, arcade, holonomic and mecanum drive.
-        properties:
-          - !ChildSelectionProperty
-            name: Left Front Motor
-            type: PIDOutput
-            validators: [RobotDrive4, ChildDropdownSelected]
-            default: 0
-          - !BooleanProperty
-            name: Left Front Motor Inverted
-            default: false
-          - !ChildSelectionProperty
-            name: Left Rear Motor
-            type: PIDOutput
-            validators: [RobotDrive4, ChildDropdownSelected]
-            default: 1
-          - !BooleanProperty
-            name: Left Rear Motor Inverted
-            default: false
-          - !ChildSelectionProperty
-            name: Right Front Motor
-            type: PIDOutput
-            validators: [RobotDrive4, ChildDropdownSelected]
-            default: 2
-          - !BooleanProperty
-            name: Right Front Motor Inverted
-            default: false
-          - !ChildSelectionProperty
-            name: Right Rear Motor
-            type: PIDOutput
-            validators: [RobotDrive4, ChildDropdownSelected]
-            default: 3
-          - !BooleanProperty
-            name: Right Rear Motor Inverted
-            default: false
-          - !DoubleProperty
-            name: Sensitivity
-            default: 0.5
-          - !DoubleProperty
-            name: Maximum Output
-            default: 1
-          - !BooleanProperty
-            name: Safety Enabled
-            default: true
-          - !DoubleProperty
-            name: Safety Expiration Time
-            default: .1
-      - !Component
-        name: Speed Controller Group
-        type: PIDOutput
-        supports: {PIDOutput: 4}
-        help: Speed Controller Group handles multiple speed controllers as one
-        properties:
-          - !ChildSelectionProperty
-            name: SpeedController1
-            type: PIDOutput
-            validators: [SpeedControllerGroup, ChildDropdownSelected]
-            default: 0
-          - !ChildSelectionProperty
-            name: SpeedController2
-            type: PIDOutput
-            validators: [SpeedControllerGroup, ChildDropdownSelected]
-            default: 1
-          - !ChildSelectionProperty
-            name: SpeedController3
-            type: PIDOutput
-            default: null
-          - !ChildSelectionProperty
-            name: SpeedController4
-            type: PIDOutput
-            default: null
       - !Component
         name: Differential Drive
         type: Controller
@@ -570,36 +462,6 @@ Palette:
             type: PIDOutput
             validators: [RobotDrive4, ChildDropdownSelected]
             default: 3
-          - !DoubleProperty
-            name: Maximum Output
-            default: 1
-          - !BooleanProperty
-            name: Safety Enabled
-            default: true
-          - !DoubleProperty
-            name: Safety Expiration Time
-            default: .1
-      - !Component
-        name: Killough Drive
-        type: Controller
-        supports: {PIDOutput: 3}
-        help: RobotDrive handles tank and arcade drives
-        properties:
-          - !ChildSelectionProperty
-            name: Left Motor
-            type: PIDOutput
-            validators: [KilloughDrive, ChildDropdownSelected]
-            default: 0
-          - !ChildSelectionProperty
-            name: Right Motor
-            type: PIDOutput
-            validators: [KilloughDrive, ChildDropdownSelected]
-            default: 1
-          - !ChildSelectionProperty
-            name: Back Motor
-            type: PIDOutput
-            validators: [KilloughDrive, ChildDropdownSelected]
-            default: 2
           - !DoubleProperty
             name: Maximum Output
             default: 1
@@ -680,15 +542,6 @@ Palette:
             choices: [ResetWhileHigh, kResetWhileLow, kResetOnFallingEdge, kResetOnRisingEdge]
             default: "kResetOnRisingEdge"
       - !Component
-        name: Gear Tooth Sensor
-        type: Sensor
-        help: A sensor that counts the number of gear teeth that go by.
-        properties:
-          #DigitalChannel("Input")
-          - !BooleanProperty
-            name: Direction Sensitive
-            default: false
-      - !Component
         name: Analog Potentiometer
         type: PIDSource
         help: An rotational analog sensor that can be used to determine the position of an axle.
@@ -726,29 +579,38 @@ Palette:
           #DigitalChannel("Ping")
           #DigitalChannel("Echo")
       - !Component
-        name: PowerDistributionPanel
+        name: PowerDistribution
         type: Sensor
-        help: Measure the current and voltage from the CTRE Power Distribution Panel.
+        help: Measure the current and voltage from a Power Distribution Module.
         properties:
           - !ChoicesProperty
             name: CAN ID
             choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
             default: "0"
+          - !ChoicesProperty
+            name: Module Type
+            choices: ["Automatic", "CTRE", "Rev"]
+            default: "Automatic"
 
   - Actuators:
       - !Component
-        name: Speed Controller
+        name: Motor Controller
         type: PIDOutput
-        help: A PWM speed controller that allows you to set the speed of a motor.
+        help: A PWM motor controller that allows you to set the speed of a motor.
         properties:
           - !ChoicesProperty
             name: Type
-            choices: ["Victor", "Jaguar", "Talon", "VictorSP", "PWMTalonSRX", "Spark", "SD540", "PWMVictorSPX", "DMC60", "PWMSparkMax", "PWMTalonFX", "PWMVenom"]
+            choices: ["Victor", "Jaguar", "Talon", "VictorSP", "PWMTalonSRX", "Spark", "SD540", "PWMVictorSPX", "DMC60", "PWMSparkMax", "PWMTalonFX", "PWMVenom", "PWMSparkFlex"]
             default: "PWMVictorSPX"
           #PWMOutput("Output")
           - !BooleanProperty
             name: Inverted
             default: false
+          - !TypeSelectionProperty
+            name: Follow
+            type: PIDOutput
+            validators: [TypeDropdownSelectedNoneOk]
+            default: None
       - !Component
         name: Nidec Brushless
         type: PIDOutput
@@ -788,17 +650,21 @@ Palette:
       - !Component
         name: Compressor
         type: Actuator
-        help: A pneumatic compressor on your robot, connected to a PCM.
+        help: A pneumatic compressor on your robot, connected to a Pneumatics Module.
         properties:
           - !ChoicesProperty
-            name: PCM ID
-            validators: [PCMCompID]
+            name: Module ID
+            validators: [CompID]
             choices: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
             default: "0"
+          - !ChoicesProperty
+            name: Module Type
+            choices: ["CTREPCM", "REVPH"]
+            default: "CTREPCM"
       - !Component
         name: Solenoid
         type: Actuator
-        help: A linear actuator used to open and close valves that runs off of the PCM.
+        help: A linear actuator used to open and close valves that runs off of a Pneumatics Module.
         properties:
           #Solenoid("Output")
       - !Component
@@ -810,16 +676,19 @@ Palette:
       - !Component
         name: Double Solenoid
         type: Actuator
-        help: A double-action linear actuator used to open and close valves that runs off of the PCM.
+        help: A double-action linear actuator used to open and close valves that runs off of a pneumatics module.
         properties:
           #Solenoid("Forward")
-          #Solenoid("Reverse")
+          - !ChoicesProperty
+            name: Reverse Channel (Solenoid)
+            choices: ["0", "1", "2", "3", "4", "5", "6", "7"]
+            default: "0"
 
   - OI:
       - !Component
         name: Joystick
         type: Joystick
-        supports: {Joystick Button: -1}
+        supports: {Joystick Button: -1, POV Button: -1}
         help: A joystick that drivers can use as input.
         properties:
           - !ChoicesProperty
@@ -839,7 +708,81 @@ Palette:
             choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32"]
             default: "1"
           #Button("")
-
+          - !BooleanProperty
+            name: Send to SmartDashboard
+            default: false
+          
+      - !Component
+        name: Xbox Controller
+        type: Joystick
+        supports: {Xbox Button: -1, POV Button: -1}
+        help: An Xbox Controller that drivers can use as input.
+        properties:
+          - !ChoicesProperty
+            name: Number
+            choices: ["0", "1", "2", "3", "4", "5"]
+            validators: [Joystick]
+            default: 1
+      - !Component
+        name: Xbox Button
+        type: Xbox Button
+        help: An Xbox Controller button that binds a driver action to a command.
+        properties:
+          - !ParentProperty
+            name: Joystick
+          - !ChoicesProperty
+            name: Button
+            choices: ["A","B","X","Y","Back","Start","LeftBumper","RightBumper","LeftStick","RightStick"]
+            default: "A"
+          #Button("")
+          - !BooleanProperty
+            name: Send to SmartDashboard
+            default: false
+      - !Component
+        name: PS4 Controller
+        type: Joystick
+        supports: {PS4 Button: -1, POV Button: -1}
+        help: A PS4 Controller that drivers can use as input.
+        properties:
+          - !ChoicesProperty
+            name: Number
+            choices: ["0", "1", "2", "3", "4", "5"]
+            validators: [Joystick]
+            default: 1
+      - !Component
+        name: PS4 Button
+        type: PS4 Button
+        help: A PS4 Controller button that binds a driver action to a command.
+        properties:
+          - !ParentProperty
+            name: Joystick
+          - !ChoicesProperty
+            name: Button
+            choices: ["Square", "Cross", "Circle", "Triangle", "L1", "R1", "L2", "R2", "Share", "Options", "L3", "R3", "PS", "Touchpad"]
+            default: "Square"
+          #Button("")
+          - !BooleanProperty
+            name: Send to SmartDashboard
+            default: false
+      - !Component
+        name: POV Button
+        type: POV Button
+        help: A POV button that binds a driver action to a command.
+        properties:
+          - !ParentProperty
+            name: Joystick
+          - !ChoicesProperty
+            name: POVNumber
+            choices: ["0", "1", "2", "3", "4", "5"]
+            default: 0
+          - !ChoicesProperty
+            name: Angle
+            choices: ["0", "45", "90", "135", "180", "225", "270", "315"]
+            default: "0"
+          #Button("")
+          - !BooleanProperty
+            name: Send to SmartDashboard
+            default: false
   - Commands:
       - !Component
         name: Command
@@ -866,17 +809,17 @@ Palette:
             name: Autonomous Selection
             default: false
       - !Component
-        name: Command Group
+        name: Sequential Command Group
         type: Command
         help: A group of commands set to run together in a prescribed way.
         properties:
+          - !TypeSelectionProperty
+            name: Requires
+            type: Subsystem
+            default: None
           - !BooleanProperty
             name: Button on SmartDashboard
             default: true
-          - !ListProperty
-            name: Commands
-            default: []
-            validators: [List]
           - !Parameters
             name: Parameters
             default: []
@@ -917,13 +860,13 @@ Palette:
             type: PIDOutput
             validators: [TypeDropdownSelected]
             default: "None"
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: P
             default: 1
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: I
             default: 0
-          - !DoubleProperty
+          - !PositiveDoubleProperty
             name: D
             default: 0
           - !DoubleProperty
@@ -980,7 +923,7 @@ Palette:
             name: Autonomous Selection
             default: false
       - !Component
-        name: Timed Command
+        name: Wait Command
         type: Command
         help: A command specifies an action that the robot can perform and finishes after a timeout.
         properties:
@@ -1033,6 +976,10 @@ Palette:
         type: Command
         help: A Command that chooses between two Commands
         properties:
+          - !TypeSelectionProperty
+            name: Requires
+            type: Subsystem
+            default: None
           - !TypeSelectionProperty
             name: On True Command
             type: Command

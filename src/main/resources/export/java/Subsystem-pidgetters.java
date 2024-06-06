@@ -1,4 +1,3 @@
-
 #foreach ($component in $components)
 #if ($component.getBase().getType() == "Command" && $component.getProperty("Input").getValue() && $subsystem.subsystem.replace(' ', '') == $component.getProperty("Requires").getValue().replace(' ', ''))
 

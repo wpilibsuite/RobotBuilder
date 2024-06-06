@@ -99,20 +99,21 @@
     #table_with_components($title, $label, "Channel (AnalogOutput)")
 #end ##macro
 
-## Generate the Solenoid table for a PCM
+## Generate the Solenoid table for a Pneumatics Module
 #macro( Solenoid $title $label $module )
-    #module_table_with_components($title, $label, "PCM (Solenoid)", "Channel (Solenoid)", $module)
+    #module_table_with_components($title, $label, "Module (Solenoid)", "Channel (Solenoid)", $module)
 #end ##macro
 
 ## Generate the Compressor
 #macro( Compressor $title )
-    #set($ports = $helper.filterComponents("PCM ID", $robot))
+    #set($ports = $helper.filterComponents("Module ID", $robot))
     #if( $ports.keySet().size() > 0 )
         <h2>$title</h2>
     <table><tr>
-    <th class="pound">PCM</th>
+    <th>Module</th>
     <th>Subsystem</th>
-    <th>Device</th></tr>
+    <th>Device</th>
+    <th>Type</th></tr>
     #to_rows($ports)
     </table>
     #end

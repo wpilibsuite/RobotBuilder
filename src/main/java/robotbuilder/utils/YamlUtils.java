@@ -12,20 +12,7 @@ import robotbuilder.data.ListValidator;
 import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.UniqueValidator;
 import robotbuilder.data.Validator;
-import robotbuilder.data.properties.BooleanProperty;
-import robotbuilder.data.properties.ChildSelectionProperty;
-import robotbuilder.data.properties.ChoicesProperty;
-import robotbuilder.data.properties.ComponentSelectionProperty;
-import robotbuilder.data.properties.ConstantsProperty;
-import robotbuilder.data.properties.DoubleProperty;
-import robotbuilder.data.properties.FileProperty;
-import robotbuilder.data.properties.IntegerProperty;
-import robotbuilder.data.properties.ListProperty;
-import robotbuilder.data.properties.ParameterSetProperty;
-import robotbuilder.data.properties.ParametersProperty;
-import robotbuilder.data.properties.ParentProperty;
-import robotbuilder.data.properties.StringProperty;
-import robotbuilder.data.properties.TypeSelectionProperty;
+import robotbuilder.data.properties.*;
 
 @UtilityClass
 public class YamlUtils {
@@ -41,6 +28,7 @@ public class YamlUtils {
         constructor.addTypeDescription(new TypeDescription(BooleanProperty.class, "!BooleanProperty"));
         constructor.addTypeDescription(new TypeDescription(IntegerProperty.class, "!IntegerProperty"));
         constructor.addTypeDescription(new TypeDescription(DoubleProperty.class, "!DoubleProperty"));
+        constructor.addTypeDescription(new TypeDescription(PositiveDoubleProperty.class, "!PositiveDoubleProperty"));
         constructor.addTypeDescription(new TypeDescription(FileProperty.class, "!FileProperty"));
         constructor.addTypeDescription(new TypeDescription(ChoicesProperty.class, "!ChoicesProperty"));
         constructor.addTypeDescription(new TypeDescription(ChildSelectionProperty.class, "!ChildSelectionProperty"));
@@ -51,6 +39,7 @@ public class YamlUtils {
         constructor.addTypeDescription(new TypeDescription(ParameterSetProperty.class, "!ParameterSet"));
         constructor.addTypeDescription(new TypeDescription(ConstantsProperty.class, "!ConstantsProperty"));
         constructor.addTypeDescription(new TypeDescription(ListProperty.class, "!ListProperty"));
+        constructor.addTypeDescription(new TypeDescription(TeamNumberProperty.class, "!TeamNumberProperty"));
 
         constructor.addTypeDescription(new TypeDescription(DistinctValidator.class, "!DistinctValidator"));
         constructor.addTypeDescription(new TypeDescription(ExistsValidator.class, "!ExistsValidator"));

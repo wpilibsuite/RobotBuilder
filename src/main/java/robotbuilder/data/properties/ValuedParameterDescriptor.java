@@ -53,6 +53,12 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
      */
     public void setValueToDefault() {
         switch (getType()) {
+            case "DoubleSupplier":
+                this.value = "() -> 0";
+                break;
+            case "std::function<double()>":
+                this.value = "[this] {return 0;}";
+                break;
             case "boolean":
                 this.value = BOOLEAN_FALSE;
                 break;
@@ -99,11 +105,16 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
      */
     public boolean valueMatchesType() {
         switch (getType()) {
-            case "boolean":
+            case "DoubleSupplier":
+            case "std::function<double()>":
                 return value instanceof String
+                && isValidStringValue()
+                && isNotEmpty();
+            case "boolean":
+                return value instanceof Boolean || (value instanceof String
                         && (isReference()
-                        || value.equals(BOOLEAN_TRUE)
-                        || value.equals(BOOLEAN_FALSE));
+                        || ((String)value).matches(BOOLEAN_TRUE)
+                        || ((String)value).matches(BOOLEAN_FALSE)));
             case "byte":
                 return value instanceof String
                         && (isReference()
@@ -184,6 +195,11 @@ public class ValuedParameterDescriptor extends ParameterDescriptor {
     private boolean isValidStringValue() {
         String s = (String) value;
         return !s.contains("\\") && !s.contains("\""); // disallow backslashes and quotes
+    }
+
+    private boolean isNotEmpty() {
+        String s = (String) value;
+        return !s.isEmpty();
     }
 
     @Override

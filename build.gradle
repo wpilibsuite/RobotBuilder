@@ -1,25 +1,22 @@
 plugins {
     id 'java'
     id 'jacoco'
-    id 'maven'
     id 'application'
     id 'maven-publish'
-    id "com.jfrog.artifactory" version "4.9.8"
-    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '4.0.1'
-    id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.1'
-    id 'io.franzbecker.gradle-lombok' version '3.1.0'
-    id "com.github.johnrengelman.shadow" version "5.1.0"
-    id "de.undercouch.download" version "4.0.1"
-    id 'org.aim42.htmlSanityCheck' version '1.1.3'
+    id "com.jfrog.artifactory" version "4.24.14"
+    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '2023.0.1'
+    id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.2'
+    id 'io.franzbecker.gradle-lombok' version '5.0.0'
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id "de.undercouch.download" version "5.4.0"
+    id 'org.aim42.htmlSanityCheck' version '1.1.6'
 }
 
-if (project.hasProperty('buildServer')) {
-    wpilibVersioning.buildServerMode = true
-}
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
-if (project.hasProperty('releaseMode')) {
-    wpilibVersioning.releaseMode = true
-}
+wpilibVersioning.buildServerMode = project.hasProperty('buildServer')
+wpilibVersioning.releaseMode = project.hasProperty('releaseMode')
 
 repositories {
     mavenCentral()
@@ -58,19 +55,19 @@ mainClassName = "robotbuilder.RobotBuilder"
 wpilibVersioning.version.finalizeValue()
 
 jacoco {
-    toolVersion = "0.8.4"
+    toolVersion = "0.8.10"
 }
 
 jacocoTestReport {
     reports {
-        xml.enabled = true
-        html.enabled = true
+        xml.required = true
+        html.required = true
     }
 }
 
-def downloadOldCommands = tasks.register('downloadOldCommands', Download) {
-  src 'https://raw.githubusercontent.com/wpilibsuite/allwpilib/master/wpilibOldCommands/WPILibOldCommands.json'
-  dest 'src/main/resources/export/vendordeps/WPILibOldCommands.json'
+def downloadNewCommands = tasks.register('downloadNewCommands', Download) {
+  src 'https://raw.githubusercontent.com/wpilibsuite/allwpilib/main/wpilibNewCommands/WPILibNewCommands.json'
+  dest 'build/resources/main/export/vendordeps/WPILibNewCommands.json'
   overwrite true
 }
 
@@ -78,13 +75,13 @@ check.dependsOn jacocoTestReport
 check.dependsOn htmlSanityCheck
 
 lombok {
-    version = "1.18.8"
+    version = "1.18.28"
     sha256 = ""
 }
 
 compileJava {
     options.encoding = "UTF-8"
-    dependsOn downloadOldCommands
+    dependsOn downloadNewCommands
 }
 
 if (!hasProperty('mainClass')) {
@@ -96,16 +93,16 @@ repositories {
 }
 
 dependencies {
-    compile 'org.apache.velocity:velocity-engine-core:2.1'
-    compile 'org.yaml:snakeyaml:1.25'
-    compile 'commons-io:commons-io:2.6'
-    compile 'org.apache.commons:commons-lang3:3.9'
-    compile 'org.slf4j:slf4j-api:1.7.28'
-    compile 'org.slf4j:slf4j-jdk14:1.7.28'
-    compile 'com.sun.activation:javax.activation:1.2.0'
-    testCompile 'junit:junit:4.12'
-    annotationProcessor 'org.projectlombok:lombok:1.18.8'
-    compileOnly 'org.projectlombok:lombok:1.18.8'
+    implementation 'org.apache.velocity:velocity-engine-core:2.3'
+    implementation 'org.yaml:snakeyaml:1.33'
+    implementation 'commons-io:commons-io:2.13.0'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+    implementation 'org.slf4j:slf4j-jdk14:2.0.7'
+    implementation 'com.sun.activation:javax.activation:1.2.0'
+    testImplementation 'junit:junit:4.13.2'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    compileOnly 'org.projectlombok:lombok:1.18.28'
 }
 
 test {
@@ -116,13 +113,6 @@ test {
 }
 
 jar {
-
-    from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }) {
-        exclude "META-INF/*.SF"
-        exclude "META-INF/*.DSA"
-        exclude "META-INF/*.RSA"
-    }
-
     manifest {
         attributes('Implementation-Title': 'RobotBuilder',
                     'Implementation-Version': wpilibVersioning.version.get(),
@@ -144,7 +134,7 @@ htmlSanityCheck {
     failOnErrors = true
 
     checkerClasses = [BrokenCrossReferencesChecker,
-             BrokenHttpLinksChecker,
+             // BrokenHttpLinksChecker, //Disable link checker due to hanging on Vex links
              DuplicateIdChecker,
              ImageMapChecker,
              MissingAltInImageTagsChecker,
@@ -158,13 +148,10 @@ publishing {
             artifact(shadowJar) {
                 classifier null
             }
-            groupId 'edu.wpi.first.wpilib'
+            groupId 'edu.wpi.first.tools'
             artifactId 'RobotBuilder'
             version wpilibVersioning.version.get()
         }
     }
 }
 
-wrapper {
-    gradleVersion = '5.4.1'
-}

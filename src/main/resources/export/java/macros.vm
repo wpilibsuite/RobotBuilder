@@ -4,8 +4,11 @@
 ## Generate Java style class names from a component name
 #macro( class $name )${name.replace(' ', '')}#end
 
-## Generate Java style consant names from a component name
+## Generate Java style constant names from a component name
 #macro( constant $name )${name.replace(' ', '_').toUpperCase()}#end
+
+## Get the base_type Not ClassName of a robot component
+#macro( base_type $component )$component.getBase().getType()#end
 
 ## Get the type of a robot component
 #macro( type $component )${helper.getInstruction($component, "ClassName")}#end
@@ -17,10 +20,10 @@
 #macro( constructor $component )${helper.getInstruction($component, "Construction")}#end
 
 ## Get the livewindow instruction of a robot component
-#macro( livewindow $component )${helper.getInstruction($component, "LiveWindow")}#end
+#macro( livewindow $component ) ${helper.getInstruction($component, "LiveWindow")}#end
 
 ## Get the extra instruction of a robot component
-#macro( extra $component )${helper.getInstruction($component, "Extra")}#end
+#macro( extra $component ) ${helper.getInstruction($component, "Extra")}#end
 
 ## Get the function instruction of a robot component
 #macro( function $component )${helper.getInstruction($component, "Function")}#end
@@ -41,6 +44,31 @@
 #set($len = $params.size() - 2)
 #set($last = $len + 1)
 new #class($command)(#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $params.get($i) ), #end#end#if( $last >= 0 )#param_set( $params.get($last) )#end)#end
+
+## Generates 'new MyCommand(arg0, arg1, arg2, ..., subsystem).withTimeout(x)'
+#macro( new_command_instantiation $component $command $params )
+#set($len = $params.size() - 1)
+new #class($command.name)(#if($command.getProperty("Requires").getValue() != "None")#if($len >= 0)#command_params($params), m_#required_subsystem($command)#else m_#required_subsystem($command) #end#else#if($len >= 0)#command_params($params)#end#end)#if($component.getProperty("Add Timeout").value == true).withTimeout($component.getProperty("Timeout").value)#end#end
+
+## Generates 'new MyCommand(arg0, arg1, arg2, ..., subsystem)'
+#macro( new_command_instantiation_nt $command $params )
+#set($len = $params.size() - 1)
+new #class($command.name)(#if($command.getProperty("Requires").getValue() != "None")#if($len >= 0)#command_params($params), m_#required_subsystem($command)#else m_#required_subsystem($command) #end#else#if($len >= 0)#command_params($params)#end#end)#end
+
+## Generates 'new MyCommand(subsystem)'
+#macro( new_command_instantiation_cc $command )
+new #class($command.name)(#if($command.getProperty("Requires").getValue() != "None") subsystem#end)#end
+
+## Generates 'arg0, arg1, arg2, ...'
+#macro( command_params $params )
+#set($len = $params.size() - 2)
+#set($last = $len + 1)
+#if( $len >= 0 )#foreach($i in [0..$len])#param_set( $params.get($i) ), #end#end#if( $last >= 0 )#param_set( $params.get($last) )#end#end
+
+## Generate required_subsystem
+#macro( required_subsystem $command )
+#variable(${command.getProperty("Requires").getValue()})
+#end
 
 ## Generate constants
 #macro( declare_constant $constant )

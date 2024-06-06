@@ -3,6 +3,7 @@ package robotbuilder.data;
 
 import org.junit.*;
 import static org.junit.Assert.*;
+import robotbuilder.extensions.Extensions;
 import robotbuilder.MainFrame;
 import robotbuilder.robottree.RobotTree;
 import robotbuilder.TestUtils;
@@ -18,6 +19,7 @@ public class ExistsValidatorTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Extensions.init();
         MainFrame.getInstance();
     }
 
@@ -42,11 +44,11 @@ public class ExistsValidatorTest {
         // Create a drive train subsystem
         RobotComponent driveTrain = new RobotComponent("Drive Train", "Subsystem", tree);
         subsystems.add(driveTrain);
-        RobotComponent robotDrive = new RobotComponent("Robot Drive", "Robot Drive 2", tree);
+        RobotComponent robotDrive = new RobotComponent("Robot Drive", "Differential Drive", tree);
         driveTrain.add(robotDrive);
-        RobotComponent leftVictor = new RobotComponent("Left Victor", "Speed Controller", tree);
+        RobotComponent leftVictor = new RobotComponent("Left Victor", "Motor Controller", tree);
         robotDrive.add(leftVictor);
-        RobotComponent rightVictor = new RobotComponent("Right Victor", "Speed Controller", tree);
+        RobotComponent rightVictor = new RobotComponent("Right Victor", "Motor Controller", tree);
         robotDrive.add(rightVictor);
 
         robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getFullName());
@@ -65,7 +67,7 @@ public class ExistsValidatorTest {
         // Create a drive train subsystem
         RobotComponent driveTrain = new RobotComponent("Drive Train", "Subsystem", tree);
         subsystems.add(driveTrain);
-        RobotComponent robotDrive = new RobotComponent("Robot Drive", "Robot Drive 2", tree);
+        RobotComponent robotDrive = new RobotComponent("Robot Drive", "Differential Drive", tree);
         driveTrain.add(robotDrive);
 
         assertFalse("Left motor should not be selected.", robotDrive.getProperty("Left Motor").isValid());
@@ -88,7 +90,7 @@ public class ExistsValidatorTest {
 
         RobotComponent encoder = new RobotComponent("Encoder", "Quadrature Encoder", tree);
         pid.add(encoder);
-        RobotComponent motor = new RobotComponent("Motor", "Speed Controller", tree);
+        RobotComponent motor = new RobotComponent("Motor", "Motor Controller", tree);
         pid.add(motor);
 
         pid.getProperty("Input").setValueAndUpdate(encoder.getFullName());

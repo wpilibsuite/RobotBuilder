@@ -18,16 +18,20 @@
   </center>
   <h2>What is it?</h2>
   <p>The compressor keeps the pneumatics of the system pressurized
-  up until the digital switch detects that there is too much
+  up until the pressure switch/sensor detects that there is too much
   pressure.</p>
-  <p>The PCM will run the compressor automatically as long as there
+  <p>The pneumatics module will run the compressor automatically as long as there
   is a solenoid constructed. The compressor class is only required
   to turn off the compressor when it would normally be running</p>
   <h2>Properties</h2>
   <dl>
-    <dt>PCM ID</dt>
-    <dd>The Pneumatics Control Module (PCM) CAN ID that the
+    <dt>Module ID</dt>
+    <dd>The CAN ID of the pneumatics module that the
     compressor is plugged into.</dd>
+    <dt>Module Type</dt>
+    <dd>The type of pneumatics module that the
+    compressor is plugged into. CTREPCM for the Cross the Road Electronics
+    Pneumatics Control Module and REVPH for the Rev Robotics Pneumatics Hub.</dd>
   </dl>
   <h2>See Also</h2>
   <ul>

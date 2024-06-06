@@ -1,7 +1,7 @@
 ## Vendordep
 - !File
-  export: $project/vendordeps/WPILibOldCommands.json
-  source: ${exporters_path}vendordeps/WPILibOldCommands.json
+  export: $project/vendordeps/WPILibNewCommands.json
+  source: ${exporters_path}vendordeps/WPILibNewCommands.json
   update: None
 
 ## WPI Project Files
@@ -26,7 +26,9 @@
 - !File
   export: $project/build.gradle
   source: ${exporter_path}build.gradle
-  update: None
+  update: Modify
+  modifications:
+    desktop: ${exporter_path}build-desktop.gradle
 
 - !File
   export: $project/settings.gradle
@@ -82,44 +84,37 @@
   export: $package_path/Robot.java
   source: ${exporter_path}RobotTemplate.java
   update: Modify
-  modifications:
-    autonomous: ${exporter_path}RobotTemplate-autonomous.java
-    declarations: ${exporter_path}RobotTemplate-declarations.java
-    constructors: ${exporter_path}RobotTemplate-constructors.java
 
 - !File
-  export: $package_path/OI.java
-  source: ${exporter_path}OI.java
+  export: $package_path/Constants.java
+  source: ${exporter_path}Constants.java
+  update: None
+
+- !File
+  export: $package_path/RobotContainer.java
+  source: ${exporter_path}RobotContainer.java
   update: Modify
   modifications:
-    declarations: ${exporter_path}OI-declarations.java
-    constructors: ${exporter_path}OI-constructors.java
-    functions: ${exporter_path}OI-functions.java
-
+    declarations: ${exporter_path}RobotContainer-declarations.java
+    buttons: ${exporter_path}RobotContainer-buttons.java
+    subsystem_default_Command: ${exporter_path}RobotContainer-subsystem_default_Command.java
+    smartdashboard: ${exporter_path}RobotContainer-smartDashboard.java
+    imports: ${exporter_path}RobotContainer-imports.java
+    autonomous: ${exporter_path}RobotContainer-autonomous.java
+    functions: ${exporter_path}RobotContainer-functions.java
 ## Export Commands as files
 #if ($export_commands)
 #foreach ($command in $commands)
-#if ($command.base.name == "Command Group")
-- !File
-  export: $package_path/commands/#class($command.name).java
-  source: ${exporter_path}CommandGroup.java
-  update: Modify
-  modifications:
-    command_declarations: ${exporter_path}CommandGroup-declarations.java
-    parameters: ${exporter_path}CommandGroup-constructor.java
-  variables:
-    command_name: ${command.name}
-#elseif($command.base.name == "PID Command")
+#if($command.base.name == "PID Command")
 - !File
   export: $package_path/commands/#class($command.name).java
   source: ${exporter_path}PIDCommand.java
   update: Modify
   modifications:
     pid: ${exporter_path}PIDCommand-pid.java
-    parameters: ${exporter_path}Command-constructor.java
-    requires: ${exporter_path}Command-requires.java
-    source: ${exporter_path}PIDCommand-source.java
-    output: ${exporter_path}PIDCommand-output.java
+    parameters: ${exporter_path}PIDCommand-constructors.java
+    constructor: ${exporter_path}PIDCommand-constructors.java
+    imports: ${exporter_path}PIDCommand-imports.java
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "Setpoint Command")
@@ -128,20 +123,26 @@
   source: ${exporter_path}SetpointCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}Command-constructor.java
     requires: ${exporter_path}Command-requires.java
     initialize: ${exporter_path}SetpointCommand-initialize.java
     isFinished: ${exporter_path}SetpointCommand-isFinished.java
+    imports: ${exporter_path}Command-imports.java
+    constructors: ${exporter_path}SetpointCommand-constructors.java
+    variable_declarations: ${exporter_path}Command-variable-declarations.java
+    variable_setting: ${exporter_path}Command-variable-setting.java
   variables:
     command_name: ${command.name}
-#elseif($command.base.name == "Timed Command")
+#elseif($command.base.name == "Wait Command")
 - !File
   export: $package_path/commands/#class($command.name).java
-  source: ${exporter_path}TimedCommand.java
+  source: ${exporter_path}WaitCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}TimedCommand-constructor.java
+    constructors: ${exporter_path}WaitCommand-constructors.java
     requires: ${exporter_path}Command-requires.java
+    imports: ${exporter_path}Command-imports.java
+    variable_declarations: ${exporter_path}Command-variable-declarations.java
+    disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
 #elseif($command.base.name == "Instant Command")
@@ -150,8 +151,12 @@
   source: ${exporter_path}InstantCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}Command-constructor.java
+    imports: ${exporter_path}Command-imports.java
+    constructors: ${exporter_path}Command-constructors.java
+    variable_declarations: ${exporter_path}Command-variable-declarations.java
+    variable_setting: ${exporter_path}Command-variable-setting.java
     requires: ${exporter_path}Command-requires.java
+    disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
 #elseif ($command.base.name == "Conditional Command")
@@ -160,7 +165,21 @@
   source: ${exporter_path}ConditionalCommand.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}ConditionalCommand-constructor.java
+    imports: ${exporter_path}Command-imports.java
+    constructors: ${exporter_path}ConditionalCommand-constructors.java
+    variable_declarations: ${exporter_path}Command-variable-declarations.java
+    disabled: ${exporter_path}Command-disabled.java
+  variables:
+    command_name: ${command.name}
+#elseif ($command.base.name == "Sequential Command Group")
+- !File
+  export: $package_path/commands/#class($command.name).java
+  source: ${exporter_path}SequentialCommandGroup.java
+  update: Modify
+  modifications:
+    imports: ${exporter_path}SequentialCommandGroup-imports.java
+    constructors: ${exporter_path}SequentialCommandGroup-constructors.java
+    disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
 #else
@@ -169,8 +188,12 @@
   source: ${exporter_path}Command.java
   update: Modify
   modifications:
-    parameters: ${exporter_path}Command-constructor.java
+    imports: ${exporter_path}Command-imports.java
+    constructors: ${exporter_path}Command-constructors.java
+    variable_declarations: ${exporter_path}Command-variable-declarations.java
+    variable_setting: ${exporter_path}Command-variable-setting.java
     requires: ${exporter_path}Command-requires.java
+    disabled: ${exporter_path}Command-disabled.java
   variables:
     command_name: ${command.name}
 #end
@@ -187,7 +210,7 @@
   update: Modify
   modifications:
     imports: ${exporter_path}Subsystem-imports.java
-    declarations: ${exporter_path}Subsystem-declarations.java
+    declarations: ${exporter_path}PIDSubsystem-declarations.java
     default_command: ${exporter_path}Subsystem-default_command.java
     pid: ${exporter_path}PIDSubsystem-pid.java
     source: ${exporter_path}PIDSubsystem-source.java
@@ -205,10 +228,8 @@
   modifications:
     imports: ${exporter_path}Subsystem-imports.java
     declarations: ${exporter_path}Subsystem-declarations.java
-    default_command: ${exporter_path}Subsystem-default_command.java
     constants: ${exporter_path}Subsystem-constants.java
     constructors: ${exporter_path}Subsystem-constructors.java
-    pidgetters: ${exporter_path}Subsystem-pidgetters.java
   variables:
     subsystem_name: ${subsystem.name}
 #end

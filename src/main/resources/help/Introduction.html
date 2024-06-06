@@ -12,7 +12,7 @@
 </head>
 <body>
   <h1>Welcome to RobotBuilder</h1>
-  <p>Currently, there is alot of development going on. For the
+  <p>Currently, there is a lot of development going on. For the
   latest most accurate information, please go to <a href=
   "https://docs.wpilib.org/en/stable/docs/software/wpilib-tools/robotbuilder/index.html">
   frc-docs</a>. Once that documentation settles down, we hope to
@@ -75,13 +75,13 @@
       <p>It's new name appears in the tree.</p>
     </li>
   </ol>
-  <h4>Adding a Robot Drive to the Drive Train</h4>
+  <h4>Adding a Differential Drive to the Drive Train</h4>
   <p>The easiest way to make your robot drive is to us the
-  RobotDrive object in WPILib. It provides methods for tank drive,
-  arcade drive and mecanum drive.</p>
+  DifferentialDrive object in WPILib. It provides methods for tank drive,
+  arcade drive. There is also a MecanumDrive object for Mecanum drivetrains.</p>
   <p class="lead">To add a robot drive to your Drive Train:</p>
   <ol>
-    <li>Click on "Robot Drive 2" in the palette on the left.</li>
+    <li>Click on "DifferentialDrive" in the palette on the left.</li>
     <li>Drag it over "Drive Train" in the robot tree and release.
       <p>Your Drive Train now has a robot drive object.</p>
     </li>
@@ -93,15 +93,15 @@
   it's right side.</p>
   <p class="lead">To add motors to your robot drive:</p>
   <ol>
-    <li>Click on "Jaguar" in the palette on the left.</li>
+    <li>Click on "MotorController" in the palette on the left.</li>
     <li>Drag it over "Robot Drive" in the robot tree and
     release.</li>
-    <li>Rename it to "Left Jaguar", the same way you renamed the
+    <li>Rename it to "Left MotorController", the same way you renamed the
     "Drive Train".</li>
-    <li>Click on "Jaguar" in the palette on the left.</li>
+    <li>Click on "MotorController" in the palette on the left.</li>
     <li>Drag it over "Robot Drive" in the robot tree and
     release.</li>
-    <li>Rename it to "Right Jaguar", the same way you renamed the
+    <li>Rename it to "Right MotorController", the same way you renamed the
     "Drive Train".</li>
   </ol>
   <h4>Checking That the Motors are Correctly Assigned</h4>
@@ -112,9 +112,9 @@
   <ol>
     <li>Click on "Robot Drive".</li>
     <li>Make sure that the "Left Motor" property is set to "Left
-    Jaguar", if not click on it and select "Left Jaguar".</li>
+    MotorController", if not click on it and select "Left MotorController".</li>
     <li>Make sure that the "Right Motor" property is set to "Right
-    Jaguar", if not click on it and select "Right Jaguar".</li>
+    MotorController", if not click on it and select "Right MotorController".</li>
   </ol>
   <p>You now have a subsystem representing your robots Drive
   Train!</p>
@@ -122,9 +122,9 @@
   <p>Commands are a way of representing actions that your robot can
   take. Commands can be bound to buttons and other triggers to run
   under certain conditions. They can also be chained in <a href=
-  "Command%20Group.html">command groups</a> to perform a more
-  complex series of actions built from existing commands. For more,
-  see: <a href="Commands.html">Commands</a> and <a href=
+  "Sequential%20Command%20Group.html">command groups</a> to perform
+  a more complex series of actions built from existing commands.
+  For more, see: <a href="Commands.html">Commands</a> and <a href=
   "Command.html">Command</a></p>
   <h4>Creating the Tank Drive Command</h4>
   <p>The first step to create a command is to add it to the robot
@@ -167,7 +167,7 @@
   Drive"</p>
   <h4>Setting the Default Command for Drive Train</h4>
   <p>Subsystems can have default commands that run when no other
-  command is running that performs the default behaviour.</p>
+  command is running that performs the default behavior.</p>
   <p class="lead">To set the default command:</p>
   <ol>
     <li>Click on the "Drive Train".
@@ -226,7 +226,7 @@
     "None".</li>
     <li>Select "Slow Tank Drive".</li>
     <li>Click the cell to the right of when to run.</li>
-    <li>Select "whileHeld".</li>
+    <li>Select "whileTrue".</li>
   </ol>
   <h3>Generating Code</h3>
   <p>Once you've filled in RobotBuilder with the information you
@@ -273,6 +273,7 @@
   </ol>
   <h3>Filling in the Code</h3>
   <p>RobotBuilder is an application designed to aid the robot
-  development process. Robot builder can help you:</p>
+  development process. But you still have to write the code to make the robot
+  do what you want.</p>
 </body>
 </html>
