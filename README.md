@@ -1,5 +1,5 @@
 # RobotBuilder Project
-[![CI](https://github.com/wpilibsuite/RobotBuilder/workflows/CI/badge.svg)
+[![CI](https://github.com/wpilibsuite/RobotBuilder/actions/workflows/ci.yml/badge.svg)](https://github.com/wpilibsuite/RobotBuilder/actions/workflows/ci.yml)
 
 Welcome to the WPILib project. This repository contains the RobotBuilder project. This program can be used to automatically generate Java and C++ FRC programs using the [New Command Framework](https://docs.wpilib.org/en/stable/docs/software/commandbased/index.html).
 
