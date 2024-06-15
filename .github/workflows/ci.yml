@@ -75,7 +75,6 @@ jobs:
           name: ${{ matrix.artifact-name }}TestReport
           path: |
             build/reports/
-            build/test-resources/RobotBuilderTestProjectCpp
 
   publish:
     name: Publish
