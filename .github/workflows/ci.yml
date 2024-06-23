@@ -93,12 +93,12 @@ jobs:
       - name: Publish
         if: |
           !startsWith(github.ref, 'refs/tags/v') &&
-          github.ref != 'refs/heads/master'
+          github.ref != 'refs/heads/main'
         run: ./gradlew publish -PbuildServer
-      - name: Publish (Master)
+      - name: Publish (Main)
         if: |
           github.repository_owner == 'wpilibsuite' &&
-          github.ref == 'refs/heads/master'
+          github.ref == 'refs/heads/main'
         run: ./gradlew publish -PbuildServer
         env:
           RUN_AZURE_ARTIFACTORY_RELEASE: 'TRUE'
