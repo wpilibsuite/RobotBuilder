@@ -1,0 +1,37 @@
+From 526393270fbe745dfbc41edfd5acc5f9ef317adc Mon Sep 17 00:00:00 2001
+From: sciencewhiz <sciencewhiz@users.noreply.github.com>
+Date: Wed, 13 Mar 2024 06:27:11 -0700
+Subject: [PATCH] Disable compile tests until GradleRIO released
+
+---
+ src/test/java/robotbuilder/exporters/CppExportTest.java  | 1 +
+ src/test/java/robotbuilder/exporters/JavaExportTest.java | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/src/test/java/robotbuilder/exporters/CppExportTest.java b/src/test/java/robotbuilder/exporters/CppExportTest.java
+index dc2acb0..bf8a00c 100644
+--- a/src/test/java/robotbuilder/exporters/CppExportTest.java
++++ b/src/test/java/robotbuilder/exporters/CppExportTest.java
+@@ -50,6 +50,7 @@ public class CppExportTest {
+         TestUtils.delete(project);
+     }
+ 
++    @Ignore("Disabling compile test until GradleRIO version released")
+     @Test
+     public void testCPPExport() throws IOException, InterruptedException {
+         RobotTree tree = TestUtils.generateTestTree();
+diff --git a/src/test/java/robotbuilder/exporters/JavaExportTest.java b/src/test/java/robotbuilder/exporters/JavaExportTest.java
+index f43b8f2..f4e0b93 100644
+--- a/src/test/java/robotbuilder/exporters/JavaExportTest.java
++++ b/src/test/java/robotbuilder/exporters/JavaExportTest.java
+@@ -52,6 +52,7 @@ public class JavaExportTest {
+         TestUtils.delete(project);
+     }
+ 
++    @Ignore("Disabling compile test until GradleRIO version released")
+     @Test
+     public void testJavaExport() throws IOException, InterruptedException {
+         RobotTree tree = TestUtils.generateTestTree();
+-- 
+2.41.0.windows.1
+
