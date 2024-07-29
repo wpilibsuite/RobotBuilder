@@ -8,7 +8,7 @@
 \#include <frc/smartdashboard/SmartDashboard.h>
 \#include <frc2/command/CommandScheduler.h>
 
-void Robot::RobotInit() {
+Robot::Robot() {
   EnableLiveWindowInTest(true);
   HAL_Report(HALUsageReporting::kResourceType_Framework,
              HALUsageReporting::kFramework_RobotBuilder);
