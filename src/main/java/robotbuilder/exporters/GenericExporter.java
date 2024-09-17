@@ -159,7 +159,7 @@ public class GenericExporter {
         }
         if(wpilibRelease == null) {
             // this shouldn't need to be relied upon, but it's better than generating nothing.
-            wpilibRelease = "v2024.3.2";
+            wpilibRelease = "v2025.0.0-alpha-2";
             wpilibRelease = wpilibRelease.substring(1); // strip leading v from tag
         }
 
