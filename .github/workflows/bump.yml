@@ -28,12 +28,17 @@ jobs:
       run: |
         git config user.name github-actions
         git config user.email github-actions@github.com
-        git am -3 < .github/workflows/0001-Disable-compile-tests-until-GradleRIO-released-.patch
-        sed -i 's/wpilibRelease = \".*/wpilibRelease = \"${{ github.event.client_payload.package_version }}\";/' src/main/java/robotbuilder/exporters/GenericExporter.java
-        ./gradlew build test -x htmlSanityCheck
-        git commit -a -m "Bump export version to ${{ github.event.client_payload.package_version }}"
-        git push origin
-        git tag ${{ github.event.client_payload.package_version }}
+        TAG_EXISTS=$(git tag -l "${{ github.event.client_payload.package_version }}")
+        if [ ! "$TAG_EXISTS" ]; then
+          git am -3 < .github/workflows/0001-Disable-compile-tests-until-GradleRIO-released-.patch
+          sed -i 's/wpilibRelease = \".*/wpilibRelease = \"${{ github.event.client_payload.package_version }}\";/' src/main/java/robotbuilder/exporters/GenericExporter.java
+          ./gradlew build test -x htmlSanityCheck
+          git commit -a -m "Bump export version to ${{ github.event.client_payload.package_version }}"
+          git push origin
+        fi
+        git tag -f ${{ github.event.client_payload.package_version }}
         git push origin ${{ github.event.client_payload.package_version }}
-        git revert HEAD~1
-        git push origin
+        if [ ! "$TAG_EXISTS" ]; then
+          git revert HEAD~1
+          git push origin
+        fi
