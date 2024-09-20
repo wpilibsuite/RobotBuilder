@@ -37,7 +37,7 @@ jobs:
           git push origin
         fi
         git tag -f ${{ github.event.client_payload.package_version }}
-        git push origin ${{ github.event.client_payload.package_version }}
+        git push -f origin ${{ github.event.client_payload.package_version }}
         if [ ! "$TAG_EXISTS" ]; then
           git revert HEAD~1
           git push origin
