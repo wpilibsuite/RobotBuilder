@@ -55,7 +55,7 @@ mainClassName = "robotbuilder.RobotBuilder"
 wpilibVersioning.version.finalizeValue()
 
 jacoco {
-    toolVersion = "0.8.10"
+    toolVersion = "0.8.12"
 }
 
 jacocoTestReport {
@@ -75,7 +75,7 @@ check.dependsOn jacocoTestReport
 check.dependsOn htmlSanityCheck
 
 lombok {
-    version = "1.18.28"
+    version = "1.18.34"
     sha256 = ""
 }
 
@@ -93,16 +93,16 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.apache.velocity:velocity-engine-core:2.3'
+    implementation 'org.apache.velocity:velocity-engine-core:2.4'
     implementation 'org.yaml:snakeyaml:1.33'
-    implementation 'commons-io:commons-io:2.13.0'
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
-    implementation 'org.slf4j:slf4j-api:2.0.7'
-    implementation 'org.slf4j:slf4j-jdk14:2.0.7'
+    implementation 'commons-io:commons-io:2.17.0'
+    implementation 'org.apache.commons:commons-lang3:3.17.0'
+    implementation 'org.slf4j:slf4j-api:2.0.16'
+    implementation 'org.slf4j:slf4j-jdk14:2.0.16'
     implementation 'com.sun.activation:javax.activation:1.2.0'
     testImplementation 'junit:junit:4.13.2'
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
-    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    compileOnly 'org.projectlombok:lombok:1.18.34'
 }
 
 test {
