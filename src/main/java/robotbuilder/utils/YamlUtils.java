@@ -2,10 +2,14 @@ package robotbuilder.utils;
 
 import lombok.experimental.UtilityClass;
 
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
+import org.yaml.snakeyaml.constructor.SafeConstructor;
+import org.yaml.snakeyaml.inspector.TagInspector;
+import robotbuilder.RobotBuilder;
 import robotbuilder.data.DistinctValidator;
 import robotbuilder.data.ExistsValidator;
 import robotbuilder.data.ListValidator;
@@ -13,6 +17,7 @@ import robotbuilder.data.PaletteComponent;
 import robotbuilder.data.UniqueValidator;
 import robotbuilder.data.Validator;
 import robotbuilder.data.properties.*;
+import robotbuilder.exporters.ExportFile;
 
 @UtilityClass
 public class YamlUtils {
@@ -20,7 +25,35 @@ public class YamlUtils {
     public static final Yaml yaml;
 
     static {
-        Constructor constructor = new Constructor();
+        LoaderOptions loaderOptions = new LoaderOptions();
+        loaderOptions.setMaxAliasesForCollections(100);
+        TagInspector taginspector = tag ->
+                tag.getClassName().equals(StringProperty.class.getName()) ||
+                tag.getClassName().equals(BooleanProperty.class.getName()) ||
+                tag.getClassName().equals(IntegerProperty.class.getName()) ||
+                tag.getClassName().equals(DoubleProperty.class.getName()) ||
+                tag.getClassName().equals(PositiveDoubleProperty.class.getName()) ||
+                tag.getClassName().equals(FileProperty.class.getName()) ||
+                tag.getClassName().equals(ChoicesProperty.class.getName()) ||
+                tag.getClassName().equals(ChildSelectionProperty.class.getName()) ||
+                tag.getClassName().equals(TypeSelectionProperty.class.getName()) ||
+                tag.getClassName().equals(ComponentSelectionProperty.class.getName()) ||
+                tag.getClassName().equals(ParentProperty.class.getName()) ||
+                tag.getClassName().equals(ParametersProperty.class.getName()) ||
+                tag.getClassName().equals(ParameterSetProperty.class.getName()) ||
+                tag.getClassName().equals(ConstantsProperty.class.getName()) ||
+                tag.getClassName().equals(ListProperty.class.getName()) ||
+                tag.getClassName().equals(TeamNumberProperty.class.getName()) ||
+                tag.getClassName().equals(ParameterDescriptor.class.getName()) ||
+
+                tag.getClassName().equals(DistinctValidator.class.getName()) ||
+                tag.getClassName().equals(ExistsValidator.class.getName()) ||
+                tag.getClassName().equals(UniqueValidator.class.getName()) ||
+                tag.getClassName().equals(ListValidator.class.getName());
+
+        loaderOptions.setTagInspector(taginspector);
+        Constructor constructor = new Constructor(loaderOptions);
+
         constructor.addTypeDescription(new TypeDescription(PaletteComponent.class, "!Component"));
 
         // Properties
@@ -40,11 +73,17 @@ public class YamlUtils {
         constructor.addTypeDescription(new TypeDescription(ConstantsProperty.class, "!ConstantsProperty"));
         constructor.addTypeDescription(new TypeDescription(ListProperty.class, "!ListProperty"));
         constructor.addTypeDescription(new TypeDescription(TeamNumberProperty.class, "!TeamNumberProperty"));
+        constructor.addTypeDescription(new TypeDescription(ParameterDescriptor.class, "!ParameterDescriptor"));
 
         constructor.addTypeDescription(new TypeDescription(DistinctValidator.class, "!DistinctValidator"));
         constructor.addTypeDescription(new TypeDescription(ExistsValidator.class, "!ExistsValidator"));
         constructor.addTypeDescription(new TypeDescription(UniqueValidator.class, "!UniqueValidator"));
         constructor.addTypeDescription(new TypeDescription(ListValidator.class, "!ListValidator"));
+
+        constructor.addTypeDescription(new TypeDescription(ExportFile.class, "!File"));
+
+        constructor.addTypeDescription(new TypeDescription(CodeFileUtils.FileParser.class, "!Parser"));
+        constructor.addTypeDescription(new TypeDescription(CodeFileUtils.TextFilter.class, "!Filter"));
 
         yaml = new Yaml(constructor);
     }
