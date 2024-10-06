@@ -7,13 +7,15 @@ plugins {
     id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '2023.0.1'
     id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.2'
     id 'io.franzbecker.gradle-lombok' version '5.0.0'
-    id "com.github.johnrengelman.shadow" version "8.1.1"
-    id "de.undercouch.download" version "5.4.0"
+    id 'com.gradleup.shadow' version '8.3.3'
+    id "de.undercouch.download" version "5.6.0"
     id 'org.aim42.htmlSanityCheck' version '1.1.6'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 wpilibVersioning.buildServerMode = project.hasProperty('buildServer')
 wpilibVersioning.releaseMode = project.hasProperty('releaseMode')
@@ -50,7 +52,9 @@ if (System.getenv()['RUN_AZURE_ARTIFACTORY_RELEASE'] != null) {
   publish.dependsOn artifactoryPublish
 }
 
-mainClassName = "robotbuilder.RobotBuilder"
+application {
+    mainClass.set("robotbuilder.RobotBuilder")
+}
 
 wpilibVersioning.version.finalizeValue()
 
@@ -82,10 +86,6 @@ lombok {
 compileJava {
     options.encoding = "UTF-8"
     dependsOn downloadNewCommands
-}
-
-if (!hasProperty('mainClass')) {
-    ext.mainClass = mainClassName
 }
 
 repositories {
