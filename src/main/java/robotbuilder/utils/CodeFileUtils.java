@@ -15,10 +15,12 @@ import java.util.regex.Pattern;
 import lombok.Data;
 import lombok.experimental.UtilityClass;
 
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
+import org.yaml.snakeyaml.constructor.SafeConstructor;
 import robotbuilder.Utils;
 import static robotbuilder.ActionsClass.EXPORTERS_PATH;
 
@@ -94,10 +96,7 @@ public class CodeFileUtils {
 
     private static final Map<String, Function<String, String>> textParserMap = new HashMap<>();
     private static final Map<String, Function<File, String>> fileParserMap = new HashMap<>();
-    private static final TypeDescription fileParserDescriptor = new TypeDescription(FileParser.class, "!Parser");
-    private static final TypeDescription textFilterDescriptor = new TypeDescription(TextFilter.class, "!Filter");
-    private static final Constructor constructor = new Constructor();
-    private static final Yaml yaml = new Yaml(constructor);
+    private static final Yaml yaml = YamlUtils.yaml;
 
     static {
         try {
@@ -109,8 +108,6 @@ public class CodeFileUtils {
     }
 
     private static void init() {
-        constructor.addTypeDescription(fileParserDescriptor);
-        constructor.addTypeDescription(textFilterDescriptor);
         String path = EXPORTERS_PATH + "parsers.yaml";
         Map<String, Object> m = (Map) yaml.load(Utils.getResourceAsStream(path));
         List<FileParser> loadedParsers = (List<FileParser>) m.get("parsers");

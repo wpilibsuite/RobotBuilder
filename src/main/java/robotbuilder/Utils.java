@@ -30,6 +30,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import robotbuilder.data.RobotComponent;
 import robotbuilder.data.properties.ParametersProperty;
+import robotbuilder.utils.YamlUtils;
 
 /**
  *
@@ -133,7 +134,7 @@ public class Utils {
         if (original == null) {
             return null;
         }
-        Yaml y = new Yaml();
+        Yaml y = YamlUtils.yaml;
         String yaml = y.dump(original);
         return (T) y.load(yaml);
     }

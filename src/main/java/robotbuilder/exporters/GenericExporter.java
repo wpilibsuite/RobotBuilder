@@ -25,10 +25,12 @@ import javax.swing.JOptionPane;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
+import org.yaml.snakeyaml.constructor.SafeConstructor;
 import robotbuilder.ActionsClass;
 import robotbuilder.MainFrame;
 import robotbuilder.RobotBuilder;
@@ -37,6 +39,7 @@ import robotbuilder.Utils;
 import robotbuilder.data.RobotComponent;
 import robotbuilder.extensions.ExtensionComponent;
 import robotbuilder.extensions.Extensions;
+import robotbuilder.utils.YamlUtils;
 
 /**
  *
@@ -66,7 +69,7 @@ public class GenericExporter {
         List<ExtensionComponent> extensions = Extensions.getComponents();
 
         // Load YAML Description
-        Yaml yaml = new Yaml();
+        Yaml yaml = YamlUtils.yaml;
         Map<String, Object> description = yaml.load(
                 new InputStreamReader(Utils.getResourceAsStream(path + "ExportDescription.yaml")));
         name = (String) description.get("Name");
@@ -253,11 +256,7 @@ public class GenericExporter {
 
     private ArrayList<ExportFile> getFiles() throws FileNotFoundException {
         String filesString = evalResource(path + filesPath);
-        Constructor constructor = new Constructor();
-        constructor.addTypeDescription(new TypeDescription(ExportFile.class, "!File"));
-        Yaml yaml = new Yaml(constructor);
-        ArrayList<ExportFile> filesYaml = yaml.load(filesString);
-        return filesYaml;
+        return YamlUtils.yaml.load(filesString);
     }
 
     String evalResource(String resource, Context context) {

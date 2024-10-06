@@ -65,6 +65,7 @@ import robotbuilder.data.RobotVisitor;
 import robotbuilder.data.RobotWalker;
 import robotbuilder.data.Validator;
 import robotbuilder.data.properties.Property;
+import robotbuilder.utils.YamlUtils;
 
 /**
  * RobotTree is the tree representation of the robot map. It will contain nodes
@@ -351,7 +352,7 @@ public class RobotTree extends JPanel {
                 return me;
             }
         }, (Object[]) null);
-        Yaml yaml = new Yaml();
+        Yaml yaml = YamlUtils.yaml;
         return yaml.dump("Version " + RobotBuilder.VERSION) + "\n---\n" + yaml.dump(out);
     }
 
@@ -389,7 +390,7 @@ public class RobotTree extends JPanel {
 
         LoaderOptions loaderOptions = new LoaderOptions();
         loaderOptions.setMaxAliasesForCollections(100);
-        Iterator docs = new Yaml(loaderOptions).loadAll(in).iterator();
+        Iterator docs = YamlUtils.yaml.loadAll(in).iterator();
 
         String version = (String) docs.next();
         if (!isVersionCompatible(version, RobotBuilder.VERSION)) {

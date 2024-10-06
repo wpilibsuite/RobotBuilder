@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.yaml.snakeyaml.Yaml;
 
 import robotbuilder.data.properties.Property;
+import robotbuilder.utils.YamlUtils;
 
 /**
  * Model class holding the data used by {@link RobotComponent}.
@@ -37,7 +38,7 @@ public class RobotComponentModel implements Serializable {
         if (o instanceof RobotComponentModel) {
             // compare serialization to avoid recursion
             RobotComponentModel other = (RobotComponentModel) o;
-            Yaml yaml = new Yaml();
+            Yaml yaml = YamlUtils.yaml;
             return yaml.dump(this).equals(yaml.dump(other));
         }
         return false;
