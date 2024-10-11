@@ -52,7 +52,7 @@ public class YamlUtils {
                 tag.getClassName().equals(ListValidator.class.getName());
 
         loaderOptions.setTagInspector(taginspector);
-        Constructor constructor = new Constructor(loaderOptions);
+        SafeConstructor constructor = new SafeConstructor(loaderOptions);
 
         constructor.addTypeDescription(new TypeDescription(PaletteComponent.class, "!Component"));
 
