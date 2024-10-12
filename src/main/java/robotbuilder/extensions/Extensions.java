@@ -14,8 +14,6 @@ import javax.swing.ImageIcon;
 
 import lombok.experimental.UtilityClass;
 
-import org.yaml.snakeyaml.Yaml;
-
 import robotbuilder.utils.YamlUtils;
 import robotbuilder.Utils;
 import static robotbuilder.extensions.ExtensionComponent.CONFIG_FILE_NAME;

@@ -29,6 +29,7 @@ import robotbuilder.actions.SaveAsAction;
 import robotbuilder.actions.TogglePaletteViewAction;
 import robotbuilder.actions.UndoAction;
 import robotbuilder.actions.VerifyAction;
+import robotbuilder.utils.YamlUtils;
 
 /**
  *
@@ -130,7 +131,7 @@ public class ActionsClass {
     }
 
     private LinkedList<ExporterAction> getExporters() {
-        Yaml yaml = new Yaml();
+        Yaml yaml = YamlUtils.yaml;
         InputStreamReader in = new InputStreamReader(Utils.getResourceAsStream(EXPORTERS_PATH + "exporters.yaml"));
         List<String> exporterNames = (List<String>) yaml.load(in);
 
