@@ -41,7 +41,6 @@ if (System.getenv()['RUN_AZURE_ARTIFACTORY_RELEASE'] != null) {
         }
         username = System.getenv()['ARTIFACTORY_PUBLISH_USERNAME']
         password = System.getenv()['ARTIFACTORY_PUBLISH_PASSWORD']
-        maven = true
       }
       defaults {
           publications ('maven')
