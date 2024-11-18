@@ -3,13 +3,13 @@ plugins {
     id 'jacoco'
     id 'application'
     id 'maven-publish'
-    id "com.jfrog.artifactory" version "4.24.14"
-    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '2023.0.1'
+    id "com.jfrog.artifactory" version "5.2.4"
+    id 'edu.wpi.first.wpilib.versioning.WPILibVersioningPlugin' version '2024.0.0'
     id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.2'
     id 'io.franzbecker.gradle-lombok' version '5.0.0'
     id 'com.gradleup.shadow' version '8.3.3'
     id "de.undercouch.download" version "5.6.0"
-    id 'org.aim42.htmlSanityCheck' version '1.1.6'
+    id 'org.aim42.htmlSanityCheck' version '2.0.0-rc2'
 }
 
 java {
@@ -41,7 +41,6 @@ if (System.getenv()['RUN_AZURE_ARTIFACTORY_RELEASE'] != null) {
         }
         username = System.getenv()['ARTIFACTORY_PUBLISH_USERNAME']
         password = System.getenv()['ARTIFACTORY_PUBLISH_PASSWORD']
-        maven = true
       }
       defaults {
           publications ('maven')
