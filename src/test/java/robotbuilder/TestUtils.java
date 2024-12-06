@@ -2,6 +2,8 @@
 package robotbuilder;
 
 import robotbuilder.data.RobotWalker;
+import robotbuilder.data.properties.ConstantsProperty;
+import robotbuilder.data.properties.ValuedParameterDescriptor;
 import robotbuilder.exporters.GenericExporter;
 import robotbuilder.robottree.RobotTree;
 
@@ -98,6 +100,9 @@ public class TestUtils {
         wrist.add(wristMotor);
         RobotComponent pot = new RobotComponent("Pot", "Analog Potentiometer", tree);
         wrist.add(pot);
+        ValuedParameterDescriptor setpoint = new ValuedParameterDescriptor("InSP", "double", 1.0);
+        ConstantsProperty setpoints = new ConstantsProperty("Setpoints", List.of(setpoint), null, null);
+        wrist.getProperty("Constants").setValueAndUpdate(setpoints);
 
         // Create a misc subsystem
         RobotComponent misc = new RobotComponent("Misc", "Subsystem", tree);
