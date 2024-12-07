@@ -46,6 +46,7 @@ public class YamlUtils {
                 tag.getClassName().equals(TeamNumberProperty.class.getName()) ||
                 tag.getClassName().equals(ParameterDescriptor.class.getName()) ||
                 tag.getClassName().equals(ValuedParameterDescriptor.class.getName()) ||
+                tag.getClassName().equals(ParameterSet.class.getName()) ||
 
                 tag.getClassName().equals(DistinctValidator.class.getName()) ||
                 tag.getClassName().equals(ExistsValidator.class.getName()) ||
@@ -76,6 +77,7 @@ public class YamlUtils {
         constructor.addTypeDescription(new TypeDescription(TeamNumberProperty.class, "!TeamNumberProperty"));
         constructor.addTypeDescription(new TypeDescription(ParameterDescriptor.class, "!ParameterDescriptor"));
         constructor.addTypeDescription(new TypeDescription(ValuedParameterDescriptor.class, "!ValuedParameterDescriptor"));
+        //constructor.addTypeDescription(new TypeDescription(ParameterSet.class, "!ParameterSet"));
 
         constructor.addTypeDescription(new TypeDescription(DistinctValidator.class, "!DistinctValidator"));
         constructor.addTypeDescription(new TypeDescription(ExistsValidator.class, "!ExistsValidator"));
