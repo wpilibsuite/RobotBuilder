@@ -12,6 +12,8 @@ jobs:
   publish:
     name: "Publish"
     runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ github.event.inputs.publish_version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -21,7 +23,7 @@ jobs:
           java-version: 17
           distribution: 'temurin'
       - name: Publish
-        run: ./gradlew publish -PbuildServer -PpublishVersion=${{ github.event.inputs.publish_version }}
+        run: ./gradlew publish -PbuildServer -PpublishVersion="$VERSION"
         env:
           RUN_AZURE_ARTIFACTORY_RELEASE: "TRUE"
           ARTIFACTORY_PUBLISH_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
