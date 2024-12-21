@@ -85,7 +85,7 @@ public class Utils {
                 Process p;
                 try {
                     System.out.println("firefox " + url);
-                    p = Runtime.getRuntime().exec("firefox " + url);
+                    p = Runtime.getRuntime().exec(new String[]{"firefox ", url});
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
