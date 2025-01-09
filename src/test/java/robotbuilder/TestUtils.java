@@ -128,7 +128,7 @@ public class TestUtils {
         RobotComponent dd1 = new RobotComponent("DD1", "Motor Controller", tree);
         dd1.setProperty("Type", "VictorSP");
         RobotComponent dd2 = new RobotComponent("DD2", "Motor Controller", tree);
-        dd2.setProperty("Type", "VictorSP");
+        dd2.setProperty("Type", "Koors40");
         RobotComponent diffDrive = new RobotComponent("Diff Drive", "Differential Drive", tree);
         diffDrive.add(dd1);
         diffDrive.add(dd2);
