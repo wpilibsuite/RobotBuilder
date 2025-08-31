@@ -53,9 +53,8 @@ jobs:
           - os: windows-2022
             artifact-name: Win64
             architecture: x64
-          - os: macos-13
+          - os: macos-14
             artifact-name: macOS
-            architecture: x64
     name: "Test - ${{ matrix.artifact-name }}"
     runs-on: ${{ matrix.os }}
     steps:
