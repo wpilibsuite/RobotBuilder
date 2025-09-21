@@ -32,6 +32,7 @@ public class MainFrame extends JFrame {
     JToolBar toolBar;
     StatusPanel statusPanel;
     NewProjectDialog newProjectDialog;
+    DeprecatedDialog deprecatedDialog;
     private static MainFrame instance = null;
     public Preferences prefs;
 
@@ -103,6 +104,9 @@ public class MainFrame extends JFrame {
 
         statusPanel = new StatusPanel();
         add(statusPanel, BorderLayout.SOUTH);
+
+        deprecatedDialog = new DeprecatedDialog(this, "RobotBuilder");
+        deprecatedDialog.setAlwaysOnTop(true);
 
         newProjectDialog = new NewProjectDialog(null);
 
@@ -186,5 +190,9 @@ public class MainFrame extends JFrame {
 
     public void showNewProjectDialog() {
         newProjectDialog.display();
+    }
+
+    public void showDeprecatedDialog() {
+        deprecatedDialog.setVisible(true);
     }
 }

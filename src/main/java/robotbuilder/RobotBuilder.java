@@ -51,6 +51,7 @@ public class RobotBuilder {
             }
             Extensions.init();
             MainFrame frame = MainFrame.getInstance();
+            frame.showDeprecatedDialog();
             frame.openDefaultFile();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             try {
