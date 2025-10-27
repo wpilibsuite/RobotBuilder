@@ -49,16 +49,16 @@ public class UniqueValidatorTest {
         // Create a basic subsystem
         RobotComponent subsystem = new RobotComponent("Subsystem", "Subsystem", tree);
         subsystems.add(subsystem);
-        RobotComponent victor1 = new RobotComponent("Victor 1", "Motor Controller", tree);
-        subsystem.add(victor1);
-        RobotComponent victor2 = new RobotComponent("Victor 2", "Motor Controller", tree);
-        subsystem.add(victor2);
+        RobotComponent talon1 = new RobotComponent("Talon 1", "Motor Controller", tree);
+        subsystem.add(talon1);
+        RobotComponent talon2 = new RobotComponent("Talon 2", "Motor Controller", tree);
+        subsystem.add(talon2);
 
         // Test it
-        assertTrue("Victor 1 Output Channel (PWM) is not valid.",
-                victor1.getProperty("Output Channel (PWM)").isValid());
-        assertTrue("Victor 2 Output Channel (PWM) is not valid.",
-                victor2.getProperty("Output Channel (PWM)").isValid());
+        assertTrue("Talon 1 Output Channel (PWM) is not valid.",
+                talon1.getProperty("Output Channel (PWM)").isValid());
+        assertTrue("Talon 2 Output Channel (PWM) is not valid.",
+                talon2.getProperty("Output Channel (PWM)").isValid());
     }
 
     /**
@@ -73,17 +73,17 @@ public class UniqueValidatorTest {
         // Create a basic subsystem
         RobotComponent subsystem = new RobotComponent("Subsystem", "Subsystem", tree);
         subsystems.add(subsystem);
-        RobotComponent victor1 = new RobotComponent("Victor 1", "Motor Controller", tree);
-        subsystem.add(victor1);
-        RobotComponent victor2 = new RobotComponent("Victor 2", "Motor Controller", tree);
-        subsystem.add(victor2);
-        victor2.getProperty("Output Channel (PWM)").setValueAndUpdate("0");
+        RobotComponent talon1 = new RobotComponent("Talon 1", "Motor Controller", tree);
+        subsystem.add(talon1);
+        RobotComponent talon2 = new RobotComponent("Talon 2", "Motor Controller", tree);
+        subsystem.add(talon2);
+        talon2.getProperty("Output Channel (PWM)").setValueAndUpdate("0");
 
         // Test it
-        assertTrue("Victor 1 Output Channel (PWM) is not valid.",
-                victor1.getProperty("Output Channel (PWM)").isValid());
-        assertFalse("Victor 2 Output Channel (PWM) should not be valid.",
-                victor2.getProperty("Output Channel (PWM)").isValid());
+        assertTrue("Talon 1 Output Channel (PWM) is not valid.",
+                talon1.getProperty("Output Channel (PWM)").isValid());
+        assertFalse("Talon 2 Output Channel (PWM) should not be valid.",
+                talon2.getProperty("Output Channel (PWM)").isValid());
     }
 
     /**
@@ -99,33 +99,33 @@ public class UniqueValidatorTest {
         // Create a basic subsystem
         RobotComponent subsystem = new RobotComponent("Subsystem", "Subsystem", tree);
         subsystems.add(subsystem);
-        RobotComponent victor1 = new RobotComponent("Victor 1", "Motor Controller", tree);
-        subsystem.add(victor1);
-        RobotComponent victor2 = new RobotComponent("Victor 2", "Motor Controller", tree);
-        subsystem.add(victor2);
+        RobotComponent talon1 = new RobotComponent("Talon 1", "Motor Controller", tree);
+        subsystem.add(talon1);
+        RobotComponent talon2 = new RobotComponent("Talon 2", "Motor Controller", tree);
+        subsystem.add(talon2);
 
         // Test it
-        assertTrue("Victor 1 Output Channel (PWM) is not valid.",
-                victor1.getProperty("Output Channel (PWM)").isValid());
-        assertTrue("Victor 2 Output Channel (PWM) is not valid.",
-                victor2.getProperty("Output Channel (PWM)").isValid());
+        assertTrue("Talon 1 Output Channel (PWM) is not valid.",
+                talon1.getProperty("Output Channel (PWM)").isValid());
+        assertTrue("Talon 2 Output Channel (PWM) is not valid.",
+                talon2.getProperty("Output Channel (PWM)").isValid());
 
         // Make it invalid
-        victor2.getProperty("Output Channel (PWM)").setValueAndUpdate("0");
+        talon2.getProperty("Output Channel (PWM)").setValueAndUpdate("0");
 
         // Test it
-        assertTrue("Victor 1 Output Channel (PWM) is not valid.",
-                victor1.getProperty("Output Channel (PWM)").isValid());
-        assertFalse("Victor 2 Output Channel (PWM) should not be valid.",
-                victor2.getProperty("Output Channel (PWM)").isValid());
+        assertTrue("Talon 1 Output Channel (PWM) is not valid.",
+                talon1.getProperty("Output Channel (PWM)").isValid());
+        assertFalse("Talon 2 Output Channel (PWM) should not be valid.",
+                talon2.getProperty("Output Channel (PWM)").isValid());
 
         // Make it valid agoin
-        victor2.getProperty("Output Channel (PWM)").setValueAndUpdate("1");
+        talon2.getProperty("Output Channel (PWM)").setValueAndUpdate("1");
 
         // Test it
-        assertTrue("Victor 1 Output Channel (PWM) is not valid.",
-                victor1.getProperty("Output Channel (PWM)").isValid());
-        assertTrue("Victor 2 Output Channel (PWM) is not valid.",
-                victor2.getProperty("Output Channel (PWM)").isValid());
+        assertTrue("Talon 1 Output Channel (PWM) is not valid.",
+                talon1.getProperty("Output Channel (PWM)").isValid());
+        assertTrue("Talon 2 Output Channel (PWM) is not valid.",
+                talon2.getProperty("Output Channel (PWM)").isValid());
     }
 }

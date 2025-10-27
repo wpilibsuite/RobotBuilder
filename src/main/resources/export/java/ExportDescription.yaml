@@ -255,15 +255,6 @@ Instructions:
           #variable($Follow).addFollower(#variable($Short_Name));
       #end
         #variable($Short_Name).setInverted(${Inverted});
-
-  Nidec Brushless:
-    Defaults: "Component,None"
-    ClassName: "NidecBrushless"
-    Import: "import edu.wpi.first.wpilibj.motorcontrol.NidecBrushless;"
-    Construction: "#variable($Short_Name) = new ${ClassName}(${Output_Channel_PWM}, ${Output_Channel_Digital});"
-    LiveWindow: "addChild(\"$Short_Name\",#variable($Short_Name));"
-    Extra: >-
-      #variable($Short_Name).setInverted(${Inverted});
   Servo:
     Defaults: "PWMOutput,Component,None"
     ClassName: "Servo"

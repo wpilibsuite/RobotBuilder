@@ -57,13 +57,13 @@ public class TestUtils {
         RobotComponent robotDrive = new RobotComponent("Robot Drive", "Differential Drive", tree);
         robotDrive.getProperty("Safety Enabled").setValueAndUpdate(false);
         driveTrain.add(robotDrive);
-        RobotComponent leftVictor = new RobotComponent("Left Victor", "Motor Controller", tree);
-        leftVictor.setProperty("Type", "Victor");
-        robotDrive.add(leftVictor);
-        RobotComponent rightVictor = new RobotComponent("Right Victor", "Motor Controller", tree);
-        rightVictor.setProperty("Type", "Victor");
-        robotDrive.add(rightVictor);
-        robotDrive.getProperty("Right Motor").setValueAndUpdate(rightVictor);
+        RobotComponent leftTalon = new RobotComponent("Left Talon", "Motor Controller", tree);
+        leftTalon.setProperty("Type", "Talon");
+        robotDrive.add(leftTalon);
+        RobotComponent rightTalon = new RobotComponent("Right Talon", "Motor Controller", tree);
+        rightTalon.setProperty("Type", "Talon");
+        robotDrive.add(rightTalon);
+        robotDrive.getProperty("Right Motor").setValueAndUpdate(rightTalon);
         RobotComponent gyro = new RobotComponent("Gyro", "AnalogGyro", tree);
         driveTrain.add(gyro);
         gyro.getProperty("Sensitivity").setValueAndUpdate(2.33);
@@ -79,7 +79,7 @@ public class TestUtils {
         pid.getProperty("Send to SmartDashboard").setValueAndUpdate(true);
         pid.getProperty("Continuous").setValueAndUpdate(true);
         RobotComponent motor = new RobotComponent("Motor", "Motor Controller", tree);
-        motor.setProperty("Type", "Jaguar");
+        motor.setProperty("Type", "Talon");
         pid.add(motor);
         RobotComponent encoder = new RobotComponent("Encoder", "Quadrature Encoder", tree);
         pid.add(encoder);
@@ -96,7 +96,7 @@ public class TestUtils {
         wrist.getProperty("D").setValueAndUpdate(0.5);
         wrist.getProperty("Continuous").setValueAndUpdate(true);
         RobotComponent wristMotor = new RobotComponent("Motor", "Motor Controller", tree);
-        wristMotor.setProperty("Type", "Jaguar");
+        wristMotor.setProperty("Type", "Talon");
         wrist.add(wristMotor);
         RobotComponent pot = new RobotComponent("Pot", "Analog Potentiometer", tree);
         wrist.add(pot);
@@ -112,16 +112,13 @@ public class TestUtils {
         RobotComponent scg2 = new RobotComponent("SCG2", "Motor Controller", tree);
         scg2.setProperty("Type", "Spark");
         RobotComponent scg3 = new RobotComponent("SCG3", "Motor Controller", tree);
-        scg3.setProperty("Type", "SD540");
+        scg3.setProperty("Type", "PWMVenom");
         RobotComponent scg4 = new RobotComponent("SCG4", "Motor Controller", tree);
-        scg4.setProperty("Type", "PWMVenom");
-        RobotComponent scg5 = new RobotComponent("SCG5", "Motor Controller", tree);
-        scg5.setProperty("Type", "PWMSparkFlex");
+        scg4.setProperty("Type", "PWMSparkFlex");
         misc.add(scg1);
         misc.add(scg2);
         misc.add(scg3);
         misc.add(scg4);
-        misc.add(scg5);
         scg2.setProperty("Follow", "SCG1");
         scg4.setProperty("Follow", "SCG3");
 
@@ -145,8 +142,6 @@ public class TestUtils {
         misc.add(ultrasonic);
         RobotComponent PDP = new RobotComponent("Power Distribution Panel", "PowerDistribution", tree);
         misc.add(PDP);
-        RobotComponent nidec = new RobotComponent("Nidec", "Nidec Brushless", tree);
-        misc.add(nidec);
         RobotComponent servo = new RobotComponent("Servo", "Servo", tree);
         misc.add(servo);
         RobotComponent dO = new RobotComponent("DO", "Digital Output", tree);
