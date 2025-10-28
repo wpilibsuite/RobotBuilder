@@ -46,13 +46,13 @@ public class ExistsValidatorTest {
         subsystems.add(driveTrain);
         RobotComponent robotDrive = new RobotComponent("Robot Drive", "Differential Drive", tree);
         driveTrain.add(robotDrive);
-        RobotComponent leftVictor = new RobotComponent("Left Victor", "Motor Controller", tree);
-        robotDrive.add(leftVictor);
-        RobotComponent rightVictor = new RobotComponent("Right Victor", "Motor Controller", tree);
-        robotDrive.add(rightVictor);
+        RobotComponent leftTalon = new RobotComponent("Left Talon", "Motor Controller", tree);
+        robotDrive.add(leftTalon);
+        RobotComponent rightTalon = new RobotComponent("Right Talon", "Motor Controller", tree);
+        robotDrive.add(rightTalon);
 
-        robotDrive.getProperty("Left Motor").setValueAndUpdate(leftVictor.getFullName());
-        robotDrive.getProperty("Right Motor").setValueAndUpdate(rightVictor.getFullName());
+        robotDrive.getProperty("Left Motor").setValueAndUpdate(leftTalon.getFullName());
+        robotDrive.getProperty("Right Motor").setValueAndUpdate(rightTalon.getFullName());
 
         assertTrue("Left motor should be selected.", robotDrive.getProperty("Left Motor").isValid());
         assertTrue("Right motor should be selected.", robotDrive.getProperty("Right Motor").isValid());

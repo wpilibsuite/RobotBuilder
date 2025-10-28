@@ -600,7 +600,7 @@ Palette:
         properties:
           - !ChoicesProperty
             name: Type
-            choices: ["Victor", "Jaguar", "Talon", "VictorSP", "PWMTalonSRX", "Spark", "SD540", "PWMVictorSPX", "DMC60", "PWMSparkMax", "PWMTalonFX", "PWMVenom", "PWMSparkFlex", "Koors40"]
+            choices: ["Talon", "VictorSP", "PWMTalonSRX", "Spark", "PWMVictorSPX", "PWMSparkMax", "PWMTalonFX", "PWMVenom", "PWMSparkFlex", "Koors40"]
             default: "PWMVictorSPX"
           #PWMOutput("Output")
           - !BooleanProperty
@@ -611,16 +611,6 @@ Palette:
             type: PIDOutput
             validators: [TypeDropdownSelectedNoneOk]
             default: None
-      - !Component
-        name: Nidec Brushless
-        type: PIDOutput
-        help: A brushless motor with built in speed controller.
-        properties:
-          #PWMOutput("Output")
-          #DigitalChannel("Output")
-          - !BooleanProperty
-            name: Inverted
-            default: false
       - !Component
         name: Servo
         type: Actuator
@@ -711,7 +701,7 @@ Palette:
           - !BooleanProperty
             name: Send to SmartDashboard
             default: false
-          
+
       - !Component
         name: Xbox Controller
         type: Joystick
